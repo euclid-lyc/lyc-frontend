@@ -29,5 +29,5 @@ Add any other context or screenshots about the feature request here.
 
 Issue 생성자
 |---|
-|<div align="center"><img src="https://contrib.rocks/image?repo={자신의 아이디를 입력해주세요}/NGo-Backend" /></div>|
+|<div align="center"><img src="https://contrib.rocks/image?repo={자신의 아이디를 입력해주세요}/{본인 public repository 이름 아무거나}" /></div>|
 |<div align="center">{자신의 아이디를 입력해주세요}</div>|
