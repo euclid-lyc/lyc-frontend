@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lyc_flutter_project/screens/my_page_screen.dart';
+import 'package:lyc_flutter_project/widget/bottom_bar.dart';
 
 class TempScreen extends StatelessWidget {
   const TempScreen({super.key});
@@ -26,7 +26,7 @@ class TempScreen extends StatelessWidget {
 
             // My Page 이동 버튼
             TextButton(onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => MyPageScreen(),));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => BottomBar(),));
             }, child: Text('My Page')),
           ],
         ),
