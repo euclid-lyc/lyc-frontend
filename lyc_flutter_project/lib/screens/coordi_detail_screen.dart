@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/model/coordi.dart';
-import 'package:lyc_flutter_project/widget/custom_back_button.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
-class CoordiDetailScreen extends StatelessWidget {
+class CoordiDetailScreen extends StatefulWidget {
   final Coordi coordi;
   final bool isMyCoordi;
 
+
   const CoordiDetailScreen(
       {super.key, required this.coordi, required this.isMyCoordi});
+  @override
+  _CoordiDetailScreenState createState() => _CoordiDetailScreenState();
+}
+
+class _CoordiDetailScreenState extends State<CoordiDetailScreen> {
+  bool isSaved = false;
 
   @override
   Widget build(BuildContext context) {
@@ -25,16 +32,16 @@ class CoordiDetailScreen extends StatelessWidget {
               children: [
                 Padding(
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                  const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       IconButton(
-                        icon: CustomBackButton(),
+                        icon: Icon(Icons.arrow_back),
                         onPressed: () => Navigator.pop(context),
                       ),
                       Spacer(),
-                      if (isMyCoordi == true)
+                      if (widget.isMyCoordi)
                         IconButton(
                           icon: Icon(
                             Icons.delete_outline_rounded,
@@ -100,12 +107,12 @@ class CoordiDetailScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          coordi.posterName,
+                          widget.coordi.posterName,
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.w600),
                         ),
                         Text(
-                          '@${coordi.posterId}',
+                          '@${widget.coordi.posterId}',
                           style: TextStyle(
                             fontWeight: FontWeight.w400,
                           ),
@@ -114,7 +121,7 @@ class CoordiDetailScreen extends StatelessWidget {
                     ),
                     Spacer(),
                     Text(
-                      coordi.weather,
+                      widget.coordi.weather,
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
@@ -125,13 +132,13 @@ class CoordiDetailScreen extends StatelessWidget {
               ),
               // 사진
               Hero(
-                tag: coordi,
+                tag: widget.coordi,
                 child: AspectRatio(
                   aspectRatio: 1,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20),
                     child: Image.asset(
-                      'assets/${coordi.image}.jpg',
+                      'assets/${widget.coordi.image}.jpg',
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -150,12 +157,22 @@ class CoordiDetailScreen extends StatelessWidget {
                       children: [
                         IconButton(
                           onPressed: () {},
-                          icon: Icon(Icons.ios_share_rounded),
+                          icon: Icon(Icons.share),
                         ),
                         IconButton(
-                          onPressed: () {},
-                          icon: Icon(Icons.bookmark_outline_rounded),
-                        ),
+                          onPressed: () {
+                            setState(() {
+                              isSaved = !isSaved;
+                            });
+                          },
+                          icon: SvgPicture.asset(
+                            isSaved
+                                ? 'assets/icon_saved.svg'
+                                : 'assets/icon_save.svg',
+                            width: 24,
+                            height: 24,
+
+                          ),),
                       ],
                     )
                   ],
@@ -171,7 +188,7 @@ class CoordiDetailScreen extends StatelessWidget {
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(20),
                 ),
-                child: Text(coordi.style.join(' ')),
+                child: Text(widget.coordi.style.join(' ')),
               )
             ],
           ),
