@@ -184,7 +184,7 @@ class _CoordiDetailScreenState extends State<CoordiDetailScreen> {
                   ],
                 ),
               ),
-              // 설명박스
+
               Container(
                 width: double.infinity,
                 height: 150,
