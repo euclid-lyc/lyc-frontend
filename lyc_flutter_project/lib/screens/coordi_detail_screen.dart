@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/model/coordi.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:lyc_flutter_project/widget/normal_appbar.dart';
 
 class CoordiDetailScreen extends StatefulWidget {
   final Coordi coordi;
   final bool isMyCoordi;
 
-
   const CoordiDetailScreen(
       {super.key, required this.coordi, required this.isMyCoordi});
+
   @override
   _CoordiDetailScreenState createState() => _CoordiDetailScreenState();
 }
@@ -17,47 +18,15 @@ class CoordiDetailScreen extends StatefulWidget {
 class _CoordiDetailScreenState extends State<CoordiDetailScreen> {
   bool isSaved = false;
   bool isFavorite = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.lightGrey,
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(90),
-        child: AppBar(
-          backgroundColor: AppColor.beige,
-          automaticallyImplyLeading: false,
-          flexibleSpace: Container(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Padding(
-                  padding:
-                  const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      IconButton(
-                        icon: Icon(Icons.arrow_back),
-                        onPressed: () => Navigator.pop(context),
-                      ),
-                      Spacer(),
-                      if (widget.isMyCoordi)
-                        IconButton(
-                          icon: Icon(
-                            Icons.delete_outline_rounded,
-                            color: Colors.white,
-                          ),
-                          onPressed: () {
-                            // delete
-                          },
-                        ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
+      appBar: NormalAppbar(
+        backButton: true,
+        title: "",
+        deleteButton: widget.isMyCoordi,
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -177,14 +146,14 @@ class _CoordiDetailScreenState extends State<CoordiDetailScreen> {
                                 : 'assets/icon_save.svg',
                             width: 24,
                             height: 24,
-
-                          ),),
+                          ),
+                        ),
                       ],
                     )
                   ],
                 ),
               ),
-
+              // 설명박스
               Container(
                 width: double.infinity,
                 height: 150,
