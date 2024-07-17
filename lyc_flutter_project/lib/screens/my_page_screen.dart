@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
-import 'package:lyc_flutter_project/data/coordi_by_category.dart';
+import 'package:lyc_flutter_project/data/coordiByCategory.dart';
 import 'package:lyc_flutter_project/model/coordi.dart';
-import 'package:lyc_flutter_project/screens/follow_list_screen.dart';
 import 'package:lyc_flutter_project/widget/grid_widget.dart';
 import 'package:lyc_flutter_project/widget/switch_category_button.dart';
 
@@ -22,7 +21,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
     });
   }
 
-  List<Coordi?> get currentOutfitList {
+  List<Coordi> get currentOutfitList {
     switch (_selectedCategory) {
       case 1:
         return CoordiLists.userCoordi;
@@ -53,7 +52,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
           Expanded(
             flex: 1,
             child: Container(
-              color: AppColor.beige,
+              color: Color(0xffC4BAA2),
               padding: EdgeInsets.only(left: 30, right: 30),
               child: Column(
                 children: [
@@ -103,7 +102,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                                   // 팔로워
                                   GestureDetector(
                                     onTap: () {
-                                      Navigator.push(context, MaterialPageRoute(builder: (context) => FollowListScreen(follower: true),));
+                                      // Navigator.push(context, MaterialPageRoute(builder: (context) => ,))
                                     },
                                     child: Text(
                                       '팔로워: 1,350만',
@@ -114,7 +113,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                                   // 팔로잉
                                   GestureDetector(
                                     onTap: () {
-                                      Navigator.push(context, MaterialPageRoute(builder: (context) => FollowListScreen(follower: false),));
+                                      // Navigator.push(context, MaterialPageRoute(builder: (context) => ,))
                                     },
                                     child: Text('팔로잉: 245',
                                         style: TextStyle(
@@ -252,7 +251,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                   // 갤러리
                   Expanded(
                     child: GridWidget(
-                        coordiLst: currentOutfitList, category: _selectedCategory,),
+                        coordiLst: currentOutfitList, isMyCoordi: _selectedCategory == 0),
                   ),
                 ],
               ),
