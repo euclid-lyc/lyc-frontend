@@ -16,7 +16,7 @@ class CoordiDetailScreen extends StatefulWidget {
 
 class _CoordiDetailScreenState extends State<CoordiDetailScreen> {
   bool isSaved = false;
-
+  bool isFavorite = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -150,8 +150,14 @@ class _CoordiDetailScreenState extends State<CoordiDetailScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     IconButton(
-                      onPressed: () {},
-                      icon: Icon(Icons.favorite_outline_outlined),
+                      onPressed: () {
+                        setState(() {
+                          isFavorite = !isFavorite; // 토글
+                        });
+                      },
+                      icon: Icon(
+                        isFavorite ? Icons.favorite : Icons.favorite_outline,
+                      ),
                     ),
                     Row(
                       children: [
