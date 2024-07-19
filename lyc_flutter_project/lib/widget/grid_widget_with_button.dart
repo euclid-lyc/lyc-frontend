@@ -1,15 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:lyc_flutter_project/model/coordi.dart';
-import 'package:lyc_flutter_project/screens/coordi_detail_screen.dart';
+import 'package:lyc_flutter_project/model/posting.dart';
+import 'package:lyc_flutter_project/screens/posting_detail_screen.dart';
 import 'package:lyc_flutter_project/screens/write_post_screen.dart';
+import 'package:lyc_flutter_project/services/temp_services.dart';
 
-class GridWidget extends StatelessWidget {
-  final List<Coordi?> coordiLst;
+/// [category]
+/// 0 나의 코디
+/// 1 저장한 코디
+/// 2 나의 옷장
+/// 3 리뷰
+
+class GridWidgetWithButton extends StatelessWidget {
+  final List<Posting> postings;
   final int category;
 
-  const GridWidget({
+  const GridWidgetWithButton({
     super.key,
-    required this.coordiLst,
+    required this.postings,
     required this.category,
   });
 
@@ -22,10 +29,9 @@ class GridWidget extends StatelessWidget {
           crossAxisSpacing: 10,
           mainAxisSpacing: 15,
         ),
-        itemCount: coordiLst.length,
+        itemCount: postings.length + 1,
         itemBuilder: (context, index) {
-          if (index == coordiLst.length - 1) {
-            // 마지막 칸
+          if (index == 0) {
             return GestureDetector(
               onTap: () {
                 if (category == 0) {
@@ -42,6 +48,13 @@ class GridWidget extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                           builder: (context) => WritePostScreen(purpose: 2)));
+                } else if (category == 3) {
+                  // 리뷰 리스트로 이동
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //       builder: (context) => ,)
+                  // )
                 }
               },
               child: Container(
@@ -61,23 +74,23 @@ class GridWidget extends StatelessWidget {
               ),
             );
           } else {
-            final coordi = coordiLst[index];
+            final posting = postings[index - 1];
+            final image = TempServices.getImageByPostingId(posting.id);
             return GestureDetector(
               onTap: () {
                 // Navigate to Detail Screen
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => CoordiDetailScreen(
-                          coordi: coordi!, isMyCoordi: (category == 0)),
+                      builder: (context) => PostingDetailScreen(id: posting.id, isMyCoordi: category == 0)
                     ));
               },
               child: Hero(
-                tag: coordi!,
+                tag: posting.id,
                 child: ClipRRect(
                     borderRadius: BorderRadius.circular(15),
                     child: Image.asset(
-                      'assets/${coordi.image}.jpg',
+                      image.image,
                       fit: BoxFit.cover,
                     )),
               ),
@@ -87,7 +100,7 @@ class GridWidget extends StatelessWidget {
   }
 
   Widget _iconByCategory() {
-    if (category == 0 || category == 2) {
+    if (category == 0 || category == 2 || category == 3) {
       return Icon(Icons.add_rounded);
     } else if (category == 1) {
       return Icon(Icons.search_rounded);
@@ -103,7 +116,10 @@ class GridWidget extends StatelessWidget {
       return Text("코디 탐색");
     } else if (category == 2) {
       return Text("옷 추가");
-    } else {
+    } else if (category == 3) {
+      return Text("리뷰 작성");
+    }
+    else {
       return Text("error");
     }
   }

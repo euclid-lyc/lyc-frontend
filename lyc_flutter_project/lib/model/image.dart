@@ -1,7 +1,7 @@
-class Image {
+class PostingImage {
   final int id;
   final String image;
   final int posting_id;
 
-  Image(this.id, this.image, this.posting_id);
+  PostingImage(this.id, this.image, this.posting_id);
 }
