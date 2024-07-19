@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lyc_flutter_project/screens/my_page_screen.dart';
 import 'package:lyc_flutter_project/widget/bottom_bar.dart';
 
 class TempScreen extends StatelessWidget {
@@ -24,10 +25,15 @@ class TempScreen extends StatelessWidget {
             //  Navigator.push(context, MaterialPageRoute(builder: (context) => 스크린클래스이름(),));
             //  }, child: Text('이 화면에 표시될 문구')),
 
-            // My Page 이동 버튼
+            // My Page 이동 버튼->member id 1을 전달합니다
             TextButton(onPressed: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) => BottomBar(),));
             }, child: Text('My Page')),
+
+          // 남의 페이지 이동 버튼->member id 2를 전달합니다
+          TextButton(onPressed: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => MyPageScreen(memberId: 2),));
+            }, child: Text('윈터 페이지로 이동')),
           ],
         ),
       ),

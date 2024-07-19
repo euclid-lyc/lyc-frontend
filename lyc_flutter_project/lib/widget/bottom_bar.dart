@@ -15,10 +15,10 @@ const List<TabItem> items = [
 ];
 
 List<Widget> pages = [
-  MyPageScreen(),
+  MyPageScreen(memberId: 1,),
   TempScreen(),
-  MyPageScreen(),
-  MyPageScreen(),
+  MyPageScreen(memberId: 1,),
+  MyPageScreen(memberId: 1,),
 ];
 
 class BottomBar extends StatefulWidget {
