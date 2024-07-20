@@ -1,23 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
-import 'package:lyc_flutter_project/model/coordi.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:lyc_flutter_project/model/image.dart';
+import 'package:lyc_flutter_project/model/member.dart';
+import 'package:lyc_flutter_project/model/posting.dart';
+import 'package:lyc_flutter_project/services/temp_services.dart';
 import 'package:lyc_flutter_project/widget/normal_appbar.dart';
 
-class CoordiDetailScreen extends StatefulWidget {
-  final Coordi coordi;
+class PostingDetailScreen extends StatefulWidget {
+  final int id;
   final bool isMyCoordi;
 
-  const CoordiDetailScreen(
-      {super.key, required this.coordi, required this.isMyCoordi});
+  const PostingDetailScreen(
+      {super.key, required this.id, required this.isMyCoordi});
 
   @override
-  _CoordiDetailScreenState createState() => _CoordiDetailScreenState();
+  _PostingDetailScreenState createState() => _PostingDetailScreenState();
 }
 
-class _CoordiDetailScreenState extends State<CoordiDetailScreen> {
+class _PostingDetailScreenState extends State<PostingDetailScreen> {
   bool isSaved = false;
   bool isFavorite = false;
+
+  late Posting posting;
+  late PostingImage image;
+  late Member writer;
+
+  @override
+  void initState() {
+    super.initState();
+    posting = TempServices.getPostingByPostingId(widget.id);
+    image = TempServices.getImageByPostingId(widget.id);
+    writer = TempServices.getMemberById(posting.writer_id);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +65,8 @@ class _CoordiDetailScreenState extends State<CoordiDetailScreen> {
                           aspectRatio: 1,
                           child: ClipOval(
                             child: Image.asset(
-                              'assets/ex_profile.png',
+                              TempServices.getMemberById(posting.from_id)
+                                  .profile_image,
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -63,7 +79,8 @@ class _CoordiDetailScreenState extends State<CoordiDetailScreen> {
                           aspectRatio: 1,
                           child: ClipOval(
                             child: Image.asset(
-                              'assets/ex_profile.png',
+                              TempServices.getMemberById(posting.to_id)
+                                  .profile_image,
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -76,12 +93,12 @@ class _CoordiDetailScreenState extends State<CoordiDetailScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          widget.coordi.posterName,
+                          writer.nickname,
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.w600),
                         ),
                         Text(
-                          '@${widget.coordi.posterId}',
+                          '@${writer.login_id}',
                           style: TextStyle(
                             fontWeight: FontWeight.w400,
                           ),
@@ -90,7 +107,7 @@ class _CoordiDetailScreenState extends State<CoordiDetailScreen> {
                     ),
                     Spacer(),
                     Text(
-                      widget.coordi.weather,
+                      '${posting.min_temp}°C ~ ${posting.max_temp}°C',
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
@@ -101,13 +118,13 @@ class _CoordiDetailScreenState extends State<CoordiDetailScreen> {
               ),
               // 사진
               Hero(
-                tag: widget.coordi,
+                tag: posting.id,
                 child: AspectRatio(
                   aspectRatio: 1,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20),
                     child: Image.asset(
-                      'assets/${widget.coordi.image}.jpg',
+                      image.image,
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -163,7 +180,7 @@ class _CoordiDetailScreenState extends State<CoordiDetailScreen> {
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(20),
                 ),
-                child: Text(widget.coordi.style.join(' ')),
+                child: Text('${posting.style}\n${posting.content}'),
               )
             ],
           ),

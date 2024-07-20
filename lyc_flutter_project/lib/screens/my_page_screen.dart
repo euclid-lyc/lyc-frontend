@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/data/coordi_by_category.dart';
 import 'package:lyc_flutter_project/data/temp_member_data.dart';
+import 'package:lyc_flutter_project/data/temp_posting_data.dart';
 import 'package:lyc_flutter_project/model/coordi.dart';
 import 'package:lyc_flutter_project/model/member.dart';
 import 'package:lyc_flutter_project/screens/follow_list_screen.dart';
 import 'package:lyc_flutter_project/services/temp_services.dart';
 import 'package:lyc_flutter_project/widget/bottom_buttons.dart';
-import 'package:lyc_flutter_project/widget/grid_widget.dart';
+import 'package:lyc_flutter_project/widget/grid_widget_with_button.dart';
 import 'package:lyc_flutter_project/widget/switch_category_button.dart';
 
 class MyPageScreen extends StatefulWidget {
@@ -192,12 +193,8 @@ class _MyPageScreenState extends State<MyPageScreen> {
                     ),
                   ),
                   SizedBox(height: 20),
-                  /// 차후 수정된 데이터에 맞게 gridWidget 수정하겠음
                   Expanded(
-                    child: GridWidget(
-                      coordiLst: currentOutfitList,
-                      category: _selectedCategory,
-                    ),
+                    child: GridWidgetWithButton(postings: TempPostingData().postings, category: _selectedCategory)
                   ),
                 ],
               ),
