@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/model/posting.dart';
 import 'package:lyc_flutter_project/screens/posting_detail_screen.dart';
+import 'package:lyc_flutter_project/screens/review_list_screen.dart';
 import 'package:lyc_flutter_project/screens/write_post_screen.dart';
 import 'package:lyc_flutter_project/services/temp_services.dart';
 
@@ -49,12 +50,11 @@ class GridWidgetWithButton extends StatelessWidget {
                       MaterialPageRoute(
                           builder: (context) => WritePostScreen(purpose: 2)));
                 } else if (category == 3) {
-                  // 리뷰 리스트로 이동
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //       builder: (context) => ,)
-                  // )
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ReviewListScreen(),
+                      ));
                 }
               },
               child: Container(
@@ -82,8 +82,8 @@ class GridWidgetWithButton extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => PostingDetailScreen(id: posting.id, isMyCoordi: category == 0)
-                    ));
+                        builder: (context) => PostingDetailScreen(
+                            id: posting.id, isMyCoordi: category == 0)));
               },
               child: Hero(
                 tag: posting.id,
@@ -118,8 +118,7 @@ class GridWidgetWithButton extends StatelessWidget {
       return Text("옷 추가");
     } else if (category == 3) {
       return Text("리뷰 작성");
-    }
-    else {
+    } else {
       return Text("error");
     }
   }
