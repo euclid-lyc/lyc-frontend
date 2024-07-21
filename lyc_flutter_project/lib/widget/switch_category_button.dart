@@ -11,18 +11,21 @@ class SwitchCategoryButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: TextButton(
-        onPressed: onPressed,
-        style: TextButton.styleFrom(
-          backgroundColor: isSelected ? AppColor.brown : Colors.white,
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(30)),
-        ),
-        child: Text(
-          text,
-          style: TextStyle(
-            color: isSelected ? Colors.white : AppColor.brown,
-            fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
+      child: Container(
+        height: double.infinity,
+        child: TextButton(
+          onPressed: onPressed,
+          style: TextButton.styleFrom(
+            backgroundColor: isSelected ? AppColor.brown : Colors.white,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30)),
+          ),
+          child: Text(
+            text,
+            style: TextStyle(
+              color: isSelected ? Colors.white : AppColor.brown,
+              fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
+            ),
           ),
         ),
       ),
