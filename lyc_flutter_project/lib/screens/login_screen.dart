@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
+import 'package:lyc_flutter_project/screens/join_membership_screen_1.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -169,6 +170,10 @@ class LoginScreen extends StatelessWidget {
                         children: [
                           TextButton(
                             onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => const JoinMembershipScreen1()),
+                              );
 // 회원가입 버튼 눌렀을 때의 동작 구현
                             },
                             child: Text(
