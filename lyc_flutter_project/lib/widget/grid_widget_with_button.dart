@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/model/posting.dart';
 import 'package:lyc_flutter_project/screens/posting_detail_screen.dart';
 import 'package:lyc_flutter_project/screens/review_list_screen.dart';
-import 'package:lyc_flutter_project/screens/write_post_screen.dart';
+import 'package:lyc_flutter_project/screens/add_posting_screen.dart';
 import 'package:lyc_flutter_project/services/temp_services.dart';
 
 /// [category]
@@ -40,7 +40,7 @@ class GridWidgetWithButton extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => WritePostScreen(purpose: 0)));
+                          builder: (context) => AddPostingScreen(purpose: 0)));
                 } else if (category == 1) {
                   // 저장한코디->코디 탐색
                 } else if (category == 2) {
@@ -48,7 +48,7 @@ class GridWidgetWithButton extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => WritePostScreen(purpose: 2)));
+                          builder: (context) => AddPostingScreen(purpose: 2)));
                 } else if (category == 3) {
                   Navigator.push(
                       context,
