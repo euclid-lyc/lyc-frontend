@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/screens/join_membership_screen_2.dart';
+import 'package:lyc_flutter_project/widget/AppTextStyles.dart';
 
 import '../widget/normal_appbar.dart';
 
@@ -9,51 +10,13 @@ class JoinMembershipScreen1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // 공통 TextStyle
-    TextStyle titleTextStyle = TextStyle(
-      fontWeight: FontWeight.w700,
-      fontSize: 20,
-      letterSpacing: -0.1,
-      color: Colors.white,
-    );
-
-    TextStyle labelTextStyle = TextStyle(
-      fontWeight: FontWeight.w500,
-      fontSize: 12,
-      height: 1.5,
-      letterSpacing: -0.1,
-      color: Color(0xFF000000),
-    );
-
-    TextStyle hintTextStyle = TextStyle(
-      fontWeight: FontWeight.w500,
-      fontSize: 12,
-      height: 1.5,
-      letterSpacing: -0.1,
-      color: Color(0xFF8D8D8D),
-    );
-
-    TextStyle littleTitleStyle = TextStyle(
-      fontWeight: FontWeight.w700,
-      fontSize: 16,
-      height: 1.1,
-      letterSpacing: -0.1,
-      color: Colors.black,
-    );
-
-    TextStyle otherLoginTextStyle = TextStyle(
-      fontWeight: FontWeight.w400,
-      fontSize: 12,
-      color: Colors.black,
-    );
-
     return Scaffold(
       backgroundColor: AppColor.lightGrey,
-      appBar:  NormalAppbar(
-      backButton: true,
-      title: "회원가입",
-      deleteButton: false,
-    ),
+      appBar: NormalAppbar(
+        backButton: true,
+        title: "회원가입",
+        deleteButton: false,
+      ),
       body: Center(
         child: SingleChildScrollView(
           child: Column(
@@ -77,48 +40,58 @@ class JoinMembershipScreen1 extends StatelessWidget {
                       alignment: Alignment.topLeft,
                       child: Text(
                         'Step 1. 아이디 패스워드 설정',
-                        style: littleTitleStyle,
+                        style: AppTextStyles.littleTitle,
                       ),
                     ),
                     buildInputField(
-                        '이름', '이름을 입력해주세요', labelTextStyle, hintTextStyle),
+                        '이름',
+                        '이름을 입력해주세요',
+                        AppTextStyles.labelTextStyle,
+                        AppTextStyles.hint
+                    ),
                     buildInputField(
-                        '아이디', '아이디를 입력해주세요', labelTextStyle, hintTextStyle),
+                        '아이디',
+                        '아이디를 입력해주세요',
+                        AppTextStyles.labelTextStyle,
+                        AppTextStyles.hint
+                    ),
                     buildInputField(
-                        '이메일', '이메일을 입력해주세요', labelTextStyle, hintTextStyle),
+                        '이메일',
+                        '이메일을 입력해주세요',
+                        AppTextStyles.labelTextStyle,
+                        AppTextStyles.hint
+                    ),
                     buildInputField(
-                        '패스워드', '패스워드를 입력해주세요', labelTextStyle, hintTextStyle),
+                        '패스워드',
+                        '패스워드를 입력해주세요',
+                        AppTextStyles.labelTextStyle,
+                        AppTextStyles.hint
+                    ),
                     buildInputField(
-                        '패스워드 확인', '패스워드를 다시 입력해주세요', labelTextStyle, hintTextStyle),
+                        '패스워드 확인',
+                        '패스워드를 다시 입력해주세요',
+                        AppTextStyles.labelTextStyle,
+                        AppTextStyles.hint
+                    ),
                     TextButton(
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => JoinMembershipScreen2()),
+                          MaterialPageRoute(builder: (context) => const JoinMembershipScreen2()),
                         );
                       },
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(AppColor.beige),
-                        shape: MaterialStateProperty.all(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
+                      style: TextButton.styleFrom(
+                        backgroundColor: AppColor.beige,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
                         ),
-                        padding: WidgetStateProperty.all(
-                          EdgeInsets.symmetric(vertical: 11),
-                        ),
+                        padding: EdgeInsets.symmetric(vertical: 11),
                       ),
                       child: SizedBox(
                         width: 230,
                         child: Text(
                           '다음',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 14,
-                            height: 1.3,
-                            letterSpacing: -0.1,
-                            color: Colors.white,
-                          ),
+                          style: AppTextStyles.button,
                           textAlign: TextAlign.center,
                         ),
                       ),
@@ -133,7 +106,7 @@ class JoinMembershipScreen1 extends StatelessWidget {
                 },
                 child: Text(
                   '다른 계정으로 회원가입',
-                  style: otherLoginTextStyle,
+                  style: AppTextStyles.otherLoginTextStyle,
                 ),
               ),
               SizedBox(

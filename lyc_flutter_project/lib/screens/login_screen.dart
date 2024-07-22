@@ -1,54 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/screens/join_membership_screen_1.dart';
+import '../widget/AppTextStyles.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-// 공통 TextStyle
-    TextStyle titleTextStyle = TextStyle(
-      fontWeight: FontWeight.w700,
-      fontSize: 20,
-      letterSpacing: -0.1,
-      color: Colors.white,
-    );
-
-    TextStyle labelTextStyle = TextStyle(
-      fontWeight: FontWeight.w500,
-      fontSize: 12,
-      height: 1.5,
-      letterSpacing: -0.1,
-      color: Color(0xFF000000),
-    );
-
-    TextStyle hintTextStyle = TextStyle(
-      fontWeight: FontWeight.w500,
-      fontSize: 12,
-      height: 1.5,
-      letterSpacing: -0.1,
-      color: Color(0xFF8D8D8D),
-    );
-
-    TextStyle linkTextStyle = TextStyle(
-      fontWeight: FontWeight.w500,
-      fontSize: 10,
-      decoration: TextDecoration.underline,
-      height: 1,
-      letterSpacing: -0.1,
-      color: Color(0xFF000000),
-      decorationColor: Color(0xFF000000),
-    );
-
-    TextStyle otherLoginTextStyle = TextStyle(
-      fontWeight: FontWeight.w500,
-      fontSize: 12,
-      height: 1.5,
-      letterSpacing: -0.1,
-      color: Color(0xFF718096),
-    );
-
     return Scaffold(
       backgroundColor: AppColor.lightGrey,
       appBar: AppBar(
@@ -62,19 +21,18 @@ class LoginScreen extends StatelessWidget {
             children: [
               Text(
                 '대충 로고',
-                style: titleTextStyle,
+                style: AppTextStyles.title,
                 textAlign: TextAlign.center,
               ),
               Text(
                 '유클리드 소개',
-                style: titleTextStyle,
+                style: AppTextStyles.title,
                 textAlign: TextAlign.center,
               ),
             ],
           ),
         ),
       ),
-
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -102,7 +60,7 @@ class LoginScreen extends StatelessWidget {
                             alignment: Alignment.topLeft,
                             child: Text(
                               '아이디',
-                              style: labelTextStyle,
+                              style: AppTextStyles.labelTextStyle,
                             ),
                           ),
                         ),
@@ -117,7 +75,7 @@ class LoginScreen extends StatelessWidget {
                               decoration: InputDecoration(
                                 border: InputBorder.none,
                                 hintText: '아이디를 입력해주세요',
-                                hintStyle: hintTextStyle,
+                                hintStyle: AppTextStyles.hint,
                               ),
                             ),
                           ),
@@ -137,7 +95,7 @@ class LoginScreen extends StatelessWidget {
                             alignment: Alignment.topLeft,
                             child: Text(
                               '패스워드',
-                              style: labelTextStyle,
+                              style: AppTextStyles.labelTextStyle,
                             ),
                           ),
                         ),
@@ -153,7 +111,7 @@ class LoginScreen extends StatelessWidget {
                               decoration: InputDecoration(
                                 border: InputBorder.none,
                                 hintText: '패스워드를 입력해주세요',
-                                hintStyle: hintTextStyle,
+                                hintStyle: AppTextStyles.hint,
                               ),
                             ),
                           ),
@@ -174,29 +132,29 @@ class LoginScreen extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(builder: (context) => const JoinMembershipScreen1()),
                               );
-// 회원가입 버튼 눌렀을 때의 동작 구현
+                              // 회원가입 버튼 눌렀을 때의 동작 구현
                             },
                             child: Text(
                               '회원가입',
-                              style: linkTextStyle,
+                              style: AppTextStyles.linkTextStyle,
                             ),
                           ),
                           TextButton(
                             onPressed: () {
-// 아이디찾기 버튼 눌렀을 때의 동작 구현
+                              // 아이디찾기 버튼 눌렀을 때의 동작 구현
                             },
                             child: Text(
                               '아이디찾기',
-                              style: linkTextStyle,
+                              style: AppTextStyles.linkTextStyle,
                             ),
                           ),
                           TextButton(
                             onPressed: () {
-// 비밀번호찾기 버튼 눌렀을 때의 동작 구현
+                              // 비밀번호찾기 버튼 눌렀을 때의 동작 구현
                             },
                             child: Text(
                               '비밀번호찾기',
-                              style: linkTextStyle,
+                              style: AppTextStyles.linkTextStyle,
                             ),
                           ),
                         ],
@@ -235,7 +193,7 @@ class LoginScreen extends StatelessWidget {
                   ),
                   TextButton(
                     onPressed: () {
-// 로그인 버튼 눌렀을 때의 동작 구현
+                      // 로그인 버튼 눌렀을 때의 동작 구현
                     },
                     style: TextButton.styleFrom(
                       backgroundColor: AppColor.beige,
@@ -248,13 +206,7 @@ class LoginScreen extends StatelessWidget {
                       width: 230,
                       child: Text(
                         '로그인',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 14,
-                          height: 1.3,
-                          letterSpacing: -0.1,
-                          color: Colors.white,
-                        ),
+                        style: AppTextStyles.button,
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -264,11 +216,11 @@ class LoginScreen extends StatelessWidget {
             ),
             TextButton(
               onPressed: () {
-// 다른 계정으로 로그인 버튼 눌렀을 때의 동작 구현
+                // 다른 계정으로 로그인 버튼 눌렀을 때의 동작 구현
               },
               child: Text(
                 '다른 계정으로 로그인',
-                style: otherLoginTextStyle,
+                style: AppTextStyles.otherLoginTextStyle,
               ),
             ),
             SizedBox(
@@ -283,7 +235,7 @@ class LoginScreen extends StatelessWidget {
                       height: 35,
                     ),
                     onPressed: () {
-// 네이버 로그인 버튼 눌렀을 때의 동작 구현
+                      // 네이버 로그인 버튼 눌렀을 때의 동작 구현
                     },
                   ),
                   IconButton(
@@ -293,7 +245,7 @@ class LoginScreen extends StatelessWidget {
                       height: 35,
                     ),
                     onPressed: () {
-// 카카오톡 로그인 버튼 눌렀을 때의 동작 구현
+                      // 카카오톡 로그인 버튼 눌렀을 때의 동작 구현
                     },
                   ),
                   IconButton(
@@ -303,7 +255,7 @@ class LoginScreen extends StatelessWidget {
                       height: 35,
                     ),
                     onPressed: () {
-// 구글 로그인 버튼 눌렀을 때의 동작 구현
+                      // 구글 로그인 버튼 눌렀을 때의 동작 구현
                     },
                   ),
                 ],
