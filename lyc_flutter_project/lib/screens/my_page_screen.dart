@@ -1,253 +1,314 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';  // SVG 이미지 사용을 위한 패키지
+import 'package:lyc_flutter_project/data/app_color.dart';
+import 'package:lyc_flutter_project/data/coordi_by_category.dart';
+import 'package:lyc_flutter_project/data/temp_member_data.dart';
+import 'package:lyc_flutter_project/data/temp_posting_data.dart';
+import 'package:lyc_flutter_project/model/coordi.dart';
+import 'package:lyc_flutter_project/model/member.dart';
+import 'package:lyc_flutter_project/screens/follow_list_screen.dart';
+import 'package:lyc_flutter_project/services/temp_services.dart';
+import 'package:lyc_flutter_project/widget/bottom_buttons.dart';
+import 'package:lyc_flutter_project/widget/grid_widget_with_button.dart';
+import 'package:lyc_flutter_project/widget/switch_category_button.dart';
 
 class MyPageScreen extends StatefulWidget {
-  const MyPageScreen({super.key});
+  final int? memberId;
+
+  const MyPageScreen({super.key, required this.memberId});
 
   @override
   State<MyPageScreen> createState() => _MyPageScreenState();
 }
 
 class _MyPageScreenState extends State<MyPageScreen> {
+  int _selectedCategory = 0;
+  Member? _member;
+  bool isMyPage = false;
 
   @override
   void initState() {
     super.initState();
-    //_tabController.addListener(tabListner);
+    _member = TempServices.getMemberById(widget.memberId!);
+    if (_member?.id == cur_member) {
+      isMyPage = true;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xffE5E5E5),
+      backgroundColor: AppColor.lightGrey,
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: AppColor.beige,
+      ),
       body: Column(
         children: [
-          // 상단 베이지 박스
-          Container(
-            height: 250,
-            color: Color(0xffC4BAA2),
-            padding: EdgeInsets.only(left: 30, right: 30, top: 50, bottom: 30),
-            child: Column(
-              children: [
-                // 프로필 박스(사진, 이름 등)
-                Container(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      // 사진
-                      Expanded(
-                        flex: 3,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(100),
-                          child: Image.asset(
-                            'assets/ex_profile.png',
-                            width: 100,
-                            height: 100,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                      // 이름, 아이디, 팔로워, 팔로잉
-                      Expanded(
-                        flex: 6,
-                        child: Container(
-                          padding: EdgeInsets.only(left: 20, right: 50),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Karina',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w800,
+          // 상단부
+          Expanded(
+            flex: 1,
+            child: Container(
+              color: AppColor.beige,
+              padding: EdgeInsets.only(left: 30, right: 30),
+              child: Column(
+                children: [
+                  // 프로필 박스
+                  Expanded(
+                    flex: 12,
+                    child: Container(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          // 사진
+                          Expanded(
+                            flex: 7,
+                            child: AspectRatio(
+                              aspectRatio: 1,
+                              child: ClipOval(
+                                child: Image.asset(
+                                  _member!.profile_image,
+                                  fit: BoxFit.cover,
                                 ),
                               ),
-                              // 이름
-                              Text('@katarinabluu'),
-                              // 아이디
-                              SizedBox(height: 10),
-                              Text(
-                                '팔로워: 1,350만',
-                                style: TextStyle(color: Color(0xff414141)),
+                            ),
+                          ),
+                          // 이름, 아이디, 팔로워, 팔로잉
+                          SizedBox(width: 20),
+                          Expanded(
+                            flex: 10,
+                            child: Container(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  // 이름
+                                  Text(
+                                    _member!.nickname,
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w800,
+                                    ),
+                                  ),
+                                  // 아이디
+                                  Text('@${_member!.login_id}'),
+                                  Text(
+                                    '\n',
+                                    style: TextStyle(fontSize: 4),
+                                  ),
+                                  // 팔로워
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                FollowListScreen(
+                                                    follower: true),
+                                          ));
+                                    },
+                                    child: Text(
+                                      '팔로워: ${_member!.follower}',
+                                      style:
+                                      TextStyle(color: Color(0xff414141)),
+                                    ),
+                                  ),
+                                  // 팔로잉
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                FollowListScreen(
+                                                    follower: false),
+                                          ));
+                                    },
+                                    child: Text('팔로잉: ${_member!.following}',
+                                        style: TextStyle(
+                                            color: Color(0xff414141))),
+                                  ),
+                                ],
                               ),
-                              // 팔로워
-                              Text('팔로잉: 245',
-                                  style: TextStyle(color: Color(0xff414141))),
-                              // 팔로잉
-                            ],
+                            ),
                           ),
-                        ),
+                          // 우측 버튼(공유 포인트/팔로우 차단 신고)
+                          Expanded(
+                            flex: 4,
+                            child: IconsInProfileBox(
+                              memberId: _member!.id,
+                            ),
+                          )
+                        ],
                       ),
-                      // 공유, P 아이콘
-                      Expanded(
-                        flex: 2,
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.send,
-                              color: Colors.white,
-                            ),
-                            SizedBox(width: 10),
-                            Icon(
-                              Icons.local_parking,
-                              color: Colors.white,
-                            ),
-                          ],
-                        ),
-                      )
-                    ],
+                    ),
                   ),
-                ),
-                SizedBox(height: 30),
-                // 버튼 박스(스탬프, 리뷰, 출석체크)
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    // 스탬프 버튼
-                    Container(
-                      height: 40,
-                      width: 100,
-                      child: TextButton(
-                          onPressed: () {},
-                          style: TextButton.styleFrom(
-                            backgroundColor: Color(0xffF1F1F1),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15)),
-                          ),
-                          child: Text(
-                            '스탬프',
-                            style: TextStyle(
-                                color: Color(0xff8D8371), fontSize: 16),
-                          )),
+                  SizedBox(height: 20),
+                  // 하단 버튼(스탬프 리뷰 출석체크/의뢰하기 리뷰 소개카드)
+                  Expanded(
+                    flex: 4,
+                    child: BottomBottons(
+                      memberId: _member!.id,
                     ),
-                    // 리뷰 버튼
-                    Container(
-                      height: 40,
-                      width: 100,
-                      child: TextButton(
-                          onPressed: () {},
-                          style: TextButton.styleFrom(
-                            backgroundColor: Color(0xffF1F1F1),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15)),
-                          ),
-                          child: Text(
-                            '리뷰',
-                            style: TextStyle(
-                                color: Color(0xff8D8371), fontSize: 16),
-                          )),
-                    ),
-                    // 출석체크 버튼
-                    Container(
-                      height: 40,
-                      width: 100,
-                      child: TextButton(
-                          onPressed: () {},
-                          style: TextButton.styleFrom(
-                            backgroundColor: Color(0xffF1F1F1),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15)),
-                          ),
-                          child: Text(
-                            '출석체크',
-                            style: TextStyle(
-                                color: Color(0xff8D8371), fontSize: 16),
-                          )),
-                    ),
-                  ],
-                ),
-              ],
+                  ),
+                  SizedBox(height: 20)
+                ],
+              ),
             ),
           ),
           // 하단부
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 30, vertical: 25),
-            child: Column(
-              children: [
-                // 네비게이터 --> 버튼 조절하기!
-                Container(
-                  height: 50,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(30),
+          Expanded(
+            flex: 2,
+            child: Container(
+              margin: EdgeInsets.only(left: 30, right: 30, top: 25, bottom: 5),
+              child: Column(
+                children: [
+                  // 갤러리 카테고리 버튼(00의 코디, 저장한 코디, 00의 옷장)
+                  Container(
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    child: Row(
+                      children: [
+                        // 나의 코디
+                        SwitchCategoryButton(
+                          isMyPage ? '나의 코디' : '${_member!.nickname}의 코디',
+                          _selectedCategory == 0,
+                              () => _onCategorySelected(0),
+                        ),
+                        // 저장한 코디
+                        SwitchCategoryButton(
+                          '저장한 코디',
+                          _selectedCategory == 1,
+                              () => _onCategorySelected(1),
+                        ),
+                        // 나의 옷장
+                        SwitchCategoryButton(
+                          isMyPage ? '나의 옷장' : '${_member!.nickname}의 옷장',
+                          _selectedCategory == 2,
+                              () => _onCategorySelected(2),
+                        ),
+                      ],
+                    ),
                   ),
-                  child: Row(
-                    children: [
-                      // 나의 코디
-                      Expanded(
-                        child: SizedBox(
-                          height: 50,
-                          child: TextButton(
-                            onPressed: () {},
-                            style: TextButton.styleFrom(
-                              backgroundColor: Color(0xff8D8371),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30)),
-                            ),
-                            child: Text(
-                              '나의 코디',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 16,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      // 저장한 코디
-                      Expanded(
-                        child: SizedBox(
-                          height: 50,
-                          child: TextButton(
-                            onPressed: () {},
-                            style: TextButton.styleFrom(
-                              backgroundColor: Color(0xff8D8371),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30)),
-                            ),
-                            child: Text(
-                              '저장한 코디',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 16,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      // 나의 옷장
-                      Expanded(
-                        child: SizedBox(
-                          height: 50,
-                          child: TextButton(
-                            onPressed: () {},
-                            style: TextButton.styleFrom(
-                              backgroundColor: Color(0xff8D8371),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30)),
-                            ),
-                            child: Text(
-                              '나의 옷장',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 16,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
+                  SizedBox(height: 20),
+                  Expanded(
+                      child: GridWidgetWithButton(
+                          postings: TempPostingData().postings,
+                          category: _selectedCategory)
                   ),
-                )
-                // 갤러리
-                // GridView로 구현
-              ],
+                ],
+              ),
             ),
           ),
         ],
       ),
     );
+  }
+
+  void _onCategorySelected(int category) {
+    setState(() {
+      _selectedCategory = category;
+    });
+  }
+
+  List<Coordi?> get currentOutfitList {
+    switch (_selectedCategory) {
+      case 1:
+        return CoordiLists.userCoordi;
+      case 2:
+        return CoordiLists.myCloset;
+      case 0:
+      default:
+        return CoordiLists.myCoordi;
+    }
+  }
+}
+
+class IconsInProfileBox extends StatefulWidget {
+  final int memberId;
+
+  const IconsInProfileBox({
+    super.key,
+    required this.memberId,
+  });
+
+  @override
+  _IconsInProfileBoxState createState() => _IconsInProfileBoxState();
+}
+
+class _IconsInProfileBoxState extends State<IconsInProfileBox> {
+  bool isFollowing = false;
+
+  void toggleFollow() {
+    setState(() {
+      isFollowing = !isFollowing;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (widget.memberId == cur_member) {
+      return Row(
+        children: [
+          Icon(
+            Icons.send,
+            color: Colors.white,
+          ),
+          SizedBox(width: 10),
+          Icon(
+            Icons.local_parking,
+            color: Colors.white,
+          ),
+        ],
+      );
+    } else {
+      // 다른 사람의 마이페이지일 때 뜨는 화면입니다
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.end,  // 우측 정렬
+        children: [
+          IconButton(
+            icon: SvgPicture.asset(
+              'assets/icon_block.svg',  // SVG 파일 로드
+              width: 24,  // 크기 조정
+              height: 24, // 크기 조정
+            ),
+            onPressed: () {},
+          ),
+          SizedBox(width: 10),  // 아이콘 간의 간격 조정
+          IconButton(
+            icon: SvgPicture.asset(
+              'assets/icon_notify.svg',  // SVG 파일 로드
+              width: 24,  // 크기 조정
+              height: 24, // 크기 조정
+            ),
+            onPressed: () {},
+          ),
+          SizedBox(width: 10),  // 아이콘 간의 간격 조정
+          IconButton(
+            icon: Container(
+              margin: EdgeInsets.only(right: 8.0),
+              decoration: BoxDecoration(
+                color: isFollowing ? Colors.white : Color(0xFFFEFFC3),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              padding: EdgeInsets.symmetric(horizontal: 15.2, vertical: 5),
+              child: Text(
+                isFollowing ? '팔로우' : '팔로잉',
+                style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 10,
+                  height: 1.6,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+            onPressed: toggleFollow,
+          ),
+        ],
+      );
+    }
   }
 }
