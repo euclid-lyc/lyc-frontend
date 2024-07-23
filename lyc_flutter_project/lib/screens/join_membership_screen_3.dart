@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lyc_flutter_project/widget/AppTextStyles.dart';
 import 'package:lyc_flutter_project/widget/normal_appbar.dart';
 import 'package:lyc_flutter_project/screens/join_membership_screen_2.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
@@ -8,37 +9,6 @@ class JoinMembershipScreen3 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // 공통 TextStyle
-    TextStyle titleTextStyle = TextStyle(
-      fontWeight: FontWeight.w700,
-      fontSize: 20,
-      letterSpacing: -0.1,
-      color: Colors.white,
-    );
-
-    TextStyle hintTextStyle = TextStyle(
-      fontWeight: FontWeight.w500,
-      fontSize: 12,
-      height: 1.5,
-      letterSpacing: -0.1,
-      color: AppColor.deepGrey, // grey로 변경
-    );
-
-    TextStyle littleTitleStyle = TextStyle(
-      fontWeight: FontWeight.w700,
-      fontSize: 16,
-      height: 1.1,
-      letterSpacing: -0.1,
-      color: Colors.black, // 검은색으로 유지
-    );
-
-    TextStyle buttonTextStyle = TextStyle(
-      fontWeight: FontWeight.w700,
-      fontSize: 14,
-      height: 1.3,
-      letterSpacing: -0.1,
-      color: Colors.white,
-    );
 
     return Scaffold(
       backgroundColor: AppColor.lightGrey, // 배경색 변경
@@ -68,14 +38,14 @@ class JoinMembershipScreen3 extends StatelessWidget {
                       padding: EdgeInsets.fromLTRB(7, 0, 7, 8), // 아래쪽 여백을 줄였습니다
                       child: Text(
                         'Step 3. 배송지 입력',
-                        style: littleTitleStyle,
+                        style: AppTextStyles.littleTitle,
                       ),
                     ),
                     Padding(
                       padding: EdgeInsets.fromLTRB(13.7, 0, 13.7, 25), // 위쪽 여백을 줄였습니다
                       child: Text(
                         '배송지 정보는 다른 사용자에게 노출되지 않습니다.',
-                        style: hintTextStyle,
+                        style: AppTextStyles.hint,
                       ),
                     ),
                     // 우편번호 입력 필드 및 버튼
@@ -94,7 +64,7 @@ class JoinMembershipScreen3 extends StatelessWidget {
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
                                   hintText: '우편번호',
-                                  hintStyle: hintTextStyle,
+                                  hintStyle: AppTextStyles.hint,
                                   contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 12), // 중앙 정렬
                                 ),
                                 textAlignVertical: TextAlignVertical.center, // 텍스트 수직 중앙 정렬
@@ -144,7 +114,7 @@ class JoinMembershipScreen3 extends StatelessWidget {
                           decoration: InputDecoration(
                             border: InputBorder.none,
                             hintText: '주소',
-                            hintStyle: hintTextStyle,
+                            hintStyle: AppTextStyles.hint,
                             contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 12), // 중앙 정렬
                           ),
                           textAlignVertical: TextAlignVertical.center, // 텍스트 수직 중앙 정렬
@@ -165,7 +135,7 @@ class JoinMembershipScreen3 extends StatelessWidget {
                           decoration: InputDecoration(
                             border: InputBorder.none,
                             hintText: '상세주소',
-                            hintStyle: hintTextStyle,
+                            hintStyle:AppTextStyles.hint,
                             contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 12), // 중앙 정렬
                           ),
                           textAlignVertical: TextAlignVertical.center, // 텍스트 수직 중앙 정렬
@@ -200,7 +170,7 @@ class JoinMembershipScreen3 extends StatelessWidget {
                     ),
                     child: Text(
                       '이전',
-                      style: hintTextStyle.copyWith(
+                      style: AppTextStyles.hint.copyWith(
                         color: Colors.black,
                         fontSize: 14,
                       ),
@@ -220,7 +190,7 @@ class JoinMembershipScreen3 extends StatelessWidget {
                     ),
                     child: Text(
                       '다음',
-                      style: buttonTextStyle,
+                      style:AppTextStyles.button,
                       textAlign: TextAlign.center,
                     ),
                   ),

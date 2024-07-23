@@ -1,48 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/widget/normal_appbar.dart';
 import 'package:lyc_flutter_project/screens/join_membership_screen_1.dart';
 import 'package:lyc_flutter_project/screens/join_membership_screen_3.dart';
+import '../widget/AppTextStyles.dart';
 
 class JoinMembershipScreen2 extends StatelessWidget {
   const JoinMembershipScreen2({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // 공통 TextStyle
-    TextStyle titleTextStyle = TextStyle(
-      fontWeight: FontWeight.w700,
-      fontSize: 20,
-      letterSpacing: -0.1,
-      color: Colors.white,
-    );
-
-    TextStyle hintTextStyle = TextStyle(
-      fontWeight: FontWeight.w500,
-      fontSize: 12,
-      height: 1.5,
-      letterSpacing: -0.1,
-      color: Color(0xFF8D8D8D),
-    );
-
-    TextStyle littleTitleStyle = TextStyle(
-      fontWeight: FontWeight.w700,
-      fontSize: 16,
-      height: 1.1,
-      letterSpacing: -0.1,
-      color: Colors.black,
-    );
-
-    TextStyle buttonTextStyle = TextStyle(
-      fontWeight: FontWeight.w700,
-      fontSize: 14,
-      height: 1.3,
-      letterSpacing: -0.1,
-      color: Colors.white,
-    );
-
     return Scaffold(
-      backgroundColor: Color(0xFFF1F1F1),
+      backgroundColor: AppColor.lightGrey,
       appBar: NormalAppbar(
         backButton: true,
         title: "회원가입",
@@ -70,7 +40,7 @@ class JoinMembershipScreen2 extends StatelessWidget {
                       alignment: Alignment.topLeft,
                       child: Text(
                         'Step 2. 회원정보 입력',
-                        style: littleTitleStyle,
+                        style: AppTextStyles.littleTitle,
                       ),
                     ),
                     Container(
@@ -93,7 +63,7 @@ class JoinMembershipScreen2 extends StatelessWidget {
                     // '닉네임' TextField
                     Container(
                       decoration: BoxDecoration(
-                        color: Color(0xFFF1F1F1),
+                        color:AppColor.lightGrey,
                         borderRadius: BorderRadius.circular(20),
                       ),
                       width: 252,
@@ -101,7 +71,7 @@ class JoinMembershipScreen2 extends StatelessWidget {
                       child: TextField(
                         decoration: InputDecoration(
                           hintText: '닉네임',
-                          hintStyle: hintTextStyle,
+                          hintStyle: AppTextStyles.hint,
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20),
                             borderSide: BorderSide.none,
@@ -114,7 +84,7 @@ class JoinMembershipScreen2 extends StatelessWidget {
                     // '자유롭게 자신을 소개해주세요' TextField
                     Container(
                       decoration: BoxDecoration(
-                        color: Color(0xFFF1F1F1),
+                        color: AppColor.lightGrey,
                         borderRadius: BorderRadius.circular(20),
                       ),
                       width: 252, // 너비를 252로 설정
@@ -122,7 +92,7 @@ class JoinMembershipScreen2 extends StatelessWidget {
                         maxLines: 3, // 여러 줄 입력 가능
                         decoration: InputDecoration(
                           hintText: '자유롭게 자신을 소개해 주세요',
-                          hintStyle: hintTextStyle,
+                          hintStyle: AppTextStyles.hint,
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20),
                             borderSide: BorderSide.none,
@@ -150,7 +120,7 @@ class JoinMembershipScreen2 extends StatelessWidget {
                       );
                     },
                     style: TextButton.styleFrom(
-                      backgroundColor: Color(0xFFD9D9D9),
+                      backgroundColor: AppColor.grey,
                       minimumSize: Size(120, 40), // 버튼 크기 설정
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
@@ -158,8 +128,8 @@ class JoinMembershipScreen2 extends StatelessWidget {
                     ),
                     child: Text(
                       '이전',
-                      style: hintTextStyle.copyWith(
-                        color: Color(0xFF000000),
+                      style: AppTextStyles.hint.copyWith(
+                        color: Colors.black,
                         fontSize: 14,
                       ),
                     ),
@@ -173,7 +143,7 @@ class JoinMembershipScreen2 extends StatelessWidget {
                       );
                     },
                     style: TextButton.styleFrom(
-                      backgroundColor: Color(0xFFC4BAA2),
+                      backgroundColor: AppColor.beige,
                       minimumSize: Size(120, 40), // 버튼 크기 설정
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
@@ -181,7 +151,7 @@ class JoinMembershipScreen2 extends StatelessWidget {
                     ),
                     child: Text(
                       '다음',
-                      style: buttonTextStyle,
+                      style: AppTextStyles.button,
                       textAlign: TextAlign.center,
                     ),
                   ),
