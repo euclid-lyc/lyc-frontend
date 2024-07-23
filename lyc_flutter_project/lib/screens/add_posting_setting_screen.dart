@@ -4,7 +4,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
+import 'package:lyc_flutter_project/styles/posting_text_style.dart';
 import 'package:lyc_flutter_project/widget/normal_appbar.dart';
+import 'package:lyc_flutter_project/widget/select_buttons_in_posting.dart';
 
 class AddPostingSettingScreen extends StatefulWidget {
   final XFile image;
@@ -41,14 +43,18 @@ class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.lightGrey,
-      appBar:
-          NormalAppbar(backButton: false, title: widget.purpose == 0 ? '코디 업로드' : '리뷰 업로드', deleteButton: false,),
+      appBar: NormalAppbar(
+        backButton: false,
+        title: widget.purpose == 0 ? '코디 업로드' : '리뷰 업로드',
+        deleteButton: false,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(30),
         child: ListView(
           children: [
             // Step1
-            TitleText('Step 1. 이 옷을 입은 날의 날씨를 알려주세요.'),
+            Text('Step 1. 이 옷을 입은 날의 날씨를 알려주세요.',
+                style: PostingTextStyle.stepTitle),
             SizedBox(height: 15),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -62,15 +68,25 @@ class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
             ),
             SizedBox(height: 40),
             // Step2
-            TitleText('Step 2. 코디가 지향하는 스타일을 선택해주세요.'),
+            Text(
+              'Step 2. 코디가 지향하는 스타일을 선택해주세요.',
+              style: PostingTextStyle.stepTitle,
+            ),
             SizedBox(height: 15),
             Wrap(
               direction: Axis.horizontal,
               alignment: WrapAlignment.start,
-              children: [for (var i = 0; i < 8; i++) buildStyleButton(i)],
+              children: [
+                for (var i = 0; i < 8; i++)
+                  SelectButtonsInPosting(styleButtons, selectedStyle, i,
+                      () => onStyleButtonPressed(styleButtons[i]))
+              ],
             ),
             SizedBox(height: 40),
-            TitleText('Step 3. 착용 정보를 자유롭게 입력해주세요.'),
+            Text(
+              'Step 3. 착용 정보를 자유롭게 입력해주세요.',
+              style: PostingTextStyle.stepTitle,
+            ),
             Text(
               '사진의 특정 위치를 클릭하여 링크를 추가할 수 있습니다.',
               style: TextStyle(
@@ -186,50 +202,12 @@ class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
     );
   }
 
-  GestureDetector buildStyleButton(int index) {
-    final String _text = styleButtons[index];
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          selectedStyle.contains(_text)
-              ? selectedStyle.remove(_text)
-              : selectedStyle.add(_text);
-        });
-      },
-      child: Container(
-        height: 50,
-        width: 80,
-        padding: EdgeInsets.all(5),
-        child: Container(
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            color: selectedStyle.contains(_text)
-                ? AppColor.deepGrey
-                : Colors.white,
-          ),
-          child: Text(
-            _text,
-            style: TextStyle(
-              fontWeight: FontWeight.w400,
-              color:
-                  selectedStyle.contains(_text) ? Colors.white : Colors.black,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Text TitleText(String title) {
-    return Text(
-      title,
-      style: TextStyle(
-        color: Colors.black,
-        fontSize: 16,
-        fontWeight: FontWeight.w600,
-      ),
-    );
+  void onStyleButtonPressed(String element) {
+    setState(() {
+      selectedStyle.contains(element)
+          ? selectedStyle.remove(element)
+          : selectedStyle.add(element);
+    });
   }
 
   Widget WeatherIcon() {
