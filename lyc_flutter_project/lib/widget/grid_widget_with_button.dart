@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/model/posting.dart';
+import 'package:lyc_flutter_project/screens/add_clothes_posting_screen.dart';
 import 'package:lyc_flutter_project/screens/posting_detail_screen.dart';
 import 'package:lyc_flutter_project/screens/review_list_screen.dart';
 import 'package:lyc_flutter_project/screens/add_posting_screen.dart';
@@ -48,7 +49,7 @@ class GridWidgetWithButton extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => AddPostingScreen(purpose: 2)));
+                          builder: (context) => AddClothesPostingScreen()));
                 } else if (category == 3) {
                   Navigator.push(
                       context,
