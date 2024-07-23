@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';  // SVG 이미지 사용을 위한 패키지
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/data/coordi_by_category.dart';
 import 'package:lyc_flutter_project/data/temp_member_data.dart';
@@ -109,7 +110,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                                     child: Text(
                                       '팔로워: ${_member!.follower}',
                                       style:
-                                          TextStyle(color: Color(0xff414141)),
+                                      TextStyle(color: Color(0xff414141)),
                                     ),
                                   ),
                                   // 팔로잉
@@ -175,26 +176,28 @@ class _MyPageScreenState extends State<MyPageScreen> {
                         SwitchCategoryButton(
                           isMyPage ? '나의 코디' : '${_member!.nickname}의 코디',
                           _selectedCategory == 0,
-                          () => _onCategorySelected(0),
+                              () => _onCategorySelected(0),
                         ),
                         // 저장한 코디
                         SwitchCategoryButton(
                           '저장한 코디',
                           _selectedCategory == 1,
-                          () => _onCategorySelected(1),
+                              () => _onCategorySelected(1),
                         ),
                         // 나의 옷장
                         SwitchCategoryButton(
                           isMyPage ? '나의 옷장' : '${_member!.nickname}의 옷장',
                           _selectedCategory == 2,
-                          () => _onCategorySelected(2),
+                              () => _onCategorySelected(2),
                         ),
                       ],
                     ),
                   ),
                   SizedBox(height: 20),
                   Expanded(
-                    child: GridWidgetWithButton(postings: TempPostingData().postings, category: _selectedCategory)
+                      child: GridWidgetWithButton(
+                          postings: TempPostingData().postings,
+                          category: _selectedCategory)
                   ),
                 ],
               ),
@@ -224,7 +227,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
   }
 }
 
-class IconsInProfileBox extends StatelessWidget {
+class IconsInProfileBox extends StatefulWidget {
   final int memberId;
 
   const IconsInProfileBox({
@@ -233,8 +236,21 @@ class IconsInProfileBox extends StatelessWidget {
   });
 
   @override
+  _IconsInProfileBoxState createState() => _IconsInProfileBoxState();
+}
+
+class _IconsInProfileBoxState extends State<IconsInProfileBox> {
+  bool isFollowing = false;
+
+  void toggleFollow() {
+    setState(() {
+      isFollowing = !isFollowing;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    if (memberId == cur_member) {
+    if (widget.memberId == cur_member) {
       return Row(
         children: [
           Icon(
@@ -250,9 +266,49 @@ class IconsInProfileBox extends StatelessWidget {
       );
     } else {
       // 다른 사람의 마이페이지일 때 뜨는 화면입니다
-      return Column(
-          // 팔로우, 신고, 차단 버튼을 여기에 만들어주세요
-          );
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.end,  // 우측 정렬
+        children: [
+          IconButton(
+            icon: SvgPicture.asset(
+              'assets/icon_block.svg',  // SVG 파일 로드
+              width: 24,  // 크기 조정
+              height: 24, // 크기 조정
+            ),
+            onPressed: () {},
+          ),
+          SizedBox(width: 10),  // 아이콘 간의 간격 조정
+          IconButton(
+            icon: SvgPicture.asset(
+              'assets/icon_notify.svg',  // SVG 파일 로드
+              width: 24,  // 크기 조정
+              height: 24, // 크기 조정
+            ),
+            onPressed: () {},
+          ),
+          SizedBox(width: 10),  // 아이콘 간의 간격 조정
+          IconButton(
+            icon: Container(
+              margin: EdgeInsets.only(right: 8.0),
+              decoration: BoxDecoration(
+                color: isFollowing ? Colors.white : Color(0xFFFEFFC3),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              padding: EdgeInsets.symmetric(horizontal: 15.2, vertical: 5),
+              child: Text(
+                isFollowing ? '팔로우' : '팔로잉',
+                style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 10,
+                  height: 1.6,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+            onPressed: toggleFollow,
+          ),
+        ],
+      );
     }
   }
 }
