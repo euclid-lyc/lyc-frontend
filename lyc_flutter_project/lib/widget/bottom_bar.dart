@@ -17,7 +17,7 @@ const List<TabItem> items = [
 List<Widget> pages = [
   MyPageScreen(memberId: 1,),
   TempScreen(),
-  MyPageScreen(memberId: 1,),
+  MyPageScreen(memberId: 2,),
   MyPageScreen(memberId: 1,),
 ];
 

@@ -18,6 +18,8 @@ dependencies:
 
   cupertino_icons: ^1.0.6
   awesome_bottom_bar: ^1.2.4
+  image_picker: ^1.1.2
+  numberpicker: ^2.1.2
 
 dev_dependencies:
   flutter_test:
