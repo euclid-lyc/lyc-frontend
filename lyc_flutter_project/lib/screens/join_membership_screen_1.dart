@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/screens/join_membership_screen_2.dart';
-import 'package:lyc_flutter_project/widget/AppTextStyles.dart';
+import 'package:lyc_flutter_project/styles/app_text_style.dart';
 
 import '../widget/normal_appbar.dart';
 
@@ -40,38 +40,38 @@ class JoinMembershipScreen1 extends StatelessWidget {
                       alignment: Alignment.topLeft,
                       child: Text(
                         'Step 1. 아이디 패스워드 설정',
-                        style: AppTextStyles.littleTitle,
+                        style: app_text_style.littleTitle,
                       ),
                     ),
                     buildInputField(
                         '이름',
                         '이름을 입력해주세요',
-                        AppTextStyles.labelTextStyle,
-                        AppTextStyles.hint
+                        app_text_style.labelTextStyle,
+                        app_text_style.hint
                     ),
                     buildInputField(
                         '아이디',
                         '아이디를 입력해주세요',
-                        AppTextStyles.labelTextStyle,
-                        AppTextStyles.hint
+                        app_text_style.labelTextStyle,
+                        app_text_style.hint
                     ),
                     buildInputField(
                         '이메일',
                         '이메일을 입력해주세요',
-                        AppTextStyles.labelTextStyle,
-                        AppTextStyles.hint
+                        app_text_style.labelTextStyle,
+                        app_text_style.hint
                     ),
                     buildInputField(
                         '패스워드',
                         '패스워드를 입력해주세요',
-                        AppTextStyles.labelTextStyle,
-                        AppTextStyles.hint
+                        app_text_style.labelTextStyle,
+                        app_text_style.hint
                     ),
                     buildInputField(
                         '패스워드 확인',
                         '패스워드를 다시 입력해주세요',
-                        AppTextStyles.labelTextStyle,
-                        AppTextStyles.hint
+                        app_text_style.labelTextStyle,
+                        app_text_style.hint
                     ),
                     TextButton(
                       onPressed: () {
@@ -91,7 +91,7 @@ class JoinMembershipScreen1 extends StatelessWidget {
                         width: 230,
                         child: Text(
                           '다음',
-                          style: AppTextStyles.button,
+                          style: app_text_style.button,
                           textAlign: TextAlign.center,
                         ),
                       ),
@@ -106,7 +106,7 @@ class JoinMembershipScreen1 extends StatelessWidget {
                 },
                 child: Text(
                   '다른 계정으로 회원가입',
-                  style: AppTextStyles.otherLoginTextStyle,
+                  style: app_text_style.otherLoginTextStyle,
                 ),
               ),
               SizedBox(
