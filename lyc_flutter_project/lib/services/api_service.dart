@@ -15,7 +15,7 @@ class ApiService {
   static const String coordies = "coordies";
 
   // [MyPage] 유저의 코디 목록 불러오기
-  static Future getMyCoordiesById(String id) async {
+  static Future<List<PostingPreview>> getMyCoordiesById(int id) async {
     List<PostingPreview> postingsPreviewInstances = [];
     final url = Uri.parse("$baseUrl/$members/$id/$coordies");
     final response = await http.get(url);
@@ -30,7 +30,7 @@ class ApiService {
   }
 
   // [MyPage] 저장한 코디 목록 불러오기
-  static Future getSavedPostingsById(String id) async {
+  static Future<List<PostingPreview>> getSavedPostingsById(int id) async {
     List<PostingPreview> postingsPreviewInstances = [];
     final url = Uri.parse("$baseUrl/$members/$id/$savedPostings");
     final response = await http.get(url);
