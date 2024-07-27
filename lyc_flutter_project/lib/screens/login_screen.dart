@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/screens/join_membership_screen_1.dart';
-import '../widget/AppTextStyles.dart';
+import '../styles/app_text_style.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -21,12 +21,12 @@ class LoginScreen extends StatelessWidget {
             children: [
               Text(
                 '대충 로고',
-                style: AppTextStyles.title,
+                style: app_text_style.title,
                 textAlign: TextAlign.center,
               ),
               Text(
                 '유클리드 소개',
-                style: AppTextStyles.title,
+                style: app_text_style.title,
                 textAlign: TextAlign.center,
               ),
             ],
@@ -60,7 +60,7 @@ class LoginScreen extends StatelessWidget {
                             alignment: Alignment.topLeft,
                             child: Text(
                               '아이디',
-                              style: AppTextStyles.labelTextStyle,
+                              style: app_text_style.labelTextStyle,
                             ),
                           ),
                         ),
@@ -75,7 +75,7 @@ class LoginScreen extends StatelessWidget {
                               decoration: InputDecoration(
                                 border: InputBorder.none,
                                 hintText: '아이디를 입력해주세요',
-                                hintStyle: AppTextStyles.hint,
+                                hintStyle: app_text_style.hint,
                               ),
                             ),
                           ),
@@ -95,7 +95,7 @@ class LoginScreen extends StatelessWidget {
                             alignment: Alignment.topLeft,
                             child: Text(
                               '패스워드',
-                              style: AppTextStyles.labelTextStyle,
+                              style: app_text_style.labelTextStyle,
                             ),
                           ),
                         ),
@@ -111,7 +111,7 @@ class LoginScreen extends StatelessWidget {
                               decoration: InputDecoration(
                                 border: InputBorder.none,
                                 hintText: '패스워드를 입력해주세요',
-                                hintStyle: AppTextStyles.hint,
+                                hintStyle: app_text_style.hint,
                               ),
                             ),
                           ),
@@ -136,7 +136,7 @@ class LoginScreen extends StatelessWidget {
                             },
                             child: Text(
                               '회원가입',
-                              style: AppTextStyles.linkTextStyle,
+                              style: app_text_style.linkTextStyle,
                             ),
                           ),
                           TextButton(
@@ -145,7 +145,7 @@ class LoginScreen extends StatelessWidget {
                             },
                             child: Text(
                               '아이디찾기',
-                              style: AppTextStyles.linkTextStyle,
+                              style: app_text_style.linkTextStyle,
                             ),
                           ),
                           TextButton(
@@ -154,7 +154,7 @@ class LoginScreen extends StatelessWidget {
                             },
                             child: Text(
                               '비밀번호찾기',
-                              style: AppTextStyles.linkTextStyle,
+                              style: app_text_style.linkTextStyle,
                             ),
                           ),
                         ],
@@ -206,7 +206,7 @@ class LoginScreen extends StatelessWidget {
                       width: 230,
                       child: Text(
                         '로그인',
-                        style: AppTextStyles.button,
+                        style: app_text_style.button,
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -220,7 +220,7 @@ class LoginScreen extends StatelessWidget {
               },
               child: Text(
                 '다른 계정으로 로그인',
-                style: AppTextStyles.otherLoginTextStyle,
+                style: app_text_style.otherLoginTextStyle,
               ),
             ),
             SizedBox(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 
-class AppTextStyles {
+class app_text_style {
   static const TextStyle title = TextStyle(
     fontWeight: FontWeight.w700,
     fontSize: 20,

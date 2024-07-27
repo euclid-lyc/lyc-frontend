@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lyc_flutter_project/widget/AppTextStyles.dart';
+import 'package:lyc_flutter_project/styles/app_text_style.dart';
 import 'package:lyc_flutter_project/widget/normal_appbar.dart';
 import 'package:lyc_flutter_project/screens/join_membership_screen_2.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
@@ -38,14 +38,14 @@ class JoinMembershipScreen3 extends StatelessWidget {
                       padding: EdgeInsets.fromLTRB(7, 0, 7, 8), // 아래쪽 여백을 줄였습니다
                       child: Text(
                         'Step 3. 배송지 입력',
-                        style: AppTextStyles.littleTitle,
+                        style: app_text_style.littleTitle,
                       ),
                     ),
                     Padding(
                       padding: EdgeInsets.fromLTRB(13.7, 0, 13.7, 25), // 위쪽 여백을 줄였습니다
                       child: Text(
                         '배송지 정보는 다른 사용자에게 노출되지 않습니다.',
-                        style: AppTextStyles.hint,
+                        style: app_text_style.hint,
                       ),
                     ),
                     // 우편번호 입력 필드 및 버튼
@@ -64,7 +64,7 @@ class JoinMembershipScreen3 extends StatelessWidget {
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
                                   hintText: '우편번호',
-                                  hintStyle: AppTextStyles.hint,
+                                  hintStyle: app_text_style.hint,
                                   contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 12), // 중앙 정렬
                                 ),
                                 textAlignVertical: TextAlignVertical.center, // 텍스트 수직 중앙 정렬
@@ -114,7 +114,7 @@ class JoinMembershipScreen3 extends StatelessWidget {
                           decoration: InputDecoration(
                             border: InputBorder.none,
                             hintText: '주소',
-                            hintStyle: AppTextStyles.hint,
+                            hintStyle: app_text_style.hint,
                             contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 12), // 중앙 정렬
                           ),
                           textAlignVertical: TextAlignVertical.center, // 텍스트 수직 중앙 정렬
@@ -135,7 +135,7 @@ class JoinMembershipScreen3 extends StatelessWidget {
                           decoration: InputDecoration(
                             border: InputBorder.none,
                             hintText: '상세주소',
-                            hintStyle:AppTextStyles.hint,
+                            hintStyle:app_text_style.hint,
                             contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 12), // 중앙 정렬
                           ),
                           textAlignVertical: TextAlignVertical.center, // 텍스트 수직 중앙 정렬
@@ -170,7 +170,7 @@ class JoinMembershipScreen3 extends StatelessWidget {
                     ),
                     child: Text(
                       '이전',
-                      style: AppTextStyles.hint.copyWith(
+                      style: app_text_style.hint.copyWith(
                         color: Colors.black,
                         fontSize: 14,
                       ),
@@ -190,7 +190,7 @@ class JoinMembershipScreen3 extends StatelessWidget {
                     ),
                     child: Text(
                       '다음',
-                      style:AppTextStyles.button,
+                      style:app_text_style.button,
                       textAlign: TextAlign.center,
                     ),
                   ),

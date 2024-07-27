@@ -4,7 +4,7 @@ import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/widget/normal_appbar.dart';
 import 'package:lyc_flutter_project/screens/join_membership_screen_1.dart';
 import 'package:lyc_flutter_project/screens/join_membership_screen_3.dart';
-import '../widget/AppTextStyles.dart';
+import '../styles/app_text_style.dart';
 
 class JoinMembershipScreen2 extends StatelessWidget {
   const JoinMembershipScreen2({super.key});
@@ -40,7 +40,7 @@ class JoinMembershipScreen2 extends StatelessWidget {
                       alignment: Alignment.topLeft,
                       child: Text(
                         'Step 2. 회원정보 입력',
-                        style: AppTextStyles.littleTitle,
+                        style: app_text_style.littleTitle,
                       ),
                     ),
                     Container(
@@ -71,7 +71,7 @@ class JoinMembershipScreen2 extends StatelessWidget {
                       child: TextField(
                         decoration: InputDecoration(
                           hintText: '닉네임',
-                          hintStyle: AppTextStyles.hint,
+                          hintStyle: app_text_style.hint,
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20),
                             borderSide: BorderSide.none,
@@ -92,7 +92,7 @@ class JoinMembershipScreen2 extends StatelessWidget {
                         maxLines: 3, // 여러 줄 입력 가능
                         decoration: InputDecoration(
                           hintText: '자유롭게 자신을 소개해 주세요',
-                          hintStyle: AppTextStyles.hint,
+                          hintStyle: app_text_style.hint,
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20),
                             borderSide: BorderSide.none,
@@ -128,7 +128,7 @@ class JoinMembershipScreen2 extends StatelessWidget {
                     ),
                     child: Text(
                       '이전',
-                      style: AppTextStyles.hint.copyWith(
+                      style: app_text_style.hint.copyWith(
                         color: Colors.black,
                         fontSize: 14,
                       ),
@@ -151,7 +151,7 @@ class JoinMembershipScreen2 extends StatelessWidget {
                     ),
                     child: Text(
                       '다음',
-                      style: AppTextStyles.button,
+                      style: app_text_style.button,
                       textAlign: TextAlign.center,
                     ),
                   ),
