@@ -50,7 +50,7 @@ class JoinMembershipScreen3 extends StatelessWidget {
                     ),
                     // 우편번호 입력 필드 및 버튼
                     Padding(
-                      padding: EdgeInsets.fromLTRB(13.7, 0, 13.7, 14),
+                      padding: EdgeInsets.fromLTRB(13.7, 0, 13.7, 15),
                       child: Row(
                         children: [
                           Expanded(
