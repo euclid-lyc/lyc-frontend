@@ -20,6 +20,7 @@ dependencies:
   awesome_bottom_bar: ^1.2.4
   image_picker: ^1.1.2
   numberpicker: ^2.1.2
+  persistent_bottom_nav_bar_v2: ^5.3.0
 
 dev_dependencies:
   flutter_test:
