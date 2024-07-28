@@ -74,19 +74,23 @@ class BottomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PersistentTabView(
+      navBarHeight: 70,
       tabs: _tabs(),
       navBarBuilder: (navBarConfig) => Style13BottomNavBar(
         navBarConfig: navBarConfig,
         navBarDecoration: NavBarDecoration(
-            borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20),),
-            boxShadow: [
-              BoxShadow(
-                color: Color(0xffBBBBBB),
-                spreadRadius: 2,
-                blurRadius: 7,
-                offset: Offset(0, -3),
-              )
-            ],
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20),
+            topRight: Radius.circular(20),
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Color(0xffBBBBBB),
+              spreadRadius: 0,
+              blurRadius: 3,
+              offset: Offset(0, -2),
+            )
+          ],
         ),
       ),
     );

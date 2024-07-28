@@ -11,6 +11,7 @@ import 'package:lyc_flutter_project/services/temp_services.dart';
 import 'package:lyc_flutter_project/widget/bottom_buttons.dart';
 import 'package:lyc_flutter_project/widget/grid_widget_with_button.dart';
 import 'package:lyc_flutter_project/widget/switch_category_button.dart';
+import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 
 class MyPageScreen extends StatefulWidget {
   final int? memberId;
@@ -99,7 +100,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                                   // 팔로워
                                   GestureDetector(
                                     onTap: () {
-                                      Navigator.push(
+                                      pushWithoutNavBar(
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) =>
@@ -116,7 +117,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                                   // 팔로잉
                                   GestureDetector(
                                     onTap: () {
-                                      Navigator.push(
+                                      pushWithoutNavBar(
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) =>

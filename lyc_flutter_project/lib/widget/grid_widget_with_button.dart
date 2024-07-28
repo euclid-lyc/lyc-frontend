@@ -5,6 +5,7 @@ import 'package:lyc_flutter_project/screens/posting_detail_screen.dart';
 import 'package:lyc_flutter_project/screens/review_list_screen.dart';
 import 'package:lyc_flutter_project/screens/add_posting_screen.dart';
 import 'package:lyc_flutter_project/services/temp_services.dart';
+import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 
 /// [category]
 /// 0 나의 코디
@@ -38,7 +39,7 @@ class GridWidgetWithButton extends StatelessWidget {
               onTap: () {
                 if (category == 0) {
                   // 나의코디->코디 추가
-                  Navigator.push(
+                  pushWithoutNavBar(
                       context,
                       MaterialPageRoute(
                           builder: (context) => AddPostingScreen(purpose: 0)));
@@ -46,12 +47,12 @@ class GridWidgetWithButton extends StatelessWidget {
                   // 저장한코디->코디 탐색
                 } else if (category == 2) {
                   // 나의옷장->옷 추가
-                  Navigator.push(
+                  pushWithoutNavBar(
                       context,
                       MaterialPageRoute(
                           builder: (context) => AddClothesPostingScreen()));
                 } else if (category == 3) {
-                  Navigator.push(
+                  pushWithoutNavBar(
                       context,
                       MaterialPageRoute(
                         builder: (context) => ReviewListScreen(),
