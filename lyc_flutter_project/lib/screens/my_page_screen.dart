@@ -9,6 +9,7 @@ import 'package:lyc_flutter_project/screens/follow_list_screen.dart';
 import 'package:lyc_flutter_project/services/temp_services.dart';
 import 'package:lyc_flutter_project/widget/bottom_buttons.dart';
 import 'package:lyc_flutter_project/widget/grid_widget_with_button.dart';
+import 'package:lyc_flutter_project/widget/round_image.dart';
 import 'package:lyc_flutter_project/widget/switch_category_button.dart';
 
 import '../data/coordi_by_category.dart';
@@ -71,15 +72,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                           // 사진
                           Expanded(
                             flex: 7,
-                            child: AspectRatio(
-                              aspectRatio: 1,
-                              child: ClipOval(
-                                child: Image.asset(
-                                  _member!.profile_image,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
+                            child: RoundImage(image: _member!.profile_image,)
                           ),
                           // 이름, 아이디, 팔로워, 팔로잉
                           SizedBox(width: 20),

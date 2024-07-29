@@ -6,6 +6,7 @@ import 'package:lyc_flutter_project/model/member.dart';
 import 'package:lyc_flutter_project/model/posting.dart';
 import 'package:lyc_flutter_project/services/temp_services.dart';
 import 'package:lyc_flutter_project/widget/normal_appbar.dart';
+import 'package:lyc_flutter_project/widget/round_image.dart';
 
 class PostingDetailScreen extends StatefulWidget {
   final int id;
@@ -61,30 +62,17 @@ class _PostingDetailScreenState extends State<PostingDetailScreen> {
                   children: [
                     Row(
                       children: [
-                        AspectRatio(
-                          aspectRatio: 1,
-                          child: ClipOval(
-                            child: Image.asset(
-                              TempServices.getMemberById(posting.from_id)
-                                  .profile_image,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
+                        RoundImage(
+                            image: TempServices.getMemberById(posting.from_id)
+                                .profile_image),
                         Icon(
                           Icons.arrow_forward_ios_rounded,
                           color: Colors.black,
                         ),
-                        AspectRatio(
-                          aspectRatio: 1,
-                          child: ClipOval(
-                            child: Image.asset(
-                              TempServices.getMemberById(posting.to_id)
-                                  .profile_image,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
+                        RoundImage(
+                          image: TempServices.getMemberById(posting.to_id)
+                              .profile_image,
+                        )
                       ],
                     ),
                     SizedBox(width: 20),
