@@ -379,8 +379,13 @@ class _IconsInProfileBoxState extends State<IconsInProfileBox> {
   @override
   Widget build(BuildContext context) {
     if (widget.memberId == cur_member) {
-      return Column(
+      return Row(
         children: [
+          Icon(
+            Icons.send,
+            color: Colors.white,
+          ),
+          SizedBox(width: 10),
           Icon(
             Icons.local_parking,
             color: Colors.white,
@@ -388,7 +393,6 @@ class _IconsInProfileBoxState extends State<IconsInProfileBox> {
         ],
       );
     } else {
-      // 다른 사람의 마이페이지일 때 뜨는 화면입니다
       return Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
@@ -543,7 +547,7 @@ class _IconsInProfileBoxState extends State<IconsInProfileBox> {
                   );
                 },
               ),
-              SizedBox(width: 10),
+              //SizedBox(width: 10),
               IconButton(
                 icon: SvgPicture.asset(
                   'assets/icon_notify.svg',

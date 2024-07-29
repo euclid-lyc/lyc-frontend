@@ -7,6 +7,7 @@ import 'package:lyc_flutter_project/model/posting.dart';
 import 'package:lyc_flutter_project/services/temp_services.dart';
 import 'package:lyc_flutter_project/widget/normal_appbar.dart';
 import 'package:lyc_flutter_project/widget/round_image.dart';
+import 'package:flutter_svg/svg.dart';
 
 class PostingDetailScreen extends StatefulWidget {
   final int id;
@@ -65,9 +66,11 @@ class _PostingDetailScreenState extends State<PostingDetailScreen> {
                         RoundImage(
                             image: TempServices.getMemberById(posting.from_id)
                                 .profile_image),
-                        Icon(
-                          Icons.arrow_forward_ios_rounded,
-                          color: Colors.black,
+                        Padding(
+                          padding: EdgeInsets.all(3),
+                          child: SvgPicture.asset(
+                            'assets/icon_arrow.svg',
+                          ),
                         ),
                         RoundImage(
                           image: TempServices.getMemberById(posting.to_id)
