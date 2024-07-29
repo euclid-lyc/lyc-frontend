@@ -78,8 +78,14 @@ class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
               alignment: WrapAlignment.start,
               children: [
                 for (var i = 0; i < 8; i++)
-                  SelectButtonsInPosting(styleButtons, selectedStyle, i,
-                      () => onStyleButtonPressed(styleButtons[i]))
+                  SelectButtonsInPosting(
+                    styleButtons,
+                    selectedStyle,
+                    i,
+                    () => onStyleButtonPressed(styleButtons[i]),
+                    AppColor.deepGrey,
+                    Colors.white,
+                  )
               ],
             ),
             SizedBox(height: 40),

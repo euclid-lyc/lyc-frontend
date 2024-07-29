@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 
 GestureDetector SelectButtonsInPosting(List<String> name, List<String> selected,
-    int index, VoidCallback _onTap) {
+    int index, VoidCallback _onTap, Color pointColor, Color backgroundColor) {
   final String _text = name[index];
   return GestureDetector(
     onTap: _onTap,
@@ -14,7 +14,7 @@ GestureDetector SelectButtonsInPosting(List<String> name, List<String> selected,
         alignment: Alignment.center,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
-          color: selected.contains(_text) ? AppColor.deepGrey : Colors.white,
+          color: selected.contains(_text) ? pointColor : backgroundColor,
         ),
         child: Text(
           _text,
