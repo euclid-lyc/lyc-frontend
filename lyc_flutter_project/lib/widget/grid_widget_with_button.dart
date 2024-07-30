@@ -26,7 +26,7 @@ class GridWidgetWithButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GridView.builder(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          childAspectRatio: 0.8,
+          childAspectRatio: (3/4),
           crossAxisCount: 3,
           crossAxisSpacing: 10,
           mainAxisSpacing: 15,
