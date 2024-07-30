@@ -24,6 +24,7 @@ class AddPostingSettingScreen extends StatefulWidget {
 }
 
 class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
+  List<Map<String, dynamic>> _points = [];
   List<String> selectedStyle = [];
   int minTempValue = 3;
   int maxTempValue = 10;
@@ -94,57 +95,117 @@ class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
               ),
             ),
             const SizedBox(height: 15),
-            AspectRatio(
-              aspectRatio: 0.8,
-              child: ClipRRect(
-                child: Image.file(
-                  File(widget.image.path),
-                  fit: BoxFit.cover,
+            GestureDetector(
+              onTapDown: (details) {
+                _addPoint(details.localPosition);
+              },
+              child: Stack(children: [
+                AspectRatio(
+                  aspectRatio: (3/4),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: Image.file(
+                      File(widget.image.path),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                 ),
-                borderRadius: BorderRadius.circular(20),
-              ),
-            ),
-            Container(
-              // 아래가 문제가 되는 패딩, 마진 효과가 동시에 생김
-              padding: EdgeInsets.only(right: 10),
-              height: 40,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: Colors.white,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Container(
-                        width: 90,
-                        alignment: Alignment.center,
+                ..._points.map(
+                      (e) {
+                    Offset offset = e["offset"];
+                    double left = offset.dx;
+                    double top = offset.dy;
+
+                    // Define the size of the container
+                    const double containerWidth = 60; // Adjust the size as needed
+                    const double containerHeight = 30; // Adjust the size as needed
+
+                    // Adjust position to ensure the container stays within bounds
+                    if (left + containerWidth >= MediaQuery.of(context).size.width - 30) {
+                      left = left - containerWidth;
+                    }
+                    if (top + containerHeight >= MediaQuery.of(context).size.height - 30) {
+                      top = top - containerHeight;
+                    }
+                    if (left < 0) {
+                      left = 0;
+                    }
+                    if (top < 0) {
+                      top = 0;
+                    }
+
+                    return Positioned(
+                      left: left,
+                      top: top,
+                      child: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
-                          color: AppColor.deepGrey,
+                          color: Color(0xff252525),
                         ),
-                        child: const Text(
-                          '링크1',
-                          style: TextStyle(
+                        padding: EdgeInsets.all(10),
+                        child: Text(
+                          '링크${_points.indexOf(e) + 1}',
+                          style: const TextStyle(
                             color: Colors.white,
-                            fontWeight: FontWeight.w400,
                           ),
                         ),
                       ),
-                      const SizedBox(width: 10),
-                      const Text('http://sample1.com'),
+                    );
+                  },
+                ).toList(),
+              ]),
+            ),
+            const SizedBox(height: 20),
+            ..._points.map(
+              (e) {
+                return Container(
+                  padding: EdgeInsets.only(right: 10),
+                  margin: EdgeInsets.symmetric(horizontal: 10),
+                  height: 40,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Colors.white,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        flex: 9,
+                        child: Row(
+                          children: [
+                            Container(
+                              width: 80,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                color: AppColor.deepGrey,
+                              ),
+                              child: Text(
+                                '링크${_points.indexOf(e) + 1}',
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                            Expanded(child: Text(e['link'], overflow: TextOverflow.ellipsis,)),
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        child: SizedBox(
+                          child: SvgPicture.asset(
+                            'assets/icon_eraser.svg',
+                            color: AppColor.deepGrey,
+                          ),
+                        ),
+                      ),
                     ],
                   ),
-                  SizedBox(
-                    width: 20,
-                    child: SvgPicture.asset(
-                      'assets/eraser.svg',
-                      color: AppColor.deepGrey,
-                    ),
-                  ),
-                ],
-              ),
+                );
+              },
             ),
             const SizedBox(height: 20),
             Row(
@@ -246,6 +307,28 @@ class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
             label == '최저기온' ? Text('$minTempValue°C') : Text('$maxTempValue°C')
           ],
         ),
+      ),
+    );
+  }
+
+  void _addPoint(Offset offset) {
+    TextEditingController _linkController = TextEditingController();
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text("Enter Link"),
+        content: TextField(controller: _linkController),
+        actions: [
+          TextButton(
+            onPressed: () {
+              setState(() {
+                _points.add({"offset": offset, "link": _linkController.text});
+              });
+              Navigator.of(context).pop();
+            },
+            child: Text("Add"),
+          ),
+        ],
       ),
     );
   }
