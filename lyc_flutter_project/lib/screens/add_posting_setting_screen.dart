@@ -53,26 +53,26 @@ class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
         child: ListView(
           children: [
             // Step1
-            Text('Step 1. 이 옷을 입은 날의 날씨를 알려주세요.',
+            const Text('Step 1. 이 옷을 입은 날의 날씨를 알려주세요.',
                 style: PostingTextStyle.stepTitle),
-            SizedBox(height: 15),
+            const SizedBox(height: 15),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
+              children: <Widget>[
                 WeatherIcon(),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 TempInputField('최저기온'),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 TempInputField('최고기온'),
               ],
             ),
-            SizedBox(height: 40),
+            const SizedBox(height: 40),
             // Step2
-            Text(
+            const Text(
               'Step 2. 코디가 지향하는 스타일을 선택해주세요.',
               style: PostingTextStyle.stepTitle,
             ),
-            SizedBox(height: 15),
+            const SizedBox(height: 15),
             Wrap(
               direction: Axis.horizontal,
               alignment: WrapAlignment.start,
@@ -82,18 +82,18 @@ class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
                       () => onStyleButtonPressed(styleButtons[i]))
               ],
             ),
-            SizedBox(height: 40),
-            Text(
+            const SizedBox(height: 40),
+            const Text(
               'Step 3. 착용 정보를 자유롭게 입력해주세요.',
               style: PostingTextStyle.stepTitle,
             ),
-            Text(
+            const Text(
               '사진의 특정 위치를 클릭하여 링크를 추가할 수 있습니다.',
               style: TextStyle(
                 color: Color(0xff575757),
               ),
             ),
-            SizedBox(height: 15),
+            const SizedBox(height: 15),
             AspectRatio(
               aspectRatio: 0.8,
               child: ClipRRect(
@@ -104,7 +104,6 @@ class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
                 borderRadius: BorderRadius.circular(20),
               ),
             ),
-            Text('어케 하는 거임..?ㅠㅠ....'),
             Container(
               // 아래가 문제가 되는 패딩, 마진 효과가 동시에 생김
               padding: EdgeInsets.only(right: 10),
@@ -125,7 +124,7 @@ class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
                           borderRadius: BorderRadius.circular(20),
                           color: AppColor.deepGrey,
                         ),
-                        child: Text(
+                        child: const Text(
                           '링크1',
                           style: TextStyle(
                             color: Colors.white,
@@ -133,8 +132,8 @@ class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
                           ),
                         ),
                       ),
-                      SizedBox(width: 10),
-                      Text('http://sample1.com'),
+                      const SizedBox(width: 10),
+                      const Text('http://sample1.com'),
                     ],
                   ),
                   SizedBox(
@@ -147,7 +146,7 @@ class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
                 ],
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -161,7 +160,7 @@ class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      child: Text(
+                      child: const Text(
                         '취소',
                         style: TextStyle(
                             color: Colors.black,
@@ -171,7 +170,7 @@ class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
                     ),
                   ),
                 ),
-                Expanded(flex: 1, child: SizedBox()),
+                const Expanded(flex: 1, child: SizedBox()),
                 Expanded(
                   flex: 2,
                   child: Container(
@@ -183,7 +182,7 @@ class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      child: Text(
+                      child: const Text(
                         '저장',
                         style: TextStyle(
                           color: Colors.white,
@@ -218,7 +217,7 @@ class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
           borderRadius: BorderRadius.circular(20),
           color: Colors.white,
         ),
-        child: Icon(
+        child: const Icon(
           Icons.wb_sunny_sharp,
           color: Colors.yellow,
           size: 50,
@@ -240,7 +239,7 @@ class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
           children: [
             Text(
               label,
-              style: TextStyle(
+              style: const TextStyle(
                 fontWeight: FontWeight.w600,
               ),
             ),
