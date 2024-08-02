@@ -69,8 +69,18 @@ class _AddClothesPostingScreenState extends State<AddClothesPostingScreen> {
                 ),
                 child: Row(
                   children: [
-                    SwitchCategoryButton('사진 업로드', photoSelected, _onPressed),
-                    SwitchCategoryButton('텍스트 업로드', !photoSelected, _onPressed),
+                    SwitchCategoryButton(
+                      '사진 업로드',
+                      photoSelected,
+                      _onPressed,
+                      AppColor.deepGrey,
+                    ),
+                    SwitchCategoryButton(
+                      '텍스트 업로드',
+                      !photoSelected,
+                      _onPressed,
+                      AppColor.deepGrey,
+                    ),
                   ],
                 ),
               ),
@@ -139,8 +149,7 @@ class _AddClothesPostingScreenState extends State<AddClothesPostingScreen> {
   ListView addPhoto() {
     return ListView(
       children: [
-        ImagePickerWidget(
-            onImageSelected: _onImageSelected, picker: picker),
+        ImagePickerWidget(onImageSelected: _onImageSelected, picker: picker),
         SizedBox(height: 40),
         PostingContentTextField(
           controller: writePostController,
@@ -170,8 +179,14 @@ class _AddClothesPostingScreenState extends State<AddClothesPostingScreen> {
           alignment: WrapAlignment.start,
           children: [
             for (var i = 0; i < 8; i++)
-              SelectButtonsInPosting(textures, selectedTextures, i,
-                  () => _onTextureButtonPressed(textures[i]))
+              SelectButtonsInPosting(
+                textures,
+                selectedTextures,
+                i,
+                () => _onTextureButtonPressed(textures[i]),
+                AppColor.deepGrey,
+                Colors.white,
+              )
           ],
         ),
         SizedBox(height: 20),
@@ -201,7 +216,13 @@ class _AddClothesPostingScreenState extends State<AddClothesPostingScreen> {
           children: [
             for (var i = 0; i < 8; i++)
               SelectButtonsInPosting(
-                  fits, selectedFits, i, () => _onFitButtonPressed(fits[i]))
+                fits,
+                selectedFits,
+                i,
+                () => _onFitButtonPressed(fits[i]),
+                AppColor.deepGrey,
+                Colors.white,
+              )
           ],
         ),
         SizedBox(height: 20),

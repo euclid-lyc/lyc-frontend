@@ -9,6 +9,7 @@ import 'package:lyc_flutter_project/screens/follow_list_screen.dart';
 import 'package:lyc_flutter_project/services/temp_services.dart';
 import 'package:lyc_flutter_project/widget/bottom_buttons.dart';
 import 'package:lyc_flutter_project/widget/grid_widget_with_button.dart';
+import 'package:lyc_flutter_project/widget/round_image.dart';
 import 'package:lyc_flutter_project/widget/switch_category_button.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 
@@ -72,15 +73,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                           // 사진
                           Expanded(
                             flex: 7,
-                            child: AspectRatio(
-                              aspectRatio: 1,
-                              child: ClipOval(
-                                child: Image.asset(
-                                  _member!.profile_image,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
+                            child: RoundImage(image: _member!.profile_image,)
                           ),
                           // 이름, 아이디, 팔로워, 팔로잉
                           SizedBox(width: 20),
@@ -119,7 +112,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                                     child: Text(
                                       '팔로워: ${_member!.follower}',
                                       style:
-                                      TextStyle(color: Color(0xff414141)),
+                                          TextStyle(color: Color(0xff414141)),
                                     ),
                                   ),
                                   // 팔로잉
@@ -232,8 +225,10 @@ class _MyPageScreenState extends State<MyPageScreen> {
               child: Container(
                 margin: EdgeInsets.fromLTRB(1, 0, 0, 228),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center, // 수직으로 가운데 정렬
-                  crossAxisAlignment: CrossAxisAlignment.center, // 수평으로 가운데 정렬
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  // 수직으로 가운데 정렬
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  // 수평으로 가운데 정렬
                   children: [
                     Container(
                       margin: EdgeInsets.fromLTRB(0, 0, 1, 19.5),
@@ -279,7 +274,8 @@ class _MyPageScreenState extends State<MyPageScreen> {
             Expanded(
               flex: 2,
               child: Container(
-                margin: EdgeInsets.only(left: 30, right: 30, top: 25, bottom: 5),
+                margin:
+                    EdgeInsets.only(left: 30, right: 30, top: 25, bottom: 5),
                 child: Column(
                   children: [
                     // 갤러리 카테고리 버튼(00의 코디, 저장한 코디, 00의 옷장)
@@ -295,19 +291,22 @@ class _MyPageScreenState extends State<MyPageScreen> {
                           SwitchCategoryButton(
                             isMyPage ? '나의 코디' : '${_member!.nickname}의 코디',
                             _selectedCategory == 0,
-                                () => _onCategorySelected(0),
+                            () => _onCategorySelected(0),
+                            AppColor.brown,
                           ),
                           // 저장한 코디
                           SwitchCategoryButton(
                             '저장한 코디',
                             _selectedCategory == 1,
-                                () => _onCategorySelected(1),
+                            () => _onCategorySelected(1),
+                            AppColor.brown,
                           ),
                           // 나의 옷장
                           SwitchCategoryButton(
                             isMyPage ? '나의 옷장' : '${_member!.nickname}의 옷장',
                             _selectedCategory == 2,
-                                () => _onCategorySelected(2),
+                            () => _onCategorySelected(2),
+                            AppColor.brown,
                           ),
                         ],
                       ),
@@ -381,8 +380,13 @@ class _IconsInProfileBoxState extends State<IconsInProfileBox> {
   @override
   Widget build(BuildContext context) {
     if (widget.memberId == cur_member) {
-      return Column(
+      return Row(
         children: [
+          Icon(
+            Icons.send,
+            color: Colors.white,
+          ),
+          SizedBox(width: 10),
           Icon(
             Icons.local_parking,
             color: Colors.white,
@@ -390,7 +394,6 @@ class _IconsInProfileBoxState extends State<IconsInProfileBox> {
         ],
       );
     } else {
-      // 다른 사람의 마이페이지일 때 뜨는 화면입니다
       return Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
@@ -424,7 +427,9 @@ class _IconsInProfileBoxState extends State<IconsInProfileBox> {
             children: [
               IconButton(
                 icon: SvgPicture.asset(
-                  widget.isBlocked ? 'assets/icon_blocked.svg' : 'assets/icon_block.svg', // SVG 파일 로드
+                  widget.isBlocked
+                      ? 'assets/icon_blocked.svg'
+                      : 'assets/icon_block.svg', // SVG 파일 로드
                   width: 20.5, // 크기 조정
                   height: 18, // 크기 조정
                 ),
@@ -456,7 +461,9 @@ class _IconsInProfileBoxState extends State<IconsInProfileBox> {
                                     Container(
                                       margin: EdgeInsets.fromLTRB(0, 0, 0, 31),
                                       child: Text(
-                                        widget.isBlocked ? '차단을 해제하시겠습니까?' : '차단하시겠습니까?',
+                                        widget.isBlocked
+                                            ? '차단을 해제하시겠습니까?'
+                                            : '차단하시겠습니까?',
                                         style: app_text_style.littleTitle,
                                       ),
                                     ),
@@ -464,9 +471,9 @@ class _IconsInProfileBoxState extends State<IconsInProfileBox> {
                                       width: 176,
                                       child: Row(
                                         mainAxisAlignment:
-                                        MainAxisAlignment.start,
+                                            MainAxisAlignment.start,
                                         crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Container(
                                             margin: EdgeInsets.fromLTRB(
@@ -474,23 +481,21 @@ class _IconsInProfileBoxState extends State<IconsInProfileBox> {
                                             decoration: BoxDecoration(
                                               color: AppColor.grey,
                                               borderRadius:
-                                              BorderRadius.circular(20),
+                                                  BorderRadius.circular(20),
                                             ),
                                             child: ElevatedButton(
                                               style: ElevatedButton.styleFrom(
-                                                backgroundColor:
-                                                AppColor.grey,
+                                                backgroundColor: AppColor.grey,
                                                 shape: RoundedRectangleBorder(
                                                   borderRadius:
-                                                  BorderRadius.circular(20),
+                                                      BorderRadius.circular(20),
                                                 ),
                                                 padding: EdgeInsets.fromLTRB(
                                                     0, 5.5, 0, 4.5),
                                                 minimumSize: Size(75, 36),
                                               ),
                                               onPressed: () {
-                                                Navigator.of(context)
-                                                    .pop();
+                                                Navigator.of(context).pop();
                                               },
                                               child: Text(
                                                 '취소',
@@ -503,14 +508,14 @@ class _IconsInProfileBoxState extends State<IconsInProfileBox> {
                                             decoration: BoxDecoration(
                                               color: Colors.black,
                                               borderRadius:
-                                              BorderRadius.circular(20),
+                                                  BorderRadius.circular(20),
                                             ),
                                             child: ElevatedButton(
                                               style: ElevatedButton.styleFrom(
                                                 backgroundColor: Colors.black,
                                                 shape: RoundedRectangleBorder(
                                                   borderRadius:
-                                                  BorderRadius.circular(20),
+                                                      BorderRadius.circular(20),
                                                 ),
                                                 padding: EdgeInsets.fromLTRB(
                                                     0, 5.5, 0, 4.5),
@@ -522,7 +527,9 @@ class _IconsInProfileBoxState extends State<IconsInProfileBox> {
                                                     .pop(); // 다이얼로그 닫기
                                               },
                                               child: Text(
-                                                widget.isBlocked ? '차단 해제' : '차단',
+                                                widget.isBlocked
+                                                    ? '차단 해제'
+                                                    : '차단',
                                                 style: app_text_style.button,
                                               ),
                                             ),
@@ -541,7 +548,7 @@ class _IconsInProfileBoxState extends State<IconsInProfileBox> {
                   );
                 },
               ),
-              SizedBox(width: 10),
+              //SizedBox(width: 10),
               IconButton(
                 icon: SvgPicture.asset(
                   'assets/icon_notify.svg',

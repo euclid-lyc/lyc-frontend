@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:lyc_flutter_project/data/app_color.dart';
 
 class SwitchCategoryButton extends StatelessWidget {
   final String text;
   final bool isSelected;
   final VoidCallback onPressed;
+  final Color color;
 
-  SwitchCategoryButton(this.text, this.isSelected, this.onPressed,);
+  SwitchCategoryButton(
+    this.text,
+    this.isSelected,
+    this.onPressed,
+    this.color,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -16,14 +21,14 @@ class SwitchCategoryButton extends StatelessWidget {
         child: TextButton(
           onPressed: onPressed,
           style: TextButton.styleFrom(
-            backgroundColor: isSelected ? AppColor.brown : Colors.white,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30)),
+            backgroundColor: isSelected ? color : Colors.white,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
           ),
           child: Text(
             text,
             style: TextStyle(
-              color: isSelected ? Colors.white : AppColor.brown,
+              color: isSelected ? Colors.white : color,
               fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
             ),
           ),
