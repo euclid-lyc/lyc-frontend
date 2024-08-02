@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lyc_flutter_project/screens/home_screen.dart';
 import 'package:lyc_flutter_project/screens/login_screen.dart';
 import 'package:lyc_flutter_project/screens/my_page_screen.dart';
 import 'package:lyc_flutter_project/widget/bottom_bar.dart';
@@ -39,6 +40,10 @@ class TempScreen extends StatelessWidget {
               Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen(),));
             }, child: Text('Login')),
 
+
+            TextButton(onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen(),));
+            }, child: Text('Home Screen')),
           ],
         ),
       ),
