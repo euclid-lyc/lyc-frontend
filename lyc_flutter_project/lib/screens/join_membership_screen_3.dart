@@ -9,24 +9,25 @@ class JoinMembershipScreen3 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-      backgroundColor: AppColor.lightGrey, // 배경색 변경
+      backgroundColor: AppColor.lightGrey,
       appBar: NormalAppbar(
         backButton: true,
         title: "회원가입",
         deleteButton: false,
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(height: 174), // 상단 여백
-            Center(
+      body: Column(
+        children: [
+          Expanded(
+            flex: 1,
+            child: Container(),
+          ),
+          SingleChildScrollView(
+            child: Center(
               child: Container(
-                constraints: BoxConstraints(maxWidth: 400), // 최대 너비 설정
+                width: 400,
                 decoration: BoxDecoration(
-                  color: Colors.white, // 흰색으로 유지
+                  color: Colors.white,
                   borderRadius: BorderRadius.circular(20),
                 ),
                 padding: EdgeInsets.fromLTRB(22, 28.5, 22, 0),
@@ -35,14 +36,14 @@ class JoinMembershipScreen3 extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: EdgeInsets.fromLTRB(7, 0, 7, 8), // 아래쪽 여백을 줄였습니다
+                      padding: EdgeInsets.fromLTRB(7, 0, 7, 8),
                       child: Text(
                         'Step 3. 배송지 입력',
                         style: app_text_style.littleTitle,
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.fromLTRB(13.7, 0, 13.7, 25), // 위쪽 여백을 줄였습니다
+                      padding: EdgeInsets.fromLTRB(13.7, 0, 13.7, 25),
                       child: Text(
                         '배송지 정보는 다른 사용자에게 노출되지 않습니다.',
                         style: app_text_style.hint,
@@ -50,7 +51,7 @@ class JoinMembershipScreen3 extends StatelessWidget {
                     ),
                     // 우편번호 입력 필드 및 버튼
                     Padding(
-                      padding: EdgeInsets.fromLTRB(13.7, 0, 13.7, 14),
+                      padding: EdgeInsets.fromLTRB(13.7, 0, 13.7, 15),
                       child: Row(
                         children: [
                           Expanded(
@@ -135,7 +136,7 @@ class JoinMembershipScreen3 extends StatelessWidget {
                           decoration: InputDecoration(
                             border: InputBorder.none,
                             hintText: '상세주소',
-                            hintStyle:app_text_style.hint,
+                            hintStyle: app_text_style.hint,
                             contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 12), // 중앙 정렬
                           ),
                           textAlignVertical: TextAlignVertical.center, // 텍스트 수직 중앙 정렬
@@ -147,58 +148,65 @@ class JoinMembershipScreen3 extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 67), // 버튼과 아래쪽 여백
-            SizedBox(
-              width: 300,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  // '이전' 버튼
-                  TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const JoinMembershipScreen2()),
-                      );
-                    },
-                    style: TextButton.styleFrom(
-                      backgroundColor: AppColor.grey, // 색상 변경
-                      minimumSize: Size(120, 40), // 버튼 크기 설정
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
+          ),
+          Expanded(
+            flex: 1,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: 300,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      // '이전' 버튼
+                      TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => const JoinMembershipScreen2()),
+                          );
+                        },
+                        style: TextButton.styleFrom(
+                          backgroundColor: AppColor.grey, // 색상 변경
+                          minimumSize: Size(120, 40), // 버튼 크기 설정
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                        ),
+                        child: Text(
+                          '이전',
+                          style: app_text_style.hint.copyWith(
+                            color: Colors.black,
+                            fontSize: 14,
+                          ),
+                        ),
                       ),
-                    ),
-                    child: Text(
-                      '이전',
-                      style: app_text_style.hint.copyWith(
-                        color: Colors.black,
-                        fontSize: 14,
+                      // '다음' 버튼
+                      TextButton(
+                        onPressed: () {
+                          // 다음 버튼 클릭 시 동작
+                        },
+                        style: TextButton.styleFrom(
+                          backgroundColor: AppColor.beige, // 색상 변경
+                          minimumSize: Size(120, 40), // 버튼 크기 설정
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                        ),
+                        child: Text(
+                          '다음',
+                          style: app_text_style.button,
+                          textAlign: TextAlign.center,
+                        ),
                       ),
-                    ),
+                    ],
                   ),
-                  // '다음' 버튼
-                  TextButton(
-                    onPressed: () {
-                      // 다음 버튼 클릭 시 동작
-                    },
-                    style: TextButton.styleFrom(
-                      backgroundColor: AppColor.beige, // 색상 변경
-                      minimumSize: Size(120, 40), // 버튼 크기 설정
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                    ),
-                    child: Text(
-                      '다음',
-                      style:app_text_style.button,
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

@@ -13,7 +13,7 @@ class LoginScreen extends StatelessWidget {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: AppColor.beige,
-        toolbarHeight: 200, // 원하는 높이로 설정 (예: 200.0)
+        toolbarHeight: 200,
         flexibleSpace: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -38,7 +38,7 @@ class LoginScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              margin: EdgeInsets.fromLTRB(7, 0, 7, 25),
+              width: 296,
               padding: EdgeInsets.all(20),
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -49,33 +49,31 @@ class LoginScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
-                    margin: EdgeInsets.fromLTRB(0, 0, 0, 12.5),
+                    margin: EdgeInsets.fromLTRB(0, 18.5, 0, 0),
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Container(
-                          margin: EdgeInsets.fromLTRB(0, 0, 0, 4.5),
-                          child: Align(
-                            alignment: Alignment.topLeft,
-                            child: Text(
-                              '아이디',
-                              style: app_text_style.labelTextStyle,
-                            ),
-                          ),
+                        Text(
+                          '아이디',
+                          style: app_text_style.labelTextStyle,
                         ),
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Color(0xFFF1F1F1),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.fromLTRB(18, 10.5, 18, 11.5),
-                            child: TextField(
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                                hintText: '아이디를 입력해주세요',
-                                hintStyle: app_text_style.hint,
+                        Padding(
+                          padding: EdgeInsets.only(top: 4.5),
+                          child: Container(
+                            width: 230,
+                            height: 40,
+                            decoration: BoxDecoration(
+                              color: AppColor.lightGrey,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 18),
+                              child: TextField(
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  hintText: '아이디를 입력해주세요',
+                                  hintStyle: app_text_style.hint,
+                                ),
                               ),
                             ),
                           ),
@@ -84,34 +82,32 @@ class LoginScreen extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.fromLTRB(0, 0, 0, 18),
+                    margin: EdgeInsets.only(top: 13),
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Container(
-                          margin: EdgeInsets.fromLTRB(0, 0, 0, 5.5),
-                          child: Align(
-                            alignment: Alignment.topLeft,
-                            child: Text(
-                              '패스워드',
-                              style: app_text_style.labelTextStyle,
-                            ),
-                          ),
+                        Text(
+                          '패스워드',
+                          style: app_text_style.labelTextStyle,
                         ),
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Color(0xFFF1F1F1),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.fromLTRB(18, 10.5, 18, 11.5),
-                            child: TextField(
-                              obscureText: true,
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                                hintText: '패스워드를 입력해주세요',
-                                hintStyle: app_text_style.hint,
+                        Padding(
+                          padding: EdgeInsets.only(top: 5.5),
+                          child: Container(
+                            width: 230,
+                            height: 40,
+                            decoration: BoxDecoration(
+                              color: AppColor.lightGrey,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 18),
+                              child: TextField(
+                                obscureText: true,
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  hintText: '패스워드를 입력해주세요',
+                                  hintStyle: app_text_style.hint,
+                                ),
                               ),
                             ),
                           ),
@@ -120,7 +116,7 @@ class LoginScreen extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.fromLTRB(0, 0, 0.9, 35.5),
+                    margin: EdgeInsets.only(top: 13),
                     child: SizedBox(
                       width: 220,
                       child: Row(
@@ -130,9 +126,10 @@ class LoginScreen extends StatelessWidget {
                             onPressed: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => const JoinMembershipScreen1()),
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                    const JoinMembershipScreen1()),
                               );
-                              // 회원가입 버튼 눌렀을 때의 동작 구현
                             },
                             child: Text(
                               '회원가입',
@@ -162,19 +159,17 @@ class LoginScreen extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.fromLTRB(0, 0, 150, 14.5),
+                    margin: EdgeInsets.only(top: 14.5),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                          margin: EdgeInsets.fromLTRB(0, 0.5, 7, 0.5),
+                          margin: EdgeInsets.only(right: 7),
                           decoration: BoxDecoration(
                             border: Border.all(color: AppColor.lightGrey),
                             borderRadius: BorderRadius.circular(5),
                             color: Colors.white,
                           ),
-                          child: Container(
+                          child: SizedBox(
                             width: 17,
                             height: 17,
                           ),
@@ -191,72 +186,82 @@ class LoginScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  TextButton(
-                    onPressed: () {
-                      // 로그인 버튼 눌렀을 때의 동작 구현
-                    },
-                    style: TextButton.styleFrom(
-                      backgroundColor: AppColor.beige,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
+                  Padding(
+                    padding: EdgeInsets.only(top: 15),
+                    child: TextButton(
+                      onPressed: () {
+                        // 로그인 버튼 눌렀을 때의 동작 구현
+                      },
+                      style: TextButton.styleFrom(
+                        backgroundColor: AppColor.beige,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        padding: EdgeInsets.symmetric(vertical: 15),
                       ),
-                      padding: EdgeInsets.fromLTRB(1, 11, 0, 11),
-                    ),
-                    child: Container(
-                      width: 230,
-                      child: Text(
-                        '로그인',
-                        style: app_text_style.button,
-                        textAlign: TextAlign.center,
+                      child: SizedBox(
+                        width: 230,
+                        child: Text(
+                          '로그인',
+                          style: app_text_style.button,
+                          textAlign: TextAlign.center,
+                        ),
                       ),
                     ),
                   ),
                 ],
               ),
             ),
-            TextButton(
-              onPressed: () {
-                // 다른 계정으로 로그인 버튼 눌렀을 때의 동작 구현
-              },
-              child: Text(
-                '다른 계정으로 로그인',
-                style: app_text_style.otherLoginTextStyle,
-              ),
-            ),
-            SizedBox(
-              width: 166,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            Padding(
+              padding: EdgeInsets.only(top: 25), // 로그인 버튼 밑에 여백 추가
+              child: Column(
                 children: [
-                  IconButton(
-                    icon: Image.asset(
-                      'assets/icon_naver.png',
-                      width: 35,
-                      height: 35,
-                    ),
+                  TextButton(
                     onPressed: () {
-                      // 네이버 로그인 버튼 눌렀을 때의 동작 구현
+                      // 다른 계정으로 로그인 버튼 눌렀을 때의 동작 구현
                     },
+                    child: Text(
+                      '다른 계정으로 로그인',
+                      style: app_text_style.otherLoginTextStyle,
+                    ),
                   ),
-                  IconButton(
-                    icon: Image.asset(
-                      'assets/icon_kakao.png',
-                      width: 35,
-                      height: 35,
+                  SizedBox(
+                    width: 166,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        IconButton(
+                          icon: Image.asset(
+                            'assets/icon_naver.png',
+                            width: 35,
+                            height: 35,
+                          ),
+                          onPressed: () {
+                            // 네이버 로그인 버튼 눌렀을 때의 동작 구현
+                          },
+                        ),
+                        IconButton(
+                          icon: Image.asset(
+                            'assets/icon_kakao.png',
+                            width: 35,
+                            height: 35,
+                          ),
+                          onPressed: () {
+                            // 카카오톡 로그인 버튼 눌렀을 때의 동작 구현
+                          },
+                        ),
+                        IconButton(
+                          icon: Image.asset(
+                            'assets/icon_google.png',
+                            width: 35,
+                            height: 35,
+                          ),
+                          onPressed: () {
+                            // 구글 로그인 버튼 눌렀을 때의 동작 구현
+                          },
+                        ),
+                      ],
                     ),
-                    onPressed: () {
-                      // 카카오톡 로그인 버튼 눌렀을 때의 동작 구현
-                    },
-                  ),
-                  IconButton(
-                    icon: Image.asset(
-                      'assets/icon_google.png',
-                      width: 35,
-                      height: 35,
-                    ),
-                    onPressed: () {
-                      // 구글 로그인 버튼 눌렀을 때의 동작 구현
-                    },
                   ),
                 ],
               ),
