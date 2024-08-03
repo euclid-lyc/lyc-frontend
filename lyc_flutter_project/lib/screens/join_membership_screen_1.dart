@@ -26,7 +26,6 @@ class JoinMembershipScreen1 extends StatelessWidget {
               Container(
                 padding: EdgeInsets.fromLTRB(29, 28.5, 29, 33),
                 width: 296,
-                height: 524,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(20),
