@@ -29,7 +29,6 @@ class _NotifyScreenState extends State<NotifyScreen> {
       appBar: NormalAppbar(
         backButton: false,
         title: "신고하기",
-        deleteButton: false, // 삭제 버튼 사용 안함
       ),
       body: Container(
         decoration: BoxDecoration(

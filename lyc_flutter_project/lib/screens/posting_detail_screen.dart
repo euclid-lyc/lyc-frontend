@@ -40,11 +40,7 @@ class _PostingDetailScreenState extends State<PostingDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.lightGrey,
-      appBar: NormalAppbar(
-        backButton: true,
-        title: "",
-        deleteButton: widget.isMyCoordi,
-      ),
+      appBar: NormalAppbar(),
       body: SingleChildScrollView(
         child: Container(
           margin: EdgeInsets.symmetric(horizontal: 15),

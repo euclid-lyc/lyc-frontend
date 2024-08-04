@@ -32,9 +32,7 @@ class _AddPostingScreenState extends State<AddPostingScreen> {
     return Scaffold(
       backgroundColor: AppColor.lightGrey,
       appBar: NormalAppbar(
-        backButton: true,
         title: getTitle(),
-        deleteButton: false,
       ),
       body: Padding(
         padding: EdgeInsets.fromLTRB(30, 25, 30, 20),

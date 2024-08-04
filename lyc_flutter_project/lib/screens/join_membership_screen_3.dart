@@ -12,9 +12,7 @@ class JoinMembershipScreen3 extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColor.lightGrey,
       appBar: NormalAppbar(
-        backButton: true,
         title: "회원가입",
-        deleteButton: false,
       ),
       body: Column(
         children: [

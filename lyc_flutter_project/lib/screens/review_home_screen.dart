@@ -11,7 +11,7 @@ class ReviewHomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.lightGrey,
-      appBar: NormalAppbar(backButton: true, title: '나의 리뷰', deleteButton: false),
+      appBar: NormalAppbar(title: '나의 리뷰'),
       body: Container(
         margin: EdgeInsets.only(left: 30, right: 30, top: 25, bottom: 5),
         child: GridWidgetWithButton(postings: TempPostingData().postings, category: 3),
