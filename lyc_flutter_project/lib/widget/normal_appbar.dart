@@ -5,6 +5,7 @@ import 'package:lyc_flutter_project/widget/custom_back_button.dart';
 /// 좀 더 일반화되게 + 간단하게 사용할 수 있게 수정합니다
 /// backButton은 default가 true입니다 -> false인 경우에만 명시하면 됩니다
 /// title은 default가 ""입니다 -> 있는 경우 써주면 됩니다
+/// backgroundColor는 default가 AppColor.beige입니다
 /// 휴지통과 같이 맨 오른쪽 아이콘을 사용하는 경우 아이콘과 onTap method를 함께 전달합니다
 
 class NormalAppbar extends StatelessWidget implements PreferredSizeWidget {
@@ -12,6 +13,7 @@ class NormalAppbar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final Icon? icon;
   final VoidCallback? onTap;
+  final Color? backgroundColor;
 
   const NormalAppbar({
     super.key,
@@ -19,12 +21,13 @@ class NormalAppbar extends StatelessWidget implements PreferredSizeWidget {
     this.title = "",
     this.icon,
     this.onTap,
+    this.backgroundColor,
   });
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: AppColor.beige,
+      backgroundColor: backgroundColor ?? AppColor.beige,
       automaticallyImplyLeading: false,
       flexibleSpace: Container(
         child: Column(
