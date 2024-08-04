@@ -13,7 +13,7 @@ class ReviewListScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColor.lightGrey,
       appBar:
-          NormalAppbar(backButton: true, title: '나의 리뷰', deleteButton: false),
+          NormalAppbar(title: '나의 리뷰',),
       body: Container(
         margin: EdgeInsets.symmetric(horizontal: 30, vertical: 25),
         child: Column(

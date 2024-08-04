@@ -46,7 +46,6 @@ class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
       appBar: NormalAppbar(
         backButton: false,
         title: widget.purpose == 0 ? '코디 업로드' : '리뷰 업로드',
-        deleteButton: false,
       ),
       body: Padding(
         padding: const EdgeInsets.all(30),

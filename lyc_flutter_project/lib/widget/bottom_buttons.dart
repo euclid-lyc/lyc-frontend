@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/data/temp_member_data.dart';
 import 'package:lyc_flutter_project/model/member.dart';
+import 'package:lyc_flutter_project/screens/attendance_screen.dart';
 import 'package:lyc_flutter_project/screens/review_home_screen.dart';
 import 'package:lyc_flutter_project/services/temp_services.dart';
 import 'package:lyc_flutter_project/widget/custom_button_in_profile_box.dart';
@@ -41,7 +42,14 @@ class BottomButtons extends StatelessWidget {
           CustomButtonInProfileBox(
             memberId: member.id,
             text: '출석체크',
-            onPressed: () => {},
+            onPressed: () => {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => AttendanceScreen(),
+                ),
+              ),
+            },
           ),
         ],
       );

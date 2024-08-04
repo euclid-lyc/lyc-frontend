@@ -34,7 +34,7 @@ class _FollowListScreenState extends State<FollowListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.lightGrey,
-      appBar: NormalAppbar(backButton: true, title: "", deleteButton: false),
+      appBar: NormalAppbar(),
       body: Container(
         margin: EdgeInsets.only(left: 20, right: 20, top: 20),
         child: Column(

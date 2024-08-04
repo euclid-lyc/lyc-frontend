@@ -55,7 +55,7 @@ class _AddClothesPostingScreenState extends State<AddClothesPostingScreen> {
     return Scaffold(
       backgroundColor: AppColor.lightGrey,
       appBar:
-          NormalAppbar(backButton: true, title: '옷 추가', deleteButton: false),
+          NormalAppbar(title: '옷 추가',),
       body: Padding(
         padding: EdgeInsets.fromLTRB(30, 25, 30, 20),
         child: Column(
