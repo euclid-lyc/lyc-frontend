@@ -4,6 +4,8 @@ import 'package:lyc_flutter_project/widget/normal_appbar.dart';
 import 'package:lyc_flutter_project/screens/join_membership_screen_2.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 
+import 'join_membership_screen_4.dart';
+
 class JoinMembershipScreen3 extends StatelessWidget {
   const JoinMembershipScreen3({super.key});
 
@@ -185,7 +187,9 @@ class JoinMembershipScreen3 extends StatelessWidget {
                       // '다음' 버튼
                       TextButton(
                         onPressed: () {
-                          // 다음 버튼 클릭 시 동작
+                         Navigator.push(context,
+                             MaterialPageRoute(builder: (context) => JoinMembershipScreen4()),
+                         );
                         },
                         style: TextButton.styleFrom(
                           backgroundColor: AppColor.beige, // 색상 변경
