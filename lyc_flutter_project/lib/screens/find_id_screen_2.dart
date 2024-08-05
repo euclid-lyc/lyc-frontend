@@ -12,11 +12,7 @@ class FindIdScreen2 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.lightGrey,
-      appBar: NormalAppbar(
-        backButton: true,
-        title: "아이디 찾기",
-        deleteButton: false,
-      ),
+      appBar: const NormalAppbar(title: "아이디 찾기"),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -26,72 +22,74 @@ class FindIdScreen2 extends StatelessWidget {
           ),
           Center(
             child: Container(
-              constraints: BoxConstraints(maxWidth: 400), // 최대 너비 설정
+              constraints: BoxConstraints(maxWidth: 400),
+              // 최대 너비 설정
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(20),
               ),
               padding: EdgeInsets.fromLTRB(22, 28.5, 22, 0),
-             width: 296,
+              width: 296,
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    margin: EdgeInsets.fromLTRB(7, 0, 7, 43.5),
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      'Step 2. 본인인증',
-                      style: app_text_style.littleTitle,
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(bottom: 49),
-                    decoration: BoxDecoration(
-                      color: Color(0xFFBBBBBB),
-                      borderRadius: BorderRadius.circular(62),
-                    ),
-                    width: 124,
-                    height: 124,
-                    child: Center(
-                      child: Icon(
-                        Icons.mail_outline_outlined, // 아이콘으로 변경
-                        size: 60, // 아이콘 크기 설정
-                        color: Colors.white, // 아이콘 색상 설정
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      margin: EdgeInsets.fromLTRB(7, 0, 7, 43.5),
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        'Step 2. 본인인증',
+                        style: app_text_style.littleTitle,
                       ),
                     ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.fromLTRB(4, 0, 0, 18.5),
-                    child: Text(
-                      '선택하신 인증수단으로 \n 인증번호가 전송되었습니다.',
-                      textAlign: TextAlign.center,
-                      style: app_text_style.otherLoginTextStyle.copyWith(color: Colors.black),
-                    ),
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: AppColor.lightGrey,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    width: 252,
-                    height: 37, // 높이 설정
-                    child: TextField(
-                      decoration: InputDecoration(
-                        hintText: '인증번호를 입력해 주세요',
-                        hintStyle: app_text_style.hint,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          borderSide: BorderSide.none,
+                    Container(
+                      margin: EdgeInsets.only(bottom: 49),
+                      decoration: BoxDecoration(
+                        color: Color(0xFFBBBBBB),
+                        borderRadius: BorderRadius.circular(62),
+                      ),
+                      width: 124,
+                      height: 124,
+                      child: Center(
+                        child: Icon(
+                          Icons.mail_outline_outlined, // 아이콘으로 변경
+                          size: 60, // 아이콘 크기 설정
+                          color: Colors.white, // 아이콘 색상 설정
                         ),
-                        contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 43),
-                  ),
-                 ]
-              ),
+                    Container(
+                      margin: EdgeInsets.fromLTRB(4, 0, 0, 18.5),
+                      child: Text(
+                        '선택하신 인증수단으로 \n 인증번호가 전송되었습니다.',
+                        textAlign: TextAlign.center,
+                        style: app_text_style.otherLoginTextStyle
+                            .copyWith(color: Colors.black),
+                      ),
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: AppColor.lightGrey,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      width: 252,
+                      height: 37, // 높이 설정
+                      child: TextField(
+                        decoration: InputDecoration(
+                          hintText: '인증번호를 입력해 주세요',
+                          hintStyle: app_text_style.hint,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide: BorderSide.none,
+                          ),
+                          contentPadding: EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 10),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 43),
+                    ),
+                  ]),
             ),
           ),
           Expanded(
@@ -109,7 +107,8 @@ class FindIdScreen2 extends StatelessWidget {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => const FindIdScreen1()),
+                            MaterialPageRoute(
+                                builder: (context) => const FindIdScreen1()),
                           );
                         },
                         style: TextButton.styleFrom(
@@ -132,7 +131,8 @@ class FindIdScreen2 extends StatelessWidget {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => FindIdScreen3()),
+                            MaterialPageRoute(
+                                builder: (context) => FindIdScreen3()),
                           );
                         },
                         style: TextButton.styleFrom(

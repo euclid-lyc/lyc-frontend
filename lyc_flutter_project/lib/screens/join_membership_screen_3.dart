@@ -185,9 +185,9 @@ class JoinMembershipScreen3 extends StatelessWidget {
                       // '다음' 버튼
                       TextButton(
                         onPressed: () {
-                         Navigator.push(context,
-                             MaterialPageRoute(builder: (context) => JoinMembershipScreen4()),
-                         );
+                         // Navigator.push(context,
+                         //     MaterialPageRoute(builder: (context) => JoinMembershipScreen4()),
+                         // );
                         },
                         style: TextButton.styleFrom(
                           backgroundColor: AppColor.beige, // 색상 변경

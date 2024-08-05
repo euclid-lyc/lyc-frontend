@@ -13,11 +13,7 @@ class FindIdScreen3 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.lightGrey,
-      appBar: NormalAppbar(
-        backButton: true,
-        title: "아이디 찾기",
-        deleteButton: false,
-      ),
+      appBar: const NormalAppbar(title: "아이디 찾기"),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
