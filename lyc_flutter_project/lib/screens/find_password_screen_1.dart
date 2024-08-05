@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
-import 'package:lyc_flutter_project/screens/join_membership_screen_2.dart';
+import 'package:lyc_flutter_project/screens/find_password_screen_2.dart';
 import 'package:lyc_flutter_project/styles/app_text_style.dart';
-
 import '../widget/normal_appbar.dart';
 
-class JoinMembershipScreen1 extends StatelessWidget {
-  const JoinMembershipScreen1({super.key});
+class FindPasswordScreen1 extends StatelessWidget {
+  const FindPasswordScreen1({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.lightGrey,
       appBar: NormalAppbar(
-        title: "회원가입",
+        backButton: true,
+        title: "비밀번호 찾기",
+        deleteButton: false,
       ),
       body: Center(
         child: SingleChildScrollView(
@@ -36,20 +37,38 @@ class JoinMembershipScreen1 extends StatelessWidget {
                       margin: EdgeInsets.only(bottom: 25),
                       alignment: Alignment.topLeft,
                       child: Text(
-                        'Step 1. 아이디 비밀번호 설정',
+                        'Step 1. 인증수단 선택',
                         style: app_text_style.littleTitle,
                       ),
                     ),
-                    buildInputField('이름', '이름을 입력해주세요',
-                        app_text_style.labelTextStyle, app_text_style.hint),
-                    buildInputField('아이디', '아이디를 입력해주세요',
-                        app_text_style.labelTextStyle, app_text_style.hint),
-                    buildInputField('이메일', '이메일을 입력해주세요',
-                        app_text_style.labelTextStyle, app_text_style.hint),
-                    buildInputField('비밀번호', '비밀번호를 입력해주세요',
-                        app_text_style.labelTextStyle, app_text_style.hint),
-                    buildInputField('비밀번호 확인', '비밀번호를 다시 입력해주세요',
-                        app_text_style.labelTextStyle, app_text_style.hint),
+                    buildInputField(
+                        '이름',
+                        '이름을 입력해주세요',
+                        app_text_style.labelTextStyle,
+                        app_text_style.hint,
+                        false
+                    ),
+                    buildInputField(
+                        '아이디',
+                        '아이디를 입력해주세요',
+                        app_text_style.labelTextStyle,
+                        app_text_style.hint,
+                        false
+                    ),
+                    buildInputField(
+                        '가입한 이메일로 찾기',
+                        '이메일을 입력해주세요',
+                        app_text_style.labelTextStyle,
+                        app_text_style.hint,
+                        true
+                    ),
+                    buildInputField(
+                        '가입한 전화번호로 찾기',
+                        '전화번호를 입력해주세요',
+                        app_text_style.labelTextStyle,
+                        app_text_style.hint,
+                        true
+                    ),
                     Padding(
                       padding: EdgeInsets.only(top: 30.5), // 위아래 여백 설정
                       child: TextButton(
@@ -57,8 +76,8 @@ class JoinMembershipScreen1 extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>
-                                const JoinMembershipScreen2()),
+                              builder: (context) => const FindPasswordScreen2(),
+                            ),
                           );
                         },
                         style: TextButton.styleFrom(
@@ -84,10 +103,10 @@ class JoinMembershipScreen1 extends StatelessWidget {
                 padding: EdgeInsets.symmetric(vertical: 20), // 위아래 여백 설정
                 child: TextButton(
                   onPressed: () {
-                    // 다른 계정으로 회원가입 버튼 눌렀을 때의 동작 구현
+                    // 다른 계정으로 로그인 버튼 눌렀을 때의 동작 구현
                   },
                   child: Text(
-                    '다른 계정으로 회원가입',
+                    '다른 계정으로 로그인',
                     style: app_text_style.otherLoginTextStyle,
                   ),
                 ),
@@ -141,23 +160,56 @@ class JoinMembershipScreen1 extends StatelessWidget {
   }
 
   Widget buildInputField(String label, String hint, TextStyle labelTextStyle,
-      TextStyle hintTextStyle) {
+      TextStyle hintTextStyle, bool showCheckbox) {
     return Container(
       margin: EdgeInsets.only(bottom: 8.5),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            margin: EdgeInsets.only(bottom: 4.5),
-            alignment: Alignment.topLeft,
-            child: Text(
-              label,
-              style: labelTextStyle,
+          if (showCheckbox)
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    // 버튼이 클릭되었을 때의 동작 구현
+                  },
+                  child: Container(
+                    margin: EdgeInsets.only(right: 7), // 오른쪽 여백 설정
+                    decoration: BoxDecoration(
+                      border: Border.all(color: AppColor.grey),
+                      borderRadius: BorderRadius.circular(5),
+                      color: Colors.white,
+                    ),
+                    child: SizedBox(
+                      width: 17,
+                      height: 17,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    margin: EdgeInsets.only(bottom: 4.5),
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      label,
+                      style: labelTextStyle,
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ),
+          if (!showCheckbox)
+            Container(
+              margin: EdgeInsets.only(bottom: 4.5),
+              alignment: Alignment.topLeft,
+              child: Text(
+                label,
+                style: labelTextStyle,
+              ),
+            ),
           Container(
-            width: 230, // 너비 설정
+            width: double.infinity, // 너비를 입력 필드에 맞게 설정
             height: 40, // 높이 설정
             decoration: BoxDecoration(
               color: AppColor.lightGrey,
@@ -181,4 +233,5 @@ class JoinMembershipScreen1 extends StatelessWidget {
       ),
     );
   }
+
 }

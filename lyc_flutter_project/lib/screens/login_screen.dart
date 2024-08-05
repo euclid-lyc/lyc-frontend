@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
+import 'package:lyc_flutter_project/screens/find_id_screen_1.dart';
+import 'package:lyc_flutter_project/screens/find_password_screen_1.dart';
 import 'package:lyc_flutter_project/screens/join_membership_screen_1.dart';
 import '../styles/app_text_style.dart';
 
@@ -138,7 +140,12 @@ class LoginScreen extends StatelessWidget {
                           ),
                           TextButton(
                             onPressed: () {
-                              // 아이디찾기 버튼 눌렀을 때의 동작 구현
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                    const FindIdScreen1()),
+                              );
                             },
                             child: Text(
                               '아이디찾기',
@@ -147,7 +154,12 @@ class LoginScreen extends StatelessWidget {
                           ),
                           TextButton(
                             onPressed: () {
-                              // 비밀번호찾기 버튼 눌렀을 때의 동작 구현
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                    const FindPasswordScreen1()),
+                              );
                             },
                             child: Text(
                               '비밀번호찾기',
@@ -165,7 +177,7 @@ class LoginScreen extends StatelessWidget {
                         Container(
                           margin: EdgeInsets.only(right: 7),
                           decoration: BoxDecoration(
-                            border: Border.all(color: AppColor.lightGrey),
+                            border: Border.all(color: AppColor.grey),
                             borderRadius: BorderRadius.circular(5),
                             color: Colors.white,
                           ),
@@ -193,7 +205,7 @@ class LoginScreen extends StatelessWidget {
                         // 로그인 버튼 눌렀을 때의 동작 구현
                       },
                       style: TextButton.styleFrom(
-                        backgroundColor: AppColor.beige,
+                        backgroundColor: AppColor.brown,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
                         ),
