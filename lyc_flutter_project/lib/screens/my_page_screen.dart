@@ -6,6 +6,7 @@ import 'package:lyc_flutter_project/data/temp_posting_data.dart';
 import 'package:lyc_flutter_project/model/coordi.dart';
 import 'package:lyc_flutter_project/model/member.dart';
 import 'package:lyc_flutter_project/screens/follow_list_screen.dart';
+import 'package:lyc_flutter_project/screens/point_screen.dart';
 import 'package:lyc_flutter_project/services/temp_services.dart';
 import 'package:lyc_flutter_project/widget/bottom_buttons.dart';
 import 'package:lyc_flutter_project/widget/grid_widget_with_button.dart';
@@ -72,9 +73,10 @@ class _MyPageScreenState extends State<MyPageScreen> {
                         children: [
                           // 사진
                           Expanded(
-                            flex: 7,
-                            child: RoundImage(image: _member!.profile_image,)
-                          ),
+                              flex: 7,
+                              child: RoundImage(
+                                image: _member!.profile_image,
+                              )),
                           // 이름, 아이디, 팔로워, 팔로잉
                           SizedBox(width: 20),
                           Expanded(
@@ -382,14 +384,26 @@ class _IconsInProfileBoxState extends State<IconsInProfileBox> {
     if (widget.memberId == cur_member) {
       return Row(
         children: [
-          Icon(
+          const Icon(
             Icons.send,
             color: Colors.white,
           ),
-          SizedBox(width: 10),
-          Icon(
-            Icons.local_parking,
-            color: Colors.white,
+          const SizedBox(width: 10),
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return PointScreen();
+                  },
+                ),
+              );
+            },
+            child: const Icon(
+              Icons.local_parking,
+              color: Colors.white,
+            ),
           ),
         ],
       );
