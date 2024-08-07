@@ -12,11 +12,7 @@ class FindPasswordScreen3 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.lightGrey,
-      appBar: NormalAppbar(
-        backButton: true,
-        title: "비밀번호 찾기",
-        deleteButton: false,
-      ),
+      appBar: NormalAppbar(title: "비밀번호 찾기"),
       body: Center(
         child: SingleChildScrollView(
           child: Column(
@@ -156,8 +152,10 @@ class FindPasswordScreen3 extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.fromLTRB(18, 0, 18, 0), // 좌우 및 상하 여백 설정
               child: TextField(
-                textAlignVertical: TextAlignVertical.center, // 텍스트 수직 정렬
-                textAlign: TextAlign.start, // 텍스트 수평 정렬
+                textAlignVertical: TextAlignVertical.center,
+                // 텍스트 수직 정렬
+                textAlign: TextAlign.start,
+                // 텍스트 수평 정렬
                 decoration: InputDecoration(
                   hintText: hint,
                   hintStyle: hintTextStyle,
