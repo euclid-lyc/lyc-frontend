@@ -8,8 +8,8 @@ import 'package:lyc_flutter_project/styles/default_padding.dart';
 import 'package:lyc_flutter_project/widget/normal_appbar.dart';
 import 'package:lyc_flutter_project/widget/round_image.dart';
 
-class InfoModScreen extends StatelessWidget {
-  const InfoModScreen({super.key});
+class InfoScreen extends StatelessWidget {
+  const InfoScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

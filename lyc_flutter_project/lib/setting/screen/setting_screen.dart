@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
-import 'package:lyc_flutter_project/setting/screen/info_mod_screen.dart';
+import 'package:lyc_flutter_project/setting/screen/info_screen.dart';
 import 'package:lyc_flutter_project/setting/widget/title_button.dart';
 import 'package:lyc_flutter_project/setting/widget/title_text.dart';
 import 'package:lyc_flutter_project/styles/default_padding.dart';
@@ -33,7 +33,7 @@ class SettingScreen extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) {
-                      return InfoModScreen();
+                      return InfoScreen();
                     },
                   ),
                 ),
