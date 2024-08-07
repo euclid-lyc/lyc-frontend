@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/screens/home_screen.dart';
-import 'package:lyc_flutter_project/screens/setting_screen.dart';
+import 'package:lyc_flutter_project/setting/screen/setting_screen.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 import 'package:lyc_flutter_project/widget/round_image.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
