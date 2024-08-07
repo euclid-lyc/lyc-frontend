@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
+import 'package:lyc_flutter_project/setting/screen/info_mod_screen.dart';
 import 'package:lyc_flutter_project/setting/screen/info_screen.dart';
 import 'package:lyc_flutter_project/setting/widget/title_button.dart';
 import 'package:lyc_flutter_project/setting/widget/title_text.dart';
@@ -42,9 +43,16 @@ class SettingScreen extends StatelessWidget {
                 label: "스타일 정보 변경",
                 onPressed: tmp,
               ),
-              const TitleButton(
+              TitleButton(
                 label: "푸시알림 설정",
-                onPressed: tmp,
+                onPressed: () => pushWithoutNavBar(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return InfoModScreen();
+                    },
+                  ),
+                ),
               ),
               const TitleButton(
                 label: "차단 계정 관리",
