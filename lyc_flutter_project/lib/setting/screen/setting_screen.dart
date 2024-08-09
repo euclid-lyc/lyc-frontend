@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
+import 'package:lyc_flutter_project/setting/screen/block_mod_screen.dart';
 import 'package:lyc_flutter_project/setting/screen/info_mod_screen.dart';
 import 'package:lyc_flutter_project/setting/screen/info_screen.dart';
 import 'package:lyc_flutter_project/setting/widget/title_button.dart';
@@ -54,9 +55,16 @@ class SettingScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              const TitleButton(
+              TitleButton(
                 label: "차단 계정 관리",
-                onPressed: tmp,
+                onPressed: () => pushWithoutNavBar(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return BlockModScreen();
+                    },
+                  ),
+                ),
               ),
               const SizedBox(height: 30.0),
               const TitleText(
