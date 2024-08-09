@@ -8,6 +8,7 @@ class InfoTextFormField extends StatelessWidget {
   final TextEditingController? controller;
   final String? hint;
   final int maxLines;
+  final bool obscureText;
 
   const InfoTextFormField({
     super.key,
@@ -17,6 +18,7 @@ class InfoTextFormField extends StatelessWidget {
     this.controller,
     this.hint,
     this.maxLines = 1,
+    this.obscureText = false,
   });
 
   @override
@@ -32,6 +34,7 @@ class InfoTextFormField extends StatelessWidget {
         maxLines: maxLines,
         onChanged: onChanged,
         readOnly: readOnly,
+        obscureText: obscureText,
         initialValue: initialValue,
         style: const TextStyle(
           color: Colors.black,

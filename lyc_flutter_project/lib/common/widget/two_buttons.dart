@@ -59,7 +59,7 @@ class TwoButtons extends StatelessWidget {
             child: TextButton(
               onPressed: scdOnPressed,
               child: Text(
-                '저장',
+                scdLabel,
                 style: TextStyle(
                   color: scdForeColor,
                   fontWeight: FontWeight.bold,
