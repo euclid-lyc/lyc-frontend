@@ -3,6 +3,7 @@ import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/setting/screen/block_mod_screen.dart';
 import 'package:lyc_flutter_project/setting/screen/info_mod_screen.dart';
 import 'package:lyc_flutter_project/setting/screen/info_screen.dart';
+import 'package:lyc_flutter_project/setting/widget/logout_dialog.dart';
 import 'package:lyc_flutter_project/setting/widget/title_button.dart';
 import 'package:lyc_flutter_project/setting/widget/title_text.dart';
 import 'package:lyc_flutter_project/styles/default_padding.dart';
@@ -85,9 +86,14 @@ class SettingScreen extends StatelessWidget {
                 title: "위험구역",
                 content: "로그아웃 및 회원탈퇴",
               ),
-              const TitleButton(
+              TitleButton(
                 label: "로그아웃",
-                onPressed: tmp,
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) => LogoutDialog(),
+                  );
+                },
               ),
               const TitleButton(
                 label: "회원 탈퇴",
