@@ -22,7 +22,8 @@ class FindPasswordScreen4 extends StatelessWidget {
           ),
           Center(
             child: Container(
-              constraints: BoxConstraints(maxWidth: 400), // 최대 너비 설정
+              constraints: BoxConstraints(maxWidth: 400),
+              // 최대 너비 설정
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(20),

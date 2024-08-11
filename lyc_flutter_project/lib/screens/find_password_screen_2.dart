@@ -40,7 +40,8 @@ class FindPasswordScreen2 extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(bottom: 16.5), // 수정된 여백 설정
+                    margin: EdgeInsets.only(bottom: 16.5),
+                    // 수정된 여백 설정
                     decoration: BoxDecoration(
                       color: Color(0xFFBBBBBB),
                       borderRadius: BorderRadius.circular(62),
@@ -60,7 +61,8 @@ class FindPasswordScreen2 extends StatelessWidget {
                     child: Text(
                       '선택하신 인증수단으로 \n 인증번호가 전송되었습니다.',
                       textAlign: TextAlign.center,
-                      style: app_text_style.otherLoginTextStyle.copyWith(color: Colors.black),
+                      style: app_text_style.otherLoginTextStyle
+                          .copyWith(color: Colors.black),
                     ),
                   ),
                   Container(
@@ -78,7 +80,8 @@ class FindPasswordScreen2 extends StatelessWidget {
                           borderRadius: BorderRadius.circular(20),
                           borderSide: BorderSide.none,
                         ),
-                        contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                        contentPadding:
+                            EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                       ),
                     ),
                   ),
@@ -104,7 +107,9 @@ class FindPasswordScreen2 extends StatelessWidget {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => const FindPasswordScreen1()),
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const FindPasswordScreen1()),
                           );
                         },
                         style: TextButton.styleFrom(
@@ -127,7 +132,8 @@ class FindPasswordScreen2 extends StatelessWidget {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => FindPasswordScreen3()),
+                            MaterialPageRoute(
+                                builder: (context) => FindPasswordScreen3()),
                           );
                         },
                         style: TextButton.styleFrom(

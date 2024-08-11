@@ -30,7 +30,7 @@ class FindIdScreen3 extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20),
               ),
               padding: EdgeInsets.fromLTRB(22, 28.5, 22, 0),
-             width: 296,
+              width: 296,
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -52,10 +52,10 @@ class FindIdScreen3 extends StatelessWidget {
                       height: 124,
                       child: Center(
                         child: SvgPicture.network(
-                        'assets/icon_fanfare.svg',
-                        width: 120,
-                        height: 120,
-                      ),
+                          'assets/icon_fanfare.svg',
+                          width: 120,
+                          height: 120,
+                        ),
                       ),
                     ),
                     Container(
@@ -68,11 +68,13 @@ class FindIdScreen3 extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      child: Text("customer1234",style: app_text_style.littleTitle),
-                    ),Padding(
-          padding: const EdgeInsets.only(top: 43),
-    ),
-                  ]  ),
+                      child: Text("customer1234",
+                          style: app_text_style.littleTitle),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 43),
+                    ),
+                  ]),
             ),
           ),
           Expanded(
@@ -131,7 +133,6 @@ class FindIdScreen3 extends StatelessWidget {
                           textAlign: TextAlign.center,
                         ),
                       ),
-
                     ],
                   ),
                 ),
