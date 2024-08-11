@@ -11,11 +11,7 @@ class FindPasswordScreen1 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.lightGrey,
-      appBar: NormalAppbar(
-        backButton: true,
-        title: "비밀번호 찾기",
-        deleteButton: false,
-      ),
+      appBar: NormalAppbar(title: "비밀번호 찾기"),
       body: Center(
         child: SingleChildScrollView(
           child: Column(
@@ -46,29 +42,25 @@ class FindPasswordScreen1 extends StatelessWidget {
                         '이름을 입력해주세요',
                         app_text_style.labelTextStyle,
                         app_text_style.hint,
-                        false
-                    ),
+                        false),
                     buildInputField(
                         '아이디',
                         '아이디를 입력해주세요',
                         app_text_style.labelTextStyle,
                         app_text_style.hint,
-                        false
-                    ),
+                        false),
                     buildInputField(
                         '가입한 이메일로 찾기',
                         '이메일을 입력해주세요',
                         app_text_style.labelTextStyle,
                         app_text_style.hint,
-                        true
-                    ),
+                        true),
                     buildInputField(
                         '가입한 전화번호로 찾기',
                         '전화번호를 입력해주세요',
                         app_text_style.labelTextStyle,
                         app_text_style.hint,
-                        true
-                    ),
+                        true),
                     Padding(
                       padding: EdgeInsets.only(top: 30.5), // 위아래 여백 설정
                       child: TextButton(
@@ -233,5 +225,4 @@ class FindPasswordScreen1 extends StatelessWidget {
       ),
     );
   }
-
 }

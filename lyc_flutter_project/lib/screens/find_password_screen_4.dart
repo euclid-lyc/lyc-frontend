@@ -12,11 +12,7 @@ class FindPasswordScreen4 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.lightGrey,
-      appBar: NormalAppbar(
-        backButton: true,
-        title: "비밀번호 찾기",
-        deleteButton: false,
-      ),
+      appBar: NormalAppbar(title: "비밀번호 찾기"),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -26,7 +22,8 @@ class FindPasswordScreen4 extends StatelessWidget {
           ),
           Center(
             child: Container(
-              constraints: BoxConstraints(maxWidth: 400), // 최대 너비 설정
+              constraints: BoxConstraints(maxWidth: 400),
+              // 최대 너비 설정
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(20),
