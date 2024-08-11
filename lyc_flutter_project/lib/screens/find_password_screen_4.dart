@@ -12,7 +12,7 @@ class FindPasswordScreen4 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.lightGrey,
-      appBar: NormalAppbar(title: "비밀번호 찾기"),
+      appBar: const NormalAppbar(title: "비밀번호 찾기"),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
