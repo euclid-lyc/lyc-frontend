@@ -13,4 +13,5 @@ abstract class AppColor {
   static const grey = const Color(0xffD9D9D9);
   static const deepGrey = const Color(0xff738998);
   static const brown = const Color(0xff8D8371);
+  static const active = Color(0xff03A600);
 }

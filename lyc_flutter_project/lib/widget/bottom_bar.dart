@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lyc_flutter_project/director/screen/director_search_screen.dart';
 import 'package:lyc_flutter_project/screens/home_screen.dart';
 import 'package:lyc_flutter_project/setting/screen/setting_screen.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
@@ -46,7 +47,7 @@ class BottomBar extends StatelessWidget {
           ),
         ),
         PersistentTabConfig(
-          screen: TempScreen(),
+          screen: DirectorSearchScreen(),
           item: ItemConfig(
             icon: SvgPicture.asset(
               'assets/icon_find_director.svg',
