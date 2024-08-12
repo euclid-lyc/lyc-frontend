@@ -8,7 +8,6 @@ import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:lyc_flutter_project/screens/my_page_screen.dart';
-import 'package:lyc_flutter_project/screens/temp_screen.dart';
 
 class BottomBar extends StatelessWidget {
   const BottomBar({super.key});
