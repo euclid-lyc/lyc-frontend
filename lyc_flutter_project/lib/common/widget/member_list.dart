@@ -6,14 +6,14 @@ class MemberList extends StatelessWidget {
   final String nickname;
   final String id;
   final String? content;
-  final Widget button;
+  final Widget? button;
 
   const MemberList({
     super.key,
     required this.profile,
     required this.nickname,
     required this.id,
-    required this.button,
+    this.button,
     this.content,
   });
 
@@ -71,7 +71,8 @@ class MemberList extends StatelessWidget {
               ),
             ],
           ),
-          button,
+          if (button != null)
+            button!,
         ],
       ),
     );
