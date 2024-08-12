@@ -8,19 +8,20 @@ class MemberList extends StatelessWidget {
   final String? content;
   final Widget button;
 
-  const MemberList(
-      {super.key,
-        required this.profile,
-        required this.nickname,
-        required this.id,
-        required this.button,
-        this.content});
+  const MemberList({
+    super.key,
+    required this.profile,
+    required this.nickname,
+    required this.id,
+    required this.button,
+    this.content,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 10),
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 14.0),
       height: 100,
       decoration: BoxDecoration(
         color: Colors.white,
@@ -32,7 +33,7 @@ class MemberList extends StatelessWidget {
           Row(
             children: [
               Padding(
-                padding: const EdgeInsets.all(4.0),
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: RoundImage(image: profile),
               ),
               const SizedBox(width: 4.0),
@@ -44,7 +45,7 @@ class MemberList extends StatelessWidget {
                       Text(
                         nickname,
                         style: const TextStyle(
-                          fontSize: 18,
+                          fontSize: 20,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -58,7 +59,14 @@ class MemberList extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 3),
-                  if (content != null) Text(content!),
+                  if (content != null)
+                    Text(
+                      content!,
+                      style: TextStyle(
+                        fontSize: 12.0,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
                 ],
               ),
             ],

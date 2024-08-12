@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:lyc_flutter_project/common/widget/member_list.dart';
+import 'package:lyc_flutter_project/common/widget/right_button_in_list.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
-import 'package:lyc_flutter_project/data/temp_member_data.dart';
-import 'package:lyc_flutter_project/screens/my_page_screen.dart';
 import 'package:lyc_flutter_project/widget/normal_appbar.dart';
-import 'package:lyc_flutter_project/widget/round_image.dart';
 import 'package:lyc_flutter_project/widget/switch_category_button.dart';
 
 class FollowListScreen extends StatefulWidget {
@@ -34,9 +33,9 @@ class _FollowListScreenState extends State<FollowListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.lightGrey,
-      appBar: NormalAppbar(),
+      appBar: const NormalAppbar(),
       body: Container(
-        margin: EdgeInsets.only(left: 20, right: 20, top: 20),
+        margin: const EdgeInsets.only(left: 20, right: 20, top: 20),
         child: Column(
           children: [
             // switch button
@@ -62,74 +61,25 @@ class _FollowListScreenState extends State<FollowListScreen> {
                 ],
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             // list view
             Expanded(
               child: ListView.builder(
                 itemCount: 10,
                 itemBuilder: (context, index) {
-                  // 팔로우 목록이 없어 임시 member 한 명만 넣어놓겠습니다,,
-                  final member = TempMemberData().members[1];
-                  return GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                MyPageScreen(memberId: member.id),
-                          ));
-                    },
-                    child: Container(
-                      margin: EdgeInsets.all(10),
-                      padding: EdgeInsets.all(10),
-                      height: 90,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(children: [
-                            RoundImage(image: member.profile_image),
-                            SizedBox(width: 8),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(children: [
-                                  Text(
-                                    member.nickname,
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                  SizedBox(width: 8),
-                                  Text('@${member.login_id}'),
-                                ]),
-                                SizedBox(height: 3),
-                                Text(member.introduction),
-                              ],
-                            ),
-                          ]),
-                          GestureDetector(
-                            onTap: () {},
-                            child: Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 5),
-                              decoration: BoxDecoration(
-                                color: Color(0xffFFDD85),
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: Text(
-                                '삭제',
-                                style: TextStyle(fontSize: 14),
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
+                  return MemberList(
+                    profile: "assets/ex_profile.png",
+                    nickname: "카리나",
+                    id: "katarinabluu",
+                    button: RightButtonInList(
+                      backgroundColor: const Color(0xffFFDD85),
+                      foregroundColor: Colors.black,
+                      label: "삭제",
+                      onPressed: () {},
+                      fontWeight: FontWeight.w400,
+                      padding: 3.0,
                     ),
+                    content: "상태메시지",
                   );
                 },
               ),
