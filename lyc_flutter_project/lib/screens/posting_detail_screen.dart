@@ -107,7 +107,7 @@ class _PostingDetailScreenState extends State<PostingDetailScreen> {
               Hero(
                 tag: posting.id,
                 child: AspectRatio(
-                  aspectRatio: 1,
+                  aspectRatio: (3/4),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20),
                     child: Image.asset(

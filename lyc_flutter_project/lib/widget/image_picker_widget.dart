@@ -70,25 +70,27 @@ class _ImagePickerWidgetState extends State<ImagePickerWidget> {
           },
         );
       },
-      child: Container(
-        height: 350,
-        width: double.infinity,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(30),
-        ),
-        child: (_image != null)
-            ? ClipRRect(
-          borderRadius: BorderRadius.circular(30),
-          child: Image.file(
-            File(_image!.path),
-            fit: BoxFit.cover,
+      child: AspectRatio(
+        aspectRatio: (3/4),
+        child: Container(
+          width: double.infinity,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(30),
           ),
-        )
-            : Icon(
-          Icons.camera_alt_outlined,
-          color: AppColor.grey,
-          size: 100,
+          child: (_image != null)
+              ? ClipRRect(
+                borderRadius: BorderRadius.circular(30),
+                child: Image.file(
+                  File(_image!.path),
+                  fit: BoxFit.cover,
+                ),
+              )
+              : Icon(
+                  Icons.camera_alt_outlined,
+                  color: AppColor.grey,
+                  size: 100,
+                ),
         ),
       ),
     );

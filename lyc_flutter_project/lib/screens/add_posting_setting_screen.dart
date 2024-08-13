@@ -24,9 +24,12 @@ class AddPostingSettingScreen extends StatefulWidget {
 }
 
 class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
+  List<Map<String, dynamic>> _points = [];
   List<String> selectedStyle = [];
   int minTempValue = 3;
   int maxTempValue = 10;
+
+  final GlobalKey _imageKey = GlobalKey();
 
   final List<String> styleButtons = [
     '클래식',
@@ -52,26 +55,26 @@ class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
         child: ListView(
           children: [
             // Step1
-            Text('Step 1. 이 옷을 입은 날의 날씨를 알려주세요.',
+            const Text('Step 1. 이 옷을 입은 날의 날씨를 알려주세요.',
                 style: PostingTextStyle.stepTitle),
-            SizedBox(height: 15),
+            const SizedBox(height: 15),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
+              children: <Widget>[
                 WeatherIcon(),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 TempInputField('최저기온'),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 TempInputField('최고기온'),
               ],
             ),
-            SizedBox(height: 40),
+            const SizedBox(height: 40),
             // Step2
-            Text(
+            const Text(
               'Step 2. 코디가 지향하는 스타일을 선택해주세요.',
               style: PostingTextStyle.stepTitle,
             ),
-            SizedBox(height: 15),
+            const SizedBox(height: 15),
             Wrap(
               direction: Axis.horizontal,
               alignment: WrapAlignment.start,
@@ -87,72 +90,145 @@ class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
                   )
               ],
             ),
-            SizedBox(height: 40),
-            Text(
+            const SizedBox(height: 40),
+            const Text(
               'Step 3. 착용 정보를 자유롭게 입력해주세요.',
               style: PostingTextStyle.stepTitle,
             ),
-            Text(
+            const Text(
               '사진의 특정 위치를 클릭하여 링크를 추가할 수 있습니다.',
               style: TextStyle(
                 color: Color(0xff575757),
               ),
             ),
-            SizedBox(height: 15),
-            AspectRatio(
-              aspectRatio: 0.8,
-              child: ClipRRect(
-                child: Image.file(
-                  File(widget.image.path),
-                  fit: BoxFit.cover,
-                ),
-                borderRadius: BorderRadius.circular(20),
-              ),
-            ),
-            Text('어케 하는 거임..?ㅠㅠ....'),
-            Container(
-              // 아래가 문제가 되는 패딩, 마진 효과가 동시에 생김
-              padding: EdgeInsets.only(right: 10),
-              height: 40,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: Colors.white,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            const SizedBox(height: 15),
+            GestureDetector(
+              onTapDown: (details) {
+                final RenderBox renderBox =
+                    _imageKey.currentContext?.findRenderObject() as RenderBox;
+                final localOffset =
+                    renderBox.globalToLocal(details.globalPosition);
+                _addPoint(localOffset); // Pass Offset directly
+              },
+              child: Stack(
                 children: [
-                  Row(
-                    children: [
-                      Container(
-                        width: 90,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: AppColor.deepGrey,
-                        ),
-                        child: Text(
-                          '링크1',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
+                  AspectRatio(
+                    aspectRatio: (3 / 4),
+                    child: ClipRRect(
+                      key: _imageKey,
+                      borderRadius: BorderRadius.circular(20),
+                      child: Image.file(
+                        File(widget.image.path),
+                        fit: BoxFit.cover,
                       ),
-                      SizedBox(width: 10),
-                      Text('http://sample1.com'),
-                    ],
-                  ),
-                  SizedBox(
-                    width: 20,
-                    child: SvgPicture.asset(
-                      'assets/eraser.svg',
-                      color: AppColor.deepGrey,
                     ),
                   ),
+                  ..._points.map(
+                    (e) {
+                      Offset offset = e["offset"];
+                      final RenderBox renderBox = _imageKey.currentContext
+                          ?.findRenderObject() as RenderBox;
+                      final size = renderBox.size;
+
+                      double left = offset.dx * size.width;
+                      double top = offset.dy * size.height;
+
+                      const double containerWidth = 60;
+                      const double containerHeight = 30;
+
+                      if (left + containerWidth > size.width) {
+                        left = size.width - containerWidth;
+                      }
+                      if (top + containerHeight > size.height) {
+                        top = size.height - containerHeight - 20;
+                      }
+                      if (left < 0) {
+                        left = 0;
+                      }
+                      if (top < 0) {
+                        top = 0;
+                      }
+
+                      return Positioned(
+                        left: left,
+                        top: top,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: const Color(0xff252525),
+                          ),
+                          padding: const EdgeInsets.all(10),
+                          child: Text(
+                            '링크${_points.indexOf(e) + 1}',
+                            style: const TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ).toList(),
                 ],
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 10),
+            ..._points.map(
+              (e) {
+                return Container(
+                  margin: const EdgeInsets.symmetric(vertical: 8),
+                  padding: const EdgeInsets.only(right: 10),
+                  height: 40,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Colors.white,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        flex: 9,
+                        child: Row(
+                          children: [
+                            Container(
+                              width: 80,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                color: AppColor.deepGrey,
+                              ),
+                              child: Text(
+                                '링크${_points.indexOf(e) + 1}',
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: Text(
+                                e['link'],
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        child: SizedBox(
+                          child: SvgPicture.asset(
+                            'assets/icon_eraser.svg',
+                            color: AppColor.deepGrey,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+            const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -166,7 +242,7 @@ class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      child: Text(
+                      child: const Text(
                         '취소',
                         style: TextStyle(
                             color: Colors.black,
@@ -176,7 +252,7 @@ class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
                     ),
                   ),
                 ),
-                Expanded(flex: 1, child: SizedBox()),
+                const Expanded(flex: 1, child: SizedBox()),
                 Expanded(
                   flex: 2,
                   child: Container(
@@ -188,7 +264,7 @@ class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      child: Text(
+                      child: const Text(
                         '저장',
                         style: TextStyle(
                           color: Colors.white,
@@ -223,7 +299,7 @@ class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
           borderRadius: BorderRadius.circular(20),
           color: Colors.white,
         ),
-        child: Icon(
+        child: const Icon(
           Icons.wb_sunny_sharp,
           color: Colors.yellow,
           size: 50,
@@ -245,13 +321,49 @@ class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
           children: [
             Text(
               label,
-              style: TextStyle(
+              style: const TextStyle(
                 fontWeight: FontWeight.w600,
               ),
             ),
             label == '최저기온' ? Text('$minTempValue°C') : Text('$maxTempValue°C')
           ],
         ),
+      ),
+    );
+  }
+
+  void _addPoint(Offset localOffset) {
+    final RenderBox renderBox =
+        _imageKey.currentContext?.findRenderObject() as RenderBox;
+    final size = renderBox.size;
+
+    double relativeDx = localOffset.dx / size.width;
+    double relativeDy = localOffset.dy / size.height;
+
+    TextEditingController _linkController = TextEditingController();
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('링크를 입력해주세요'),
+        content: TextField(controller: _linkController),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('취소'),
+          ),
+          TextButton(
+            onPressed: () {
+              setState(() {
+                _points.add({
+                  "offset": Offset(relativeDx, relativeDy),
+                  "link": _linkController.text
+                });
+              });
+              Navigator.of(context).pop();
+            },
+            child: const Text('추가하기'),
+          ),
+        ],
       ),
     );
   }
