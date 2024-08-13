@@ -174,7 +174,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
           // 하단부
           if (isBlocked)
             Expanded(
-              flex: 2,
+              flex: 3,
               child: Container(
                 margin: EdgeInsets.fromLTRB(1, 0, 0, 228),
                 child: Column(
@@ -223,7 +223,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
             )
           else if (isNotified)
             Expanded(
-              flex: 2,
+              flex: 3,
               child: Container(
                 margin: EdgeInsets.fromLTRB(1, 0, 0, 228),
                 child: Column(
@@ -274,7 +274,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
             )
           else
             Expanded(
-              flex: 2,
+              flex: 3,
               child: Container(
                 margin:
                     EdgeInsets.only(left: 30, right: 30, top: 25, bottom: 5),
