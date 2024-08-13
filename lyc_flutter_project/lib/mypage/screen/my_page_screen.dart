@@ -62,7 +62,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
             flex: 1,
             child: Container(
               color: AppColor.beige,
-              padding: EdgeInsets.only(left: 30, right: 30),
+              padding: const EdgeInsets.symmetric(horizontal: 30.0),
               child: Column(
                 children: [
                   // 프로필 박스
@@ -278,7 +278,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
               flex: 3,
               child: Container(
                 margin:
-                    EdgeInsets.only(left: 30, right: 30, top: 25, bottom: 5),
+                    const EdgeInsets.only(left: 20, right: 20, bottom: 5, top: 20),
                 child: Column(
                   children: [
                     // 갤러리 카테고리 버튼(00의 코디, 저장한 코디, 00의 옷장)
