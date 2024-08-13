@@ -31,7 +31,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
     return Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
-          image: AssetImage('assets/sky.jpg'),
+          image: AssetImage('assets/background_attendance.jpg'),
           fit: BoxFit.cover,
         ),
       ),
