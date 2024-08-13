@@ -9,6 +9,7 @@ import 'package:lyc_flutter_project/model/member.dart';
 import 'package:lyc_flutter_project/mypage/screen/follow_list_screen.dart';
 import 'package:lyc_flutter_project/mypage/screen/point_screen.dart';
 import 'package:lyc_flutter_project/mypage/widget/grid_widget_with_button.dart';
+import 'package:lyc_flutter_project/mypage/widget/my_closet_list.dart';
 import 'package:lyc_flutter_project/services/temp_services.dart';
 import 'package:lyc_flutter_project/styles/app_text_style.dart';
 import 'package:lyc_flutter_project/widget/bottom_buttons.dart';
@@ -314,10 +315,16 @@ class _MyPageScreenState extends State<MyPageScreen> {
                       ),
                     ),
                     SizedBox(height: 20),
-                    Expanded(
+                    if (_selectedCategory == 0 || _selectedCategory == 1)
+                      Expanded(
                         child: GridWidgetWithButton(
                             postings: TempPostingData().postings,
-                            category: _selectedCategory)),
+                            category: _selectedCategory),
+                      )
+                    else
+                      Expanded(
+                        child: MyClosetList(),
+                      )
                   ],
                 ),
               ),
