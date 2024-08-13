@@ -85,7 +85,7 @@ class GridWidgetWithButton extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                         builder: (context) => PostingDetailScreen(
-                            id: posting.id, isMyCoordi: category == 0)));
+                            id: posting.id, isMyposting: category == 0)));
               },
               child: Hero(
                 tag: posting.id,
