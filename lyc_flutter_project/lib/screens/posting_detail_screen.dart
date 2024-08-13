@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lyc_flutter_project/common/widget/posting_top.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lyc_flutter_project/widget/normal_appbar.dart';
@@ -46,7 +47,7 @@ class _PostingDetailScreenState extends State<PostingDetailScreen> {
               if (widget.isCloset == false)
                 PostingTop(
                   child: Row(
-                    children: <Widget>[
+                    children: [
                       Row(
                         children: [
                           const RoundImage(
@@ -189,29 +190,6 @@ class _PostingDetailScreenState extends State<PostingDetailScreen> {
           ),
         ),
       ),
-    );
-  }
-}
-
-class PostingTop extends StatelessWidget {
-  final Widget child;
-
-  const PostingTop({
-    super.key,
-    required this.child,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 70,
-      padding: const EdgeInsets.all(10),
-      margin: const EdgeInsets.symmetric(vertical: 15),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        color: Colors.white,
-      ),
-      child: child,
     );
   }
 }
