@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/model/posting.dart';
-import 'package:lyc_flutter_project/screens/add_clothes_posting_screen.dart';
-import 'package:lyc_flutter_project/screens/posting_detail_screen.dart';
+import 'package:lyc_flutter_project/posting/screen/add_clothes_posting_screen.dart';
+import 'package:lyc_flutter_project/posting/screen/posting_detail_screen.dart';
 import 'package:lyc_flutter_project/mypage/screen/review_list_screen.dart';
-import 'package:lyc_flutter_project/screens/add_posting_screen.dart';
+import 'package:lyc_flutter_project/posting/screen/add_posting_screen.dart';
 import 'package:lyc_flutter_project/services/temp_services.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 
