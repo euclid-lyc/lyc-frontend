@@ -6,7 +6,7 @@ import 'package:lyc_flutter_project/model/member.dart';
 import 'package:lyc_flutter_project/model/posting.dart';
 import 'package:lyc_flutter_project/services/temp_services.dart';
 import 'package:lyc_flutter_project/widget/normal_appbar.dart';
-import 'package:lyc_flutter_project/widget/round_image.dart';
+import 'package:lyc_flutter_project/common/widget/round_image.dart';
 import 'package:flutter_svg/svg.dart';
 
 class PostingDetailScreen extends StatefulWidget {

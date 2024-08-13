@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart'; // SVG 이미지 사용을 위한 패키지
 import 'package:lyc_flutter_project/data/app_color.dart';
+import 'package:lyc_flutter_project/data/coordi_by_category.dart';
 import 'package:lyc_flutter_project/data/temp_member_data.dart';
 import 'package:lyc_flutter_project/data/temp_posting_data.dart';
 import 'package:lyc_flutter_project/model/coordi.dart';
 import 'package:lyc_flutter_project/model/member.dart';
-import 'package:lyc_flutter_project/screens/follow_list_screen.dart';
-import 'package:lyc_flutter_project/screens/point_screen.dart';
+import 'package:lyc_flutter_project/mypage/screen/follow_list_screen.dart';
+import 'package:lyc_flutter_project/mypage/screen/point_screen.dart';
+import 'package:lyc_flutter_project/mypage/widget/grid_widget_with_button.dart';
 import 'package:lyc_flutter_project/services/temp_services.dart';
+import 'package:lyc_flutter_project/styles/app_text_style.dart';
 import 'package:lyc_flutter_project/widget/bottom_buttons.dart';
-import 'package:lyc_flutter_project/widget/grid_widget_with_button.dart';
-import 'package:lyc_flutter_project/widget/round_image.dart';
-import 'package:lyc_flutter_project/widget/switch_category_button.dart';
+import 'package:lyc_flutter_project/common/widget/round_image.dart';
+import 'package:lyc_flutter_project/common/widget/switch_category_button.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 
-import '../data/coordi_by_category.dart';
-import '../styles/app_text_style.dart';
 import 'notify_screen.dart';
 
 class MyPageScreen extends StatefulWidget {

@@ -3,7 +3,7 @@ import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/data/temp_member_data.dart';
 import 'package:lyc_flutter_project/screens/add_posting_screen.dart';
 import 'package:lyc_flutter_project/widget/normal_appbar.dart';
-import 'package:lyc_flutter_project/widget/round_image.dart';
+import 'package:lyc_flutter_project/common/widget/round_image.dart';
 
 class ReviewListScreen extends StatelessWidget {
   const ReviewListScreen({super.key});

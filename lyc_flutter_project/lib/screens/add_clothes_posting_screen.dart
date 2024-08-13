@@ -6,7 +6,7 @@ import 'package:lyc_flutter_project/widget/image_picker_widget.dart';
 import 'package:lyc_flutter_project/widget/normal_appbar.dart';
 import 'package:lyc_flutter_project/widget/posting_content_text_field.dart';
 import 'package:lyc_flutter_project/widget/select_buttons_in_posting.dart';
-import 'package:lyc_flutter_project/widget/switch_category_button.dart';
+import 'package:lyc_flutter_project/common/widget/switch_category_button.dart';
 
 class AddClothesPostingScreen extends StatefulWidget {
   const AddClothesPostingScreen({super.key});

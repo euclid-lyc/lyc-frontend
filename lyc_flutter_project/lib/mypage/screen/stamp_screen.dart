@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
-import 'package:lyc_flutter_project/widget/stamp.dart';
+import 'package:lyc_flutter_project/mypage/widget/stamp.dart';
 
 class StampScreen extends StatelessWidget {
   const StampScreen({super.key});

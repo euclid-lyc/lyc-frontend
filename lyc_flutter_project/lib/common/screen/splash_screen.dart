@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/screens/temp_screen.dart';
 
-class LoadingScreen extends StatelessWidget {
-  const LoadingScreen({super.key});
+class SplashScreen extends StatelessWidget {
+  const SplashScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lyc_flutter_project/screens/loading_screen.dart';
+import 'package:lyc_flutter_project/common/screen/splash_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       title: 'Lead Your Closet',
       debugShowCheckedModeBanner: false,
-      home: LoadingScreen(),
+      home: SplashScreen(),
     );
   }
 }
