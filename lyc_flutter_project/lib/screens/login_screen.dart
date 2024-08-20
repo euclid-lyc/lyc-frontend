@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/screens/find_id_screen_1.dart';
 import 'package:lyc_flutter_project/screens/find_password_screen_1.dart';
-import 'package:lyc_flutter_project/screens/join_membership_screen_1.dart';
+import 'package:lyc_flutter_project/Join/Screens/join_membership_screen_1.dart';
 import '../styles/app_text_style.dart';
+import 'my_page_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -130,7 +131,7 @@ class LoginScreen extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                    const JoinMembershipScreen1()),
+                                        const JoinMembershipScreen1()),
                               );
                             },
                             child: Text(
@@ -144,7 +145,7 @@ class LoginScreen extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                    const FindIdScreen1()),
+                                        const FindIdScreen1()),
                               );
                             },
                             child: Text(
@@ -158,7 +159,7 @@ class LoginScreen extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                    const FindPasswordScreen1()),
+                                        const FindPasswordScreen1()),
                               );
                             },
                             child: Text(
@@ -202,7 +203,13 @@ class LoginScreen extends StatelessWidget {
                     padding: EdgeInsets.only(top: 15),
                     child: TextButton(
                       onPressed: () {
-                        // 로그인 버튼 눌렀을 때의 동작 구현
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const MyPageScreen(
+                                    memberId: 1,
+                                  )),
+                        ); // 로그인 버튼 눌렀을 때의 동작 구현
                       },
                       style: TextButton.styleFrom(
                         backgroundColor: AppColor.brown,
