@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:lyc_flutter_project/Join/Screens/join_membership_screen_4.dart';
 import 'package:lyc_flutter_project/screens/loading_screen.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(providers: [
+      ChangeNotifierProvider(create: (context) => MembershipState()),
+      // 다른 프로바이더들도 여기에 추가
+    ], child: MyApp()),
+  );
 }
 
 class MyApp extends StatelessWidget {
