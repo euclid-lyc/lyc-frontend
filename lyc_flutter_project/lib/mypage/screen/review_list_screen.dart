@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:lyc_flutter_project/common/widget/member_list.dart';
+import 'package:lyc_flutter_project/common/widget/right_button_in_list.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
-import 'package:lyc_flutter_project/data/temp_member_data.dart';
-import 'package:lyc_flutter_project/posting/screen/add_posting_screen.dart';
+import 'package:lyc_flutter_project/screens/add_posting_screen.dart';
 import 'package:lyc_flutter_project/widget/normal_appbar.dart';
-import 'package:lyc_flutter_project/common/widget/round_image.dart';
 
 class ReviewListScreen extends StatelessWidget {
   const ReviewListScreen({super.key});
@@ -12,8 +12,9 @@ class ReviewListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.lightGrey,
-      appBar:
-          NormalAppbar(title: '나의 리뷰',),
+      appBar: NormalAppbar(
+        title: '나의 리뷰',
+      ),
       body: Container(
         margin: EdgeInsets.symmetric(horizontal: 30, vertical: 25),
         child: Column(
@@ -34,71 +35,30 @@ class ReviewListScreen extends StatelessWidget {
             ),
             SizedBox(height: 15),
             Expanded(
-              child: ListView.separated(
+              child: ListView.builder(
                 itemCount: 10,
                 itemBuilder: (context, index) {
-                  // 팔로우 목록이 없어 임시 member 한 명만 넣어놓겠습니다,,
-                  final member = TempMemberData().members[1];
-                  return Container(
-                    padding: EdgeInsets.all(10),
-                    height: 90,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(children: [
-                          RoundImage(image: member.profile_image),
-                          SizedBox(width: 8),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(children: [
-                                Text(
-                                  member.nickname,
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                                SizedBox(width: 8),
-                                Text('@${member.login_id}'),
-                              ]),
-                              SizedBox(height: 3),
-                              Text('디렉팅 받은 날짜인가요'),
-                            ],
-                          ),
-                        ]),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.push(context, MaterialPageRoute(
-                              builder: (context) {
-                                return AddPostingScreen(purpose: 1);
-                              },
-                            ));
+                  return MemberList(
+                    profile: "assets/ex_profile.png",
+                    nickname: "karina",
+                    id: "katarinabluu",
+                    content: "날짜",
+                    button: RightButtonInList(
+                      backgroundColor: Color(0xffFFDD85),
+                      foregroundColor: Colors.black,
+                      label: "작성하기",
+                      fontSize: 12.0,
+                      onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return AddPostingScreen(purpose: 1);
                           },
-                          child: Container(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 5),
-                            decoration: BoxDecoration(
-                              color: Color(0xffFFDD85),
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: Text(
-                              '작성하기',
-                              style: TextStyle(fontSize: 14),
-                            ),
-                          ),
-                        )
-                      ],
+                        ),
+                      ),
                     ),
                   );
                 },
-                separatorBuilder: (context, index) {
-                  return SizedBox(height: 15);
-                }
               ),
             ),
           ],

@@ -1,30 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:lyc_flutter_project/data/app_color.dart';
+import 'package:lyc_flutter_project/styles/app_text_style.dart';
 import 'package:lyc_flutter_project/widget/normal_appbar.dart';
-import 'package:lyc_flutter_project/Join/Screens/join_membership_screen_1.dart';
-import 'package:lyc_flutter_project/Join/Screens/join_membership_screen_3.dart';
-import '../../styles/app_text_style.dart';
-import '../../widget/Controller.dart';
+import 'package:lyc_flutter_project/screens/join_membership_screen_2.dart';
+import 'package:lyc_flutter_project/data/app_color.dart';
 
-class JoinMembershipScreen2 extends StatefulWidget {
-  const JoinMembershipScreen2({super.key});
+class JoinMembershipScreen3 extends StatelessWidget {
+  const JoinMembershipScreen3({super.key});
 
-  @override
-  JoinMembershipScreenState2 createState() {
-    return JoinMembershipScreenState2();
-  }
-}
-
-class JoinMembershipScreenState2 extends State<JoinMembershipScreen2> {
-
-  final Controller _controller1 = Controller();
-  final Controller _controller2 = Controller();
-  final Controller _controller3 = Controller();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.lightGrey,
-      appBar: const NormalAppbar(
+      appBar: NormalAppbar(
         title: "회원가입",
       ),
       body: Column(
@@ -49,7 +36,7 @@ class JoinMembershipScreenState2 extends State<JoinMembershipScreen2> {
                     Padding(
                       padding: EdgeInsets.fromLTRB(7, 0, 7, 8),
                       child: Text(
-                        'Step 2. 배송지 입력',
+                        'Step 3. 배송지 입력',
                         style: app_text_style.littleTitle,
                       ),
                     ),
@@ -73,17 +60,13 @@ class JoinMembershipScreenState2 extends State<JoinMembershipScreen2> {
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               child: TextField(
-                                controller: _controller1.controller,
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
                                   hintText: '우편번호',
                                   hintStyle: app_text_style.hint,
-
-                                  contentPadding: EdgeInsets.symmetric(
-                                      horizontal: 12, vertical: 12), // 중앙 정렬
+                                  contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 12), // 중앙 정렬
                                 ),
-                                textAlignVertical: TextAlignVertical.center,
-                                // 텍스트 수직 중앙 정렬
+                                textAlignVertical: TextAlignVertical.center, // 텍스트 수직 중앙 정렬
                                 textAlign: TextAlign.left, // 텍스트 왼쪽 정렬
                               ),
                             ),
@@ -100,8 +83,7 @@ class JoinMembershipScreenState2 extends State<JoinMembershipScreen2> {
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10),
                                 ),
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 11.1, vertical: 4.7),
+                                padding: EdgeInsets.symmetric(horizontal: 11.1, vertical: 4.7),
                               ),
                               child: Center(
                                 child: Text(
@@ -128,16 +110,13 @@ class JoinMembershipScreenState2 extends State<JoinMembershipScreen2> {
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: TextField(
-                          controller: _controller2.controller,
                           decoration: InputDecoration(
                             border: InputBorder.none,
                             hintText: '주소',
                             hintStyle: app_text_style.hint,
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 12, vertical: 12), // 중앙 정렬
+                            contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 12), // 중앙 정렬
                           ),
-                          textAlignVertical: TextAlignVertical.center,
-                          // 텍스트 수직 중앙 정렬
+                          textAlignVertical: TextAlignVertical.center, // 텍스트 수직 중앙 정렬
                           textAlign: TextAlign.left, // 텍스트 왼쪽 정렬
                         ),
                       ),
@@ -152,16 +131,13 @@ class JoinMembershipScreenState2 extends State<JoinMembershipScreen2> {
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: TextField(
-                          controller: _controller3.controller,
                           decoration: InputDecoration(
                             border: InputBorder.none,
                             hintText: '상세주소',
                             hintStyle: app_text_style.hint,
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 12, vertical: 12), // 중앙 정렬
+                            contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 12), // 중앙 정렬
                           ),
-                          textAlignVertical: TextAlignVertical.center,
-                          // 텍스트 수직 중앙 정렬
+                          textAlignVertical: TextAlignVertical.center, // 텍스트 수직 중앙 정렬
                           textAlign: TextAlign.left, // 텍스트 왼쪽 정렬
                         ),
                       ),
@@ -186,13 +162,12 @@ class JoinMembershipScreenState2 extends State<JoinMembershipScreen2> {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(
-                                builder: (context) => const JoinMembershipScreen1()),
+                            MaterialPageRoute(builder: (context) => const JoinMembershipScreen2()),
                           );
                         },
                         style: TextButton.styleFrom(
                           backgroundColor: AppColor.grey, // 색상 변경
-                          minimumSize: const Size(120, 40), // 버튼 크기 설정
+                          minimumSize: Size(120, 40), // 버튼 크기 설정
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
                           ),
@@ -208,10 +183,9 @@ class JoinMembershipScreenState2 extends State<JoinMembershipScreen2> {
                       // '다음' 버튼
                       TextButton(
                         onPressed: () {
-                          Navigator.push(context,
-                            MaterialPageRoute(
-                                builder: (context) => const JoinMembershipScreen3()),
-                          );
+                         // Navigator.push(context,
+                         //     MaterialPageRoute(builder: (context) => JoinMembershipScreen4()),
+                         // );
                         },
                         style: TextButton.styleFrom(
                           backgroundColor: AppColor.beige, // 색상 변경
@@ -236,6 +210,4 @@ class JoinMembershipScreenState2 extends State<JoinMembershipScreen2> {
       ),
     );
   }
-
-
 }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lyc_flutter_project/data/app_color.dart';
 
 GestureDetector SelectButtonsInPosting(List<String> name, List<String> selected,
     int index, VoidCallback _onTap, Color pointColor, Color backgroundColor) {

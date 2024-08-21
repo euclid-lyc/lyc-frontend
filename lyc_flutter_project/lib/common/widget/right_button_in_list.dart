@@ -5,6 +5,9 @@ class RightButtonInList extends StatelessWidget {
   final Color foregroundColor;
   final String label;
   final VoidCallback onPressed;
+  final FontWeight fontWeight;
+  final double fontSize;
+  final double padding;
 
   const RightButtonInList({
     super.key,
@@ -12,6 +15,9 @@ class RightButtonInList extends StatelessWidget {
     required this.foregroundColor,
     required this.label,
     required this.onPressed,
+    this.fontWeight = FontWeight.w500,
+    this.fontSize = 14.0,
+    this.padding = 5.0,
   });
 
   @override
@@ -22,9 +28,9 @@ class RightButtonInList extends StatelessWidget {
         backgroundColor: MaterialStateProperty.all(backgroundColor),
         foregroundColor: MaterialStateProperty.all(foregroundColor),
         textStyle: MaterialStateProperty.all(
-          const TextStyle(
-            fontWeight: FontWeight.w500,
-            fontSize: 14.0,
+          TextStyle(
+            fontWeight: fontWeight,
+            fontSize: fontSize,
           ),
         ),
         shape: MaterialStateProperty.all(
@@ -33,7 +39,7 @@ class RightButtonInList extends StatelessWidget {
           ),
         ),
         padding: MaterialStateProperty.all(
-          const EdgeInsets.all(5.0),
+          EdgeInsets.all(padding),
         ),
       ),
       child: Text(label),
