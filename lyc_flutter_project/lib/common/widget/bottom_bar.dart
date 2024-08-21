@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:lyc_flutter_project/common/widget/round_image.dart';
 import 'package:lyc_flutter_project/director/screen/director_search_screen.dart';
+import 'package:lyc_flutter_project/mypage/screen/my_page_screen.dart';
 import 'package:lyc_flutter_project/screens/home_screen.dart';
 import 'package:lyc_flutter_project/setting/screen/setting_screen.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
-import 'package:lyc_flutter_project/widget/round_image.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
-import 'package:lyc_flutter_project/screens/my_page_screen.dart';
 
 class BottomBar extends StatelessWidget {
   const BottomBar({super.key});
