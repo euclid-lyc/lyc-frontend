@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/common/widget/member_list.dart';
 import 'package:lyc_flutter_project/common/widget/right_button_in_list.dart';
+import 'package:lyc_flutter_project/common/widget/switch_category_button.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/widget/normal_appbar.dart';
-import 'package:lyc_flutter_project/widget/switch_category_button.dart';
 
 class FollowListScreen extends StatefulWidget {
   final bool follower;
