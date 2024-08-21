@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:lyc_flutter_project/mypage/screen/my_page_screen.dart';
 import 'package:lyc_flutter_project/screens/home_screen.dart';
 import 'package:lyc_flutter_project/screens/login_screen.dart';
-import 'package:lyc_flutter_project/screens/my_page_screen.dart';
-import 'package:lyc_flutter_project/widget/bottom_bar.dart';
+import 'package:lyc_flutter_project/common/widget/bottom_bar.dart';
 
 class TempScreen extends StatelessWidget {
   const TempScreen({super.key});

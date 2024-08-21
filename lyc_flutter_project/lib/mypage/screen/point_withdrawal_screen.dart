@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
+import 'package:lyc_flutter_project/mypage/widget/point_custom_container.dart';
 import 'package:lyc_flutter_project/widget/normal_appbar.dart';
-import 'package:lyc_flutter_project/widget/point_custom_container.dart';
-import 'package:lyc_flutter_project/widget/point_sub_title.dart';
+import 'package:lyc_flutter_project/mypage/widget/point_sub_title.dart';
 import 'package:lyc_flutter_project/widget/point_title.dart';
 
 class PointWithdrawalScreen extends StatelessWidget {

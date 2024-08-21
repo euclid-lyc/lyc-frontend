@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:lyc_flutter_project/common/screen/splash_screen.dart';
 import 'package:lyc_flutter_project/Join/Screens/join_membership_screen_4.dart';
-import 'package:lyc_flutter_project/screens/loading_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       title: 'Lead Your Closet',
       debugShowCheckedModeBanner: false,
-      home: LoadingScreen(),
+      home: SplashScreen(),
     );
   }
 }

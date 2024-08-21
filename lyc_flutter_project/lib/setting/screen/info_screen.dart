@@ -6,7 +6,7 @@ import 'package:lyc_flutter_project/setting/widget/common_button.dart';
 import 'package:lyc_flutter_project/setting/widget/info_text_form_field.dart';
 import 'package:lyc_flutter_project/styles/default_padding.dart';
 import 'package:lyc_flutter_project/widget/normal_appbar.dart';
-import 'package:lyc_flutter_project/widget/round_image.dart';
+import 'package:lyc_flutter_project/common/widget/round_image.dart';
 
 class InfoScreen extends StatelessWidget {
   const InfoScreen({super.key});
