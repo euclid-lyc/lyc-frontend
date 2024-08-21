@@ -1,19 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:lyc_flutter_project/data/app_color.dart';
+import 'package:lyc_flutter_project/styles/app_text_style.dart';
 import 'package:lyc_flutter_project/widget/normal_appbar.dart';
-import 'package:lyc_flutter_project/screens/join_membership_screen_1.dart';
-import 'package:lyc_flutter_project/screens/join_membership_screen_3.dart';
-import '../styles/app_text_style.dart';
+import 'package:lyc_flutter_project/Join/Screens/join_membership_screen_2.dart';
+import 'package:lyc_flutter_project/data/app_color.dart';
 
-class JoinMembershipScreen2 extends StatelessWidget {
-  const JoinMembershipScreen2({super.key});
+import '../../widget/Controller.dart';
+import 'join_membership_screen_4.dart';
+
+class JoinMembershipScreen3 extends StatefulWidget {
+  const JoinMembershipScreen3({super.key});
+
+  @override
+  State<JoinMembershipScreen3> createState() {
+    return JoinMembershipScreenState3();
+  }
+}
+
+class JoinMembershipScreenState3 extends State<JoinMembershipScreen3> {
+  final Controller _controller1 = Controller();
+  final Controller _controller2 = Controller();
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.lightGrey,
-      appBar: NormalAppbar(
+      appBar: const NormalAppbar(
         title: "회원가입",
       ),
       body: Column(
@@ -25,7 +38,8 @@ class JoinMembershipScreen2 extends StatelessWidget {
           ),
           Center(
             child: Container(
-              constraints: BoxConstraints(maxWidth: 400), // 최대 너비 설정
+              constraints: BoxConstraints(maxWidth: 400),
+              // 최대 너비 설정
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(20),
@@ -39,7 +53,7 @@ class JoinMembershipScreen2 extends StatelessWidget {
                     margin: EdgeInsets.fromLTRB(7, 0, 7, 43.5),
                     alignment: Alignment.topLeft,
                     child: Text(
-                      'Step 2. 회원정보 입력',
+                      'Step 3. 회원정보 입력',
                       style: app_text_style.littleTitle,
                     ),
                   ),
@@ -69,6 +83,7 @@ class JoinMembershipScreen2 extends StatelessWidget {
                     width: 252,
                     height: 37, // 너비를 252로 설정
                     child: TextField(
+                      controller: _controller1.controller,
                       decoration: InputDecoration(
                         hintText: '닉네임',
                         hintStyle: app_text_style.hint,
@@ -76,7 +91,8 @@ class JoinMembershipScreen2 extends StatelessWidget {
                           borderRadius: BorderRadius.circular(20),
                           borderSide: BorderSide.none,
                         ),
-                        contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                        contentPadding:
+                            EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                       ),
                     ),
                   ),
@@ -89,6 +105,7 @@ class JoinMembershipScreen2 extends StatelessWidget {
                     ),
                     width: 252, // 너비를 252로 설정
                     child: TextField(
+                      controller: _controller2.controller,
                       maxLines: 3, // 여러 줄 입력 가능
                       decoration: InputDecoration(
                         hintText: '자유롭게 자신을 소개해 주세요',
@@ -97,7 +114,8 @@ class JoinMembershipScreen2 extends StatelessWidget {
                           borderRadius: BorderRadius.circular(20),
                           borderSide: BorderSide.none,
                         ),
-                        contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 10), // 왼쪽 여백 조정
+                        contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 15, vertical: 10), // 왼쪽 여백 조정
                       ),
                     ),
                   ),
@@ -120,7 +138,9 @@ class JoinMembershipScreen2 extends StatelessWidget {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => const JoinMembershipScreen1()),
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const JoinMembershipScreen2()),
                           );
                         },
                         style: TextButton.styleFrom(
@@ -143,7 +163,8 @@ class JoinMembershipScreen2 extends StatelessWidget {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => JoinMembershipScreen3()),
+                            MaterialPageRoute(
+                                builder: (context) => JoinMembershipScreen4()),
                           );
                         },
                         style: TextButton.styleFrom(
@@ -153,7 +174,7 @@ class JoinMembershipScreen2 extends StatelessWidget {
                             borderRadius: BorderRadius.circular(20),
                           ),
                         ),
-                        child: Text(
+                        child: const Text(
                           '다음',
                           style: app_text_style.button,
                           textAlign: TextAlign.center,
@@ -169,4 +190,6 @@ class JoinMembershipScreen2 extends StatelessWidget {
       ),
     );
   }
+
+
 }
