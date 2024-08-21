@@ -11,7 +11,7 @@ import 'package:lyc_flutter_project/widget/custom_back_button.dart';
 class NormalAppbar extends StatelessWidget implements PreferredSizeWidget {
   final bool backButton;
   final String title;
-  final Icon? icon;
+  final Widget? icon;
   final VoidCallback? onTap;
   final Color? backgroundColor;
 
@@ -29,59 +29,57 @@ class NormalAppbar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       backgroundColor: backgroundColor ?? AppColor.beige,
       automaticallyImplyLeading: false,
-      flexibleSpace: Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(15),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Expanded(
-                    child: backButton
-                        ? Container(
-                            alignment: AlignmentDirectional.bottomStart,
-                            child: GestureDetector(
-                              child: const CustomBackButton(),
-                              onTap: () => Navigator.pop(context),
-                            ),
-                          )
-                        : const SizedBox(),
-                  ),
-                  Expanded(
-                    child: Container(
-                      alignment: Alignment.center,
-                      child: Text(
-                        title,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 20,
-                        ),
+      flexibleSpace: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(20),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Expanded(
+                  child: backButton
+                      ? Container(
+                          alignment: AlignmentDirectional.bottomStart,
+                          child: GestureDetector(
+                            child: const CustomBackButton(),
+                            onTap: () => Navigator.pop(context),
+                          ),
+                        )
+                      : const SizedBox(),
+                ),
+                Expanded(
+                  child: Container(
+                    alignment: Alignment.center,
+                    child: Text(
+                      title,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 20,
                       ),
                     ),
                   ),
-                  Expanded(
-                    child: (icon != null)
-                        ? Container(
-                            alignment: AlignmentDirectional.bottomStart,
-                            child: GestureDetector(
-                              child: icon,
-                              onTap: () => onTap,
-                            ),
-                          )
-                        : const SizedBox(),
-                  ),
-                ],
-              ),
+                ),
+                Expanded(
+                  child: (icon != null)
+                      ? Container(
+                          alignment: AlignmentDirectional.bottomEnd,
+                          child: GestureDetector(
+                            child: icon,
+                            onTap: () => onTap,
+                          ),
+                        )
+                      : const SizedBox(),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(90);
+  Size get preferredSize => const Size.fromHeight(70);
 }

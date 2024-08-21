@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/common/widget/member_list.dart';
+import 'package:lyc_flutter_project/common/widget/switch_category_button.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/director/widget/active_state.dart';
 import 'package:lyc_flutter_project/director/widget/custom_search_bar.dart';
 import 'package:lyc_flutter_project/screens/home_screen.dart';
 import 'package:lyc_flutter_project/styles/default_padding.dart';
-import 'package:lyc_flutter_project/widget/switch_category_button.dart';
 
 class DirectorSearchScreen extends StatefulWidget {
   const DirectorSearchScreen({super.key});

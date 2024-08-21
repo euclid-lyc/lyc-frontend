@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
-import 'package:lyc_flutter_project/screens/add_posting_setting_screen.dart';
+import 'package:lyc_flutter_project/posting/screen/add_posting_setting_screen.dart';
 import 'package:lyc_flutter_project/widget/image_picker_widget.dart';
 import 'package:lyc_flutter_project/widget/normal_appbar.dart';
 import 'package:lyc_flutter_project/widget/posting_content_text_field.dart';
@@ -13,7 +13,7 @@ import 'package:lyc_flutter_project/widget/posting_content_text_field.dart';
 class AddPostingScreen extends StatefulWidget {
   final int purpose;
 
-  AddPostingScreen({
+  const AddPostingScreen({
     super.key,
     required this.purpose,
   });
@@ -35,7 +35,7 @@ class _AddPostingScreenState extends State<AddPostingScreen> {
         title: getTitle(),
       ),
       body: Padding(
-        padding: EdgeInsets.fromLTRB(30, 25, 30, 20),
+        padding: const EdgeInsets.fromLTRB(20, 25, 20, 20),
         child: Column(
           children: [
             Expanded(
@@ -43,12 +43,12 @@ class _AddPostingScreenState extends State<AddPostingScreen> {
               child: ListView(
                 children: [
                   ImagePickerWidget(onImageSelected: _onImageSelected, picker: picker),
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                   PostingContentTextField(controller: writePostController, hint: '텍스트를 입력해주세요.',),
                 ],
               ),
             ),
-            Expanded(child: SizedBox()),
+            const Expanded(child: SizedBox()),
             // 세부설정, 등록 버튼
             Expanded(
               flex: 2,
@@ -76,13 +76,13 @@ class _AddPostingScreenState extends State<AddPostingScreen> {
                             );
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
+                              const SnackBar(
                                 content: Text('사진을 첨부해주세요.'),
                               ),
                             );
                           }
                         },
-                        child: Text(
+                        child: const Text(
                           '세부설정',
                           style: TextStyle(
                               color: Colors.black,
@@ -92,7 +92,7 @@ class _AddPostingScreenState extends State<AddPostingScreen> {
                       ),
                     ),
                   ),
-                  Expanded(flex: 1, child: SizedBox()),
+                  const Expanded(flex: 1, child: SizedBox()),
                   Expanded(
                     flex: 2,
                     child: Container(
@@ -104,7 +104,7 @@ class _AddPostingScreenState extends State<AddPostingScreen> {
                         onPressed: () {
                           // save my posting
                         },
-                        child: Text(
+                        child: const Text(
                           '등록',
                           style: TextStyle(
                             color: Colors.white,

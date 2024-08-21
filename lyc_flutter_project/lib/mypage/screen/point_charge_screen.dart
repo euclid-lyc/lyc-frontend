@@ -5,11 +5,11 @@ import 'package:bootpay/model/payload.dart';
 import 'package:bootpay/model/user.dart';
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
+import 'package:lyc_flutter_project/mypage/widget/point_input_field.dart';
+import 'package:lyc_flutter_project/mypage/widget/point_pay.dart';
 import 'package:lyc_flutter_project/widget/normal_appbar.dart';
-import 'package:lyc_flutter_project/widget/point_custom_container.dart';
-import 'package:lyc_flutter_project/widget/point_input_field.dart';
-import 'package:lyc_flutter_project/widget/point_pay.dart';
-import 'package:lyc_flutter_project/widget/point_sub_title.dart';
+import 'package:lyc_flutter_project/mypage/widget/point_custom_container.dart';
+import 'package:lyc_flutter_project/mypage/widget/point_sub_title.dart';
 
 class PointChargeScreen extends StatefulWidget {
   const PointChargeScreen({super.key});

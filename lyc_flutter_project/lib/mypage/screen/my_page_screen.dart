@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart'; // SVG 이미지 사용을 위한 패키지
 import 'package:lyc_flutter_project/data/app_color.dart';
+import 'package:lyc_flutter_project/data/coordi_by_category.dart';
 import 'package:lyc_flutter_project/data/temp_member_data.dart';
 import 'package:lyc_flutter_project/data/temp_posting_data.dart';
 import 'package:lyc_flutter_project/model/coordi.dart';
 import 'package:lyc_flutter_project/model/member.dart';
-import 'package:lyc_flutter_project/screens/follow_list_screen.dart';
-import 'package:lyc_flutter_project/screens/point_screen.dart';
+import 'package:lyc_flutter_project/mypage/screen/follow_list_screen.dart';
+import 'package:lyc_flutter_project/mypage/screen/point_screen.dart';
+import 'package:lyc_flutter_project/mypage/widget/grid_widget_with_button.dart';
+import 'package:lyc_flutter_project/mypage/widget/my_closet_list.dart';
 import 'package:lyc_flutter_project/services/temp_services.dart';
+import 'package:lyc_flutter_project/styles/app_text_style.dart';
 import 'package:lyc_flutter_project/widget/bottom_buttons.dart';
-import 'package:lyc_flutter_project/widget/grid_widget_with_button.dart';
-import 'package:lyc_flutter_project/widget/round_image.dart';
-import 'package:lyc_flutter_project/widget/switch_category_button.dart';
+import 'package:lyc_flutter_project/common/widget/round_image.dart';
+import 'package:lyc_flutter_project/common/widget/switch_category_button.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 
-import '../data/coordi_by_category.dart';
-import '../styles/app_text_style.dart';
 import 'notify_screen.dart';
 
 class MyPageScreen extends StatefulWidget {
@@ -61,7 +62,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
             flex: 1,
             child: Container(
               color: AppColor.beige,
-              padding: EdgeInsets.only(left: 30, right: 30),
+              padding: const EdgeInsets.symmetric(horizontal: 30.0),
               child: Column(
                 children: [
                   // 프로필 박스
@@ -174,7 +175,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
           // 하단부
           if (isBlocked)
             Expanded(
-              flex: 2,
+              flex: 3,
               child: Container(
                 margin: EdgeInsets.fromLTRB(1, 0, 0, 228),
                 child: Column(
@@ -223,7 +224,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
             )
           else if (isNotified)
             Expanded(
-              flex: 2,
+              flex: 3,
               child: Container(
                 margin: EdgeInsets.fromLTRB(1, 0, 0, 228),
                 child: Column(
@@ -274,10 +275,10 @@ class _MyPageScreenState extends State<MyPageScreen> {
             )
           else
             Expanded(
-              flex: 2,
+              flex: 3,
               child: Container(
                 margin:
-                    EdgeInsets.only(left: 30, right: 30, top: 25, bottom: 5),
+                    const EdgeInsets.only(left: 20, right: 20, bottom: 5, top: 20),
                 child: Column(
                   children: [
                     // 갤러리 카테고리 버튼(00의 코디, 저장한 코디, 00의 옷장)
@@ -314,10 +315,16 @@ class _MyPageScreenState extends State<MyPageScreen> {
                       ),
                     ),
                     SizedBox(height: 20),
-                    Expanded(
+                    if (_selectedCategory == 0 || _selectedCategory == 1)
+                      Expanded(
                         child: GridWidgetWithButton(
                             postings: TempPostingData().postings,
-                            category: _selectedCategory)),
+                            category: _selectedCategory),
+                      )
+                    else
+                      Expanded(
+                        child: MyClosetList(),
+                      )
                   ],
                 ),
               ),
