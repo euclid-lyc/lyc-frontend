@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lyc_flutter_project/common/widget/home_appbar.dart';
+import 'package:lyc_flutter_project/common/widget/horizontal_posting_list.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/common/widget/round_image.dart';
 
@@ -39,21 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 // 둘러보기
                 const TitleRow(label: '둘러보기', onTap: _onTap),
                 const Line(),
-                SizedBox(
-                  height: 200,
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    children: [
-                      for (var i = 0; i < 10; i++)
-                        Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 8),
-                          decoration: buildWhiteRoundBox(),
-                          height: 190,
-                          width: 135,
-                        ),
-                    ],
-                  ),
-                ),
+                HorizontalPostingList(),
 
                 // 오늘의 디렉터
                 const MarginBox(),

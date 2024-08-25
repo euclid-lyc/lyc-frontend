@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class CustomSearchBar extends StatelessWidget {
-  const CustomSearchBar({super.key});
+  final ValueChanged<String> onChanged;
+  const CustomSearchBar({super.key, required this.onChanged});
 
   @override
   Widget build(BuildContext context) {
     return SearchBar(
+      onChanged: onChanged,
       backgroundColor: MaterialStateProperty.all(Colors.white),
       hintText: "검색어를 입력하세요",
       hintStyle: MaterialStateProperty.all(
