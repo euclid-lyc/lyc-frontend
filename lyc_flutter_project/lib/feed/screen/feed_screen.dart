@@ -6,6 +6,7 @@ import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/director/widget/custom_search_bar.dart';
 import 'package:lyc_flutter_project/feed/widget/height_box.dart';
 import 'package:lyc_flutter_project/feed/widget/title_box.dart';
+import 'package:lyc_flutter_project/feed/widget/today_temp.dart';
 import 'package:lyc_flutter_project/styles/default_padding.dart';
 
 class FeedScreen extends StatefulWidget {
@@ -64,29 +65,6 @@ class _FeedScreenState extends State<FeedScreen> {
           );
         },
         childCount: 10, // Adjust as needed
-      ),
-    );
-  }
-}
-
-class TodayTemp extends StatelessWidget {
-  final int minTemp;
-  final int maxTemp;
-
-  const TodayTemp({
-    super.key,
-    required this.minTemp,
-    required this.maxTemp,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      "$minTemp°C~$maxTemp°C",
-      style: const TextStyle(
-        color: AppColor.brown,
-        fontWeight: FontWeight.w500,
-        fontSize: 20.0,
       ),
     );
   }
