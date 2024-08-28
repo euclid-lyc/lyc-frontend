@@ -7,6 +7,7 @@ import 'package:lyc_flutter_project/mypage/provider/notify_provider.dart';
 import 'package:provider/provider.dart';
 
 void main() {
+  Provider.debugCheckInvalidValueType = null;
   runApp(
     MultiProvider(providers: [
       ChangeNotifierProvider(create: (context) => MembershipState()),

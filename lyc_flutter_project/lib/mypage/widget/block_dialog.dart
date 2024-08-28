@@ -5,11 +5,13 @@ import 'package:lyc_flutter_project/styles/app_text_style.dart';
 import 'package:provider/provider.dart';
 
 class BlockDialog extends StatelessWidget {
+  final int memberId;
   final BlockProvider blockProvider;
 
   const BlockDialog({
     super.key,
     required this.blockProvider,
+    required this.memberId,
   });
 
   @override
@@ -35,7 +37,9 @@ class BlockDialog extends StatelessWidget {
                   Container(
                     margin: EdgeInsets.fromLTRB(0, 0, 0, 31),
                     child: Text(
-                      blockProvider.isBlocked ? '차단을 해제하시겠습니까?' : '차단하시겠습니까?',
+                      blockProvider.isBlocked(memberId)
+                          ? '차단을 해제하시겠습니까?'
+                          : '차단하시겠습니까?',
                       style: app_text_style.littleTitle,
                     ),
                   ),
@@ -90,11 +94,11 @@ class BlockDialog extends StatelessWidget {
                               minimumSize: const Size(75, 36),
                             ),
                             onPressed: () {
-                              blockProvider.toggleBlock();
+                              blockProvider.toggleBlock(memberId);
                               Navigator.of(context).pop(); // 다이얼로그 닫기
                             },
                             child: Text(
-                              blockProvider.isBlocked ? '차단 해제' : '차단',
+                              blockProvider.isBlocked(memberId) ? '차단 해제' : '차단',
                               style: app_text_style.button,
                             ),
                           ),
