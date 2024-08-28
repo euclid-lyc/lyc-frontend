@@ -3,7 +3,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lyc_flutter_project/mypage/provider/block_provider.dart';
 import 'package:lyc_flutter_project/mypage/provider/follow_provider.dart';
 import 'package:lyc_flutter_project/mypage/provider/notify_provider.dart';
-import 'package:lyc_flutter_project/mypage/screen/my_page_screen.dart';
 import 'package:lyc_flutter_project/mypage/screen/notify_screen.dart';
 import 'package:lyc_flutter_project/mypage/screen/point_screen.dart';
 import 'package:lyc_flutter_project/mypage/widget/block_dialog.dart';
@@ -11,22 +10,22 @@ import 'package:lyc_flutter_project/mypage/widget/block_dialog.dart';
 class IconsInProfileBox extends StatelessWidget {
   final int memberId;
   final bool isMypage;
-  final BlockProvider blockProvider;
-  final FollowProvider followProvider;
-  final NotifyProvider notifyProvider;
+  final BlockProvider? blockProvider;
+  final FollowProvider? followProvider;
+  final NotifyProvider? notifyProvider;
 
   const IconsInProfileBox({
     super.key,
     required this.isMypage,
     required this.memberId,
-    required this.blockProvider,
-    required this.followProvider,
-    required this.notifyProvider,
+    this.blockProvider,
+    this.followProvider,
+    this.notifyProvider,
   });
 
   @override
   Widget build(BuildContext context) {
-    if (isMyPage) {
+    if (isMypage) {
       return Row(
         children: [
           IconButton(
@@ -55,7 +54,7 @@ class IconsInProfileBox extends StatelessWidget {
           IconButton(
             icon: Container(
               decoration: BoxDecoration(
-                color: followProvider.isFollowing
+                color: followProvider!.isFollowing(memberId)
                     ? Colors.white
                     : const Color(0xFFFEFFC3),
                 borderRadius: BorderRadius.circular(20),
@@ -65,7 +64,7 @@ class IconsInProfileBox extends StatelessWidget {
                 vertical: 5,
               ),
               child: Text(
-                followProvider.isFollowing ? '팔로우' : '팔로잉',
+                followProvider!.isFollowing(memberId) ? '팔로우' : '팔로잉',
                 style: const TextStyle(
                   fontWeight: FontWeight.w500,
                   fontSize: 14.0,
@@ -75,7 +74,7 @@ class IconsInProfileBox extends StatelessWidget {
               ),
             ),
             onPressed: () {
-              followProvider.toggleFollow();
+              followProvider!.toggleFollow(memberId);
             },
           ),
           const SizedBox(height: 10),
@@ -83,38 +82,34 @@ class IconsInProfileBox extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               IconButton(
-                //padding: EdgeInsets.all(0.0),
                 icon: SvgPicture.asset(
-                  blockProvider.isBlocked
+                  blockProvider!.isBlocked(memberId)
                       ? 'assets/icon_blocked.svg'
-                      : 'assets/icon_block.svg', // SVG 파일 로드
-                  // width: 18, // 크기 조정
-                  // height: 18, // 크기 조정
+                      : 'assets/icon_block.svg',
                 ),
                 onPressed: () {
                   showDialog(
                     context: context,
                     builder: (BuildContext context) {
                       return BlockDialog(
-                        blockProvider: blockProvider,
+                        memberId: memberId,
+                        blockProvider: blockProvider!,
                       );
                     },
                   );
                 },
               ),
               IconButton(
-                //padding: EdgeInsets.all(0.0),
                 icon: SvgPicture.asset(
                   'assets/icon_notify.svg',
-                  // width: 18, // 크기 조정
-                  // height: 18, // 크기 조정
                 ),
                 onPressed: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => NotifyScreen(
-                        notifyProvider: notifyProvider,
+                        memberId: memberId,
+                        notifyProvider: notifyProvider!,
                       ),
                     ),
                   );

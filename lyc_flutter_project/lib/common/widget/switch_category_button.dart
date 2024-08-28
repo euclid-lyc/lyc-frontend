@@ -6,12 +6,12 @@ class SwitchCategoryButton extends StatelessWidget {
   final VoidCallback onPressed;
   final Color color;
 
-  SwitchCategoryButton(
-    this.text,
-    this.isSelected,
-    this.onPressed,
-    this.color,
-  );
+  const SwitchCategoryButton({
+    required this.text,
+    required this.isSelected,
+    required this.onPressed,
+    required this.color,
+  });
 
   @override
   Widget build(BuildContext context) {

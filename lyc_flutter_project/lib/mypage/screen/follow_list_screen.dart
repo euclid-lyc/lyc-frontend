@@ -47,16 +47,16 @@ class _FollowListScreenState extends State<FollowListScreen> {
               child: Row(
                 children: [
                   SwitchCategoryButton(
-                    "팔로워",
-                    isFollower,
-                    () => followerSelected(true),
-                    AppColor.brown,
+                    text: "팔로워",
+                    isSelected: isFollower,
+                    onPressed: () => followerSelected(true),
+                    color: AppColor.brown,
                   ),
                   SwitchCategoryButton(
-                    "팔로잉",
-                    !isFollower,
-                    () => followerSelected(false),
-                    AppColor.brown,
+                    text: "팔로잉",
+                    isSelected: !isFollower,
+                    onPressed: () => followerSelected(false),
+                    color: AppColor.brown,
                   ),
                 ],
               ),

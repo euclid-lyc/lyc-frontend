@@ -5,9 +5,14 @@ import 'package:lyc_flutter_project/styles/app_text_style.dart';
 import 'package:lyc_flutter_project/widget/normal_appbar.dart';
 
 class NotifyScreen extends StatefulWidget {
+  final int memberId;
   final NotifyProvider notifyProvider;
 
-  NotifyScreen({Key? key, required this.notifyProvider}) : super(key: key);
+  NotifyScreen({
+    Key? key,
+    required this.notifyProvider,
+    required this.memberId,
+  }) : super(key: key);
 
   @override
   _NotifyScreenState createState() => _NotifyScreenState();
@@ -113,7 +118,8 @@ class _NotifyScreenState extends State<NotifyScreen> {
                             height: 40,
                             child: TextButton(
                               onPressed: () {
-                                widget.notifyProvider.setNotify(); // notify 콜백 호출
+                                widget.notifyProvider
+                                    .setNotify(widget.memberId); // notify 콜백 호출
                                 Navigator.pop(context); // 화면 닫기
                               },
                               style: TextButton.styleFrom(
@@ -173,14 +179,16 @@ class _NotifyScreenState extends State<NotifyScreen> {
                           Checkbox(
                             value: _checkboxValues.last,
                             onChanged: (bool? value) {
-                              _updateCheckbox(_checkboxValues.length - 1, value);
+                              _updateCheckbox(
+                                  _checkboxValues.length - 1, value);
                             },
                           ),
                           const SizedBox(width: 8),
                           Expanded(
                             child: Container(
                               height: 31, // 높이 고정
-                              padding: const EdgeInsets.symmetric(horizontal: 8),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 8),
                               decoration: BoxDecoration(
                                 border: Border.all(color: AppColor.lightGrey),
                                 borderRadius: BorderRadius.circular(5),

@@ -2,11 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class NotifyProvider extends ChangeNotifier {
-  bool _isNotified = false;
-  bool get isNotified => _isNotified;
+  List<int> _notifiedIds = [];
+  bool isNotified(int memberId) => _notifiedIds.contains(memberId);
 
-  setNotify() {
-    _isNotified = true;
+  setNotify(int memberId) {
+    if (!_notifiedIds.contains(memberId)) {
+      _notifiedIds.add(memberId);
+    }
     notifyListeners();
   }
 }
