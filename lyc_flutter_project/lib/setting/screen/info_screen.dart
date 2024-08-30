@@ -28,7 +28,12 @@ class InfoScreen extends StatelessWidget {
                   children: [
                     SizedBox(
                       width: MediaQuery.of(context).size.width / 3,
-                      child: const RoundImage(image: "assets/ex_profile.png"),
+                      child: RoundImage(
+                        image: Image.asset(
+                          "assets/ex_profile.png",
+                          fit: BoxFit.cover,
+                        ),
+                      ),
                     ),
                     GestureDetector(
                       onTap: () {},
