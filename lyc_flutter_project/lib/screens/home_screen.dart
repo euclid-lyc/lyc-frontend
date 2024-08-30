@@ -58,16 +58,21 @@ class _HomeScreenState extends State<HomeScreen> {
                           height: 90,
                           width: 90,
                           alignment: Alignment.center,
-                          child: const Column(
+                          child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 SizedBox(
-                                    height: 50,
-                                    width: 50,
-                                    child: RoundImage(
-                                        image: 'assets/ex_profile2.png')),
-                                SizedBox(height: 3),
-                                Text(
+                                  height: 50,
+                                  width: 50,
+                                  child: RoundImage(
+                                    image: Image.asset(
+                                      'assets/ex_profile2.png',
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 3),
+                                const Text(
                                   'Winter',
                                   style: TextStyle(color: AppColor.deepGrey),
                                 ),
@@ -103,7 +108,12 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                             const SizedBox(width: 10),
-                            const RoundImage(image: 'assets/ex_profile.png'),
+                            RoundImage(
+                              image: Image.network(
+                                'assets/ex_profile.png',
+                                fit: BoxFit.cover,
+                              ),
+                            ),
                             const SizedBox(width: 10),
                             const Text('전남친이 청접장을 보내왔습니다.'),
                           ],
@@ -125,109 +135,109 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Container renderEuclid() {
     return Container(
-          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 40),
-          color: const Color(0xffF4F5F6),
-          child: Column(
+      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 40),
+      color: const Color(0xffF4F5F6),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            '유클리드',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+          ),
+          const MarginBox(),
+          Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                '유클리드',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
-              ),
-              const MarginBox(),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        const DescriptTitle(label: 'Contact us'),
-                        const MiniBox(),
-                        const DescriptText(label: 'id@gmail.com'),
-                        const MiniBox(),
-                        const DescriptText(label: '+82 10-XXXX-XXXX'),
-                        const MiniBox(),
-                        const DescriptText(label: 'Address'),
-                        const SizedBox(height: 30),
-                        Row(
-                          children: [
-                            SvgPicture.asset('assets/icon_facebook.svg'),
-                            const SizedBox(width: 10),
-                            SvgPicture.asset('assets/icon_linkedin.svg'),
-                            const SizedBox(width: 10),
-                            SvgPicture.asset('assets/icon_twitter.svg'),
-                            const SizedBox(width: 10),
-                            SvgPicture.asset('assets/icon_instagram.svg'),
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                  const Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    const DescriptTitle(label: 'Contact us'),
+                    const MiniBox(),
+                    const DescriptText(label: 'id@gmail.com'),
+                    const MiniBox(),
+                    const DescriptText(label: '+82 10-XXXX-XXXX'),
+                    const MiniBox(),
+                    const DescriptText(label: 'Address'),
+                    const SizedBox(height: 30),
+                    Row(
                       children: [
-                        DescriptTitle(label: 'Products'),
-                        MiniBox(),
-                        DescriptText(label: 'Author volutpat.'),
-                        MiniBox(),
-                        DescriptText(label: 'Fermentum turpis.'),
-                        MiniBox(),
-                        DescriptText(label: 'Mi consequat.'),
-                        MiniBox(),
-                        DescriptText(label: 'Amet venenatis.'),
-                        MiniBox(),
-                        DescriptText(label: 'Convallis porttitor.'),
+                        SvgPicture.asset('assets/icon_facebook.svg'),
+                        const SizedBox(width: 10),
+                        SvgPicture.asset('assets/icon_linkedin.svg'),
+                        const SizedBox(width: 10),
+                        SvgPicture.asset('assets/icon_twitter.svg'),
+                        const SizedBox(width: 10),
+                        SvgPicture.asset('assets/icon_instagram.svg'),
                       ],
-                    ),
-                  ),
-                ],
+                    )
+                  ],
+                ),
               ),
-              const MarginBox(),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        DescriptTitle(label: 'About'),
-                        MiniBox(),
-                        DescriptText(label: 'Egestas vitae.'),
-                        MiniBox(),
-                        DescriptText(label: 'Viverra lorem ac.'),
-                        MiniBox(),
-                        DescriptText(label: 'Eget ac tellus.'),
-                        MiniBox(),
-                        DescriptText(label: 'Erat nulla.'),
-                        MiniBox(),
-                        DescriptText(label: 'Vulputate proin.'),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const DescriptTitle(label: 'Get the app'),
-                        const MiniBox(),
-                        SvgPicture.asset('assets/icon_appstore.svg'),
-                        const MiniBox(),
-                        SvgPicture.asset('assets/icon_playstore.svg'),
-                      ],
-                    ),
-                  ),
-                ],
+              const Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    DescriptTitle(label: 'Products'),
+                    MiniBox(),
+                    DescriptText(label: 'Author volutpat.'),
+                    MiniBox(),
+                    DescriptText(label: 'Fermentum turpis.'),
+                    MiniBox(),
+                    DescriptText(label: 'Mi consequat.'),
+                    MiniBox(),
+                    DescriptText(label: 'Amet venenatis.'),
+                    MiniBox(),
+                    DescriptText(label: 'Convallis porttitor.'),
+                  ],
+                ),
               ),
-              const MarginBox(),
-              Text(
-                'Copyright © 2024. All rights reserved.',
-                style: TextStyle(color: AppColor.deepGrey.withOpacity(0.8)),
-              )
             ],
           ),
-        );
+          const MarginBox(),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    DescriptTitle(label: 'About'),
+                    MiniBox(),
+                    DescriptText(label: 'Egestas vitae.'),
+                    MiniBox(),
+                    DescriptText(label: 'Viverra lorem ac.'),
+                    MiniBox(),
+                    DescriptText(label: 'Eget ac tellus.'),
+                    MiniBox(),
+                    DescriptText(label: 'Erat nulla.'),
+                    MiniBox(),
+                    DescriptText(label: 'Vulputate proin.'),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const DescriptTitle(label: 'Get the app'),
+                    const MiniBox(),
+                    SvgPicture.asset('assets/icon_appstore.svg'),
+                    const MiniBox(),
+                    SvgPicture.asset('assets/icon_playstore.svg'),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const MarginBox(),
+          Text(
+            'Copyright © 2024. All rights reserved.',
+            style: TextStyle(color: AppColor.deepGrey.withOpacity(0.8)),
+          )
+        ],
+      ),
+    );
   }
 
   BoxDecoration buildWhiteRoundBox() {

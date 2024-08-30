@@ -70,8 +70,10 @@ class HomeAppbar extends StatelessWidget implements PreferredSizeWidget {
                           child: GestureDetector(
                             onTap: () {},
                             child: SizedBox(
-                                child:
-                                RoundImage(image: 'assets/ex_profile.png')),
+                              child: RoundImage(
+                                image: Image.asset('assets/ex_profile.png'),
+                              ),
+                            ),
                           )),
                     ],
                   ),
