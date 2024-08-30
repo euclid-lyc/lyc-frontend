@@ -3,31 +3,41 @@ import 'package:json_annotation/json_annotation.dart';
 part 'mypage_posting_preview.g.dart';
 
 @JsonSerializable()
-class CoordiPostingPreview {
-  final int postingId;
+class BasePostingPreview {
   final String image;
 
-  CoordiPostingPreview({
-    required this.postingId,
+  BasePostingPreview({
     required this.image,
   });
-  
-  factory CoordiPostingPreview.fromJson(Map<String, dynamic> json)
-  => _$CoordiPostingPreviewFromJson(json);
+
+  factory BasePostingPreview.fromJson(Map<String, dynamic> json) =>
+      _$BasePostingPreviewFromJson(json);
 }
 
 @JsonSerializable()
-class ClosetPostingPreview {
+class CoordiPostingPreview extends BasePostingPreview{
+  final int postingId;
+
+CoordiPostingPreview({
+    required this.postingId,
+    required super.image,
+  });
+
+  factory CoordiPostingPreview.fromJson(Map<String, dynamic> json) =>
+      _$CoordiPostingPreviewFromJson(json);
+}
+
+@JsonSerializable()
+class ClosetPostingPreview extends BasePostingPreview{
   final int clothesId;
-  final String image;
   final String title;
 
   ClosetPostingPreview({
     required this.clothesId,
-    required this.image,
+    required super.image,
     required this.title,
   });
-  
-  factory ClosetPostingPreview.fromJson(Map<String, dynamic> json)
-  => _$ClosetPostingPreviewFromJson(json);
+
+  factory ClosetPostingPreview.fromJson(Map<String, dynamic> json) =>
+      _$ClosetPostingPreviewFromJson(json);
 }

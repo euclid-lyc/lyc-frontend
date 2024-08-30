@@ -11,7 +11,9 @@ import 'package:lyc_flutter_project/mypage/provider/follow_provider.dart';
 import 'package:lyc_flutter_project/mypage/provider/notify_provider.dart';
 import 'package:lyc_flutter_project/mypage/repository/mypage_repository.dart';
 import 'package:lyc_flutter_project/mypage/widget/blocked_widget.dart';
+import 'package:lyc_flutter_project/mypage/widget/grid_widget_with_button.dart';
 import 'package:lyc_flutter_project/mypage/widget/icons_in_profile_box.dart';
+import 'package:lyc_flutter_project/mypage/widget/my_closet_list.dart';
 import 'package:lyc_flutter_project/mypage/widget/notified_widget.dart';
 import 'package:lyc_flutter_project/mypage/widget/profile_box.dart';
 import 'package:lyc_flutter_project/widget/bottom_buttons.dart';
@@ -150,45 +152,33 @@ class MypageProvider extends ChangeNotifier {
                       ],
                     ),
                   );
-                }
-                else if (snapshot.hasError) {
+                } else if (snapshot.hasError) {
                   return Center(child: Text("Error: ${snapshot.error}"));
-                }
-                else if (snapshot.hasData) {
+                } else if (snapshot.hasData) {
                   // print("[Success] ${snapshot.data}");
                   final result = snapshot.data!.result;
                   if (result is CoordieResult) {
                     final lst = result.imageList;
                     if (lst.isEmpty) {
-                      return const Text("비어있습니다.");
+                      return const Text("비어있습니다");
                     } else {
-                      return ListView.builder(
-                        itemCount: lst.length,
-                        itemBuilder: (context, index) {
-                          return Text("${lst[index].postingId}");
-                        },
+                      return GridWidgetWithButton(
+                        postings: lst,
+                        category: categoryProvider.curCategory,
                       );
                     }
-                  }
-                  else if (result is ClosetResult) {
+                  } else if (result is ClosetResult) {
                     final lst = result.clothesList;
                     if (lst.isEmpty) {
-                      return Text("비어있습니다.");
+                      return const Text("비어있습니다");
                     } else {
-                      return ListView.builder(
-                        itemCount: lst.length,
-                        itemBuilder: (context, index) {
-                          return Text("${lst[index].clothesId}");
-                        },
-                      );
+                      return MyClosetList(postings: lst);
                     }
-                  }
-                  else {
+                  } else {
                     return const Text("[Error] 잘못된 데이터 타입");
                   }
-                }
-                else {
-                  return const Center(child: Text("No data.."));
+                } else {
+                  return const Center(child: Text("[Error] 응답 없음"));
                 }
               },
             ),
