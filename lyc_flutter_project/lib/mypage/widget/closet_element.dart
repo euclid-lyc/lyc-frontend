@@ -34,7 +34,7 @@ class ClosetElement extends StatelessWidget {
                     width: 50,
                     child: SvgPicture.asset("assets/icon_plus.svg"),
                   )
-                : Image.asset(
+                : Image.network(
                     image,
                     fit: BoxFit.cover,
                     height: 50,
