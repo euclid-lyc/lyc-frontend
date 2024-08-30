@@ -3,7 +3,6 @@ import 'package:lyc_flutter_project/common/widget/switch_category_button.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/data/temp_member_data.dart';
 import 'package:lyc_flutter_project/mypage/model/base_preview.dart';
-import 'package:lyc_flutter_project/mypage/model/mypage_preview.dart';
 import 'package:lyc_flutter_project/mypage/model/result.dart';
 import 'package:lyc_flutter_project/mypage/provider/block_provider.dart';
 import 'package:lyc_flutter_project/mypage/provider/category_provider.dart';
