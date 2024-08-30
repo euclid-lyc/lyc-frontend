@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/common/widget/switch_category_button.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/data/temp_member_data.dart';
-import 'package:lyc_flutter_project/common/model/api_response.dart';
 import 'package:lyc_flutter_project/mypage/model/profile.dart';
 import 'package:lyc_flutter_project/mypage/model/result.dart';
 import 'package:lyc_flutter_project/mypage/provider/block_provider.dart';
@@ -27,8 +26,9 @@ class MypageProvider extends ChangeNotifier {
   final MypageRepositoryProvider mypageRepositoryProvider;
 
   final bool _isMypage;
-
   bool get isMypage => _isMypage;
+
+  Profile? _cachedProfile;
 
   MypageProvider({
     required this.memberId,
@@ -69,7 +69,7 @@ class MypageProvider extends ChangeNotifier {
               children: [
                 Expanded(
                   flex: 13,
-                  child: FutureBuilder<Profile>(
+                  child: (_cachedProfile == null) ? FutureBuilder<Profile>(
                     future: getProfile(),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
@@ -83,7 +83,7 @@ class MypageProvider extends ChangeNotifier {
                         return const Text("[Error] 응답 없음");
                       }
                     },
-                  ),
+                  ) : ProfileBox.fromModel(profile: _cachedProfile!),
                 ),
                 Expanded(
                   flex: 5,
@@ -228,7 +228,8 @@ class MypageProvider extends ChangeNotifier {
     final resp = await mypageRepositoryProvider.mypageRepository
         .getProfile(memberId: memberId);
     if (resp.isSuccess) {
-      return resp.result;
+      _cachedProfile = resp.result;
+      return _cachedProfile!;
     } else {
       throw Exception(resp.message);
     }
