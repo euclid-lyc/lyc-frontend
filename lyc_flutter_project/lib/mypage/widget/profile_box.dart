@@ -4,7 +4,9 @@ import 'package:lyc_flutter_project/mypage/screen/follow_list_screen.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 
 class ProfileBox extends StatelessWidget {
-  const ProfileBox({super.key});
+  final int memberId;
+
+  const ProfileBox({super.key, required this.memberId});
 
   @override
   Widget build(BuildContext context) {

@@ -19,21 +19,21 @@ class _MypageRepository implements MypageRepository {
   String? baseUrl;
 
   @override
-  Future<List<PostingPreview>> getCoordiesList({required int memberId}) async {
+  Future<CoordiPreview> getMyCoorides({required int memberId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'accessToken': 'true'};
     _headers.removeWhere((k, v) => v == null);
     final Map<String, dynamic>? _data = null;
     final _result = await _dio
-        .fetch<List<dynamic>>(_setStreamType<List<PostingPreview>>(Options(
+        .fetch<Map<String, dynamic>>(_setStreamType<CoordiPreview>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              '/api/members/${memberId}/coordies',
+              '/members/${memberId}/coordies',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -42,28 +42,26 @@ class _MypageRepository implements MypageRepository {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    var value = _result.data!
-        .map((dynamic i) => PostingPreview.fromJson(i as Map<String, dynamic>))
-        .toList();
+    final value = CoordiPreview.fromJson(_result.data!);
     return value;
   }
 
   @override
-  Future<List<PostingPreview>> getSavedList({required int memberId}) async {
+  Future<CoordiPreview> getSavedCoordies({required int memberId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'accessToken': 'true'};
     _headers.removeWhere((k, v) => v == null);
     final Map<String, dynamic>? _data = null;
     final _result = await _dio
-        .fetch<List<dynamic>>(_setStreamType<List<PostingPreview>>(Options(
+        .fetch<Map<String, dynamic>>(_setStreamType<CoordiPreview>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              'api/members/${memberId}/saved-postings',
+              '/members/${memberId}/saved-postings',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -72,9 +70,35 @@ class _MypageRepository implements MypageRepository {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    var value = _result.data!
-        .map((dynamic i) => PostingPreview.fromJson(i as Map<String, dynamic>))
-        .toList();
+    final value = CoordiPreview.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<ClosetPreview> getMyCloset({required int memberId}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'accessToken': 'true'};
+    _headers.removeWhere((k, v) => v == null);
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<ClosetPreview>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/clothes/members/${memberId}',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = ClosetPreview.fromJson(_result.data!);
     return value;
   }
 

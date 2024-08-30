@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lyc_flutter_project/common/dio/dio.dart';
 import 'package:lyc_flutter_project/common/screen/splash_screen.dart';
 import 'package:lyc_flutter_project/Join/Screens/join_membership_screen_4.dart';
 import 'package:lyc_flutter_project/mypage/provider/block_provider.dart';
@@ -10,6 +11,7 @@ void main() {
   Provider.debugCheckInvalidValueType = null;
   runApp(
     MultiProvider(providers: [
+      ChangeNotifierProvider(create: (context) => DioProvider(),),
       ChangeNotifierProvider(create: (context) => MembershipState()),
       ChangeNotifierProvider(create: (context) => BlockProvider(),),
       ChangeNotifierProvider(create: (context) => NotifyProvider(),),
