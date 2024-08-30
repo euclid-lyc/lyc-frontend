@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:lyc_flutter_project/config/secret.dart';
 
 class DioProvider extends ChangeNotifier {
   final _dio = Dio();
@@ -32,8 +33,7 @@ class CustomInterceptor extends Interceptor {
       // postman으로 로그인->토큰 받아서 옮기는 식으로 하드코딩 할게요
 
       // final token = await storage.read(key: ACCESS_TOKEN_KEY);
-      const token =
-          "eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJldWNsaWQtbHljIiwic3ViIjoic3RyaW5nIiwiaWF0IjoxNzI0OTkzMjU5LCJleHAiOjE3MjQ5OTY4NTl9.oaQI3y4ndj2PFl0nP8RifJQlAk9LDfj9AIckFIaHvHO6PiwARbdpiaOLnRwnBFR-";
+      const token = DEV_TOKEN;
       options.headers.addAll({
         // 'authorization': 'Bearer $token',
         "authorization": "Bearer $token",
