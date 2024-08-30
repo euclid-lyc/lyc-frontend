@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/common/widget/round_image.dart';
 import 'package:lyc_flutter_project/director/screen/director_search_screen.dart';
+import 'package:lyc_flutter_project/feed/screen/feed_screen.dart';
 import 'package:lyc_flutter_project/mypage/screen/my_page_screen.dart';
 import 'package:lyc_flutter_project/screens/home_screen.dart';
 import 'package:lyc_flutter_project/setting/screen/setting_screen.dart';
@@ -26,7 +27,7 @@ class BottomBar extends StatelessWidget {
           ),
         ),
         PersistentTabConfig(
-          screen: MyPageScreen(memberId: 2),
+          screen: FeedScreen(),
           item: ItemConfig(
             icon: SvgPicture.asset(
               'assets/icon_feed.svg',

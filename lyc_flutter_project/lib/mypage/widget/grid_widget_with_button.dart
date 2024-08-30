@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lyc_flutter_project/common/style/custom_grid_delegate.dart';
 import 'package:lyc_flutter_project/model/posting.dart';
 import 'package:lyc_flutter_project/posting/screen/add_clothes_posting_screen.dart';
 import 'package:lyc_flutter_project/posting/screen/posting_detail_screen.dart';
@@ -26,12 +27,7 @@ class GridWidgetWithButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          childAspectRatio: (3/4),
-          crossAxisCount: 3,
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 15,
-        ),
+        gridDelegate: customGridDelegate(),
         itemCount: postings.length + 1,
         itemBuilder: (context, index) {
           if (index == 0) {
