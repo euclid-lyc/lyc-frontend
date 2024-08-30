@@ -66,6 +66,7 @@ class MypageProvider extends ChangeNotifier {
           Expanded(
             flex: 12,
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Expanded(
                   flex: 13,
