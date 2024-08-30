@@ -115,8 +115,7 @@ class CheckDialog extends StatelessWidget {
               style: ButtonStyle(
                 backgroundColor:
                     MaterialStateProperty.all<Color>(const Color(0xffC4BAA2)),
-                foregroundColor:
-                    MaterialStateProperty.all<Color>(Colors.black),
+                foregroundColor: MaterialStateProperty.all<Color>(Colors.black),
               ),
               onPressed: () {
                 Navigator.pop(context);
@@ -142,13 +141,13 @@ class Profile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SizedBox(
+    return SizedBox(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           // Texts
-          Column(
+          const Column(
             children: [
               Text(
                 'Karina',
@@ -169,7 +168,12 @@ class Profile extends StatelessWidget {
             ],
           ),
           SizedBox(width: 16.0),
-          RoundImage(image: 'assets/ex_profile.png'),
+          RoundImage(
+            image: Image.asset(
+              'assets/ex_profile.png',
+              fit: BoxFit.cover,
+            ),
+          ),
         ],
       ),
     );
@@ -226,15 +230,24 @@ class Calendar extends StatelessWidget {
             fontSize: 26.0,
           ),
           formatButtonVisible: false,
-
           titleTextFormatter: (date, locale) {
             final month = date.month;
             final year = date.year;
 
             // 월 이름을 배열로 정의
             final monthNames = [
-              'JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN',
-              'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'
+              'JAN',
+              'FEB',
+              'MAR',
+              'APR',
+              'MAY',
+              'JUN',
+              'JUL',
+              'AUG',
+              'SEP',
+              'OCT',
+              'NOV',
+              'DEC'
             ];
 
             // 월과 연도를 원하는 형식으로 변환

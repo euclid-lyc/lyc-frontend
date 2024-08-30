@@ -30,10 +30,12 @@ class _PostingDetailScreenState extends State<PostingDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.lightGrey,
-      appBar: widget.isMyposting ? NormalAppbar(
-        icon: SvgPicture.asset("assets/icon_delete.svg"),
-        onTap: () {},
-      ) : const NormalAppbar(),
+      appBar: widget.isMyposting
+          ? NormalAppbar(
+              icon: SvgPicture.asset("assets/icon_delete.svg"),
+              onTap: () {},
+            )
+          : const NormalAppbar(),
       body: SingleChildScrollView(
         child: Container(
           margin: const EdgeInsets.only(
@@ -50,8 +52,11 @@ class _PostingDetailScreenState extends State<PostingDetailScreen> {
                     children: [
                       Row(
                         children: [
-                          const RoundImage(
-                            image: "assets/ex_profile.png",
+                          RoundImage(
+                            image: Image.asset(
+                              "assets/ex_profile.png",
+                              fit: BoxFit.cover,
+                            ),
                           ),
                           Padding(
                             padding: const EdgeInsets.all(3),
@@ -59,8 +64,11 @@ class _PostingDetailScreenState extends State<PostingDetailScreen> {
                               'assets/icon_arrow.svg',
                             ),
                           ),
-                          const RoundImage(
-                            image: "assets/ex_profile2.png",
+                          RoundImage(
+                            image: Image.asset(
+                              "assets/ex_profile2.png",
+                              fit: BoxFit.cover,
+                            ),
                           )
                         ],
                       ),
@@ -96,12 +104,12 @@ class _PostingDetailScreenState extends State<PostingDetailScreen> {
                   ),
                 )
               else
-                const PostingTop(
+                PostingTop(
                   child: Row(
                     children: [
-                      RoundImage(image: "assets/ex_profile2.png"),
-                      SizedBox(width: 12.0),
-                      Text(
+                      RoundImage(image: Image.asset("assets/ex_profile2.png")),
+                      const SizedBox(width: 12.0),
+                      const Text(
                         "정열의 레드 붉은 상어파의 티샤쓰",
                         style: TextStyle(
                           fontWeight: FontWeight.w600,

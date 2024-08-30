@@ -70,20 +70,26 @@ class _HomeScreenState extends State<HomeScreen> {
                           height: 90,
                           width: 90,
                           alignment: Alignment.center,
-                          child: const Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SizedBox(
-                                    height: 50,
-                                    width: 50,
-                                    child: RoundImage(
-                                        image: 'assets/ex_profile2.png')),
-                                SizedBox(height: 3),
-                                Text(
-                                  'Winter',
-                                  style: TextStyle(color: AppColor.deepGrey),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                height: 50,
+                                width: 50,
+                                child: RoundImage(
+                                  image: Image.asset(
+                                    'assets/ex_profile2.png',
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
-                              ]),
+                              ),
+                              const SizedBox(height: 3),
+                              const Text(
+                                'Winter',
+                                style: TextStyle(color: AppColor.deepGrey),
+                              ),
+                            ],
+                          ),
                         ),
                     ],
                   ),
@@ -115,7 +121,12 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                             const SizedBox(width: 10),
-                            const RoundImage(image: 'assets/ex_profile.png'),
+                            RoundImage(
+                              image: Image.asset(
+                                'assets/ex_profile.png',
+                                fit: BoxFit.cover,
+                              ),
+                            ),
                             const SizedBox(width: 10),
                             const Text('전남친이 청접장을 보내왔습니다.'),
                           ],
@@ -411,8 +422,13 @@ class HomeAppbar extends StatelessWidget implements PreferredSizeWidget {
                           child: GestureDetector(
                             onTap: () {},
                             child: SizedBox(
-                                child:
-                                    RoundImage(image: 'assets/ex_profile.png')),
+                              child: RoundImage(
+                                image: Image.asset(
+                                  'assets/ex_profile.png',
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
                           )),
                     ],
                   ),

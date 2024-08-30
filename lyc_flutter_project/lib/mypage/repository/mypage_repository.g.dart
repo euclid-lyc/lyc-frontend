@@ -19,14 +19,15 @@ class _MypageRepository implements MypageRepository {
   String? baseUrl;
 
   @override
-  Future<CoordiPreview> getMyCoorides({required int memberId}) async {
+  Future<ApiResponse<CoordieResult>> getMyCoorides(
+      {required int memberId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'accessToken': 'true'};
     _headers.removeWhere((k, v) => v == null);
     final Map<String, dynamic>? _data = null;
-    final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<CoordiPreview>(Options(
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ApiResponse<CoordieResult>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -42,19 +43,23 @@ class _MypageRepository implements MypageRepository {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = CoordiPreview.fromJson(_result.data!);
+    final value = ApiResponse<CoordieResult>.fromJson(
+      _result.data!,
+      (json) => CoordieResult.fromJson(json as Map<String, dynamic>),
+    );
     return value;
   }
 
   @override
-  Future<CoordiPreview> getSavedCoordies({required int memberId}) async {
+  Future<ApiResponse<CoordieResult>> getSavedCoordies(
+      {required int memberId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'accessToken': 'true'};
     _headers.removeWhere((k, v) => v == null);
     final Map<String, dynamic>? _data = null;
-    final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<CoordiPreview>(Options(
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ApiResponse<CoordieResult>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -70,19 +75,22 @@ class _MypageRepository implements MypageRepository {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = CoordiPreview.fromJson(_result.data!);
+    final value = ApiResponse<CoordieResult>.fromJson(
+      _result.data!,
+      (json) => CoordieResult.fromJson(json as Map<String, dynamic>),
+    );
     return value;
   }
 
   @override
-  Future<ClosetPreview> getMyCloset({required int memberId}) async {
+  Future<ApiResponse<ClosetResult>> getMyCloset({required int memberId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'accessToken': 'true'};
     _headers.removeWhere((k, v) => v == null);
     final Map<String, dynamic>? _data = null;
-    final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<ClosetPreview>(Options(
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ApiResponse<ClosetResult>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -98,7 +106,41 @@ class _MypageRepository implements MypageRepository {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = ClosetPreview.fromJson(_result.data!);
+    final value = ApiResponse<ClosetResult>.fromJson(
+      _result.data!,
+      (json) => ClosetResult.fromJson(json as Map<String, dynamic>),
+    );
+    return value;
+  }
+
+  @override
+  Future<ApiResponse<Profile>> getProfile({required int memberId}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'accessToken': 'true'};
+    _headers.removeWhere((k, v) => v == null);
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ApiResponse<Profile>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/socials/members/${memberId}',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = ApiResponse<Profile>.fromJson(
+      _result.data!,
+      (json) => Profile.fromJson(json as Map<String, dynamic>),
+    );
     return value;
   }
 

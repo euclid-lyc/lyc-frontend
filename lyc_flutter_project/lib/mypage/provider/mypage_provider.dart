@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/common/widget/switch_category_button.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/data/temp_member_data.dart';
-import 'package:lyc_flutter_project/mypage/model/base_preview.dart';
+import 'package:lyc_flutter_project/common/model/api_response.dart';
+import 'package:lyc_flutter_project/mypage/model/profile.dart';
 import 'package:lyc_flutter_project/mypage/model/result.dart';
 import 'package:lyc_flutter_project/mypage/provider/block_provider.dart';
 import 'package:lyc_flutter_project/mypage/provider/category_provider.dart';
@@ -68,8 +69,20 @@ class MypageProvider extends ChangeNotifier {
               children: [
                 Expanded(
                   flex: 13,
-                  child: ProfileBox(
-                    memberId: memberId,
+                  child: FutureBuilder<Profile>(
+                    future: getProfile(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const SizedBox();
+                      } else if (snapshot.hasError) {
+                        return Text("${snapshot.error}");
+                      } else if (snapshot.hasData) {
+                        final profile = snapshot.data!;
+                        return ProfileBox.fromModel(profile: profile);
+                      } else {
+                        return const Text("[Error] 응답 없음");
+                      }
+                    },
                   ),
                 ),
                 Expanded(
@@ -138,7 +151,7 @@ class MypageProvider extends ChangeNotifier {
           ),
           const SizedBox(height: 20.0),
           Expanded(
-            child: FutureBuilder<BasePreview>(
+            child: FutureBuilder<BaseResult>(
               future: getList(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
@@ -155,7 +168,7 @@ class MypageProvider extends ChangeNotifier {
                   return Center(child: Text("Error: ${snapshot.error}"));
                 } else if (snapshot.hasData) {
                   // print("[Success] ${snapshot.data}");
-                  final result = snapshot.data!.result;
+                  final result = snapshot.data!;
                   if (result is CoordieResult) {
                     final lst = result.imageList;
                     if (lst.isEmpty) {
@@ -187,25 +200,37 @@ class MypageProvider extends ChangeNotifier {
     );
   }
 
-  Future<BasePreview> getList() async {
-    print("start getList");
+  Future<BaseResult> getList() async {
     try {
       switch (categoryProvider.curCategory) {
         case 0:
-          return await mypageRepositoryProvider.mypageRepository
+          final resp = await mypageRepositoryProvider.mypageRepository
               .getMyCoorides(memberId: memberId);
+          return resp.result;
         case 1:
-          return await mypageRepositoryProvider.mypageRepository
+          final resp = await mypageRepositoryProvider.mypageRepository
               .getSavedCoordies(memberId: memberId);
+          return resp.result;
         case 2:
-          return await mypageRepositoryProvider.mypageRepository
+          final resp = await mypageRepositoryProvider.mypageRepository
               .getMyCloset(memberId: memberId);
+          return resp.result;
         default:
           throw Exception("Invalid category");
       }
     } catch (e) {
       print("Error in getList: $e");
       rethrow;
+    }
+  }
+
+  Future<Profile> getProfile() async {
+    final resp = await mypageRepositoryProvider.mypageRepository
+        .getProfile(memberId: memberId);
+    if (resp.isSuccess) {
+      return resp.result;
+    } else {
+      throw Exception(resp.message);
     }
   }
 }

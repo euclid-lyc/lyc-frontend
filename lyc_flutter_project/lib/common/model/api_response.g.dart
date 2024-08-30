@@ -1,24 +1,24 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'base_preview.dart';
+part of 'api_response.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-BasePreview<T> _$BasePreviewFromJson<T>(
+ApiResponse<T> _$ApiResponseFromJson<T>(
   Map<String, dynamic> json,
   T Function(Object? json) fromJsonT,
 ) =>
-    BasePreview<T>(
+    ApiResponse<T>(
       code: json['code'] as String,
       message: json['message'] as String,
       result: fromJsonT(json['result']),
       isSuccess: json['isSuccess'] as bool,
     );
 
-Map<String, dynamic> _$BasePreviewToJson<T>(
-  BasePreview<T> instance,
+Map<String, dynamic> _$ApiResponseToJson<T>(
+  ApiResponse<T> instance,
   Object? Function(T value) toJsonT,
 ) =>
     <String, dynamic>{

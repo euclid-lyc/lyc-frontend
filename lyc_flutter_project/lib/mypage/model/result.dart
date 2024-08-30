@@ -3,8 +3,10 @@ import 'package:lyc_flutter_project/mypage/model/mypage_posting_preview.dart';
 
 part 'result.g.dart';
 
+abstract class BaseResult {}
+
 @JsonSerializable()
-class CoordieResult {
+class CoordieResult extends BaseResult {
   final int memberId;
   final List<CoordiPostingPreview> imageList;
 
@@ -20,7 +22,7 @@ class CoordieResult {
 }
 
 @JsonSerializable()
-class ClosetResult {
+class ClosetResult extends BaseResult {
   final int memberId;
   final List<ClosetPostingPreview> clothesList;
 
