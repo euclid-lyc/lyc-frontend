@@ -13,7 +13,7 @@ class MyClosetList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
-      itemCount: postings.length,
+      itemCount: postings.length + 1,
       itemBuilder: (context, index) {
         if (index == 0) {
           return GestureDetector(

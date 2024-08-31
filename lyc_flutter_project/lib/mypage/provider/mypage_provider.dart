@@ -26,6 +26,7 @@ class MypageProvider extends ChangeNotifier {
   final MypageRepositoryProvider mypageRepositoryProvider;
 
   final bool _isMypage;
+
   bool get isMypage => _isMypage;
 
   Profile? _cachedProfile;
@@ -70,21 +71,24 @@ class MypageProvider extends ChangeNotifier {
               children: [
                 Expanded(
                   flex: 13,
-                  child: (_cachedProfile == null) ? FutureBuilder<Profile>(
-                    future: getProfile(),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const SizedBox();
-                      } else if (snapshot.hasError) {
-                        return Text("${snapshot.error}");
-                      } else if (snapshot.hasData) {
-                        final profile = snapshot.data!;
-                        return ProfileBox.fromModel(profile: profile);
-                      } else {
-                        return const Text("[Error] 응답 없음");
-                      }
-                    },
-                  ) : ProfileBox.fromModel(profile: _cachedProfile!),
+                  child: (_cachedProfile == null)
+                      ? FutureBuilder<Profile>(
+                          future: getProfile(),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return const SizedBox();
+                            } else if (snapshot.hasError) {
+                              return Text("${snapshot.error}");
+                            } else if (snapshot.hasData) {
+                              final profile = snapshot.data!;
+                              return ProfileBox.fromModel(profile: profile);
+                            } else {
+                              return const Text("[Error] 응답 없음");
+                            }
+                          },
+                        )
+                      : ProfileBox.fromModel(profile: _cachedProfile!),
                 ),
                 Expanded(
                   flex: 5,
@@ -172,21 +176,13 @@ class MypageProvider extends ChangeNotifier {
                   final result = snapshot.data!;
                   if (result is CoordieResult) {
                     final lst = result.imageList;
-                    if (lst.isEmpty) {
-                      return const Text("비어있습니다");
-                    } else {
-                      return GridWidgetWithButton(
-                        postings: lst,
-                        category: categoryProvider.curCategory,
-                      );
-                    }
+                    return GridWidgetWithButton(
+                      postings: lst,
+                      category: categoryProvider.curCategory,
+                    );
                   } else if (result is ClosetResult) {
                     final lst = result.clothesList;
-                    if (lst.isEmpty) {
-                      return const Text("비어있습니다");
-                    } else {
-                      return MyClosetList(postings: lst);
-                    }
+                    return MyClosetList(postings: lst);
                   } else {
                     return const Text("[Error] 잘못된 데이터 타입");
                   }
