@@ -69,16 +69,16 @@ class _AddClothesPostingScreenState extends State<AddClothesPostingScreen> {
               child: Row(
                 children: [
                   SwitchCategoryButton(
-                    '사진 업로드',
-                    photoSelected,
-                    _onPressed,
-                    AppColor.deepGrey,
+                    text: '사진 업로드',
+                    isSelected: photoSelected,
+                    onPressed: _onPressed,
+                    color: AppColor.deepGrey,
                   ),
                   SwitchCategoryButton(
-                    '텍스트 업로드',
-                    !photoSelected,
-                    _onPressed,
-                    AppColor.deepGrey,
+                    text: '텍스트 업로드',
+                    isSelected: !photoSelected,
+                    onPressed: _onPressed,
+                    color: AppColor.deepGrey,
                   ),
                 ],
               ),

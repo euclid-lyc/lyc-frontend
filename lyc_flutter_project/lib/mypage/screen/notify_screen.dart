@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
+import 'package:lyc_flutter_project/mypage/provider/notify_provider.dart';
 import 'package:lyc_flutter_project/styles/app_text_style.dart';
 import 'package:lyc_flutter_project/widget/normal_appbar.dart';
 
 class NotifyScreen extends StatefulWidget {
-  final VoidCallback onNotify;
+  final int memberId;
+  final NotifyProvider notifyProvider;
 
-  NotifyScreen({Key? key, required this.onNotify}) : super(key: key);
+  NotifyScreen({
+    Key? key,
+    required this.notifyProvider,
+    required this.memberId,
+  }) : super(key: key);
 
   @override
   _NotifyScreenState createState() => _NotifyScreenState();
@@ -26,12 +32,12 @@ class _NotifyScreenState extends State<NotifyScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: NormalAppbar(
+      appBar: const NormalAppbar(
         backButton: false,
         title: "신고하기",
       ),
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: AppColor.lightGrey,
         ),
         child: Stack(
@@ -43,7 +49,7 @@ class _NotifyScreenState extends State<NotifyScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    margin: EdgeInsets.fromLTRB(30, 0, 30, 74.5),
+                    margin: const EdgeInsets.fromLTRB(30, 0, 30, 74.5),
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: Column(
@@ -51,13 +57,13 @@ class _NotifyScreenState extends State<NotifyScreen> {
                         children: [
                           Container(
                             padding: EdgeInsets.only(top: 60),
-                            child: Text(
+                            child: const Text(
                               '해당 사용자를 신고하시겠습니까?',
                               style: app_text_style.littleTitle,
                             ),
                           ),
                           Container(
-                            margin: EdgeInsets.fromLTRB(0, 6, 0, 334.5),
+                            margin: const EdgeInsets.fromLTRB(0, 6, 0, 334.5),
                             child: Text(
                               '이용에 불편을 드려 죄송합니다. 안전하고 쾌적한 서비스 제공을 위해 다음 양식에 신고 사유를 표시해주세요.',
                               style: app_text_style.labelTextStyle.copyWith(
@@ -66,7 +72,7 @@ class _NotifyScreenState extends State<NotifyScreen> {
                             ),
                           ),
                           Container(
-                            margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                            margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                             child: Text(
                               '불편사항을 신고해 주셔서 대단히 감사합니다.\n유클리드는 사용자 여러분의 안전과 편의를 위해 늘 최선을 다하겠습니다.\n** 허위 신고 시 불이익이 발생할 수 있습니다 **',
                               style: app_text_style.labelTextStyle.copyWith(
@@ -112,7 +118,8 @@ class _NotifyScreenState extends State<NotifyScreen> {
                             height: 40,
                             child: TextButton(
                               onPressed: () {
-                                widget.onNotify(); // notify 콜백 호출
+                                widget.notifyProvider
+                                    .setNotify(widget.memberId); // notify 콜백 호출
                                 Navigator.pop(context); // 화면 닫기
                               },
                               style: TextButton.styleFrom(
@@ -155,7 +162,7 @@ class _NotifyScreenState extends State<NotifyScreen> {
                                 _updateCheckbox(i, value);
                               },
                             ),
-                            SizedBox(width: 8),
+                            const SizedBox(width: 8),
                             Expanded(
                               child: Text(
                                 _checkboxLabels[i],
@@ -165,27 +172,29 @@ class _NotifyScreenState extends State<NotifyScreen> {
                           ],
                         ),
                       ),
-                    SizedBox(height: 15),
+                    const SizedBox(height: 15),
                     Container(
                       child: Row(
                         children: [
                           Checkbox(
                             value: _checkboxValues.last,
                             onChanged: (bool? value) {
-                              _updateCheckbox(_checkboxValues.length - 1, value);
+                              _updateCheckbox(
+                                  _checkboxValues.length - 1, value);
                             },
                           ),
-                          SizedBox(width: 8),
+                          const SizedBox(width: 8),
                           Expanded(
                             child: Container(
                               height: 31, // 높이 고정
-                              padding: EdgeInsets.symmetric(horizontal: 8),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 8),
                               decoration: BoxDecoration(
                                 border: Border.all(color: AppColor.lightGrey),
                                 borderRadius: BorderRadius.circular(5),
                                 color: Colors.white,
                               ),
-                              child: Padding(
+                              child: const Padding(
                                 padding: EdgeInsets.only(top: 0, bottom: 9.3),
                                 child: TextField(
                                   decoration: InputDecoration(

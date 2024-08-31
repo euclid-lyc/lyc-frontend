@@ -42,7 +42,12 @@ class BottomBar extends StatelessWidget {
         PersistentTabConfig(
           screen: MyPageScreen(memberId: 1),
           item: ItemConfig(
-            icon: RoundImage(image: 'assets/ex_profile.png'),
+            icon: RoundImage(
+              image: Image.asset(
+                'assets/ex_profile.png',
+                fit: BoxFit.cover,
+              ),
+            ),
           ),
         ),
         PersistentTabConfig(

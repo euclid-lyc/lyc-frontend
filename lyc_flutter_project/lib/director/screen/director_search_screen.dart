@@ -28,9 +28,7 @@ class _DirectorSearchScreenState extends State<DirectorSearchScreen> {
         child: Column(
           children: [
             CustomSearchBar(
-              onChanged: (value) {
-                setState(() {});
-              },
+              onChanged: (String value) {},
             ),
             const SizedBox(height: 16.0),
             renderButtons(),
@@ -65,20 +63,20 @@ class _DirectorSearchScreenState extends State<DirectorSearchScreen> {
       child: Row(
         children: [
           SwitchCategoryButton(
-            "일반검색",
-            isNormal,
-            () => setState(() {
+            text: "일반검색",
+            isSelected: isNormal,
+            onPressed: () => setState(() {
               isNormal = true;
             }),
-            AppColor.brown,
+            color: AppColor.brown,
           ),
           SwitchCategoryButton(
-            "키워드검색",
-            !isNormal,
-            () => setState(() {
+            text: "키워드검색",
+            isSelected: !isNormal,
+            onPressed: () => setState(() {
               isNormal = false;
             }),
-            AppColor.brown,
+            color: AppColor.brown,
           ),
         ],
       ),

@@ -18,7 +18,7 @@ class TodayTemp extends StatelessWidget {
       style: const TextStyle(
         color: AppColor.brown,
         fontWeight: FontWeight.w600,
-        fontSize: 20.0,
+        fontSize: 18.0,
       ),
     );
   }

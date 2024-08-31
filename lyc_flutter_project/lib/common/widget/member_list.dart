@@ -34,7 +34,12 @@ class MemberList extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: RoundImage(image: profile),
+                child: RoundImage(
+                  image: Image.asset(
+                    profile,
+                    fit: BoxFit.cover,
+                  ),
+                ),
               ),
               const SizedBox(width: 4.0),
               Column(
@@ -71,8 +76,7 @@ class MemberList extends StatelessWidget {
               ),
             ],
           ),
-          if (button != null)
-            button!,
+          if (button != null) button!,
         ],
       ),
     );

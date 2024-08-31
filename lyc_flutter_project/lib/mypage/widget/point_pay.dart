@@ -25,7 +25,12 @@ class PointPay extends StatelessWidget {
           children: [
             SizedBox(
               height: 50,
-              child: RoundImage(image: icon),
+              child: RoundImage(
+                image: Image.asset(
+                  icon,
+                  fit: BoxFit.cover,
+                ),
+              ),
             ),
             const SizedBox(width: 8.0),
             Text(
