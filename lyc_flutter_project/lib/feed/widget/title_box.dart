@@ -29,7 +29,7 @@ class TitleBox extends StatelessWidget {
                   style: const TextStyle(
                     color: Color(0xff525252),
                     fontWeight: FontWeight.w600,
-                    fontSize: 22.0,
+                    fontSize: 20.0,
                   ),
                 ),
                 Text(
@@ -37,7 +37,7 @@ class TitleBox extends StatelessWidget {
                   style: const TextStyle(
                     color: AppColor.deepGrey,
                     fontWeight: FontWeight.w400,
-                    fontSize: 16.0,
+                    fontSize: 14.0,
                   ),
                 ),
               ],
