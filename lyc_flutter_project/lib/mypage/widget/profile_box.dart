@@ -25,7 +25,7 @@ class ProfileBox extends StatelessWidget {
   factory ProfileBox.fromModel({required Profile profile}) {
     return ProfileBox(
       memberId: profile.memberId,
-      nickName: profile.nickName,
+      nickName: profile.nickname,
       loginId: profile.loginId,
       follower: profile.follower,
       following: profile.following,
