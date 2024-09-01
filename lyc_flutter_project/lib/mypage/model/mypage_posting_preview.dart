@@ -1,11 +1,9 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:lyc_flutter_project/common/utils/data_utils.dart';
 
 part 'mypage_posting_preview.g.dart';
 
 @JsonSerializable()
 class BasePostingPreview {
-  @JsonKey(fromJson: DataUtils.pathToUrl)
   final String image;
 
   BasePostingPreview({

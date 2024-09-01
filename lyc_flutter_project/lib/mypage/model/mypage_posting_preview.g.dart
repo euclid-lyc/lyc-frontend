@@ -8,7 +8,7 @@ part of 'mypage_posting_preview.dart';
 
 BasePostingPreview _$BasePostingPreviewFromJson(Map<String, dynamic> json) =>
     BasePostingPreview(
-      image: DataUtils.pathToUrl(json['image'] as String),
+      image: json['image'] as String,
     );
 
 Map<String, dynamic> _$BasePostingPreviewToJson(BasePostingPreview instance) =>
@@ -20,7 +20,7 @@ CoordiPostingPreview _$CoordiPostingPreviewFromJson(
         Map<String, dynamic> json) =>
     CoordiPostingPreview(
       postingId: (json['postingId'] as num).toInt(),
-      image: DataUtils.pathToUrl(json['image'] as String),
+      image: json['image'] as String,
     );
 
 Map<String, dynamic> _$CoordiPostingPreviewToJson(
@@ -34,7 +34,7 @@ ClosetPostingPreview _$ClosetPostingPreviewFromJson(
         Map<String, dynamic> json) =>
     ClosetPostingPreview(
       clothesId: (json['clothesId'] as num).toInt(),
-      image: DataUtils.pathToUrl(json['image'] as String),
+      image: json['image'] as String,
       title: json['title'] as String,
     );
 
