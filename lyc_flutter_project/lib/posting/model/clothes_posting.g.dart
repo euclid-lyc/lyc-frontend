@@ -9,7 +9,6 @@ part of 'clothes_posting.dart';
 ClothesPostingImage _$ClothesPostingImageFromJson(Map<String, dynamic> json) =>
     ClothesPostingImage(
       memberId: (json['memberId'] as num?)?.toInt(),
-      image: json['image'] as String?,
       text: json['text'] as String?,
       title: json['title'] as String?,
     );
@@ -18,7 +17,6 @@ Map<String, dynamic> _$ClothesPostingImageToJson(
         ClothesPostingImage instance) =>
     <String, dynamic>{
       'memberId': instance.memberId,
-      'image': instance.image,
       'text': instance.text,
       'title': instance.title,
     };

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/common/style/custom_grid_delegate.dart';
 import 'package:lyc_flutter_project/mypage/model/mypage_posting_preview.dart';
-import 'package:lyc_flutter_project/posting/screen/add_clothes_posting_screen.dart';
 import 'package:lyc_flutter_project/mypage/screen/review_list_screen.dart';
 import 'package:lyc_flutter_project/posting/screen/add_posting_screen.dart';
 import 'package:lyc_flutter_project/posting/screen/posting_detail_screen.dart';
@@ -39,12 +38,6 @@ class GridWidgetWithButton extends StatelessWidget {
                         builder: (context) => AddPostingScreen(purpose: 0)));
               } else if (category == 1) {
                 // 저장한코디->코디 탐색
-              } else if (category == 2) {
-                // 나의옷장->옷 추가
-                pushWithoutNavBar(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => AddClothesPostingScreen()));
               } else if (category == 3) {
                 pushWithoutNavBar(
                     context,

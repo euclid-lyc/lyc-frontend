@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart' hide Headers;
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/common/const/data.dart';
@@ -25,7 +27,9 @@ abstract class ClothesRepository {
 
   @POST("/images")
   @Headers({"accessToken": "true"})
+  @MultiPart()
   Future<ApiResponse<ClothesPostingImageResult>> uploadPostingImage({
-    @Body() required ClothesPostingImage posting,
+    @Part(name: "clothesByImageDTO") required String clothesByImageDTO,
+    @Part(name: "image") required File image,
   });
 }

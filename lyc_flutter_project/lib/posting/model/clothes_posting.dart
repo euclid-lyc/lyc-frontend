@@ -2,9 +2,11 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'clothes_posting.g.dart';
 
+
 @JsonSerializable()
 class ClothesPostingImage {
   final int? memberId;
+  @JsonKey(ignore: true)
   final String? image;
   final String? text;
   final String? title;

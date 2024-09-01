@@ -19,19 +19,32 @@ class _ClothesRepository implements ClothesRepository {
   String? baseUrl;
 
   @override
-  Future<ApiResponse<ClothesPostingImageResult>> uploadPostingImage(
-      {required ClothesPostingImage posting}) async {
+  Future<ApiResponse<ClothesPostingImageResult>> uploadPostingImage({
+    required String clothesByImageDTO,
+    required File image,
+  }) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'accessToken': 'true'};
     _headers.removeWhere((k, v) => v == null);
-    final _data = <String, dynamic>{};
-    _data.addAll(posting.toJson());
+    final _data = FormData();
+    _data.fields.add(MapEntry(
+      'clothesByImageDTO',
+      clothesByImageDTO,
+    ));
+    _data.files.add(MapEntry(
+      'image',
+      MultipartFile.fromFileSync(
+        image.path,
+        filename: image.path.split(Platform.pathSeparator).last,
+      ),
+    ));
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ApiResponse<ClothesPostingImageResult>>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
+      contentType: 'multipart/form-data',
     )
             .compose(
               _dio.options,
