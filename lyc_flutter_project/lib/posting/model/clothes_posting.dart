@@ -20,6 +20,20 @@ class ClothesPostingImage {
       _$ClothesPostingImageFromJson(json);
 
   Map<String, dynamic> toJson() => _$ClothesPostingImageToJson(this);
+
+  ClothesPostingImage copyWith({
+    int? memberId,
+    String? image,
+    String? text,
+    String? title,
+  }) {
+    return ClothesPostingImage(
+      memberId: memberId ?? this.memberId,
+      image: image ?? this.image,
+      text: text ?? this.text,
+      title: title ?? this.title,
+    );
+  }
 }
 
 @JsonSerializable()

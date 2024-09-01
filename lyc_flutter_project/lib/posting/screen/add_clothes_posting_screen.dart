@@ -26,10 +26,11 @@ class _AddClothesPostingScreenState extends State<AddClothesPostingScreen> {
   late XFile? _image;
   final ImagePicker picker = ImagePicker();
 
-  TextEditingController writePostController = TextEditingController();
-  TextEditingController clothesNameController = TextEditingController();
-  TextEditingController textureController = TextEditingController();
-  TextEditingController fitController = TextEditingController();
+  late TextEditingController titleController;
+  late TextEditingController contentController;
+  late TextEditingController clothesNameController;
+  late TextEditingController textureController;
+  late TextEditingController fitController;
 
   List<String> textures = [
     '면',
@@ -56,68 +57,102 @@ class _AddClothesPostingScreenState extends State<AddClothesPostingScreen> {
   List<String> selectedFits = [];
 
   @override
+  void initState() {
+    super.initState();
+    titleController = TextEditingController();
+    contentController = TextEditingController();
+    clothesNameController = TextEditingController();
+    textureController = TextEditingController();
+    fitController = TextEditingController();
+
+    titleController.addListener(_updateTitle);
+    contentController.addListener(_updateContent);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+
+    titleController.removeListener(_updateTitle);
+    contentController.removeListener(_updateContent);
+
+    titleController.dispose();
+    contentController.dispose();
+  }
+
+  _updateTitle() {
+    Provider.of<ClothesProvider>(context, listen: false).updateTitle(titleController.text);
+  }
+  _updateContent() {
+    Provider.of<ClothesProvider>(context, listen: false).updateContent(contentController.text);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (context) => ClothesRepositoryProvider(
-            dio: context.read<DioProvider>().dio,
+    return Scaffold(
+      backgroundColor: AppColor.lightGrey,
+      appBar: const NormalAppbar(title: '옷 추가'),
+      body: MultiProvider(
+        providers: [
+          Provider<ClothesRepositoryProvider>(
+            create: (context) => ClothesRepositoryProvider(
+              dio: Provider.of<DioProvider>(context, listen: false).dio,
+            ),
           ),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => ClothesProvider(
-            repositoryProvider: context.read<ClothesRepositoryProvider>(),
+          ChangeNotifierProxyProvider<ClothesRepositoryProvider, ClothesProvider>(
+            create: (context) => ClothesProvider(
+              repositoryProvider: Provider.of<ClothesRepositoryProvider>(context, listen: false),
+            ),
+            update: (context, repositoryProvider, previousClothesProvider) =>
+                ClothesProvider(repositoryProvider: repositoryProvider),
           ),
-        )
-      ],
-      child: Scaffold(
-        backgroundColor: AppColor.lightGrey,
-        appBar: const NormalAppbar(title: '옷 추가'),
-        body: Consumer<ClothesProvider>(
-          builder:
-              (BuildContext context, ClothesProvider value, Widget? child) {
-            return Padding(
-              padding: const EdgeInsets.fromLTRB(20, 25, 20, 20),
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    height: 40.0,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20),
+        ],
+        builder: (context, child) {
+          return Consumer<ClothesProvider>(
+            builder: (BuildContext context, ClothesProvider value, Widget? child) {
+              return Padding(
+                padding: const EdgeInsets.fromLTRB(20, 25, 20, 20),
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      height: 40.0,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Row(
+                        children: [
+                          SwitchCategoryButton(
+                            text: '사진 업로드',
+                            isSelected: photoSelected,
+                            onPressed: _onPressed,
+                            color: AppColor.deepGrey,
+                          ),
+                          SwitchCategoryButton(
+                            text: '텍스트 업로드',
+                            isSelected: !photoSelected,
+                            onPressed: _onPressed,
+                            color: AppColor.deepGrey,
+                          ),
+                        ],
+                      ),
                     ),
-                    child: Row(
-                      children: [
-                        SwitchCategoryButton(
-                          text: '사진 업로드',
-                          isSelected: photoSelected,
-                          onPressed: _onPressed,
-                          color: AppColor.deepGrey,
-                        ),
-                        SwitchCategoryButton(
-                          text: '텍스트 업로드',
-                          isSelected: !photoSelected,
-                          onPressed: _onPressed,
-                          color: AppColor.deepGrey,
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 16.0),
-                  Expanded(child: photoSelected ? addPhoto() : addText()),
-                  const SizedBox(height: 16.0),
-                  TwoButtons(
-                    fstOnPressed: () => Navigator.pop,
-                    scdOnPressed: () {
-                      value.uploadImage();
-                    },
-                    scdLabel: "추가",
-                  )
-                ],
-              ),
-            );
-          },
-        ),
+                    const SizedBox(height: 16.0),
+                    Expanded(child: photoSelected ? addPhoto() : addText()),
+                    const SizedBox(height: 16.0),
+                    TwoButtons(
+                      fstOnPressed: () => Navigator.pop,
+                      scdOnPressed: () {
+                        value.uploadImage();
+                      },
+                      scdLabel: "추가",
+                    )
+                  ],
+                ),
+              );
+            },
+          );
+        },
       ),
     );
   }
@@ -125,10 +160,19 @@ class _AddClothesPostingScreenState extends State<AddClothesPostingScreen> {
   ListView addPhoto() {
     return ListView(
       children: [
-        ImagePickerWidget(onImageSelected: _onImageSelected, picker: picker),
-        const SizedBox(height: 40),
+        ImagePickerWidget(
+          onImageSelected: _onImageSelected,
+          picker: picker,
+        ),
+        const SizedBox(height: 16.0),
         PostingContentTextField(
-          controller: writePostController,
+          controller: titleController,
+          hint: "옷의 이름을 입력해주세요.",
+          maxLines: 1,
+        ),
+        const SizedBox(height: 16.0),
+        PostingContentTextField(
+          controller: contentController,
           hint: '텍스트를 입력해주세요.',
         ),
       ],
@@ -165,7 +209,7 @@ class _AddClothesPostingScreenState extends State<AddClothesPostingScreen> {
                 textures,
                 selectedTextures,
                 i,
-                () => _onTextureButtonPressed(textures[i]),
+                    () => _onTextureButtonPressed(textures[i]),
                 AppColor.deepGrey,
                 Colors.white,
               ),
@@ -205,7 +249,7 @@ class _AddClothesPostingScreenState extends State<AddClothesPostingScreen> {
                 fits,
                 selectedFits,
                 i,
-                () => _onFitButtonPressed(fits[i]),
+                    () => _onFitButtonPressed(fits[i]),
                 AppColor.deepGrey,
                 Colors.white,
               ),
@@ -245,6 +289,7 @@ class _AddClothesPostingScreenState extends State<AddClothesPostingScreen> {
     setState(() {
       _image = image;
     });
+    Provider.of<ClothesProvider>(context, listen: false).updateImage(image);
   }
 
   void _onTextureButtonPressed(String element) {
