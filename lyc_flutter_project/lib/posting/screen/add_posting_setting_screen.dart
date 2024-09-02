@@ -1,12 +1,16 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:lyc_flutter_project/common/widget/two_buttons.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
+import 'package:lyc_flutter_project/posting/widget/link_box.dart';
+import 'package:lyc_flutter_project/posting/widget/mini_link_box.dart';
+import 'package:lyc_flutter_project/posting/widget/weather_icon.dart';
+import 'package:lyc_flutter_project/styles/default_padding.dart';
 import 'package:lyc_flutter_project/styles/posting_text_style.dart';
 import 'package:lyc_flutter_project/widget/normal_appbar.dart';
 import 'package:lyc_flutter_project/widget/select_buttons_in_posting.dart';
+import 'package:numberpicker/numberpicker.dart';
 
 class AddPostingSettingScreen extends StatefulWidget {
   final XFile image;
@@ -26,8 +30,8 @@ class AddPostingSettingScreen extends StatefulWidget {
 class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
   List<Map<String, dynamic>> _points = [];
   List<String> selectedStyle = [];
-  int minTempValue = 3;
-  int maxTempValue = 10;
+  int minTempValue = 0;
+  int maxTempValue = 0;
 
   final GlobalKey _imageKey = GlobalKey();
 
@@ -50,8 +54,8 @@ class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
         backButton: false,
         title: widget.purpose == 0 ? '코디 업로드' : '리뷰 업로드',
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(30),
+      body: DefaultPadding(
+        bottom: 20.0,
         child: ListView(
           children: [
             // Step1
@@ -61,7 +65,7 @@ class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
-                WeatherIcon(),
+                const WeatherIcon(),
                 const SizedBox(width: 10),
                 TempInputField('최저기온'),
                 const SizedBox(width: 10),
@@ -75,19 +79,34 @@ class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
               style: PostingTextStyle.stepTitle,
             ),
             const SizedBox(height: 15),
-            Wrap(
-              direction: Axis.horizontal,
-              alignment: WrapAlignment.start,
+            Row(
               children: [
-                for (var i = 0; i < 8; i++)
-                  SelectButtonsInPosting(
-                    styleButtons,
-                    selectedStyle,
-                    i,
-                    () => onStyleButtonPressed(styleButtons[i]),
-                    AppColor.deepGrey,
-                    Colors.white,
-                  )
+                for (var i = 0; i < 4; i++)
+                  Expanded(
+                    child: SelectButtonsInPosting(
+                      styleButtons,
+                      selectedStyle,
+                      i,
+                      () => onStyleButtonPressed(styleButtons[i]),
+                      AppColor.deepGrey,
+                      Colors.white,
+                    ),
+                  ),
+              ],
+            ),
+            Row(
+              children: [
+                for (var i = 4; i < 8; i++)
+                  Expanded(
+                    child: SelectButtonsInPosting(
+                      styleButtons,
+                      selectedStyle,
+                      i,
+                      () => onStyleButtonPressed(styleButtons[i]),
+                      AppColor.deepGrey,
+                      Colors.white,
+                    ),
+                  ),
               ],
             ),
             const SizedBox(height: 40),
@@ -152,131 +171,31 @@ class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
                       return Positioned(
                         left: left,
                         top: top,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: const Color(0xff252525),
-                          ),
-                          padding: const EdgeInsets.all(10),
-                          child: Text(
-                            '링크${_points.indexOf(e) + 1}',
-                            style: const TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
+                        child: MiniLinkBox(
+                          index: (_points.indexOf(e) + 1).toString(),
                         ),
                       );
                     },
-                  ).toList(),
+                  ),
                 ],
               ),
             ),
             const SizedBox(height: 10),
             ..._points.map(
               (e) {
-                return Container(
-                  margin: const EdgeInsets.symmetric(vertical: 8),
-                  padding: const EdgeInsets.only(right: 10),
-                  height: 40,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.white,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        flex: 9,
-                        child: Row(
-                          children: [
-                            Container(
-                              width: 80,
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                                color: AppColor.deepGrey,
-                              ),
-                              child: Text(
-                                '링크${_points.indexOf(e) + 1}',
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(width: 10),
-                            Expanded(
-                              child: Text(
-                                e['link'],
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Expanded(
-                        child: SizedBox(
-                          child: SvgPicture.asset(
-                            'assets/icon_eraser.svg',
-                            color: AppColor.deepGrey,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                return LinkBox(
+                  index: (_points.indexOf(e) + 1).toString(),
+                  link: e["link"],
                 );
               },
             ),
             const SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  flex: 2,
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: AppColor.grey,
-                        borderRadius: BorderRadius.circular(30)),
-                    child: TextButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: const Text(
-                        '취소',
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16),
-                      ),
-                    ),
-                  ),
-                ),
-                const Expanded(flex: 1, child: SizedBox()),
-                Expanded(
-                  flex: 2,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: AppColor.beige,
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    child: TextButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: const Text(
-                        '저장',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            )
+            TwoButtons(
+              fstOnPressed: () {
+                Navigator.pop(context);
+              },
+              scdOnPressed: () {},
+            ),
           ],
         ),
       ),
@@ -285,48 +204,110 @@ class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
 
   void onStyleButtonPressed(String element) {
     setState(() {
-      selectedStyle.contains(element)
-          ? selectedStyle.remove(element)
-          : selectedStyle.add(element);
+      if (selectedStyle.contains(element)) {
+        selectedStyle.remove(element);
+      } else {
+        if (selectedStyle.isNotEmpty) {
+          selectedStyle.clear();
+        }
+        selectedStyle.add(element);
+      }
     });
-  }
-
-  Widget WeatherIcon() {
-    return Expanded(
-      child: Container(
-        height: 80,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          color: Colors.white,
-        ),
-        child: const Icon(
-          Icons.wb_sunny_sharp,
-          color: Colors.yellow,
-          size: 50,
-        ),
-      ),
-    );
   }
 
   Widget TempInputField(String label) {
     return Expanded(
-      child: Container(
-        height: 80,
-        padding: const EdgeInsets.all(10),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          color: Colors.white,
-        ),
-        child: Column(
-          children: [
-            Text(
-              label,
-              style: const TextStyle(
-                fontWeight: FontWeight.w600,
+      child: GestureDetector(
+        onTap: () {
+          showDialog(
+            barrierDismissible: true,
+            context: context,
+            builder: (BuildContext context) {
+              int tempValue = label == "최저기온" ? minTempValue : maxTempValue;
+              return StatefulBuilder(
+                builder: (BuildContext context, StateSetter setState) {
+                  return AlertDialog(
+                    title: Text(
+                      '$label을 선택해주세요',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 20.0,
+                      ),
+                    ),
+                    content: NumberPicker(
+                      minValue: -99,
+                      maxValue: 99,
+                      value: tempValue,
+                      onChanged: (value) => setState(() => tempValue = value),
+                    ),
+                    actions: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          TextButton(
+                            child: const Text(
+                              '취소',
+                              style: TextStyle(
+                                color: Colors.black,
+                              ),
+                            ),
+                            onPressed: () => Navigator.of(context).pop(),
+                          ),
+                          TextButton(
+                            child: const Text(
+                              '확인',
+                              style: TextStyle(
+                                color: Colors.black,
+                              ),
+                            ),
+                            onPressed: () {
+                              Navigator.of(context).pop(tempValue);
+                            },
+                          ),
+                        ],
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
+          ).then((value) {
+            if (value != null) {
+              setState(() {
+                if (label == "최저기온") {
+                  minTempValue = value;
+                } else {
+                  maxTempValue = value;
+                }
+              });
+            }
+          });
+        },
+        child: Container(
+          height: 80,
+          padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            color: Colors.white,
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Text(
+                label,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w600,
+                ),
               ),
-            ),
-            label == '최저기온' ? Text('$minTempValue°C') : Text('$maxTempValue°C')
-          ],
+              Text(
+                label == "최저기온" ? "$minTempValue°C" : "$maxTempValue°C",
+                style: const TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 20.0,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -344,24 +325,38 @@ class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('링크를 입력해주세요'),
+        title: const Text(
+          '링크를 입력해주세요',
+          style: TextStyle(
+            fontWeight: FontWeight.w600,
+            fontSize: 20.0,
+          ),
+        ),
         content: TextField(controller: _linkController),
         actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('취소'),
-          ),
-          TextButton(
-            onPressed: () {
-              setState(() {
-                _points.add({
-                  "offset": Offset(relativeDx, relativeDy),
-                  "link": _linkController.text
-                });
-              });
-              Navigator.of(context).pop();
-            },
-            child: const Text('추가하기'),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text('취소', style: TextStyle(color: Colors.black)),
+              ),
+              TextButton(
+                onPressed: () {
+                  setState(() {
+                    _points.add({
+                      "offset": Offset(relativeDx, relativeDy),
+                      "link": _linkController.text
+                    });
+                  });
+                  Navigator.of(context).pop();
+                },
+                child: const Text(
+                  '추가하기',
+                  style: TextStyle(color: Colors.black),
+                ),
+              ),
+            ],
           ),
         ],
       ),
