@@ -2,7 +2,6 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'clothes_posting.g.dart';
 
-
 @JsonSerializable()
 class ClothesPostingImage {
   final int? memberId;
@@ -39,6 +38,26 @@ class ClothesPostingImage {
 }
 
 @JsonSerializable()
+class ClothesPostingText {
+  final String? title;
+  final String? text;
+  final String? material;
+  final String? fit;
+
+  ClothesPostingText({
+    this.title,
+    this.text,
+    this.material,
+    this.fit,
+  });
+
+  factory ClothesPostingText.fromJson(Map<String, dynamic> json) =>
+      _$ClothesPostingTextFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ClothesPostingTextToJson(this);
+}
+
+@JsonSerializable()
 class ClothesPostingImageResult {
   final int memberId;
   final int clothesId;
@@ -56,4 +75,28 @@ class ClothesPostingImageResult {
 
   factory ClothesPostingImageResult.fromJson(Map<String, dynamic> json) =>
       _$ClothesPostingImageResultFromJson(json);
+}
+
+@JsonSerializable()
+class ClothesPostingTextResult {
+  final int memberId;
+  final int clothesId;
+  final int clothesTextId;
+  final String title;
+  final String material;
+  final String fit;
+  final String text;
+
+  ClothesPostingTextResult({
+    required this.memberId,
+    required this.clothesId,
+    required this.clothesTextId,
+    required this.title,
+    required this.material,
+    required this.fit,
+    required this.text,
+  });
+  
+  factory ClothesPostingTextResult.fromJson(Map<String, dynamic> json)
+  => _$ClothesPostingTextResultFromJson(json);
 }

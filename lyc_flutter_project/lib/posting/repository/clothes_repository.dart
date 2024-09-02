@@ -32,4 +32,10 @@ abstract class ClothesRepository {
     @Part(name: "clothesByImageDTO") required String clothesByImageDTO,
     @Part(name: "image") required File image,
   });
+
+  @POST("/texts")
+  @Headers({"accessToken": "true"})
+  Future<ApiResponse<ClothesPostingTextResult>> uploadPostingText({
+    @Body() required ClothesPostingText posting,
+  });
 }
