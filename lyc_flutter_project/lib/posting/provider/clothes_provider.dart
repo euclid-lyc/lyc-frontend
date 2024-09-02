@@ -16,7 +16,7 @@ class ClothesProvider extends ChangeNotifier {
     required this.repositoryProvider,
   });
 
-  void updateImage(XFile image) {
+  void iUpdateImage(XFile image) {
     _postingImage = ClothesPostingImage(
       memberId: _postingImage.memberId,
       image: image.path,
@@ -26,12 +26,12 @@ class ClothesProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateTitle(String text) {
+  void iUpdateTitle(String text) {
     _postingImage = _postingImage.copyWith(title: text);
     notifyListeners();
   }
 
-  void updateContent(String text) {
+  void iUpdateContent(String text) {
     _postingImage = _postingImage.copyWith(text: text);
     notifyListeners();
   }

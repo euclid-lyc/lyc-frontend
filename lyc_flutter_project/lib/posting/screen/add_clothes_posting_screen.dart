@@ -93,11 +93,11 @@ class _AddClothesPostingScreenState extends State<AddClothesPostingScreen> {
   }
 
   _updateTitle() {
-    widget.clothesProvider.updateTitle(iTitleController.text);
+    widget.clothesProvider.iUpdateTitle(iTitleController.text);
   }
 
   _updateContent() {
-    widget.clothesProvider.updateContent(iContentController.text);
+    widget.clothesProvider.iUpdateContent(iContentController.text);
   }
 
   @override
@@ -329,7 +329,7 @@ class _AddClothesPostingScreenState extends State<AddClothesPostingScreen> {
     setState(() {
       _image = image;
     });
-    widget.clothesProvider.updateImage(image);
+    widget.clothesProvider.iUpdateImage(image);
   }
 
   void _onTextureButtonPressed(String element) {
