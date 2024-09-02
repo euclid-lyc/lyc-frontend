@@ -11,6 +11,12 @@ class ClothesProvider extends ChangeNotifier {
   ClothesPostingImage _postingImage = ClothesPostingImage(
     memberId: cur_member,
   );
+  ClothesPostingText _postingText = ClothesPostingText(
+    title: "",
+    text: "",
+    material: "",
+    fit: "",
+  );
 
   ClothesProvider({
     required this.repositoryProvider,
@@ -36,6 +42,30 @@ class ClothesProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void tUpdateTitle(String text) {
+    _postingText = _postingText.copyWith(title: text);
+    notifyListeners();
+    print("title: ${_postingText.title}");
+  }
+
+  void tUpdateText(String text) {
+    _postingText = _postingText.copyWith(text: text);
+    notifyListeners();
+    print(_postingText.text);
+  }
+
+  void tUpdateMaterial(String text) {
+    _postingText = _postingText.copyWith(material: text);
+    notifyListeners();
+    print(_postingText.material);
+  }
+
+  void tUpdateFit(String text) {
+    _postingText = _postingText.copyWith(fit: text);
+    notifyListeners();
+    print(_postingText.fit);
+  }
+
   Future<bool> canUploadImage() async {
     if (_postingImage.memberId == null) {
       print("memberId is null");
@@ -56,6 +86,26 @@ class ClothesProvider extends ChangeNotifier {
     return true;
   }
 
+  bool canUploadText() {
+    if (_postingText.title == "") {
+      print("title is null");
+      return false;
+    }
+    if (_postingText.material == "") {
+      print("material is null");
+      return false;
+    }
+    if (_postingText.fit == "") {
+      print("fit is null");
+      return false;
+    }
+    if (_postingText.text == "") {
+      print("text is null");
+      return false;
+    }
+    return true;
+  }
+
   void uploadImage() async {
     if (await canUploadImage()) {
       final clothesByImageDTO = jsonEncode({
@@ -70,8 +120,17 @@ class ClothesProvider extends ChangeNotifier {
         clothesByImageDTO: clothesByImageDTO,
         image: image,
       );
+    } else {
+      print("can't upload");
     }
-    else {
+  }
+
+  void uploadText() async {
+    if (canUploadText()) {
+      await repositoryProvider.repository.uploadPostingText(
+        posting: _postingText,
+      );
+    } else {
       print("can't upload");
     }
   }

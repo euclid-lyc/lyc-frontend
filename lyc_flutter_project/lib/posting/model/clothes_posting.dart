@@ -51,6 +51,20 @@ class ClothesPostingText {
     this.fit,
   });
 
+  ClothesPostingText copyWith({
+    String? title,
+    String? text,
+    String? material,
+    String? fit,
+  }) {
+    return ClothesPostingText(
+      title: title ?? this.title,
+      text: text ?? this.text,
+      material: material ?? this.material,
+      fit: fit ?? this.fit
+    );
+  }
+
   factory ClothesPostingText.fromJson(Map<String, dynamic> json) =>
       _$ClothesPostingTextFromJson(json);
 

@@ -71,8 +71,8 @@ class _AddClothesPostingScreenState extends State<AddClothesPostingScreen> {
     iTitleController.addListener(_updateTitle);
     iContentController.addListener(_updateContent);
 
-    // tTitleController.addListener(listener);
-    // tTextController.addListener(listener);
+    tTitleController.addListener(_tUpdateTitle);
+    tTextController.addListener(_tUpdateText);
   }
 
   @override
@@ -82,8 +82,8 @@ class _AddClothesPostingScreenState extends State<AddClothesPostingScreen> {
     iTitleController.removeListener(_updateTitle);
     iContentController.removeListener(_updateContent);
 
-    // tTitleController.removeListener(listener);
-    // tTextController.removeListener(listener);
+    tTitleController.removeListener(_tUpdateTitle);
+    tTextController.removeListener(_tUpdateText);
 
     iTitleController.dispose();
     iContentController.dispose();
@@ -98,6 +98,14 @@ class _AddClothesPostingScreenState extends State<AddClothesPostingScreen> {
 
   _updateContent() {
     widget.clothesProvider.iUpdateContent(iContentController.text);
+  }
+
+  _tUpdateTitle() {
+    widget.clothesProvider.tUpdateTitle(tTitleController.text);
+  }
+
+  _tUpdateText() {
+    widget.clothesProvider.tUpdateText(tTextController.text);
   }
 
   @override
@@ -142,7 +150,7 @@ class _AddClothesPostingScreenState extends State<AddClothesPostingScreen> {
                   TwoButtons(
                     fstOnPressed: () => Navigator.pop,
                     scdOnPressed: () {
-                      value.uploadImage();
+                      photoSelected ? value.uploadImage() : value.uploadText();
                     },
                     scdLabel: "추가",
                   )
@@ -341,6 +349,7 @@ class _AddClothesPostingScreenState extends State<AddClothesPostingScreen> {
           selectedTextures.clear();
         }
         selectedTextures.add(element);
+        widget.clothesProvider.tUpdateMaterial(element);
       }
     });
   }
@@ -354,6 +363,7 @@ class _AddClothesPostingScreenState extends State<AddClothesPostingScreen> {
           selectedFits.clear();
         }
         selectedFits.add(element);
+        widget.clothesProvider.tUpdateFit(element);
       }
     });
   }
