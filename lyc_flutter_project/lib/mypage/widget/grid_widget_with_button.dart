@@ -34,17 +34,19 @@ class GridWidgetWithButton extends StatelessWidget {
           return GestureDetector(
             onTap: () {
               if (category == 0) {
-                ChangeNotifierProvider(
-                  create: (context) => CoordiProvider(
-                    repositoryProvider:
-                        context.read<CoordiRepositoryProvider>(),
-                  ),
+                final coordiProvider = CoordiProvider(
+                  repositoryProvider: context.read<CoordiRepositoryProvider>(),
                 );
                 // 나의코디->코디 추가
                 pushWithoutNavBar(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => AddPostingScreen(purpose: 0)));
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AddPostingScreen(
+                      purpose: 0,
+                      coordiProvider: coordiProvider,
+                    ),
+                  ),
+                );
               } else if (category == 1) {
                 // 저장한코디->코디 탐색
               } else if (category == 3) {

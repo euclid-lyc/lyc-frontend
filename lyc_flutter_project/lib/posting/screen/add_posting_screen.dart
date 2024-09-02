@@ -2,21 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lyc_flutter_project/common/widget/two_buttons.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
+import 'package:lyc_flutter_project/model/coordi.dart';
+import 'package:lyc_flutter_project/posting/provider/coordi_provider.dart';
 import 'package:lyc_flutter_project/posting/screen/add_posting_setting_screen.dart';
 import 'package:lyc_flutter_project/styles/default_padding.dart';
 import 'package:lyc_flutter_project/widget/image_picker_widget.dart';
 import 'package:lyc_flutter_project/widget/normal_appbar.dart';
 import 'package:lyc_flutter_project/widget/posting_content_text_field.dart';
+import 'package:provider/provider.dart';
 
 /// 다목적 스크린
 /// 코디 업로드(0), 리뷰 업로드(1)
 
 class AddPostingScreen extends StatefulWidget {
   final int purpose;
+  final CoordiProvider coordiProvider;
 
   const AddPostingScreen({
     super.key,
     required this.purpose,
+    required this.coordiProvider,
   });
 
   @override
@@ -26,7 +31,27 @@ class AddPostingScreen extends StatefulWidget {
 class _AddPostingScreenState extends State<AddPostingScreen> {
   XFile? _image;
   final ImagePicker picker = ImagePicker();
-  TextEditingController writePostController = TextEditingController();
+  late TextEditingController contentController;
+
+  @override
+  void initState() {
+    super.initState();
+
+    contentController = TextEditingController();
+    contentController.addListener(_listener);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+
+    contentController.removeListener(_listener);
+    contentController.dispose();
+  }
+
+  void _listener() {
+    widget.coordiProvider.updateContent(contentController.text);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,15 +67,21 @@ class _AddPostingScreenState extends State<AddPostingScreen> {
             Expanded(
               flex: 25,
               child: ListView(
-                keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+                keyboardDismissBehavior:
+                    ScrollViewKeyboardDismissBehavior.onDrag,
                 children: [
                   ImagePickerWidget(
-                    onImageSelected: _onImageSelected,
+                    onImageSelected: (p0) {
+                      setState(() {
+                        _image = p0;
+                      });
+                      widget.coordiProvider.updateImage(p0.path);
+                    },
                     picker: picker,
                   ),
                   const SizedBox(height: 30),
                   PostingContentTextField(
-                    controller: writePostController,
+                    controller: contentController,
                     hint: '텍스트를 입력해주세요.',
                   ),
                 ],
@@ -60,38 +91,34 @@ class _AddPostingScreenState extends State<AddPostingScreen> {
             // 세부설정, 등록 버튼
             TwoButtons(
               fstLabel: "세부설정",
-                fstOnPressed: () {
-                  if (_image != null) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => AddPostingSettingScreen(
-                          image: _image!,
-                          purpose: widget.purpose,
-                        ),
-                        fullscreenDialog: true,
+              fstOnPressed: () {
+                if (_image != null) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => AddPostingSettingScreen(
+                        image: _image!,
+                        purpose: widget.purpose,
+                        coordiProvider: widget.coordiProvider,
                       ),
-                    );
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('사진을 첨부해주세요.'),
-                      ),
-                    );
-                  }
-                },
-                scdLabel: "등록",
-                scdOnPressed: () {}),
+                      fullscreenDialog: true,
+                    ),
+                  );
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('사진을 첨부해주세요.'),
+                    ),
+                  );
+                }
+              },
+              scdLabel: "등록",
+              scdOnPressed: () {},
+            ),
           ],
         ),
       ),
     );
-  }
-
-  void _onImageSelected(XFile image) {
-    setState(() {
-      _image = image;
-    });
   }
 
   String getTitle() {

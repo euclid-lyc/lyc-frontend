@@ -48,14 +48,15 @@ class ReviewListScreen extends StatelessWidget {
                       foregroundColor: Colors.black,
                       label: "작성하기",
                       fontSize: 12.0,
-                      onPressed: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) {
-                            return AddPostingScreen(purpose: 1);
-                          },
-                        ),
-                      ),
+                      // onPressed: () => Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (context) {
+                      //       return AddPostingScreen(purpose: 1);
+                      //     },
+                      //   ),
+                      // ),
+                      onPressed: () {},
                     ),
                   );
                 },

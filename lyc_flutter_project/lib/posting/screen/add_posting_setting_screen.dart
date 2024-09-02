@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lyc_flutter_project/common/widget/two_buttons.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
+import 'package:lyc_flutter_project/posting/provider/coordi_provider.dart';
 import 'package:lyc_flutter_project/posting/widget/link_box.dart';
 import 'package:lyc_flutter_project/posting/widget/mini_link_box.dart';
 import 'package:lyc_flutter_project/posting/widget/weather_icon.dart';
@@ -15,11 +16,13 @@ import 'package:numberpicker/numberpicker.dart';
 class AddPostingSettingScreen extends StatefulWidget {
   final XFile image;
   final int purpose;
+  final CoordiProvider coordiProvider;
 
   const AddPostingSettingScreen({
     super.key,
     required this.image,
     required this.purpose,
+    required this.coordiProvider,
   });
 
   @override
@@ -206,11 +209,13 @@ class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
     setState(() {
       if (selectedStyle.contains(element)) {
         selectedStyle.remove(element);
+        widget.coordiProvider.styleToNull();
       } else {
         if (selectedStyle.isNotEmpty) {
           selectedStyle.clear();
         }
         selectedStyle.add(element);
+        widget.coordiProvider.updateStyle(element);
       }
     });
   }
@@ -238,7 +243,12 @@ class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
                       minValue: -99,
                       maxValue: 99,
                       value: tempValue,
-                      onChanged: (value) => setState(() => tempValue = value),
+                      onChanged: (value) => setState(() {
+                        tempValue = value;
+                        label == "최저기온"
+                            ? widget.coordiProvider.updateMinTemp(tempValue)
+                            : widget.coordiProvider.updateMaxTemp(tempValue);
+                      }),
                     ),
                     actions: <Widget>[
                       Row(
@@ -349,6 +359,7 @@ class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
                       "link": _linkController.text
                     });
                   });
+                  widget.coordiProvider.updateLinkList(_linkController.text);
                   Navigator.of(context).pop();
                 },
                 child: const Text(
