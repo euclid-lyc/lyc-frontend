@@ -3,13 +3,13 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class ClosetElement extends StatelessWidget {
   final String title;
-  final String image;
+  final String? image;
   final bool isFst;
 
   const ClosetElement({
     super.key,
     required this.title,
-    required this.image,
+    this.image,
     this.isFst = false,
   });
 
@@ -34,12 +34,14 @@ class ClosetElement extends StatelessWidget {
                     width: 50,
                     child: SvgPicture.asset("assets/icon_plus.svg"),
                   )
-                : Image.network(
-                    image,
-                    fit: BoxFit.cover,
-                    height: 50,
-                    width: 50,
-                  ),
+                : image != null
+                    ? Image.network(
+                        image!,
+                        fit: BoxFit.cover,
+                        height: 50,
+                        width: 50,
+                      )
+                    : const SizedBox(),
           ),
           const SizedBox(width: 10.0),
           Expanded(
