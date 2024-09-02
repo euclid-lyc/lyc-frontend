@@ -29,11 +29,11 @@ class _AddClothesPostingScreenState extends State<AddClothesPostingScreen> {
   late XFile? _image;
   final ImagePicker picker = ImagePicker();
 
-  late TextEditingController titleController;
-  late TextEditingController contentController;
-  late TextEditingController clothesNameController;
-  late TextEditingController textureController;
-  late TextEditingController fitController;
+  late TextEditingController iTitleController;
+  late TextEditingController iContentController;
+
+  late TextEditingController tTitleController;
+  late TextEditingController tTextController;
 
   List<String> textures = [
     '면',
@@ -62,33 +62,42 @@ class _AddClothesPostingScreenState extends State<AddClothesPostingScreen> {
   @override
   void initState() {
     super.initState();
-    titleController = TextEditingController();
-    contentController = TextEditingController();
-    clothesNameController = TextEditingController();
-    textureController = TextEditingController();
-    fitController = TextEditingController();
+    iTitleController = TextEditingController();
+    iContentController = TextEditingController();
 
-    titleController.addListener(_updateTitle);
-    contentController.addListener(_updateContent);
+    tTitleController = TextEditingController();
+    tTextController = TextEditingController();
+
+    iTitleController.addListener(_updateTitle);
+    iContentController.addListener(_updateContent);
+
+    // tTitleController.addListener(listener);
+    // tTextController.addListener(listener);
   }
 
   @override
   void dispose() {
     super.dispose();
 
-    titleController.removeListener(_updateTitle);
-    contentController.removeListener(_updateContent);
+    iTitleController.removeListener(_updateTitle);
+    iContentController.removeListener(_updateContent);
 
-    titleController.dispose();
-    contentController.dispose();
+    // tTitleController.removeListener(listener);
+    // tTextController.removeListener(listener);
+
+    iTitleController.dispose();
+    iContentController.dispose();
+
+    tTitleController.dispose();
+    tTitleController.dispose();
   }
 
   _updateTitle() {
-    widget.clothesProvider.updateTitle(titleController.text);
+    widget.clothesProvider.updateTitle(iTitleController.text);
   }
 
   _updateContent() {
-    widget.clothesProvider.updateContent(contentController.text);
+    widget.clothesProvider.updateContent(iContentController.text);
   }
 
   @override
@@ -155,13 +164,13 @@ class _AddClothesPostingScreenState extends State<AddClothesPostingScreen> {
         ),
         const SizedBox(height: 16.0),
         PostingContentTextField(
-          controller: titleController,
+          controller: iTitleController,
           hint: "옷의 이름을 입력해주세요.",
           maxLines: 1,
         ),
         const SizedBox(height: 16.0),
         PostingContentTextField(
-          controller: contentController,
+          controller: iContentController,
           hint: '텍스트를 입력해주세요.',
         ),
       ],
@@ -177,34 +186,53 @@ class _AddClothesPostingScreenState extends State<AddClothesPostingScreen> {
         ),
         const SizedBox(height: 12.0),
         Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              color: Colors.white,
-            ),
-            child: PostingContentTextField(
-                controller: clothesNameController, hint: 'ex. 파란색 크롭 반팔 티셔츠')),
-        const SizedBox(height: 40),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            color: Colors.white,
+          ),
+          child: PostingContentTextField(
+            maxLines: 1,
+            controller: tTitleController,
+            hint: 'ex. 파란색 크롭 반팔 티셔츠',
+          ),
+        ),
+        const SizedBox(height: 24.0),
         const Text(
           'Step 2. 소재감은 어떤가요?',
           style: PostingTextStyle.stepTitle,
         ),
         const SizedBox(height: 12.0),
-        Wrap(
-          direction: Axis.horizontal,
-          alignment: WrapAlignment.start,
+        Row(
           children: [
-            for (var i = 0; i < 8; i++)
-              SelectButtonsInPosting(
-                textures,
-                selectedTextures,
-                i,
-                () => _onTextureButtonPressed(textures[i]),
-                AppColor.deepGrey,
-                Colors.white,
+            for (var i = 0; i < 4; i++)
+              Expanded(
+                child: SelectButtonsInPosting(
+                  textures,
+                  selectedTextures,
+                  i,
+                  () => _onTextureButtonPressed(textures[i]),
+                  AppColor.deepGrey,
+                  Colors.white,
+                ),
               ),
           ],
         ),
-        const SizedBox(height: 12.0),
+        Row(
+          children: [
+            for (var i = 4; i < 8; i++)
+              Expanded(
+                child: SelectButtonsInPosting(
+                  textures,
+                  selectedTextures,
+                  i,
+                  () => _onTextureButtonPressed(textures[i]),
+                  AppColor.deepGrey,
+                  Colors.white,
+                ),
+              ),
+          ],
+        ),
+        const SizedBox(height: 16.0),
         const Text(
           '기타 재질 입력',
           style: TextStyle(
@@ -214,7 +242,6 @@ class _AddClothesPostingScreenState extends State<AddClothesPostingScreen> {
         ),
         const SizedBox(height: 12.0),
         TextField(
-          controller: textureController,
           decoration: InputDecoration(
             filled: true,
             fillColor: AppColor.grey,
@@ -223,28 +250,43 @@ class _AddClothesPostingScreenState extends State<AddClothesPostingScreen> {
                 borderSide: BorderSide.none),
           ),
         ),
-        const SizedBox(height: 40),
+        const SizedBox(height: 24),
         const Text(
           'Step 3. 핏은 어떤가요? ',
           style: PostingTextStyle.stepTitle,
         ),
         const SizedBox(height: 12.0),
-        Wrap(
-          direction: Axis.horizontal,
-          alignment: WrapAlignment.start,
+        Row(
           children: [
-            for (var i = 0; i < 8; i++)
-              SelectButtonsInPosting(
-                fits,
-                selectedFits,
-                i,
-                () => _onFitButtonPressed(fits[i]),
-                AppColor.deepGrey,
-                Colors.white,
+            for (var i = 0; i < 4; i++)
+              Expanded(
+                child: SelectButtonsInPosting(
+                  fits,
+                  selectedFits,
+                  i,
+                  () => _onFitButtonPressed(fits[i]),
+                  AppColor.deepGrey,
+                  Colors.white,
+                ),
               ),
           ],
         ),
-        const SizedBox(height: 20),
+        Row(
+          children: [
+            for (var i = 4; i < 8; i++)
+              Expanded(
+                child: SelectButtonsInPosting(
+                  fits,
+                  selectedFits,
+                  i,
+                  () => _onFitButtonPressed(fits[i]),
+                  AppColor.deepGrey,
+                  Colors.white,
+                ),
+              ),
+          ],
+        ),
+        const SizedBox(height: 16),
         const Text(
           '기타 핏 입력',
           style: TextStyle(
@@ -254,7 +296,6 @@ class _AddClothesPostingScreenState extends State<AddClothesPostingScreen> {
         ),
         const SizedBox(height: 12.0),
         TextField(
-          controller: fitController,
           decoration: InputDecoration(
             filled: true,
             fillColor: AppColor.grey,
@@ -263,6 +304,16 @@ class _AddClothesPostingScreenState extends State<AddClothesPostingScreen> {
               borderSide: BorderSide.none,
             ),
           ),
+        ),
+        const SizedBox(height: 24.0),
+        const Text(
+          'Step 4. 더 자세한 사항을 입력해주세요.',
+          style: PostingTextStyle.stepTitle,
+        ),
+        const SizedBox(height: 12.0),
+        PostingContentTextField(
+          controller: tTextController,
+          hint: "ex: 거의 무릎까지 오는 기장입니다.\n봄, 여름에 입기 좋은 두께감입니다.",
         ),
       ],
     );
@@ -283,17 +334,27 @@ class _AddClothesPostingScreenState extends State<AddClothesPostingScreen> {
 
   void _onTextureButtonPressed(String element) {
     setState(() {
-      selectedTextures.contains(element)
-          ? selectedTextures.remove(element)
-          : selectedTextures.add(element);
+      if (selectedTextures.contains(element)) {
+        selectedTextures.remove(element);
+      } else {
+        if (selectedTextures.isNotEmpty) {
+          selectedTextures.clear();
+        }
+        selectedTextures.add(element);
+      }
     });
   }
 
   void _onFitButtonPressed(String element) {
     setState(() {
-      selectedFits.contains(element)
-          ? selectedFits.remove(element)
-          : selectedFits.add(element);
+      if (selectedFits.contains(element)) {
+        selectedFits.remove(element);
+      } else {
+        if (selectedFits.isNotEmpty) {
+          selectedFits.clear();
+        }
+        selectedFits.add(element);
+      }
     });
   }
 }
