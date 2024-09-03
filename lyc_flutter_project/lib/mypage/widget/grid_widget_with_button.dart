@@ -80,10 +80,14 @@ class GridWidgetWithButton extends StatelessWidget {
             onTap: () {
               // Navigate to Detail Screen
               Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => PostingDetailScreen(
-                          id: posting.postingId, isMyposting: category == 0)));
+                context,
+                MaterialPageRoute(
+                  builder: (context) => PostingDetailScreen(
+                    postingId: posting.postingId,
+                    isMyposting: category == 0,
+                  ),
+                ),
+              );
             },
             child: Hero(
               tag: posting.postingId,

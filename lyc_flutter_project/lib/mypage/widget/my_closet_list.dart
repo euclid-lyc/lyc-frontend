@@ -49,7 +49,7 @@ class MyClosetList extends StatelessWidget {
               MaterialPageRoute(
                 builder: (context) {
                   return PostingDetailScreen(
-                    id: posting.clothesId,
+                    postingId: posting.clothesId,
                     isCloset: true,
                     isMyposting: true,
                   );
