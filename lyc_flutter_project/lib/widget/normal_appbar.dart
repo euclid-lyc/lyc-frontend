@@ -66,8 +66,8 @@ class NormalAppbar extends StatelessWidget implements PreferredSizeWidget {
                       ? Container(
                           alignment: AlignmentDirectional.bottomEnd,
                           child: GestureDetector(
+                            onTap: onTap,
                             child: icon,
-                            onTap: () => onTap,
                           ),
                         )
                       : const SizedBox(),

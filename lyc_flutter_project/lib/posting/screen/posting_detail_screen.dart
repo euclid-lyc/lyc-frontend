@@ -33,17 +33,29 @@ class _PostingDetailScreenState extends State<PostingDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColor.lightGrey,
-      appBar: widget.isMyposting
-          ? NormalAppbar(
-              icon: SvgPicture.asset("assets/icon_delete.svg"),
-              onTap: () {},
-            )
-          : const NormalAppbar(),
-      body: Consumer<CoordiRepositoryProvider>(
-        builder: (context, value, child) {
-          return SingleChildScrollView(
+    return Consumer<CoordiRepositoryProvider>(
+      builder: (context, value, child) {
+        return Scaffold(
+          backgroundColor: AppColor.lightGrey,
+          appBar: widget.isMyposting
+              ? NormalAppbar(
+                  icon: SvgPicture.asset("assets/icon_delete.svg"),
+                  onTap: () {
+                    print("휴지통 클릭");
+                    value.repository.deleteCoordi(postingId: widget.postingId);
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return const SnackBar(
+                          content: Text("삭제되었습니다."),
+                        );
+                      },
+                    );
+                    Navigator.pop(context);
+                  },
+                )
+              : const NormalAppbar(),
+          body: SingleChildScrollView(
             child: DefaultPadding(
               child: FutureBuilder<ApiResponse<CoordiPostingResult>>(
                 future: value.repository.getCoordi(postingId: widget.postingId),
@@ -218,9 +230,9 @@ class _PostingDetailScreenState extends State<PostingDetailScreen> {
                 },
               ),
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }
