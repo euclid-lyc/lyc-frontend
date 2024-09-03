@@ -200,7 +200,6 @@ class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
             const SizedBox(height: 20),
             TwoButtons(
               fstOnPressed: () {
-                widget.coordiProvider.resetSetting();
                 Navigator.pop(context);
               },
               scdOnPressed: () {

@@ -20,6 +20,7 @@ class PostingContentTextField extends StatelessWidget {
       decoration: BoxDecoration(
           color: Colors.white, borderRadius: BorderRadius.circular(30)),
       child: TextField(
+        autofocus: false,
         maxLines: maxLines,
         controller: controller,
         decoration: InputDecoration(

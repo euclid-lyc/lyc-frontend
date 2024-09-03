@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/data/temp_member_data.dart';
 import 'package:lyc_flutter_project/posting/model/coordi_posting.dart';
@@ -13,9 +14,6 @@ class CoordiProvider extends ChangeNotifier {
     fromMemberId: cur_member,
     minTemp: 0,
     maxTemp: 0,
-    content: "",
-    image: "",
-    style: "",
   );
 
   CoordiProvider({required this.repositoryProvider});
@@ -37,6 +35,8 @@ class CoordiProvider extends ChangeNotifier {
       content: _posting.content,
       toMemberId: _posting.toMemberId,
       fromMemberId: _posting.fromMemberId,
+      maxTemp: 0,
+      minTemp: 0
     );
   }
 
@@ -52,23 +52,9 @@ class CoordiProvider extends ChangeNotifier {
     // print("update maxtemp: ${_posting.maxTemp}");
   }
 
-  void styleToNull() {
-    _posting = CoordiPosting(
-      fromMemberId: _posting.fromMemberId,
-      toMemberId: _posting.toMemberId,
-      style: null,
-      content: _posting.content,
-      maxTemp: _posting.maxTemp,
-      minTemp: _posting.minTemp,
-      image: _posting.image,
-      writerId: _posting.writerId,
-    );
-    // print("style to null: ${_posting.style}");
-  }
-
   void updateStyle(String style) {
     _posting = _posting.copyWith(style: style);
-    print("update style: ${_posting.style}");
+    // print("update style: ${_posting.style}");
   }
 
   void updateContent(String content) {
@@ -84,7 +70,7 @@ class CoordiProvider extends ChangeNotifier {
   void updateImage(String image) {
     _posting = _posting.copyWith(image: image);
     notifyListeners();
-    print("update image: ${_posting.image}");
+    // print("update image: ${_posting.image}");
   }
 
   void updateLinkList(String link) {
@@ -129,20 +115,25 @@ class CoordiProvider extends ChangeNotifier {
         "toMemberId": _posting.toMemberId,
         "writerId": _posting.writerId,
       });
+      print("posingSaveDTO = $postingSaveDTO");
       final resp = await repositoryProvider.repository
           .uploadCoordi(postingSaveDTO: postingSaveDTO);
       if (!resp.isSuccess) {
         print(resp.message);
         return;
       }
+
       final postingId = resp.result.postingId;
       final linkDTO = jsonEncode({
-        "image": _posting.image,
-        "links": _posting.linkList,
+        "links": [_posting.linkList],
       });
+      final image = await MultipartFile.fromFile(_posting.image!);
+      final imageList = [image];
+
       await repositoryProvider.repository.uploadImage(
         postingId: postingId,
         linkDTO: linkDTO,
+        multipartFiles: imageList,
       );
     }
   }

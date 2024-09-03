@@ -52,14 +52,14 @@ class CoordiPosting {
 class CoordiPostingResult {
   final MemberPreview fromMember;
   final MemberPreview toMember;
-  final String writerId;
+  final int writerId;
   final String nickname;
   final String loginId;
   final int postingId;
   final int minTemp;
   final int maxTemp;
   final String content;
-  final ImageInfo imageInfo;
+  final List<ImageInfo> imageInfo;
   final int likes;
 
   CoordiPostingResult({
@@ -101,10 +101,12 @@ class MemberPreview {
 @JsonSerializable()
 class ImageInfo {
   final int imageId;
-  final LinkList linkList;
+  final String image;
+  final List<LinkList> linkList;
 
   ImageInfo({
     required this.imageId,
+    required this.image,
     required this.linkList,
   });
 

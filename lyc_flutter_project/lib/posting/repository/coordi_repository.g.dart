@@ -39,7 +39,7 @@ class _CoordiRepository implements CoordiRepository {
     )
             .compose(
               _dio.options,
-              '/',
+              '',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -59,6 +59,7 @@ class _CoordiRepository implements CoordiRepository {
   Future<ApiResponse<CoordiPostingResult>> uploadImage({
     required int postingId,
     required dynamic linkDTO,
+    required List<MultipartFile> multipartFiles,
   }) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -69,6 +70,8 @@ class _CoordiRepository implements CoordiRepository {
       'linkDTO',
       linkDTO,
     ));
+    _data.files
+        .addAll(multipartFiles.map((i) => MapEntry('multipartFiles', i)));
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ApiResponse<CoordiPostingResult>>(Options(
       method: 'POST',

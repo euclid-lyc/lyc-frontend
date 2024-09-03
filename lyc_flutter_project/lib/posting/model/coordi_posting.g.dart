@@ -36,14 +36,16 @@ CoordiPostingResult _$CoordiPostingResultFromJson(Map<String, dynamic> json) =>
           MemberPreview.fromJson(json['fromMember'] as Map<String, dynamic>),
       toMember:
           MemberPreview.fromJson(json['toMember'] as Map<String, dynamic>),
-      writerId: json['writerId'] as String,
+      writerId: (json['writerId'] as num).toInt(),
       nickname: json['nickname'] as String,
       loginId: json['loginId'] as String,
       postingId: (json['postingId'] as num).toInt(),
       minTemp: (json['minTemp'] as num).toInt(),
       maxTemp: (json['maxTemp'] as num).toInt(),
       content: json['content'] as String,
-      imageInfo: ImageInfo.fromJson(json['imageInfo'] as Map<String, dynamic>),
+      imageInfo: (json['imageInfo'] as List<dynamic>)
+          .map((e) => ImageInfo.fromJson(e as Map<String, dynamic>))
+          .toList(),
       likes: (json['likes'] as num).toInt(),
     );
 
@@ -77,11 +79,15 @@ Map<String, dynamic> _$MemberPreviewToJson(MemberPreview instance) =>
 
 ImageInfo _$ImageInfoFromJson(Map<String, dynamic> json) => ImageInfo(
       imageId: (json['imageId'] as num).toInt(),
-      linkList: LinkList.fromJson(json['linkList'] as Map<String, dynamic>),
+      image: json['image'] as String,
+      linkList: (json['linkList'] as List<dynamic>)
+          .map((e) => LinkList.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$ImageInfoToJson(ImageInfo instance) => <String, dynamic>{
       'imageId': instance.imageId,
+      'image': instance.image,
       'linkList': instance.linkList,
     };
 

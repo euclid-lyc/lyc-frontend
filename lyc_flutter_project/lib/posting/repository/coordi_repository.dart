@@ -24,7 +24,7 @@ class CoordiRepositoryProvider extends ChangeNotifier {
 abstract class CoordiRepository {
   factory CoordiRepository(Dio dio, {String baseUrl}) = _CoordiRepository;
 
-  @POST("/")
+  @POST("")
   @Headers({"accessToken": "true"})
   @MultiPart()
   Future<ApiResponse<CoordiPostingResult>> uploadCoordi({
@@ -37,5 +37,6 @@ abstract class CoordiRepository {
   Future<ApiResponse<CoordiPostingResult>> uploadImage({
     @Path() required int postingId,
     @Part(name: "linkDTO") required linkDTO,
+    @Part() required List<MultipartFile> multipartFiles,
   });
 }
