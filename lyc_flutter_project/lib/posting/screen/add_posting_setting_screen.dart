@@ -31,7 +31,7 @@ class AddPostingSettingScreen extends StatefulWidget {
 class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
   final GlobalKey _imageKey = GlobalKey();
 
-  final List<String> styleButtons = [
+  final List<String> styles = [
     '클래식',
     '캐주얼',
     '힙',
@@ -41,6 +41,7 @@ class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
     '모던시크',
     '스트릿'
   ];
+  List<String> selected = [];
 
   @override
   Widget build(BuildContext context) {
@@ -87,10 +88,10 @@ class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
                 for (var i = 0; i < 4; i++)
                   Expanded(
                     child: SelectButtonsInPosting(
-                      styleButtons,
-                      widget.coordiProvider.selectedStyle,
+                      styles,
+                      selected,
                       i,
-                      () => coordiProvider.updateStyle(styleButtons[i]),
+                          () => _onStyleButtonPressed(styles[i]),
                       AppColor.deepGrey,
                       Colors.white,
                     ),
@@ -102,11 +103,10 @@ class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
                 for (var i = 4; i < 8; i++)
                   Expanded(
                     child: SelectButtonsInPosting(
-                      styleButtons,
-                      widget.coordiProvider.selectedStyle,
+                      styles,
+                      selected,
                       i,
-                      () =>
-                          coordiProvider.onStyleButtonPressed(styleButtons[i]),
+                          () => _onStyleButtonPressed(styles[i]),
                       AppColor.deepGrey,
                       Colors.white,
                     ),
@@ -128,9 +128,9 @@ class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
             GestureDetector(
               onTapDown: (details) {
                 final RenderBox renderBox =
-                    _imageKey.currentContext?.findRenderObject() as RenderBox;
+                _imageKey.currentContext?.findRenderObject() as RenderBox;
                 final localOffset =
-                    renderBox.globalToLocal(details.globalPosition);
+                renderBox.globalToLocal(details.globalPosition);
                 _addPoint(localOffset); // Pass Offset directly
               },
               child: Stack(
@@ -142,14 +142,14 @@ class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
                       borderRadius: BorderRadius.circular(20),
                       child: coordiProvider.image != null
                           ? Image.file(
-                              File(widget.coordiProvider.image),
-                              fit: BoxFit.cover,
-                            )
-                          : SizedBox(),
+                        File(widget.coordiProvider.image),
+                        fit: BoxFit.cover,
+                      )
+                          : const SizedBox(),
                     ),
                   ),
                   ...widget.coordiProvider.points.map(
-                    (e) {
+                        (e) {
                       Offset offset = e["offset"];
                       final RenderBox renderBox = _imageKey.currentContext
                           ?.findRenderObject() as RenderBox;
@@ -189,10 +189,10 @@ class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
             ),
             const SizedBox(height: 10),
             ...widget.coordiProvider.points.map(
-              (e) {
+                  (e) {
                 return LinkBox(
                   index:
-                      (widget.coordiProvider.points.indexOf(e) + 1).toString(),
+                  (widget.coordiProvider.points.indexOf(e) + 1).toString(),
                   link: e["link"],
                 );
               },
@@ -215,7 +215,7 @@ class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
 
   void _addPoint(Offset localOffset) {
     final RenderBox renderBox =
-        _imageKey.currentContext?.findRenderObject() as RenderBox;
+    _imageKey.currentContext?.findRenderObject() as RenderBox;
     final size = renderBox.size;
 
     double relativeDx = localOffset.dx / size.width;
@@ -224,28 +224,43 @@ class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
     TextEditingController _linkController = TextEditingController();
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('링크를 입력해주세요'),
-        content: TextField(controller: _linkController),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('취소'),
+      builder: (context) =>
+          AlertDialog(
+            title: const Text('링크를 입력해주세요'),
+            content: TextField(controller: _linkController),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text('취소'),
+              ),
+              TextButton(
+                onPressed: () {
+                  setState(() {
+                    widget.coordiProvider.points.add({
+                      "offset": Offset(relativeDx, relativeDy),
+                      "link": _linkController.text
+                    });
+                  });
+                  Navigator.of(context).pop();
+                },
+                child: const Text('추가하기'),
+              ),
+            ],
           ),
-          TextButton(
-            onPressed: () {
-              setState(() {
-                widget.coordiProvider.points.add({
-                  "offset": Offset(relativeDx, relativeDy),
-                  "link": _linkController.text
-                });
-              });
-              Navigator.of(context).pop();
-            },
-            child: const Text('추가하기'),
-          ),
-        ],
-      ),
     );
+  }
+
+  void _onStyleButtonPressed(String element) {
+    setState(() {
+      if (selected.contains(element)) {
+        selected.remove(element);
+      } else {
+        if (selected.isNotEmpty) {
+          selected.clear();
+        }
+        selected.add(element);
+        widget.coordiProvider.updateStyle(element);
+      }
+    });
   }
 }

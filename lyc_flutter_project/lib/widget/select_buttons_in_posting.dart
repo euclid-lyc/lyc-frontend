@@ -8,7 +8,7 @@ GestureDetector SelectButtonsInPosting(List<String> name, List<String> selected,
     child: Container(
       height: 50,
       width: 80,
-      padding: EdgeInsets.all(5),
+      padding: const EdgeInsets.all(5),
       child: Container(
         alignment: Alignment.center,
         decoration: BoxDecoration(

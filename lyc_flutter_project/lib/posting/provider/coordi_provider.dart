@@ -30,14 +30,6 @@ class CoordiProvider extends ChangeNotifier {
 
   get selectedStyle => _posting.style;
 
-  void onStyleButtonPressed(String element) {
-    if (_posting.style == element) {
-      styleToNull();
-    } else {
-      updateStyle(element);
-    }
-  }
-
   void resetSetting() {
     _posting = CoordiPosting(
       writerId: _posting.writerId,
