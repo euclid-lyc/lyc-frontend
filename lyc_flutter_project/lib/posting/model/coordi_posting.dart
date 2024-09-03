@@ -41,6 +41,7 @@ class CoordiPosting {
       fromMemberId: fromMemberId,
       toMemberId: toMemberId ?? this.toMemberId,
       writerId: writerId,
+      image: image ?? this.image,
     );
   }
 

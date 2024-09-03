@@ -75,7 +75,7 @@ class _AddPostingScreenState extends State<AddPostingScreen> {
                       setState(() {
                         _image = p0;
                       });
-                      widget.coordiProvider.updateImage(p0.path);
+                      widget.coordiProvider.updateImage(p0.path.toString());
                     },
                     picker: picker,
                   ),
@@ -92,14 +92,16 @@ class _AddPostingScreenState extends State<AddPostingScreen> {
             TwoButtons(
               fstLabel: "세부설정",
               fstOnPressed: () {
-                if (_image != null) {
+                if (_image != null && widget.coordiProvider.image != null) {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => AddPostingSettingScreen(
-                        image: _image!,
-                        purpose: widget.purpose,
-                        coordiProvider: widget.coordiProvider,
+                      builder: (context) => ChangeNotifierProvider.value(
+                        value: widget.coordiProvider,
+                        child: AddPostingSettingScreen(
+                          purpose: widget.purpose,
+                          coordiProvider: widget.coordiProvider,
+                        ),
                       ),
                       fullscreenDialog: true,
                     ),
@@ -113,7 +115,9 @@ class _AddPostingScreenState extends State<AddPostingScreen> {
                 }
               },
               scdLabel: "등록",
-              scdOnPressed: () {},
+              scdOnPressed: () {
+                widget.coordiProvider.upload();
+              },
             ),
           ],
         ),

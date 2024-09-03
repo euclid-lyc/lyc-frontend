@@ -1,26 +1,24 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:lyc_flutter_project/common/widget/two_buttons.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/posting/provider/coordi_provider.dart';
 import 'package:lyc_flutter_project/posting/widget/link_box.dart';
 import 'package:lyc_flutter_project/posting/widget/mini_link_box.dart';
+import 'package:lyc_flutter_project/posting/widget/temp_box.dart';
 import 'package:lyc_flutter_project/posting/widget/weather_icon.dart';
 import 'package:lyc_flutter_project/styles/default_padding.dart';
 import 'package:lyc_flutter_project/styles/posting_text_style.dart';
 import 'package:lyc_flutter_project/widget/normal_appbar.dart';
 import 'package:lyc_flutter_project/widget/select_buttons_in_posting.dart';
-import 'package:numberpicker/numberpicker.dart';
+import 'package:provider/provider.dart';
 
 class AddPostingSettingScreen extends StatefulWidget {
-  final XFile image;
   final int purpose;
   final CoordiProvider coordiProvider;
 
   const AddPostingSettingScreen({
     super.key,
-    required this.image,
     required this.purpose,
     required this.coordiProvider,
   });
@@ -31,11 +29,6 @@ class AddPostingSettingScreen extends StatefulWidget {
 }
 
 class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
-  List<Map<String, dynamic>> _points = [];
-  List<String> selectedStyle = [];
-  int minTempValue = 0;
-  int maxTempValue = 0;
-
   final GlobalKey _imageKey = GlobalKey();
 
   final List<String> styleButtons = [
@@ -51,6 +44,7 @@ class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final coordiProvider = Provider.of<CoordiProvider>(context);
     return Scaffold(
       backgroundColor: AppColor.lightGrey,
       appBar: NormalAppbar(
@@ -70,9 +64,15 @@ class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
               children: <Widget>[
                 const WeatherIcon(),
                 const SizedBox(width: 10),
-                TempInputField('최저기온'),
+                TempBox(
+                  label: "최저기온",
+                  onChanged: coordiProvider.updateMinTemp,
+                ),
                 const SizedBox(width: 10),
-                TempInputField('최고기온'),
+                TempBox(
+                  label: "최고기온",
+                  onChanged: coordiProvider.updateMaxTemp,
+                ),
               ],
             ),
             const SizedBox(height: 40),
@@ -88,9 +88,9 @@ class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
                   Expanded(
                     child: SelectButtonsInPosting(
                       styleButtons,
-                      selectedStyle,
+                      widget.coordiProvider.selectedStyle,
                       i,
-                      () => onStyleButtonPressed(styleButtons[i]),
+                      () => coordiProvider.updateStyle(styleButtons[i]),
                       AppColor.deepGrey,
                       Colors.white,
                     ),
@@ -103,9 +103,10 @@ class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
                   Expanded(
                     child: SelectButtonsInPosting(
                       styleButtons,
-                      selectedStyle,
+                      widget.coordiProvider.selectedStyle,
                       i,
-                      () => onStyleButtonPressed(styleButtons[i]),
+                      () =>
+                          coordiProvider.onStyleButtonPressed(styleButtons[i]),
                       AppColor.deepGrey,
                       Colors.white,
                     ),
@@ -139,13 +140,15 @@ class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
                     child: ClipRRect(
                       key: _imageKey,
                       borderRadius: BorderRadius.circular(20),
-                      child: Image.file(
-                        File(widget.image.path),
-                        fit: BoxFit.cover,
-                      ),
+                      child: coordiProvider.image != null
+                          ? Image.file(
+                              File(widget.coordiProvider.image),
+                              fit: BoxFit.cover,
+                            )
+                          : SizedBox(),
                     ),
                   ),
-                  ..._points.map(
+                  ...widget.coordiProvider.points.map(
                     (e) {
                       Offset offset = e["offset"];
                       final RenderBox renderBox = _imageKey.currentContext
@@ -175,7 +178,8 @@ class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
                         left: left,
                         top: top,
                         child: MiniLinkBox(
-                          index: (_points.indexOf(e) + 1).toString(),
+                          index: (widget.coordiProvider.points.indexOf(e) + 1)
+                              .toString(),
                         ),
                       );
                     },
@@ -184,10 +188,11 @@ class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
               ),
             ),
             const SizedBox(height: 10),
-            ..._points.map(
+            ...widget.coordiProvider.points.map(
               (e) {
                 return LinkBox(
-                  index: (_points.indexOf(e) + 1).toString(),
+                  index:
+                      (widget.coordiProvider.points.indexOf(e) + 1).toString(),
                   link: e["link"],
                 );
               },
@@ -195,129 +200,14 @@ class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
             const SizedBox(height: 20),
             TwoButtons(
               fstOnPressed: () {
+                widget.coordiProvider.resetSetting();
                 Navigator.pop(context);
               },
-              scdOnPressed: () {},
+              scdOnPressed: () {
+                Navigator.pop(context);
+              },
             ),
           ],
-        ),
-      ),
-    );
-  }
-
-  void onStyleButtonPressed(String element) {
-    setState(() {
-      if (selectedStyle.contains(element)) {
-        selectedStyle.remove(element);
-        widget.coordiProvider.styleToNull();
-      } else {
-        if (selectedStyle.isNotEmpty) {
-          selectedStyle.clear();
-        }
-        selectedStyle.add(element);
-        widget.coordiProvider.updateStyle(element);
-      }
-    });
-  }
-
-  Widget TempInputField(String label) {
-    return Expanded(
-      child: GestureDetector(
-        onTap: () {
-          showDialog(
-            barrierDismissible: true,
-            context: context,
-            builder: (BuildContext context) {
-              int tempValue = label == "최저기온" ? minTempValue : maxTempValue;
-              return StatefulBuilder(
-                builder: (BuildContext context, StateSetter setState) {
-                  return AlertDialog(
-                    title: Text(
-                      '$label을 선택해주세요',
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 20.0,
-                      ),
-                    ),
-                    content: NumberPicker(
-                      minValue: -99,
-                      maxValue: 99,
-                      value: tempValue,
-                      onChanged: (value) => setState(() {
-                        tempValue = value;
-                        label == "최저기온"
-                            ? widget.coordiProvider.updateMinTemp(tempValue)
-                            : widget.coordiProvider.updateMaxTemp(tempValue);
-                      }),
-                    ),
-                    actions: <Widget>[
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          TextButton(
-                            child: const Text(
-                              '취소',
-                              style: TextStyle(
-                                color: Colors.black,
-                              ),
-                            ),
-                            onPressed: () => Navigator.of(context).pop(),
-                          ),
-                          TextButton(
-                            child: const Text(
-                              '확인',
-                              style: TextStyle(
-                                color: Colors.black,
-                              ),
-                            ),
-                            onPressed: () {
-                              Navigator.of(context).pop(tempValue);
-                            },
-                          ),
-                        ],
-                      ),
-                    ],
-                  );
-                },
-              );
-            },
-          ).then((value) {
-            if (value != null) {
-              setState(() {
-                if (label == "최저기온") {
-                  minTempValue = value;
-                } else {
-                  maxTempValue = value;
-                }
-              });
-            }
-          });
-        },
-        child: Container(
-          height: 80,
-          padding: const EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            color: Colors.white,
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Text(
-                label,
-                style: const TextStyle(
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              Text(
-                label == "최저기온" ? "$minTempValue°C" : "$maxTempValue°C",
-                style: const TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 20.0,
-                ),
-              ),
-            ],
-          ),
         ),
       ),
     );
@@ -335,39 +225,24 @@ class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text(
-          '링크를 입력해주세요',
-          style: TextStyle(
-            fontWeight: FontWeight.w600,
-            fontSize: 20.0,
-          ),
-        ),
+        title: const Text('링크를 입력해주세요'),
         content: TextField(controller: _linkController),
         actions: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(),
-                child: const Text('취소', style: TextStyle(color: Colors.black)),
-              ),
-              TextButton(
-                onPressed: () {
-                  setState(() {
-                    _points.add({
-                      "offset": Offset(relativeDx, relativeDy),
-                      "link": _linkController.text
-                    });
-                  });
-                  widget.coordiProvider.updateLinkList(_linkController.text);
-                  Navigator.of(context).pop();
-                },
-                child: const Text(
-                  '추가하기',
-                  style: TextStyle(color: Colors.black),
-                ),
-              ),
-            ],
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('취소'),
+          ),
+          TextButton(
+            onPressed: () {
+              setState(() {
+                widget.coordiProvider.points.add({
+                  "offset": Offset(relativeDx, relativeDy),
+                  "link": _linkController.text
+                });
+              });
+              Navigator.of(context).pop();
+            },
+            child: const Text('추가하기'),
           ),
         ],
       ),

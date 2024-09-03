@@ -19,8 +19,8 @@ class _CoordiRepository implements CoordiRepository {
   String? baseUrl;
 
   @override
-  Future<ApiResponse<CoordiPostingResult>> uploadCoori(
-      {required String postingSaveDTO}) async {
+  Future<ApiResponse<CoordiPostingResult>> uploadCoordi(
+      {required dynamic postingSaveDTO}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'accessToken': 'true'};
@@ -40,6 +40,45 @@ class _CoordiRepository implements CoordiRepository {
             .compose(
               _dio.options,
               '/',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = ApiResponse<CoordiPostingResult>.fromJson(
+      _result.data!,
+      (json) => CoordiPostingResult.fromJson(json as Map<String, dynamic>),
+    );
+    return value;
+  }
+
+  @override
+  Future<ApiResponse<CoordiPostingResult>> uploadImage({
+    required int postingId,
+    required dynamic linkDTO,
+  }) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'accessToken': 'true'};
+    _headers.removeWhere((k, v) => v == null);
+    final _data = FormData();
+    _data.fields.add(MapEntry(
+      'linkDTO',
+      linkDTO,
+    ));
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ApiResponse<CoordiPostingResult>>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+      contentType: 'multipart/form-data',
+    )
+            .compose(
+              _dio.options,
+              '/${postingId}',
               queryParameters: queryParameters,
               data: _data,
             )
