@@ -19,14 +19,14 @@ class _FeedRepository implements FeedRepository {
   String? baseUrl;
 
   @override
-  Future<ApiResponse<CoordiPostingPreview>> getFeedPreview() async {
+  Future<ApiResponse<List<CoordiPostingPreview>>> getFeedPreview() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'accessToken': 'true'};
     _headers.removeWhere((k, v) => v == null);
     final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<ApiResponse<CoordiPostingPreview>>(Options(
+        _setStreamType<ApiResponse<List<CoordiPostingPreview>>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -42,9 +42,14 @@ class _FeedRepository implements FeedRepository {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = ApiResponse<CoordiPostingPreview>.fromJson(
+    final value = ApiResponse<List<CoordiPostingPreview>>.fromJson(
       _result.data!,
-      (json) => CoordiPostingPreview.fromJson(json as Map<String, dynamic>),
+      (json) => json is List<dynamic>
+          ? json
+              .map<CoordiPostingPreview>((i) =>
+                  CoordiPostingPreview.fromJson(i as Map<String, dynamic>))
+              .toList()
+          : List.empty(),
     );
     return value;
   }

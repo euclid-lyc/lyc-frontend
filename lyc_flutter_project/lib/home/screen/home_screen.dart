@@ -1,8 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/common/widget/round_image.dart';
+import 'package:lyc_flutter_project/home/provider/home_provider.dart';
+import 'package:lyc_flutter_project/mypage/model/mypage_posting_preview.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -16,236 +18,281 @@ void _onTap() {}
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColor.lightGrey,
-      appBar: const HomeAppbar(),
-      body: ListView(
-        children: [
-          const MarginBox(),
-          // 배너
-          Container(
-            alignment: Alignment.center,
-            width: double.infinity,
-            height: 170,
-            color: Colors.white,
-            child: const Text('배너'),
-          ),
-          const MarginBox(),
-          Container(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              children: [
-                // 둘러보기
-                const TitleRow(label: '둘러보기', onTap: _onTap),
-                const Line(),
-                SizedBox(
-                  height: 200,
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    children: [
-                      for (var i = 0; i < 10; i++)
-                        Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 8),
-                          decoration: buildWhiteRoundBox(),
-                          height: 190,
-                          width: 135,
-                        ),
-                    ],
-                  ),
-                ),
+    return Consumer<HomeProvider>(
+      builder: (context, value, child) {
+        return Scaffold(
+          backgroundColor: AppColor.lightGrey,
+          appBar: const HomeAppbar(),
+          body: ListView(
+            children: [
+              const MarginBox(),
+              // 배너
+              Container(
+                alignment: Alignment.center,
+                width: double.infinity,
+                height: 170,
+                color: Colors.white,
+                child: const Text('배너'),
+              ),
+              const MarginBox(),
+              Container(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  children: [
+                    // 둘러보기
+                    const TitleRow(label: '둘러보기', onTap: _onTap),
+                    const Line(),
+                    FutureBuilder<List<CoordiPostingPreview>>(
+                      future: value.getPostingPreview(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const CircularProgressIndicator();
+                        } else if (snapshot.hasError) {
+                          return Text("Error: ${snapshot.error.toString()}");
+                        } else if (snapshot.hasData) {
+                          return SizedBox(
+                            height: 200,
+                            child: snapshot.data!.isEmpty
+                                ? const Text("게시글이 없습니다")
+                                : ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: snapshot.data!.length,
+                                    itemBuilder: (context, index) {
+                                      final posting = snapshot.data![index];
+                                      return Container(
+                                        height: 190,
+                                        width: 135,
+                                        margin: const EdgeInsets.symmetric(
+                                          horizontal: 8.0,
+                                        ),
+                                        decoration: buildWhiteRoundBox(),
+                                        child: Image.network(
+                                          posting.image,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      );
+                                    },
+                                  ),
+                          );
+                        } else {
+                          return const SizedBox();
+                        }
+                      },
+                    ),
+                    // SizedBox(
+                    //   height: 200,
+                    //   child: ListView(
+                    //     scrollDirection: Axis.horizontal,
+                    //     children: [
+                    //       for (var i = 0; i < 10; i++)
+                    //         Container(
+                    //           margin: const EdgeInsets.symmetric(horizontal: 8),
+                    //           decoration: buildWhiteRoundBox(),
+                    //           height: 190,
+                    //           width: 135,
+                    //         ),
+                    //     ],
+                    //   ),
+                    // ),
 
-                // 오늘의 디렉터
-                const MarginBox(),
-                const TitleRow(label: '오늘의 디렉터', onTap: _onTap),
-                const Line(),
-                SizedBox(
-                  height: 100,
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    children: [
-                      for (var i = 0; i < 10; i++)
-                        Container(
-                          decoration: buildWhiteRoundBox(),
-                          margin: const EdgeInsets.symmetric(horizontal: 8),
-                          height: 90,
-                          width: 90,
-                          alignment: Alignment.center,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SizedBox(
-                                height: 50,
-                                width: 50,
-                                child: RoundImage(
+                    // 오늘의 디렉터
+                    const MarginBox(),
+                    const TitleRow(label: '오늘의 디렉터', onTap: _onTap),
+                    const Line(),
+                    SizedBox(
+                      height: 100,
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: [
+                          for (var i = 0; i < 10; i++)
+                            Container(
+                              decoration: buildWhiteRoundBox(),
+                              margin: const EdgeInsets.symmetric(horizontal: 8),
+                              height: 90,
+                              width: 90,
+                              alignment: Alignment.center,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    height: 50,
+                                    width: 50,
+                                    child: RoundImage(
+                                      image: Image.asset(
+                                        'assets/ex_profile2.png',
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 3),
+                                  const Text(
+                                    'Winter',
+                                    style: TextStyle(color: AppColor.deepGrey),
+                                  ),
+                                ],
+                              ),
+                            ),
+                        ],
+                      ),
+                    ),
+
+                    // 금주의 사연
+                    const MarginBox(),
+                    const TitleRow(label: '금주의 사연', onTap: _onTap),
+                    const Line(),
+                    Column(
+                      children: [
+                        for (var i = 0; i < 10; i++)
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 5),
+                            margin: const EdgeInsets.symmetric(vertical: 8),
+                            decoration: buildWhiteRoundBox(),
+                            width: double.infinity,
+                            height: 40,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  '${i + 1}',
+                                  style: const TextStyle(
+                                    color: Colors.grey,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                const SizedBox(width: 10),
+                                RoundImage(
                                   image: Image.asset(
-                                    'assets/ex_profile2.png',
+                                    'assets/ex_profile.png',
                                     fit: BoxFit.cover,
                                   ),
                                 ),
-                              ),
-                              const SizedBox(height: 3),
-                              const Text(
-                                'Winter',
-                                style: TextStyle(color: AppColor.deepGrey),
-                              ),
+                                const SizedBox(width: 10),
+                                const Text('전남친이 청접장을 보내왔습니다.'),
+                              ],
+                            ),
+                          ),
+                      ],
+                    )
+                  ],
+                ),
+              ),
+
+              // 유클리드
+              const MarginBox(),
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 30, vertical: 40),
+                color: const Color(0xffF4F5F6),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      '유클리드',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+                    ),
+                    const MarginBox(),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              const DescriptTitle(label: 'Contact us'),
+                              const MiniBox(),
+                              const DescriptText(label: 'id@gmail.com'),
+                              const MiniBox(),
+                              const DescriptText(label: '+82 10-XXXX-XXXX'),
+                              const MiniBox(),
+                              const DescriptText(label: 'Address'),
+                              const SizedBox(height: 30),
+                              Row(
+                                children: [
+                                  SvgPicture.asset('assets/icon_facebook.svg'),
+                                  const SizedBox(width: 10),
+                                  SvgPicture.asset('assets/icon_linkedin.svg'),
+                                  const SizedBox(width: 10),
+                                  SvgPicture.asset('assets/icon_twitter.svg'),
+                                  const SizedBox(width: 10),
+                                  SvgPicture.asset('assets/icon_instagram.svg'),
+                                ],
+                              )
                             ],
                           ),
                         ),
-                    ],
-                  ),
-                ),
-
-                // 금주의 사연
-                const MarginBox(),
-                const TitleRow(label: '금주의 사연', onTap: _onTap),
-                const Line(),
-                Column(
-                  children: [
-                    for (var i = 0; i < 10; i++)
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 5),
-                        margin: const EdgeInsets.symmetric(vertical: 8),
-                        decoration: buildWhiteRoundBox(),
-                        width: double.infinity,
-                        height: 40,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              '${i + 1}',
-                              style: const TextStyle(
-                                color: Colors.grey,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            const SizedBox(width: 10),
-                            RoundImage(
-                              image: Image.asset(
-                                'assets/ex_profile.png',
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                            const SizedBox(width: 10),
-                            const Text('전남친이 청접장을 보내왔습니다.'),
-                          ],
-                        ),
-                      ),
-                  ],
-                )
-              ],
-            ),
-          ),
-
-          // 유클리드
-          const MarginBox(),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 40),
-            color: const Color(0xffF4F5F6),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  '유클리드',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
-                ),
-                const MarginBox(),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          const DescriptTitle(label: 'Contact us'),
-                          const MiniBox(),
-                          const DescriptText(label: 'id@gmail.com'),
-                          const MiniBox(),
-                          const DescriptText(label: '+82 10-XXXX-XXXX'),
-                          const MiniBox(),
-                          const DescriptText(label: 'Address'),
-                          const SizedBox(height: 30),
-                          Row(
+                        const Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              SvgPicture.asset('assets/icon_facebook.svg'),
-                              const SizedBox(width: 10),
-                              SvgPicture.asset('assets/icon_linkedin.svg'),
-                              const SizedBox(width: 10),
-                              SvgPicture.asset('assets/icon_twitter.svg'),
-                              const SizedBox(width: 10),
-                              SvgPicture.asset('assets/icon_instagram.svg'),
+                              DescriptTitle(label: 'Products'),
+                              MiniBox(),
+                              DescriptText(label: 'Author volutpat.'),
+                              MiniBox(),
+                              DescriptText(label: 'Fermentum turpis.'),
+                              MiniBox(),
+                              DescriptText(label: 'Mi consequat.'),
+                              MiniBox(),
+                              DescriptText(label: 'Amet venenatis.'),
+                              MiniBox(),
+                              DescriptText(label: 'Convallis porttitor.'),
                             ],
-                          )
-                        ],
-                      ),
+                          ),
+                        ),
+                      ],
                     ),
-                    const Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          DescriptTitle(label: 'Products'),
-                          MiniBox(),
-                          DescriptText(label: 'Author volutpat.'),
-                          MiniBox(),
-                          DescriptText(label: 'Fermentum turpis.'),
-                          MiniBox(),
-                          DescriptText(label: 'Mi consequat.'),
-                          MiniBox(),
-                          DescriptText(label: 'Amet venenatis.'),
-                          MiniBox(),
-                          DescriptText(label: 'Convallis porttitor.'),
-                        ],
-                      ),
+                    const MarginBox(),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              DescriptTitle(label: 'About'),
+                              MiniBox(),
+                              DescriptText(label: 'Egestas vitae.'),
+                              MiniBox(),
+                              DescriptText(label: 'Viverra lorem ac.'),
+                              MiniBox(),
+                              DescriptText(label: 'Eget ac tellus.'),
+                              MiniBox(),
+                              DescriptText(label: 'Erat nulla.'),
+                              MiniBox(),
+                              DescriptText(label: 'Vulputate proin.'),
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const DescriptTitle(label: 'Get the app'),
+                              const MiniBox(),
+                              SvgPicture.asset('assets/icon_appstore.svg'),
+                              const MiniBox(),
+                              SvgPicture.asset('assets/icon_playstore.svg'),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
+                    const MarginBox(),
+                    Text(
+                      'Copyright © 2024. All rights reserved.',
+                      style:
+                          TextStyle(color: AppColor.deepGrey.withOpacity(0.8)),
+                    )
                   ],
                 ),
-                const MarginBox(),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          DescriptTitle(label: 'About'),
-                          MiniBox(),
-                          DescriptText(label: 'Egestas vitae.'),
-                          MiniBox(),
-                          DescriptText(label: 'Viverra lorem ac.'),
-                          MiniBox(),
-                          DescriptText(label: 'Eget ac tellus.'),
-                          MiniBox(),
-                          DescriptText(label: 'Erat nulla.'),
-                          MiniBox(),
-                          DescriptText(label: 'Vulputate proin.'),
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const DescriptTitle(label: 'Get the app'),
-                          const MiniBox(),
-                          SvgPicture.asset('assets/icon_appstore.svg'),
-                          const MiniBox(),
-                          SvgPicture.asset('assets/icon_playstore.svg'),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                const MarginBox(),
-                Text(
-                  'Copyright © 2024. All rights reserved.',
-                  style: TextStyle(color: AppColor.deepGrey.withOpacity(0.8)),
-                )
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 
