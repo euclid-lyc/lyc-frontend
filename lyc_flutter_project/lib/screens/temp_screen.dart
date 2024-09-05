@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/mypage/screen/my_page_screen.dart';
-import 'package:lyc_flutter_project/home/home_screen.dart';
+import 'package:lyc_flutter_project/screens/home_screen.dart';
 import 'package:lyc_flutter_project/screens/login_screen.dart';
 import 'package:lyc_flutter_project/common/widget/bottom_bar.dart';
 
