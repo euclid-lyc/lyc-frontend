@@ -49,16 +49,8 @@ class _FeedScreenState extends State<FeedScreen> {
                       ? FutureBuilder(
                           future: value.getTemp(),
                           builder: (context, snapshot) {
-                            if (snapshot.hasData) {
-                              print("has data!!!");
-                              return TodayTemp(
-                                minTemp: value.minTemp!,
-                                maxTemp: value.maxTemp!,
-                              );
-                            }
                             return const SizedBox();
-                          },
-                        )
+                          })
                       : TodayTemp(
                           minTemp: value.minTemp!,
                           maxTemp: value.maxTemp!,
