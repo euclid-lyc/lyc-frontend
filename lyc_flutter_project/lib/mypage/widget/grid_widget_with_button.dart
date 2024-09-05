@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/common/style/custom_grid_delegate.dart';
 import 'package:lyc_flutter_project/mypage/model/mypage_posting_preview.dart';
-import 'package:lyc_flutter_project/posting/screen/add_clothes_posting_screen.dart';
 import 'package:lyc_flutter_project/mypage/screen/review_list_screen.dart';
+import 'package:lyc_flutter_project/posting/provider/coordi_provider.dart';
+import 'package:lyc_flutter_project/posting/repository/coordi_repository.dart';
 import 'package:lyc_flutter_project/posting/screen/add_posting_screen.dart';
 import 'package:lyc_flutter_project/posting/screen/posting_detail_screen.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
+import 'package:provider/provider.dart';
 
 /// [category]
 /// 0 나의 코디
@@ -32,25 +34,28 @@ class GridWidgetWithButton extends StatelessWidget {
           return GestureDetector(
             onTap: () {
               if (category == 0) {
+                final coordiProvider = CoordiProvider(
+                  repositoryProvider: context.read<CoordiRepositoryProvider>(),
+                );
                 // 나의코디->코디 추가
                 pushWithoutNavBar(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => AddPostingScreen(purpose: 0)));
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AddPostingScreen(
+                      purpose: 0,
+                      coordiProvider: coordiProvider,
+                    ),
+                  ),
+                );
               } else if (category == 1) {
                 // 저장한코디->코디 탐색
-              } else if (category == 2) {
-                // 나의옷장->옷 추가
-                pushWithoutNavBar(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => AddClothesPostingScreen()));
               } else if (category == 3) {
                 pushWithoutNavBar(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ReviewListScreen(),
-                    ));
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ReviewListScreen(),
+                  ),
+                );
               }
             },
             child: Container(
@@ -75,10 +80,14 @@ class GridWidgetWithButton extends StatelessWidget {
             onTap: () {
               // Navigate to Detail Screen
               Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => PostingDetailScreen(
-                          id: posting.postingId, isMyposting: category == 0)));
+                context,
+                MaterialPageRoute(
+                  builder: (context) => PostingDetailScreen(
+                    postingId: posting.postingId,
+                    isMyposting: category == 0,
+                  ),
+                ),
+              );
             },
             child: Hero(
               tag: posting.postingId,
