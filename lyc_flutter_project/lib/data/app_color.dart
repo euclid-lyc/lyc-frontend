@@ -8,10 +8,10 @@ import 'dart:ui';
 abstract class AppColor {
   AppColor._();
 
-  static const beige = const Color(0xffC4BAA2);
-  static const lightGrey = const Color(0xffF1F1F1);
-  static const grey = const Color(0xffD9D9D9);
-  static const deepGrey = const Color(0xff738998);
-  static const brown = const Color(0xff8D8371);
+  static const beige = Color(0xffC4BAA2);
+  static const lightGrey = Color(0xffF1F1F1);
+  static const grey = Color(0xffD9D9D9);
+  static const deepGrey = Color(0xff738998);
+  static const brown = Color(0xff8D8371);
   static const active = Color(0xff03A600);
 }

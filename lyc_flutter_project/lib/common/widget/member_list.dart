@@ -67,7 +67,7 @@ class MemberList extends StatelessWidget {
                   if (content != null)
                     Text(
                       content!,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 12.0,
                         overflow: TextOverflow.ellipsis,
                       ),

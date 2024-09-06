@@ -7,11 +7,13 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future.delayed(
-      Duration(seconds: 2),
+      const Duration(seconds: 2),
       () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => TempScreen()),
+          MaterialPageRoute(
+            builder: (context) => const TempScreen(),
+          ),
         );
       },
     );
