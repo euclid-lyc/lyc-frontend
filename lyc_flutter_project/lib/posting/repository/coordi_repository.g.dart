@@ -25,17 +25,12 @@ class _CoordiRepository implements CoordiRepository {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'accessToken': 'true'};
     _headers.removeWhere((k, v) => v == null);
-    final _data = FormData();
-    _data.fields.add(MapEntry(
-      'postingSaveDTO',
-      postingSaveDTO,
-    ));
+    final _data = postingSaveDTO;
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ApiResponse<CoordiPostingResult>>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
-      contentType: 'multipart/form-data',
     )
             .compose(
               _dio.options,

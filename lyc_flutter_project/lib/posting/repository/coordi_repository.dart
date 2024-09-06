@@ -26,9 +26,8 @@ abstract class CoordiRepository {
 
   @POST("")
   @Headers({"accessToken": "true"})
-  @MultiPart()
   Future<ApiResponse<CoordiPostingResult>> uploadCoordi({
-    @Part(name: "postingSaveDTO") required postingSaveDTO,
+    @Body() required postingSaveDTO,
   });
 
   @POST("/{postingId}")
