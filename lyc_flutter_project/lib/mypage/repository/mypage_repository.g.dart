@@ -19,10 +19,13 @@ class _MypageRepository implements MypageRepository {
   String? baseUrl;
 
   @override
-  Future<ApiResponse<CoordieResult>> getMyCoorides(
-      {required int memberId}) async {
+  Future<ApiResponse<CoordieResult>> getMyCoorides({
+    required int memberId,
+    required PaginateQuery paginateQuery,
+  }) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.addAll(paginateQuery.toJson());
     final _headers = <String, dynamic>{r'accessToken': 'true'};
     _headers.removeWhere((k, v) => v == null);
     final Map<String, dynamic>? _data = null;
@@ -51,10 +54,13 @@ class _MypageRepository implements MypageRepository {
   }
 
   @override
-  Future<ApiResponse<CoordieResult>> getSavedCoordies(
-      {required int memberId}) async {
+  Future<ApiResponse<CoordieResult>> getSavedCoordies({
+    required int memberId,
+    required PaginateQuery paginateQuery,
+  }) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.addAll(paginateQuery.toJson());
     final _headers = <String, dynamic>{r'accessToken': 'true'};
     _headers.removeWhere((k, v) => v == null);
     final Map<String, dynamic>? _data = null;
@@ -83,9 +89,13 @@ class _MypageRepository implements MypageRepository {
   }
 
   @override
-  Future<ApiResponse<ClosetResult>> getMyCloset({required int memberId}) async {
+  Future<ApiResponse<ClosetResult>> getMyCloset({
+    required int memberId,
+    required PaginateQuery paginateQuery,
+  }) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.addAll(paginateQuery.toJson());
     final _headers = <String, dynamic>{r'accessToken': 'true'};
     _headers.removeWhere((k, v) => v == null);
     final Map<String, dynamic>? _data = null;

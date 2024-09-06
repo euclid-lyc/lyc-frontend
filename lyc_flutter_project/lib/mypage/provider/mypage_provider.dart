@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lyc_flutter_project/common/model/paginate_query.dart';
 import 'package:lyc_flutter_project/common/widget/switch_category_button.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/data/temp_member_data.dart';
@@ -164,7 +165,9 @@ class MypageProvider extends ChangeNotifier {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        CircularProgressIndicator(),
+                        CircularProgressIndicator(
+                          color: AppColor.brown,
+                        ),
                         SizedBox(height: 20.0),
                       ],
                     ),
@@ -197,20 +200,36 @@ class MypageProvider extends ChangeNotifier {
     );
   }
 
-  Future<BaseResult> getList() async {
+  Future<BaseResult> getList({
+    int pageSize = 20,
+    String cursorDateTime = "9999-12-31T23:59:59.0000",
+  }) async {
     try {
+      PaginateQuery paginateQuery = PaginateQuery(
+        pageSize: pageSize,
+        cursorDateTime: cursorDateTime,
+      );
       switch (categoryProvider.curCategory) {
         case 0:
-          final resp = await mypageRepositoryProvider.mypageRepository
-              .getMyCoorides(memberId: memberId);
+          final resp =
+              await mypageRepositoryProvider.mypageRepository.getMyCoorides(
+            memberId: memberId,
+            paginateQuery: paginateQuery,
+          );
           return resp.result;
         case 1:
-          final resp = await mypageRepositoryProvider.mypageRepository
-              .getSavedCoordies(memberId: memberId);
+          final resp =
+              await mypageRepositoryProvider.mypageRepository.getSavedCoordies(
+            memberId: memberId,
+            paginateQuery: paginateQuery,
+          );
           return resp.result;
         case 2:
-          final resp = await mypageRepositoryProvider.mypageRepository
-              .getMyCloset(memberId: memberId);
+          final resp =
+              await mypageRepositoryProvider.mypageRepository.getMyCloset(
+            memberId: memberId,
+            paginateQuery: paginateQuery,
+          );
           return resp.result;
         default:
           throw Exception("Invalid category");
