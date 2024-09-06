@@ -1,2 +1,0 @@
-const String ACCESS_TOKEN =
-"eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJldWNsaWQtbHljIiwic3ViIjoic3RyaW5nIiwiaWF0IjoxNzI1MzczNDYxLCJleHAiOjE3MjUzNzcwNjF9.6evyCAeqs8w_4i2t1I50QaYx4Q_vfiHWtG0GrHIr30AwUvIRwShuZq8mZzYDnZ_r";
