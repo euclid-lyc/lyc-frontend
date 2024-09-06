@@ -14,7 +14,7 @@ class BottomBar extends StatelessWidget {
 
   List<PersistentTabConfig> _tabs() => [
         PersistentTabConfig(
-          screen: HomeScreen(),
+          screen: const HomeScreen(),
           item: ItemConfig(
             icon: SvgPicture.asset(
               'assets/icon_home.svg',
@@ -22,12 +22,12 @@ class BottomBar extends StatelessWidget {
             ),
             inactiveIcon: SvgPicture.asset(
               'assets/icon_home.svg',
-              color: Color(0xffBBBBBB), // Active color
+              color: const Color(0xffBBBBBB), // Active color
             ),
           ),
         ),
         PersistentTabConfig(
-          screen: FeedScreen(),
+          screen: const FeedScreen(),
           item: ItemConfig(
             icon: SvgPicture.asset(
               'assets/icon_feed.svg',
@@ -35,12 +35,12 @@ class BottomBar extends StatelessWidget {
             ),
             inactiveIcon: SvgPicture.asset(
               'assets/icon_feed.svg',
-              color: Color(0xffBBBBBB), // Active color
+              color: const Color(0xffBBBBBB), // Active color
             ),
           ),
         ),
         PersistentTabConfig(
-          screen: MyPageScreen(memberId: 1),
+          screen: const MyPageScreen(memberId: 1),
           item: ItemConfig(
             icon: RoundImage(
               image: Image.asset(
@@ -51,7 +51,7 @@ class BottomBar extends StatelessWidget {
           ),
         ),
         PersistentTabConfig(
-          screen: DirectorSearchScreen(),
+          screen: const DirectorSearchScreen(),
           item: ItemConfig(
             icon: SvgPicture.asset(
               'assets/icon_find_director.svg',
@@ -59,12 +59,12 @@ class BottomBar extends StatelessWidget {
             ),
             inactiveIcon: SvgPicture.asset(
               'assets/icon_find_director.svg',
-              color: Color(0xffBBBBBB), // Active color
+              color: const Color(0xffBBBBBB), // Active color
             ),
           ),
         ),
         PersistentTabConfig(
-          screen: SettingScreen(),
+          screen: const SettingScreen(),
           item: ItemConfig(
             icon: SvgPicture.asset(
               'assets/icon_setting.svg',
@@ -72,7 +72,7 @@ class BottomBar extends StatelessWidget {
             ),
             inactiveIcon: SvgPicture.asset(
               'assets/icon_setting.svg',
-              color: Color(0xffBBBBBB), // Active color
+              color: const Color(0xffBBBBBB), // Active color
             ),
           ),
         ),
@@ -85,7 +85,7 @@ class BottomBar extends StatelessWidget {
       tabs: _tabs(),
       navBarBuilder: (navBarConfig) => Style13BottomNavBar(
         navBarConfig: navBarConfig,
-        navBarDecoration: NavBarDecoration(
+        navBarDecoration: const NavBarDecoration(
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(20),
             topRight: Radius.circular(20),

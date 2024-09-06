@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/common/widget/member_list.dart';
 import 'package:lyc_flutter_project/common/widget/right_button_in_list.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
-import 'package:lyc_flutter_project/posting/screen/add_posting_screen.dart';
 import 'package:lyc_flutter_project/widget/normal_appbar.dart';
 
 class ReviewListScreen extends StatelessWidget {
@@ -12,28 +11,28 @@ class ReviewListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.lightGrey,
-      appBar: NormalAppbar(
+      appBar: const NormalAppbar(
         title: '나의 리뷰',
       ),
       body: Container(
-        margin: EdgeInsets.symmetric(horizontal: 30, vertical: 25),
+        margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 25),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               '작성 가능한 리뷰',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
               ),
             ),
-            Text(
+            const Text(
               '7일 이내에 디렉팅 받은 코디에 대한 리뷰를 작성할 수 있습니다.',
               style: TextStyle(
                 color: AppColor.deepGrey,
               ),
             ),
-            SizedBox(height: 15),
+            const SizedBox(height: 15),
             Expanded(
               child: ListView.builder(
                 itemCount: 10,
