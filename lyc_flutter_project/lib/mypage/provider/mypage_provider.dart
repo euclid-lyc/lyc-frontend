@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lyc_flutter_project/common/model/api_response.dart';
 import 'package:lyc_flutter_project/common/model/paginate_query.dart';
 import 'package:lyc_flutter_project/common/widget/switch_category_button.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
@@ -209,30 +210,31 @@ class MypageProvider extends ChangeNotifier {
         pageSize: pageSize,
         cursorDateTime: cursorDateTime,
       );
+      ApiResponse<BaseResult> resp;
       switch (categoryProvider.curCategory) {
         case 0:
-          final resp =
-              await mypageRepositoryProvider.mypageRepository.getMyCoorides(
+          resp = await mypageRepositoryProvider.mypageRepository.getMyCoorides(
             memberId: memberId,
             paginateQuery: paginateQuery,
           );
-          return resp.result;
         case 1:
-          final resp =
+          resp =
               await mypageRepositoryProvider.mypageRepository.getSavedCoordies(
             memberId: memberId,
             paginateQuery: paginateQuery,
           );
-          return resp.result;
         case 2:
-          final resp =
-              await mypageRepositoryProvider.mypageRepository.getMyCloset(
+          resp = await mypageRepositoryProvider.mypageRepository.getMyCloset(
             memberId: memberId,
             paginateQuery: paginateQuery,
           );
-          return resp.result;
         default:
           throw Exception("Invalid category");
+      }
+      if (resp.isSuccess) {
+        return resp.result;
+      } else {
+        throw Exception(resp.message);
       }
     } catch (e) {
       print("Error in getList: $e");

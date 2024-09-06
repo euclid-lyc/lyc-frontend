@@ -9,12 +9,12 @@ class BasePostingPreview {}
 class CoordiPostingPreview extends BasePostingPreview {
   final int postingId;
   final String image;
-  final String cursorDateTime;
+  final String createdAt;
 
   CoordiPostingPreview({
     required this.postingId,
     required this.image,
-    required this.cursorDateTime,
+    required this.createdAt,
   });
 
   factory CoordiPostingPreview.fromJson(Map<String, dynamic> json) =>
@@ -26,13 +26,14 @@ class ClosetPostingPreview extends BasePostingPreview {
   final int clothesId;
   final String title;
   final String? image;
-  final String cursorDateTime;
+  final String createdAt;
 
-  ClosetPostingPreview(
-      {required this.clothesId,
-      this.image,
-      required this.title,
-      required this.cursorDateTime});
+  ClosetPostingPreview({
+    required this.clothesId,
+    this.image,
+    required this.title,
+    required this.createdAt,
+  });
 
   factory ClosetPostingPreview.fromJson(Map<String, dynamic> json) =>
       _$ClosetPostingPreviewFromJson(json);
