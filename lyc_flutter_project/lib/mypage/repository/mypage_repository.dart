@@ -2,6 +2,7 @@ import 'package:dio/dio.dart' hide Headers;
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/common/const/data.dart';
 import 'package:lyc_flutter_project/common/model/api_response.dart';
+import 'package:lyc_flutter_project/common/model/paginate_query.dart';
 import 'package:lyc_flutter_project/mypage/model/profile.dart';
 import 'package:lyc_flutter_project/mypage/model/result.dart';
 import 'package:retrofit/http.dart';
@@ -32,6 +33,7 @@ abstract class MypageRepository {
   })
   Future<ApiResponse<CoordieResult>> getMyCoorides({
     @Path() required int memberId,
+    @Queries() required PaginateQuery paginateQuery,
   });
 
   @GET("/members/{memberId}/saved-postings")
@@ -40,6 +42,7 @@ abstract class MypageRepository {
   })
   Future<ApiResponse<CoordieResult>> getSavedCoordies({
     @Path() required int memberId,
+    @Queries() required PaginateQuery paginateQuery,
   });
 
   @GET("/clothes/members/{memberId}")
@@ -48,6 +51,7 @@ abstract class MypageRepository {
   })
   Future<ApiResponse<ClosetResult>> getMyCloset({
     @Path() required int memberId,
+    @Queries() required PaginateQuery paginateQuery,
   });
 
   @GET("/socials/members/{memberId}")
