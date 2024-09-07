@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/common/style/custom_grid_delegate.dart';
+import 'package:lyc_flutter_project/common/widget/custom_loading.dart';
 import 'package:lyc_flutter_project/mypage/model/mypage_posting_preview.dart';
 import 'package:lyc_flutter_project/mypage/provider/mypage_provider.dart';
 import 'package:lyc_flutter_project/mypage/screen/review_list_screen.dart';
@@ -61,7 +62,7 @@ class _GridWidgetWithButtonState extends State<GridWidgetWithButton> {
     return GridView.builder(
       controller: controller,
       gridDelegate: customGridDelegate(),
-      itemCount: widget.postings.length + 1,
+      itemCount: widget.postings.length + 2,
       itemBuilder: (context, index) {
         if (index == 0) {
           return GestureDetector(
@@ -107,6 +108,12 @@ class _GridWidgetWithButtonState extends State<GridWidgetWithButton> {
               ),
             ),
           );
+        } else if (index == widget.postings.length + 1) {
+          return widget.provider.getLoading()
+              ? const Center(
+                  child: CustomLoading(),
+                )
+              : const SizedBox.shrink();
         } else {
           final posting = widget.postings[index - 1];
           return GestureDetector(

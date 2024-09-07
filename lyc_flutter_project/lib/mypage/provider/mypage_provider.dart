@@ -43,6 +43,12 @@ class MypageProvider extends ChangeNotifier {
 
   get hasProfile => _hasProfile;
 
+  get listLength => {
+    if (_category == 0) myCoordi.length
+    else if (_category == 1) savedCoordi.length
+    else myCloset.length
+  };
+
   bool getLoading() {
     switch (category) {
       case 0:
@@ -140,7 +146,7 @@ class MypageProvider extends ChangeNotifier {
   }
 
   void getList({
-    int pageSize = 20,
+    int pageSize = 10,
     String cursorDateTime = "9999-12-31T23:59:59.0000",
   }) async {
     if (getLoading() || !getHasMore()) return;
