@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lyc_flutter_project/data/app_color.dart';
 
 class SwitchCategoryButton extends StatelessWidget {
   final String text;
@@ -10,7 +11,7 @@ class SwitchCategoryButton extends StatelessWidget {
     required this.text,
     required this.isSelected,
     required this.onPressed,
-    required this.color,
+    this.color = AppColor.brown,
   });
 
   @override

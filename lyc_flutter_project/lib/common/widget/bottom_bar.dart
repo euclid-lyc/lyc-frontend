@@ -2,16 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/common/widget/round_image.dart';
 import 'package:lyc_flutter_project/director/screen/director_search_screen.dart';
 import 'package:lyc_flutter_project/feed/screen/feed_screen.dart';
-import 'package:lyc_flutter_project/mypage/screen/my_page_screen.dart';
+import 'package:lyc_flutter_project/mypage/provider/mypage_provider.dart';
 import 'package:lyc_flutter_project/home/screen/home_screen.dart';
+import 'package:lyc_flutter_project/mypage/screen/mypage_screen.dart';
 import 'package:lyc_flutter_project/setting/screen/setting_screen.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
-class BottomBar extends StatelessWidget {
+class BottomBar extends StatefulWidget {
   const BottomBar({super.key});
 
+  @override
+  State<BottomBar> createState() => _BottomBarState();
+}
+
+class _BottomBarState extends State<BottomBar> {
   List<PersistentTabConfig> _tabs() => [
         PersistentTabConfig(
           screen: const HomeScreen(),
@@ -40,7 +47,7 @@ class BottomBar extends StatelessWidget {
           ),
         ),
         PersistentTabConfig(
-          screen: const MyPageScreen(memberId: 1),
+          screen: const MypageScreen(),
           item: ItemConfig(
             icon: RoundImage(
               image: Image.asset(
@@ -78,6 +85,11 @@ class BottomBar extends StatelessWidget {
         ),
       ];
 
+  @override
+  void initState() {
+    super.initState();
+    context.read<MypageProvider>().getProfile();
+  }
   @override
   Widget build(BuildContext context) {
     return PersistentTabView(
