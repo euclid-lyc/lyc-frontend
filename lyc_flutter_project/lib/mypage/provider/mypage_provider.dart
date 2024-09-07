@@ -22,13 +22,18 @@ class MypageProvider extends ChangeNotifier {
 
   Profile? _profile;
   bool _hasProfile = false;
-  bool _loading = true;
+
+  bool _loadingCoordi = false;
+  bool _loadingSaved = false;
+  bool _loadingCloset = false;
+
+  bool _hasMoreCoordi = true;
+  bool _hasMoreSaved = true;
+  bool _hasMoreCloset = true;
 
   List<CoordiPostingPreview> myCoordi = [];
   List<CoordiPostingPreview> savedCoordi = [];
   List<ClosetPostingPreview> myCloset = [];
-
-  // bool hasMore
 
   int _category = 0;
 
@@ -38,7 +43,53 @@ class MypageProvider extends ChangeNotifier {
 
   get hasProfile => _hasProfile;
 
-  get loading => _loading;
+  bool getLoading() {
+    switch (category) {
+      case 0:
+        return _loadingCoordi;
+      case 1:
+        return _loadingSaved;
+      case 2:
+        return _loadingCloset;
+      default:
+        return true;
+    }
+  }
+
+  void updateLoading(bool boolean) {
+    switch (category) {
+      case 0:
+        _loadingCoordi = boolean;
+      case 1:
+        _loadingSaved = boolean;
+      case 2:
+        _loadingCloset = boolean;
+    }
+  }
+
+  void updateHasMore(bool boolean) {
+    switch (category) {
+      case 0:
+        _hasMoreCoordi = boolean;
+      case 1:
+        _hasMoreSaved = boolean;
+      case 2:
+        _hasMoreCloset = boolean;
+    }
+  }
+
+  bool getHasMore() {
+    switch (category) {
+      case 0:
+        return _hasMoreCoordi;
+      case 1:
+        return _hasMoreSaved;
+      case 2:
+        return _hasMoreCloset;
+      default:
+        return false;
+    }
+  }
 
   Future<void> getProfile() async {
     final resp = await mypageRepositoryProvider.mypageRepository
@@ -59,7 +110,7 @@ class MypageProvider extends ChangeNotifier {
   }
 
   Widget renderList() {
-    if (loading) {
+    if (getLoading()) {
       const Center(
         child: CustomLoading(),
       );
@@ -70,15 +121,18 @@ class MypageProvider extends ChangeNotifier {
         return GridWidgetWithButton(
           postings: myCoordi,
           category: 0,
+          provider: this,
         );
       case 1:
         return GridWidgetWithButton(
           postings: savedCoordi,
           category: 1,
+          provider: this,
         );
       case 2:
         return MyClosetList(
           postings: myCloset,
+          provider: this,
         );
       default:
         return const CustomLoading();
@@ -89,11 +143,15 @@ class MypageProvider extends ChangeNotifier {
     int pageSize = 20,
     String cursorDateTime = "9999-12-31T23:59:59.0000",
   }) async {
+    if (getLoading() || !getHasMore()) return;
+
     PaginateQuery paginateQuery = PaginateQuery(
       pageSize: pageSize,
       cursorDateTime: cursorDateTime,
     );
+
     try {
+      updateLoading(true);
       switch (_category) {
         case 0:
           if (myCoordi.isNotEmpty) {
@@ -101,7 +159,6 @@ class MypageProvider extends ChangeNotifier {
               cursorDateTime: myCoordi.last.createdAt,
             );
           }
-          _loading = true;
           notifyListeners();
           final ApiResponse<CoordieResult> resp =
               await mypageRepositoryProvider.mypageRepository.getMyCoorides(
@@ -112,7 +169,8 @@ class MypageProvider extends ChangeNotifier {
             ...myCoordi,
             ...resp.result.imageList,
           ];
-          case 1:
+          updateHasMore(resp.result.imageList.length >= pageSize);
+        case 1:
           if (savedCoordi.isNotEmpty) {
             paginateQuery = paginateQuery.copyWith(
               cursorDateTime: savedCoordi.last.createdAt,
@@ -127,6 +185,7 @@ class MypageProvider extends ChangeNotifier {
             ...savedCoordi,
             ...resp.result.imageList,
           ];
+          updateHasMore(resp.result.imageList.length >= pageSize);
         case 2:
           if (myCloset.isNotEmpty) {
             paginateQuery = paginateQuery.copyWith(
@@ -142,13 +201,14 @@ class MypageProvider extends ChangeNotifier {
             ...myCloset,
             ...resp.result.clothesList,
           ];
+          updateHasMore(resp.result.clothesList.length >= pageSize);
         default:
           Exception();
       }
     } catch (e) {
       Exception(e);
     } finally {
-      _loading = false;
+      updateLoading(false);
       notifyListeners();
     }
   }

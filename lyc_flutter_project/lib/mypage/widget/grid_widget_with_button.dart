@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/common/style/custom_grid_delegate.dart';
 import 'package:lyc_flutter_project/mypage/model/mypage_posting_preview.dart';
+import 'package:lyc_flutter_project/mypage/provider/mypage_provider.dart';
 import 'package:lyc_flutter_project/mypage/screen/review_list_screen.dart';
 import 'package:lyc_flutter_project/posting/provider/coordi_provider.dart';
 import 'package:lyc_flutter_project/posting/repository/coordi_repository.dart';
@@ -14,26 +15,58 @@ import 'package:provider/provider.dart';
 /// 1 저장한 코디
 /// 3 리뷰
 
-class GridWidgetWithButton extends StatelessWidget {
+class GridWidgetWithButton extends StatefulWidget {
   final List<CoordiPostingPreview> postings;
   final int category;
+  final MypageProvider provider;
 
   const GridWidgetWithButton({
     super.key,
     required this.postings,
     required this.category,
+    required this.provider,
   });
+
+  @override
+  State<GridWidgetWithButton> createState() => _GridWidgetWithButtonState();
+}
+
+class _GridWidgetWithButtonState extends State<GridWidgetWithButton> {
+  final ScrollController controller = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    controller.addListener(listener);
+  }
+
+  void listener() {
+    if (controller.offset > controller.position.maxScrollExtent - 200) {
+      if (!widget.provider.getLoading() && widget.provider.getHasMore()) {
+        widget.provider.getList();
+        print("데이터 추가 요청");
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    controller.removeListener(listener);
+    controller.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
+      controller: controller,
       gridDelegate: customGridDelegate(),
-      itemCount: postings.length + 1,
+      itemCount: widget.postings.length + 1,
       itemBuilder: (context, index) {
         if (index == 0) {
           return GestureDetector(
             onTap: () {
-              if (category == 0) {
+              if (widget.category == 0) {
                 final coordiProvider = CoordiProvider(
                   repositoryProvider: context.read<CoordiRepositoryProvider>(),
                 );
@@ -47,9 +80,9 @@ class GridWidgetWithButton extends StatelessWidget {
                     ),
                   ),
                 );
-              } else if (category == 1) {
+              } else if (widget.category == 1) {
                 // 저장한코디->코디 탐색
-              } else if (category == 3) {
+              } else if (widget.category == 3) {
                 pushWithoutNavBar(
                   context,
                   MaterialPageRoute(
@@ -75,7 +108,7 @@ class GridWidgetWithButton extends StatelessWidget {
             ),
           );
         } else {
-          final posting = postings[index - 1];
+          final posting = widget.postings[index - 1];
           return GestureDetector(
             onTap: () {
               // Navigate to Detail Screen
@@ -84,7 +117,7 @@ class GridWidgetWithButton extends StatelessWidget {
                 MaterialPageRoute(
                   builder: (context) => PostingDetailScreen(
                     postingId: posting.postingId,
-                    isMyposting: category == 0,
+                    isMyposting: widget.category == 0,
                   ),
                 ),
               );
@@ -106,9 +139,9 @@ class GridWidgetWithButton extends StatelessWidget {
   }
 
   Widget _iconByCategory() {
-    if (category == 0 || category == 2 || category == 3) {
+    if (widget.category == 0 || widget.category == 2 || widget.category == 3) {
       return const Icon(Icons.add_rounded);
-    } else if (category == 1) {
+    } else if (widget.category == 1) {
       return const Icon(Icons.search_rounded);
     } else {
       return const Icon(Icons.not_interested_rounded);
@@ -116,11 +149,11 @@ class GridWidgetWithButton extends StatelessWidget {
   }
 
   Widget _textByCategory() {
-    if (category == 0) {
+    if (widget.category == 0) {
       return const Text("코디 추가");
-    } else if (category == 1) {
+    } else if (widget.category == 1) {
       return const Text("코디 탐색");
-    } else if (category == 3) {
+    } else if (widget.category == 3) {
       return const Text("리뷰 작성");
     } else {
       return const Text("error");

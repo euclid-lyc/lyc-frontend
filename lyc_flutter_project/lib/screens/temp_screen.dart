@@ -33,9 +33,6 @@ class TempScreen extends StatelessWidget {
             }, child: Text('My Page')),
 
           // 남의 페이지 이동 버튼->member id 2를 전달합니다
-          TextButton(onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => DirectorPageScreen(memberId: 2),));
-            }, child: Text('윈터 페이지로 이동')),
             TextButton(onPressed: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen(),));
             }, child: Text('Login')),
