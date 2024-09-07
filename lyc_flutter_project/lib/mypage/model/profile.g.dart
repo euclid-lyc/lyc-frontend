@@ -7,12 +7,12 @@ part of 'profile.dart';
 // **************************************************************************
 
 Profile _$ProfileFromJson(Map<String, dynamic> json) => Profile(
-      memberId: (json['memberId'] as num?)?.toInt() ?? 1,
-      nickName: json['nickName'] as String? ?? "",
-      loginId: json['loginId'] as String? ?? "",
-      follower: (json['follower'] as num?)?.toInt() ?? 0,
-      following: (json['following'] as num?)?.toInt() ?? 0,
-      profileImage: json['profileImage'] as String? ?? "",
+      memberId: (json['memberId'] as num).toInt(),
+      nickName: json['nickName'] as String,
+      loginId: json['loginId'] as String,
+      follower: (json['follower'] as num).toInt(),
+      following: (json['following'] as num).toInt(),
+      profileImage: json['profileImage'] as String,
     );
 
 Map<String, dynamic> _$ProfileToJson(Profile instance) => <String, dynamic>{
