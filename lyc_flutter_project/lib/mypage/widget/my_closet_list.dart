@@ -37,7 +37,7 @@ class _MyClosetListState extends State<MyClosetList> {
     if (controller.offset > controller.position.maxScrollExtent - 200) {
       if (!widget.provider.getLoading() && widget.provider.getHasMore()) {
         widget.provider.getList();
-        print("데이터 추가 요청");
+        // print("데이터 추가 요청");
       }
     }
   }

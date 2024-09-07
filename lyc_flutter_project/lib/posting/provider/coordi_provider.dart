@@ -114,11 +114,10 @@ class CoordiProvider extends ChangeNotifier {
         "toMemberId": _posting.toMemberId,
         "writerId": _posting.writerId,
       });
-      print("posingSaveDTO = $postingSaveDTO");
       final resp = await repositoryProvider.repository
           .uploadCoordi(postingSaveDTO: postingSaveDTO);
       if (!resp.isSuccess) {
-        print(resp.message);
+        Exception(resp.message);
         return;
       }
 
