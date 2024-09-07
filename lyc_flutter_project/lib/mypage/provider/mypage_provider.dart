@@ -35,6 +35,9 @@ class MypageProvider extends ChangeNotifier {
   List<CoordiPostingPreview> savedCoordi = [];
   List<ClosetPostingPreview> myCloset = [];
 
+  List<String> likedCoordi = [];
+  List<String> blockMember = [];
+
   int _category = 0;
 
   get profile => _profile;
