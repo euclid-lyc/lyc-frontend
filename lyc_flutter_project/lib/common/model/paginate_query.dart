@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+
 part 'paginate_query.g.dart';
 
 @JsonSerializable()
@@ -9,9 +10,20 @@ class PaginateQuery {
   const PaginateQuery({
     required this.pageSize,
     required this.cursorDateTime,
-});
-  factory PaginateQuery.fromJson(Map<String, dynamic> json)
-  => _$PaginateQueryFromJson(json);
+  });
+
+  PaginateQuery copyWith({
+    int? pageSize,
+    String? cursorDateTime,
+  }) {
+    return PaginateQuery(
+      pageSize: pageSize ?? this.pageSize,
+      cursorDateTime: cursorDateTime ?? this.cursorDateTime,
+    );
+  }
+
+  factory PaginateQuery.fromJson(Map<String, dynamic> json) =>
+      _$PaginateQueryFromJson(json);
 
   Map<String, dynamic> toJson() => _$PaginateQueryToJson(this);
 }
