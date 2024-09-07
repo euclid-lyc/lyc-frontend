@@ -203,13 +203,6 @@ class LoginScreen extends StatelessWidget {
                     padding: EdgeInsets.only(top: 15),
                     child: TextButton(
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const DirectorPageScreen(
-                                    memberId: 1,
-                                  )),
-                        ); // 로그인 버튼 눌렀을 때의 동작 구현
                       },
                       style: TextButton.styleFrom(
                         backgroundColor: AppColor.brown,
