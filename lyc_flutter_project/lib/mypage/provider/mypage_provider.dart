@@ -167,8 +167,6 @@ class MypageProvider extends ChangeNotifier {
       cursorDateTime: cursorDateTime,
     );
 
-    if (refresh)
-      print("refreshhhh");
     if (!refresh) {
       switch (_category) {
         case 0:
