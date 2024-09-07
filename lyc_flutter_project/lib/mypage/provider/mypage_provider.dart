@@ -17,14 +17,18 @@ class MypageProvider extends ChangeNotifier {
     required this.mypageRepositoryProvider,
   }) {
     getProfile();
+    getList();
   }
 
   Profile? _profile;
-  bool hasProfile = false;
+  bool _hasProfile = false;
+  bool _loading = true;
 
   List<CoordiPostingPreview> myCoordi = [];
   List<CoordiPostingPreview> savedCoordi = [];
   List<ClosetPostingPreview> myCloset = [];
+
+  // bool hasMore
 
   int _category = 0;
 
@@ -32,12 +36,16 @@ class MypageProvider extends ChangeNotifier {
 
   get category => _category;
 
+  get hasProfile => _hasProfile;
+
+  get loading => _loading;
+
   Future<void> getProfile() async {
     final resp = await mypageRepositoryProvider.mypageRepository
         .getProfile(memberId: cur_member);
     if (resp.isSuccess) {
       _profile = resp.result;
-      hasProfile = true;
+      _hasProfile = true;
       notifyListeners();
     } else {
       throw Exception(resp.message);
@@ -46,11 +54,17 @@ class MypageProvider extends ChangeNotifier {
 
   void categorySelected(int selected) {
     _category = selected;
+    getList();
     notifyListeners();
   }
 
   Widget renderList() {
-    getList();
+    if (loading) {
+      const Center(
+        child: CustomLoading(),
+      );
+      notifyListeners();
+    }
     switch (_category) {
       case 0:
         return GridWidgetWithButton(
@@ -71,7 +85,7 @@ class MypageProvider extends ChangeNotifier {
     }
   }
 
-  getList({
+  void getList({
     int pageSize = 20,
     String cursorDateTime = "9999-12-31T23:59:59.0000",
   }) async {
@@ -82,6 +96,13 @@ class MypageProvider extends ChangeNotifier {
     try {
       switch (_category) {
         case 0:
+          if (myCoordi.isNotEmpty) {
+            paginateQuery = paginateQuery.copyWith(
+              cursorDateTime: myCoordi.last.createdAt,
+            );
+          }
+          _loading = true;
+          notifyListeners();
           final ApiResponse<CoordieResult> resp =
               await mypageRepositoryProvider.mypageRepository.getMyCoorides(
             memberId: cur_member,
@@ -91,22 +112,44 @@ class MypageProvider extends ChangeNotifier {
             ...myCoordi,
             ...resp.result.imageList,
           ];
-          notifyListeners();
-        case 1:
-          mypageRepositoryProvider.mypageRepository.getSavedCoordies(
+          case 1:
+          if (savedCoordi.isNotEmpty) {
+            paginateQuery = paginateQuery.copyWith(
+              cursorDateTime: savedCoordi.last.createdAt,
+            );
+          }
+          final resp =
+              await mypageRepositoryProvider.mypageRepository.getSavedCoordies(
             memberId: cur_member,
             paginateQuery: paginateQuery,
           );
+          savedCoordi = [
+            ...savedCoordi,
+            ...resp.result.imageList,
+          ];
         case 2:
-          mypageRepositoryProvider.mypageRepository.getMyCloset(
+          if (myCloset.isNotEmpty) {
+            paginateQuery = paginateQuery.copyWith(
+              cursorDateTime: myCloset.last.createdAt,
+            );
+          }
+          final resp =
+              await mypageRepositoryProvider.mypageRepository.getMyCloset(
             memberId: cur_member,
             paginateQuery: paginateQuery,
           );
+          myCloset = [
+            ...myCloset,
+            ...resp.result.clothesList,
+          ];
         default:
           Exception();
       }
     } catch (e) {
       Exception(e);
+    } finally {
+      _loading = false;
+      notifyListeners();
     }
   }
 }

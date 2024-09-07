@@ -84,7 +84,11 @@ class MypageScreen extends StatelessWidget {
               ),
               const SizedBox(height: 20.0),
               Expanded(
-                child: value.renderList(),
+                child: value.loading
+                    ? const Center(
+                        child: CustomLoading(),
+                      )
+                    : value.renderList(),
               ),
             ],
           ),
