@@ -44,10 +44,13 @@ class MypageProvider extends ChangeNotifier {
   get hasProfile => _hasProfile;
 
   get listLength => {
-    if (_category == 0) myCoordi.length
-    else if (_category == 1) savedCoordi.length
-    else myCloset.length
-  };
+        if (_category == 0)
+          myCoordi.length
+        else if (_category == 1)
+          savedCoordi.length
+        else
+          myCloset.length
+      };
 
   bool getLoading() {
     switch (category) {
@@ -145,7 +148,12 @@ class MypageProvider extends ChangeNotifier {
     }
   }
 
+  Future<void> refresh() async {
+    getList(refresh: true);
+  }
+
   void getList({
+    bool refresh = false,
     int pageSize = 10,
     String cursorDateTime = "9999-12-31T23:59:59.0000",
   }) async {
@@ -156,57 +164,66 @@ class MypageProvider extends ChangeNotifier {
       cursorDateTime: cursorDateTime,
     );
 
+    if (refresh)
+      print("refreshhhh");
+    if (!refresh) {
+      switch (_category) {
+        case 0:
+          if (myCoordi.isNotEmpty) {
+            paginateQuery.copyWith(cursorDateTime: myCoordi.last.createdAt);
+          }
+        case 1:
+          if (savedCoordi.isNotEmpty) {
+            paginateQuery.copyWith(cursorDateTime: savedCoordi.last.createdAt);
+          }
+        case 2:
+          if (myCloset.isNotEmpty) {
+            paginateQuery.copyWith(cursorDateTime: myCloset.last.createdAt);
+          }
+      }
+    }
+
     try {
       updateLoading(true);
       switch (_category) {
         case 0:
-          if (myCoordi.isNotEmpty) {
-            paginateQuery = paginateQuery.copyWith(
-              cursorDateTime: myCoordi.last.createdAt,
-            );
-          }
-          notifyListeners();
           final ApiResponse<CoordieResult> resp =
               await mypageRepositoryProvider.mypageRepository.getMyCoorides(
             memberId: cur_member,
             paginateQuery: paginateQuery,
           );
-          myCoordi = [
-            ...myCoordi,
-            ...resp.result.imageList,
-          ];
+          myCoordi = refresh
+              ? [...resp.result.imageList]
+              : [
+                  ...myCoordi,
+                  ...resp.result.imageList,
+                ];
           updateHasMore(resp.result.imageList.length >= pageSize);
         case 1:
-          if (savedCoordi.isNotEmpty) {
-            paginateQuery = paginateQuery.copyWith(
-              cursorDateTime: savedCoordi.last.createdAt,
-            );
-          }
           final resp =
               await mypageRepositoryProvider.mypageRepository.getSavedCoordies(
             memberId: cur_member,
             paginateQuery: paginateQuery,
           );
-          savedCoordi = [
-            ...savedCoordi,
-            ...resp.result.imageList,
-          ];
+          savedCoordi = refresh
+              ? [...resp.result.imageList]
+              : [
+                  ...savedCoordi,
+                  ...resp.result.imageList,
+                ];
           updateHasMore(resp.result.imageList.length >= pageSize);
         case 2:
-          if (myCloset.isNotEmpty) {
-            paginateQuery = paginateQuery.copyWith(
-              cursorDateTime: myCloset.last.createdAt,
-            );
-          }
           final resp =
               await mypageRepositoryProvider.mypageRepository.getMyCloset(
             memberId: cur_member,
             paginateQuery: paginateQuery,
           );
-          myCloset = [
-            ...myCloset,
-            ...resp.result.clothesList,
-          ];
+          myCloset = refresh
+              ? [...resp.result.clothesList]
+              : [
+                  ...myCloset,
+                  ...resp.result.clothesList,
+                ];
           updateHasMore(resp.result.clothesList.length >= pageSize);
         default:
           Exception();
