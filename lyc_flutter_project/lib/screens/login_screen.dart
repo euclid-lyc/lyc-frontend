@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
-import 'package:lyc_flutter_project/mypage/screen/director_page_screen.dart';
 import 'package:lyc_flutter_project/screens/find_id_screen_1.dart';
 import 'package:lyc_flutter_project/screens/find_password_screen_1.dart';
 import 'package:lyc_flutter_project/Join/Screens/join_membership_screen_1.dart';

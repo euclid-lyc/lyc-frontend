@@ -7,10 +7,7 @@ import 'package:lyc_flutter_project/feed/provider/feed_provider.dart';
 import 'package:lyc_flutter_project/feed/repository/feed_repository.dart';
 import 'package:lyc_flutter_project/feed/repository/weather_repository.dart';
 import 'package:lyc_flutter_project/home/provider/home_provider.dart';
-import 'package:lyc_flutter_project/mypage/provider/block_provider.dart';
-import 'package:lyc_flutter_project/mypage/provider/follow_provider.dart';
 import 'package:lyc_flutter_project/mypage/provider/mypage_provider.dart';
-import 'package:lyc_flutter_project/mypage/provider/notify_provider.dart';
 import 'package:lyc_flutter_project/mypage/repository/mypage_repository.dart';
 import 'package:lyc_flutter_project/posting/provider/posting_detail_provider.dart';
 import 'package:lyc_flutter_project/posting/repository/clothes_repository.dart';
@@ -26,15 +23,6 @@ void main() {
           create: (context) => DioProvider(),
         ),
         ChangeNotifierProvider(create: (context) => MembershipState()),
-        ChangeNotifierProvider(
-          create: (context) => BlockProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => NotifyProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => FollowProvider(),
-        ),
         ChangeNotifierProvider(
           create: (context) =>
               ClothesRepositoryProvider(dio: context.read<DioProvider>().dio),
