@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:lyc_flutter_project/common/model/api_response.dart';
+import 'package:lyc_flutter_project/common/widget/custom_loading.dart';
 import 'package:lyc_flutter_project/common/widget/posting_top.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lyc_flutter_project/posting/model/coordi_posting.dart';
-import 'package:lyc_flutter_project/posting/repository/coordi_repository.dart';
+import 'package:lyc_flutter_project/posting/provider/posting_detail_provider.dart';
 import 'package:lyc_flutter_project/styles/default_padding.dart';
 import 'package:lyc_flutter_project/widget/normal_appbar.dart';
 import 'package:lyc_flutter_project/common/widget/round_image.dart';
@@ -24,16 +24,22 @@ class PostingDetailScreen extends StatefulWidget {
   });
 
   @override
-  _PostingDetailScreenState createState() => _PostingDetailScreenState();
+  State<PostingDetailScreen> createState() => _PostingDetailScreenState();
 }
 
 class _PostingDetailScreenState extends State<PostingDetailScreen> {
-  bool isSaved = false;
-  bool isFavorite = false;
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await Provider.of<PostingDetailProvider>(context, listen: false).initialize(widget.postingId);
+      setState(() {});
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<CoordiRepositoryProvider>(
+    return Consumer<PostingDetailProvider>(
       builder: (context, value, child) {
         return Scaffold(
           backgroundColor: AppColor.lightGrey,
@@ -42,7 +48,8 @@ class _PostingDetailScreenState extends State<PostingDetailScreen> {
                   icon: SvgPicture.asset("assets/icon_delete.svg"),
                   onTap: () {
                     print("휴지통 클릭");
-                    value.repository.deleteCoordi(postingId: widget.postingId);
+                    value.delete();
+                    Navigator.pop(context);
                     showDialog(
                       context: context,
                       builder: (context) {
@@ -51,17 +58,16 @@ class _PostingDetailScreenState extends State<PostingDetailScreen> {
                         );
                       },
                     );
-                    Navigator.pop(context);
                   },
                 )
               : const NormalAppbar(),
           body: SingleChildScrollView(
             child: DefaultPadding(
-              child: FutureBuilder<ApiResponse<CoordiPostingResult>>(
-                future: value.repository.getCoordi(postingId: widget.postingId),
+              child: FutureBuilder<CoordiPostingResult>(
+                future: value.initialize(widget.postingId),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
-                    final resp = snapshot.data!.result;
+                    final resp = snapshot.data!;
                     return Column(
                       children: [
                         // 프로필, 날씨
@@ -128,8 +134,10 @@ class _PostingDetailScreenState extends State<PostingDetailScreen> {
                             child: Row(
                               children: [
                                 RoundImage(
-                                    image:
-                                        Image.asset("assets/ex_profile2.png")),
+                                  image: Image.asset(
+                                    "assets/ex_profile2.png",
+                                  ),
+                                ),
                                 const SizedBox(width: 12.0),
                                 const Text(
                                   "정열의 레드 붉은 상어파의 티샤쓰",
@@ -168,13 +176,9 @@ class _PostingDetailScreenState extends State<PostingDetailScreen> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   IconButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        isFavorite = !isFavorite; // 토글
-                                      });
-                                    },
+                                    onPressed: () => value.pressLike,
                                     icon: Icon(
-                                      isFavorite
+                                      value.isLiked
                                           ? Icons.favorite
                                           : Icons.favorite_outline,
                                     ),
@@ -186,15 +190,11 @@ class _PostingDetailScreenState extends State<PostingDetailScreen> {
                                         icon: const Icon(Icons.share),
                                       ),
                                       IconButton(
-                                        onPressed: () {
-                                          setState(() {
-                                            isSaved = !isSaved;
-                                          });
-                                        },
+                                        onPressed: () => value.pressSave,
                                         icon: SvgPicture.asset(
-                                          isSaved
-                                              ? 'assets/icon_saved.svg'
-                                              : 'assets/icon_save.svg',
+                                          value.isSaved
+                                              ? "assets/icon_saved.svg"
+                                              : "assets/icon_save.svg",
                                           width: 24,
                                           height: 24,
                                         ),
@@ -225,7 +225,9 @@ class _PostingDetailScreenState extends State<PostingDetailScreen> {
                       ],
                     );
                   } else {
-                    return const CircularProgressIndicator();
+                    return const Center(
+                      child: CustomLoading(),
+                    );
                   }
                 },
               ),
