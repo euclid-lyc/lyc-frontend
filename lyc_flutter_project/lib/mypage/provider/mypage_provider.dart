@@ -35,7 +35,6 @@ class MypageProvider extends ChangeNotifier {
   List<CoordiPostingPreview> savedCoordi = [];
   List<ClosetPostingPreview> myCloset = [];
 
-  List<int> likedCoordi = [];
   List<int> blockMember = [];
 
   int _category = 0;
@@ -58,12 +57,6 @@ class MypageProvider extends ChangeNotifier {
   bool isSaved(int postingId) {
     return savedCoordi.any(
       (element) => element.postingId == postingId,
-    );
-  }
-
-  bool isLiked(int postingId) {
-    return likedCoordi.any(
-      (element) => element == postingId,
     );
   }
 
@@ -90,14 +83,12 @@ class MypageProvider extends ChangeNotifier {
   Future<void> like(int postingId) async {
     final resp = await mypageRepositoryProvider.mypageRepository
         .likePosting(postingId: postingId);
-    likedCoordi.add(postingId);
     if (!resp.isSuccess) Exception(resp.message);
   }
 
   Future<void> dislike(int postingId) async {
     final resp = await mypageRepositoryProvider.mypageRepository
         .dislikePosting(postingId: postingId);
-    likedCoordi.remove(postingId);
     if (!resp.isSuccess) Exception(resp.message);
   }
 
