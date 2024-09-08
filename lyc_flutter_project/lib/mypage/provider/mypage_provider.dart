@@ -35,8 +35,8 @@ class MypageProvider extends ChangeNotifier {
   List<CoordiPostingPreview> savedCoordi = [];
   List<ClosetPostingPreview> myCloset = [];
 
-  List<String> likedCoordi = [];
-  List<String> blockMember = [];
+  List<int> likedCoordi = [];
+  List<int> blockMember = [];
 
   int _category = 0;
 
@@ -54,6 +54,52 @@ class MypageProvider extends ChangeNotifier {
         else
           myCloset.length
       };
+
+  bool isSaved(int postingId) {
+    return savedCoordi.any(
+      (element) => element.postingId == postingId,
+    );
+  }
+
+  bool isLiked(int postingId) {
+    return likedCoordi.any(
+      (element) => element == postingId,
+    );
+  }
+
+  Future<void> save(int postingId) async {
+    final resp = await mypageRepositoryProvider.mypageRepository.savePosting(postingId: postingId);
+    if (resp.isSuccess) {
+      getList(type: 1, refresh: true);
+    }
+    else {
+      Exception(resp.message);
+    }
+  }
+
+  Future<void> unsave(int postingId) async {
+    final resp = await mypageRepositoryProvider.mypageRepository.unsavePosting(postingId: postingId);
+    if (resp.isSuccess) {
+      getList(type: 1, refresh: true);
+    }
+    else {
+      Exception(resp.message);
+    }
+  }
+
+  Future<void> like(int postingId) async {
+    final resp = await mypageRepositoryProvider.mypageRepository
+        .likePosting(postingId: postingId);
+    likedCoordi.add(postingId);
+    if (!resp.isSuccess) Exception(resp.message);
+  }
+
+  Future<void> dislike(int postingId) async {
+    final resp = await mypageRepositoryProvider.mypageRepository
+        .dislikePosting(postingId: postingId);
+    likedCoordi.remove(postingId);
+    if (!resp.isSuccess) Exception(resp.message);
+  }
 
   bool getLoading() {
     switch (category) {
@@ -157,10 +203,15 @@ class MypageProvider extends ChangeNotifier {
 
   void getList({
     bool refresh = false,
+    int type = 5,
     int pageSize = 10,
     String cursorDateTime = "9999-12-31T23:59:59.0000",
   }) async {
     if (getLoading() || !getHasMore()) return;
+
+    if (type == 5) {
+      type = _category;
+    }
 
     PaginateQuery paginateQuery = PaginateQuery(
       pageSize: pageSize,
@@ -168,7 +219,7 @@ class MypageProvider extends ChangeNotifier {
     );
 
     if (!refresh) {
-      switch (_category) {
+      switch (type) {
         case 0:
           if (myCoordi.isNotEmpty) {
             paginateQuery.copyWith(cursorDateTime: myCoordi.last.createdAt);
@@ -186,7 +237,7 @@ class MypageProvider extends ChangeNotifier {
 
     try {
       updateLoading(true);
-      switch (_category) {
+      switch (type) {
         case 0:
           final ApiResponse<CoordieResult> resp =
               await mypageRepositoryProvider.mypageRepository.getMyCoorides(

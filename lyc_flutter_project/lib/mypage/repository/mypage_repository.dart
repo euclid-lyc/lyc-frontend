@@ -112,4 +112,16 @@ abstract class MypageRepository {
   Future<ApiResponse<CoordiPostingResult>> unsavePosting({
     @Path() required int postingId,
   });
+
+  @GET("/postings/{postingId}")
+  @Headers({"accessToken": "true"})
+  Future<ApiResponse<CoordiPostingResult>> getCoordi({
+    @Path() required int postingId,
+  });
+
+  @DELETE("/postings/{postingId}")
+  @Headers({"accessToken": "true"})
+  Future<ApiResponse<int>> deleteCoordi({
+    @Path() required int postingId,
+  });
 }

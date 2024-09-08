@@ -38,16 +38,4 @@ abstract class CoordiRepository {
     @Part(name: "linkDTO") required linkDTO,
     @Part() required List<MultipartFile> multipartFiles,
   });
-
-  @GET("/{postingId}")
-  @Headers({"accessToken": "true"})
-  Future<ApiResponse<CoordiPostingResult>> getCoordi({
-    @Path() required int postingId,
-  });
-
-  @DELETE("/{postingId}")
-  @Headers({"accessToken": "true"})
-  Future<ApiResponse<int>> deleteCoordi({
-    @Path() required int postingId,
-  });
 }
