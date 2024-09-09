@@ -1,88 +1,76 @@
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/mypage/provider/mypage_provider.dart';
 import 'package:lyc_flutter_project/posting/model/coordi_posting.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
+class PostingDetailProviderFactory extends ChangeNotifier {
+  final MypageProvider mypageProvider;
+  final Map<int, PostingDetailProvider> _providers = {};
+
+  PostingDetailProviderFactory({required this.mypageProvider});
+
+  PostingDetailProvider getProvider(int postingId) {
+    if (!_providers.containsKey(postingId)) {
+      _providers[postingId] = PostingDetailProvider(
+        mypageProvider: mypageProvider,
+        postingId: postingId,
+      );
+    }
+    return _providers[postingId]!;
+  }
+
+  void disposeProvider(int postingId) {
+    _providers.remove(postingId)?.dispose();
+    notifyListeners();
+  }
+
+  @override
+  void dispose() {
+    for (var provider in _providers.values) {
+      provider.dispose();
+    }
+    _providers.clear();
+    super.dispose();
+  }
+}
 
 class PostingDetailProvider extends ChangeNotifier {
   final MypageProvider mypageProvider;
-  late SharedPreferences pref;
+  final int postingId;
 
   PostingDetailProvider({
     required this.mypageProvider,
-  }) {
-    getPref();
-  }
+    required this.postingId,
+  });
 
-  int postingId = 0;
   bool isLiked = false;
   bool isSaved = false;
 
-  List<String>? likedPostings;
+  bool initialized = false;
 
   Future<CoordiPostingResult> initialize(int postingId) async {
-    postingId = postingId;
-    isLiked = await checkLiked(postingId);
-    isSaved = mypageProvider.isSaved(postingId);
-    print("initialized $postingId, liked: $isLiked, saved: $isSaved");
     return getDetail();
   }
 
-  Future<void> getPref() async {
-    pref = await SharedPreferences.getInstance();
-  }
-
-  Future<void> getLikedList() async {
-    likedPostings = pref.getStringList("likedPostings");
-  }
-
-  Future<bool> checkLiked(int postingId) async {
-    String id = postingId.toString();
-    getLikedList();
-    if (likedPostings == null) {
-      return false;
-    } else {
-      return likedPostings!.contains(id);
-    }
-  }
-
-  Future<void> addLike(int postingId) async {
-    String id = postingId.toString();
-    if (likedPostings == null) {
-      likedPostings = [id];
-    } else {
-      likedPostings!.add(id);
-    }
-    pref.setStringList("likedPostings", likedPostings!);
-  }
-
-  Future<void> removeLike(int postingId) async {
-    String id = postingId.toString();
-    if (likedPostings != null) {
-      if (likedPostings!.contains(id)) {
-        likedPostings!.remove(id);
-        pref.setStringList("likedPostings", likedPostings!);
-      }
-    }
-  }
-
   void pressLike() {
-    isLiked = !isLiked;
-    notifyListeners();
     if (isLiked) {
-      removeLike(postingId);
+      isLiked = false;
+      notifyListeners();
       mypageProvider.dislike(postingId);
     } else {
-      addLike(postingId);
+      isLiked = true;
+      notifyListeners();
       mypageProvider.like(postingId);
     }
   }
 
   void pressSave() {
-    isLiked = !isLiked;
-    notifyListeners();
     if (isSaved) {
+      isSaved = false;
+      notifyListeners();
       mypageProvider.unsave(postingId);
     } else {
+      isSaved = true;
+      notifyListeners();
       mypageProvider.save(postingId);
     }
   }
@@ -99,7 +87,6 @@ class PostingDetailProvider extends ChangeNotifier {
 
   Future<CoordiPostingResult> getDetail() async {
     try {
-      print("get detail");
       final resp = await mypageProvider
           .mypageRepositoryProvider.mypageRepository
           .getCoordi(postingId: postingId);

@@ -131,3 +131,17 @@ class LinkList {
 
   Map<String, dynamic> toJson() => _$LinkListToJson(this);
 }
+
+@JsonSerializable()
+class SavedResult {
+  final int postingId;
+  final int savedPostingId;
+
+  SavedResult({
+    required this.postingId,
+    required this.savedPostingId,
+  });
+
+  factory SavedResult.fromJson(Map<String, dynamic> json) =>
+      _$SavedResultFromJson(json);
+}

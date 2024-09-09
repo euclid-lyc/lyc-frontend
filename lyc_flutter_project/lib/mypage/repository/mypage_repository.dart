@@ -109,7 +109,7 @@ abstract class MypageRepository {
   @Headers({
     "accessToken": "true",
   })
-  Future<ApiResponse<CoordiPostingResult>> unsavePosting({
+  Future<ApiResponse<SavedResult>> unsavePosting({
     @Path() required int postingId,
   });
 
