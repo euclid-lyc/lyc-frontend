@@ -191,24 +191,31 @@ class _PostingDetailScreenState extends State<PostingDetailScreen> {
                                         value.isLiked
                                             ? Icons.favorite
                                             : Icons.favorite_outline,
+                                        size: 30,
                                       ),
                                     ),
                                     Row(
                                       children: [
                                         IconButton(
                                           onPressed: () {},
-                                          icon: const Icon(Icons.share),
-                                        ),
-                                        IconButton(
-                                          onPressed: () => value.pressSave(),
-                                          icon: SvgPicture.asset(
-                                            value.isSaved
-                                                ? "assets/icon_saved.svg"
-                                                : "assets/icon_save.svg",
-                                            width: 24,
-                                            height: 24,
+                                          icon: const Icon(
+                                            Icons.share,
+                                            size: 30,
                                           ),
                                         ),
+                                        !widget.isMyposting
+                                            ? IconButton(
+                                                onPressed: () =>
+                                                    value.pressSave(),
+                                                icon: SvgPicture.asset(
+                                                  value.isSaved
+                                                      ? "assets/icon_saved.svg"
+                                                      : "assets/icon_save.svg",
+                                                  width: 30,
+                                                  height: 30,
+                                                ),
+                                              )
+                                            : const SizedBox.shrink(),
                                       ],
                                     )
                                   ],
