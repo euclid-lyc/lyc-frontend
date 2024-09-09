@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:lyc_flutter_project/Join/Provider/login_provider.dart';
-import 'package:lyc_flutter_project/Join/repository/login_repository.dart';
 import 'package:lyc_flutter_project/common/dio/dio.dart';
 import 'package:lyc_flutter_project/common/screen/splash_screen.dart';
 import 'package:lyc_flutter_project/Join/Screens/join_membership_screen_4.dart';
@@ -29,7 +28,7 @@ void main() {
         ChangeNotifierProvider(create: (context) => FollowProvider()),
         ChangeNotifierProvider(
           create: (context) => LoginProvider(
-            loginRepository: LoginRepository(dio),
+            dio: dio,
             storage: storage,
           ),
         ),
