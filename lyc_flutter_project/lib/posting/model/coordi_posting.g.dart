@@ -111,3 +111,12 @@ Map<String, dynamic> _$SavedResultToJson(SavedResult instance) =>
       'postingId': instance.postingId,
       'savedPostingId': instance.savedPostingId,
     };
+
+DelPosting _$DelPostingFromJson(Map<String, dynamic> json) => DelPosting(
+      postingId: (json['postingId'] as num).toInt(),
+    );
+
+Map<String, dynamic> _$DelPostingToJson(DelPosting instance) =>
+    <String, dynamic>{
+      'postingId': instance.postingId,
+    };

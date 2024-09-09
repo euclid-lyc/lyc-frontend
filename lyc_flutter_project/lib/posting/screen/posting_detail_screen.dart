@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:lyc_flutter_project/common/widget/confirm_alter_dialog.dart';
 import 'package:lyc_flutter_project/common/widget/custom_loading.dart';
 import 'package:lyc_flutter_project/common/widget/posting_top.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:lyc_flutter_project/posting/model/coordi_posting.dart';
 import 'package:lyc_flutter_project/posting/provider/posting_detail_provider.dart';
 import 'package:lyc_flutter_project/styles/default_padding.dart';
 import 'package:lyc_flutter_project/widget/normal_appbar.dart';
@@ -35,6 +35,7 @@ class _PostingDetailScreenState extends State<PostingDetailScreen> {
     super.initState();
     provider = Provider.of<PostingDetailProviderFactory>(context, listen: false)
         .getProvider(widget.postingId);
+    provider.initialize();
   }
 
   @override
@@ -55,29 +56,44 @@ class _PostingDetailScreenState extends State<PostingDetailScreen> {
             appBar: widget.isMyposting
                 ? NormalAppbar(
                     icon: SvgPicture.asset("assets/icon_delete.svg"),
-                    onTap: () {
-                      print("휴지통 클릭");
-                      value.delete();
-                      Navigator.pop(context);
-                      showDialog(
+                    onTap: () async {
+                      final delete = await showDialog<bool>(
                         context: context,
                         builder: (context) {
-                          return const SnackBar(
-                            content: Text("삭제되었습니다."),
+                          return CustomAlterDialog(
+                            title: "정말 삭제하시겠습니까?",
+                            leftButtonLabel: "취소",
+                            rightButtonLabel: "삭제",
+                            leftButtonPressed: () =>
+                                Navigator.pop(context, false),
+                            rightButtonPressed: () =>
+                                Navigator.pop(context, true),
+                            rightBackgroundColor: AppColor.brown,
                           );
                         },
                       );
+                      if (delete == true) {
+                        try {
+                          await value.delete();
+                          Navigator.pop(context, true);
+                        } catch (e) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                "오류가 발생했습니다: ${e.toString()}",
+                              ),
+                            ),
+                          );
+                        }
+                      }
                     },
                   )
                 : const NormalAppbar(),
-            body: SingleChildScrollView(
-              child: DefaultPadding(
-                child: FutureBuilder<CoordiPostingResult>(
-                  future: value.initialize(widget.postingId),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      final resp = snapshot.data!;
-                      return Column(
+            body: value.loadingState
+                ? const Center(child: CustomLoading())
+                : SingleChildScrollView(
+                    child: DefaultPadding(
+                      child: Column(
                         children: [
                           // 프로필, 날씨
                           if (widget.isCloset == false)
@@ -88,7 +104,7 @@ class _PostingDetailScreenState extends State<PostingDetailScreen> {
                                     children: [
                                       RoundImage(
                                         image: Image.network(
-                                          resp.fromMember.profileImage,
+                                          value.posting.fromMember.profileImage,
                                           fit: BoxFit.cover,
                                         ),
                                       ),
@@ -100,7 +116,7 @@ class _PostingDetailScreenState extends State<PostingDetailScreen> {
                                       ),
                                       RoundImage(
                                         image: Image.asset(
-                                          resp.toMember.profileImage,
+                                          value.posting.toMember.profileImage,
                                           fit: BoxFit.cover,
                                         ),
                                       )
@@ -113,14 +129,14 @@ class _PostingDetailScreenState extends State<PostingDetailScreen> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
-                                        resp.nickname,
+                                        value.posting.nickname,
                                         style: const TextStyle(
                                           fontSize: 18,
                                           fontWeight: FontWeight.w600,
                                         ),
                                       ),
                                       Text(
-                                        '@${resp.loginId}',
+                                        '@${value.posting.loginId}',
                                         style: const TextStyle(
                                           fontWeight: FontWeight.w400,
                                         ),
@@ -129,7 +145,7 @@ class _PostingDetailScreenState extends State<PostingDetailScreen> {
                                   ),
                                   const Spacer(),
                                   Text(
-                                    '${resp.minTemp}°C ~ ${resp.maxTemp}°C',
+                                    '${value.posting.minTemp}°C ~ ${value.posting.maxTemp}°C',
                                     style: const TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.w600,
@@ -167,9 +183,9 @@ class _PostingDetailScreenState extends State<PostingDetailScreen> {
                               aspectRatio: (3 / 4),
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(20),
-                                child: resp.imageInfo.isNotEmpty
+                                child: value.posting.imageInfo.isNotEmpty
                                     ? Image.network(
-                                        resp.imageInfo[0].image,
+                                        value.posting.imageInfo[0].image,
                                         fit: BoxFit.cover,
                                       )
                                     : Image.asset(
@@ -232,7 +248,7 @@ class _PostingDetailScreenState extends State<PostingDetailScreen> {
                               borderRadius: BorderRadius.circular(20),
                             ),
                             child: Text(
-                              resp.content,
+                              value.posting.content,
                               style: const TextStyle(
                                 fontWeight: FontWeight.w400,
                                 fontSize: 14.0,
@@ -240,16 +256,9 @@ class _PostingDetailScreenState extends State<PostingDetailScreen> {
                             ),
                           )
                         ],
-                      );
-                    } else {
-                      return const Center(
-                        child: CustomLoading(),
-                      );
-                    }
-                  },
-                ),
-              ),
-            ),
+                      ),
+                    ),
+                  ),
           );
         },
       ),

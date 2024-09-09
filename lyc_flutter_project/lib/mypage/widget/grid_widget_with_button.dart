@@ -117,9 +117,8 @@ class _GridWidgetWithButtonState extends State<GridWidgetWithButton> {
         } else {
           final posting = widget.postings[index - 1];
           return GestureDetector(
-            onTap: () {
-              // Navigate to Detail Screen
-              Navigator.push(
+            onTap: () async {
+              final delete = await Navigator.push<bool>(
                 context,
                 MaterialPageRoute(
                   builder: (context) => PostingDetailScreen(
@@ -128,6 +127,16 @@ class _GridWidgetWithButtonState extends State<GridWidgetWithButton> {
                   ),
                 ),
               );
+              if (delete == true) {
+                widget.provider.refresh();
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text(
+                      '삭제되었습니다',
+                    ),
+                  ),
+                );
+              }
             },
             child: Hero(
               tag: posting.postingId,
