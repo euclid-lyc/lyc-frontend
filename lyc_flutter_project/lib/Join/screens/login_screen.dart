@@ -113,7 +113,7 @@ class LoginScreen extends StatelessWidget {
                             MaterialPageRoute(
                               builder: (context) => MyPageScreen(
                                 memberId:
-                                    loginProvider.memberId!, // memberId를 전달합니다.
+                                    loginProvider.memberId!,
                               ),
                             ),
                           );

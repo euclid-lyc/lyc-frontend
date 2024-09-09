@@ -179,7 +179,7 @@ class LoginProvider extends ChangeNotifier {
         options: Options(
           headers: {
             'Content-Type': 'application/json',
-            'accept': '*/*',
+
           },
         ),
       );
