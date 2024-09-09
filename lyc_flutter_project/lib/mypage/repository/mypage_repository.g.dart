@@ -321,7 +321,7 @@ class _MypageRepository implements MypageRepository {
   }
 
   @override
-  Future<ApiResponse<CoordiPostingResult>> unsavePosting(
+  Future<ApiResponse<SavedResult>> unsavePosting(
       {required int postingId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -329,7 +329,7 @@ class _MypageRepository implements MypageRepository {
     _headers.removeWhere((k, v) => v == null);
     final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<ApiResponse<CoordiPostingResult>>(Options(
+        _setStreamType<ApiResponse<SavedResult>>(Options(
       method: 'DELETE',
       headers: _headers,
       extra: _extra,
@@ -345,9 +345,9 @@ class _MypageRepository implements MypageRepository {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = ApiResponse<CoordiPostingResult>.fromJson(
+    final value = ApiResponse<SavedResult>.fromJson(
       _result.data!,
-      (json) => CoordiPostingResult.fromJson(json as Map<String, dynamic>),
+      (json) => SavedResult.fromJson(json as Map<String, dynamic>),
     );
     return value;
   }

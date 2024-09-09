@@ -62,6 +62,13 @@ void main() {
             mypageRepositoryProvider: context.read<MypageRepositoryProvider>(),
           ),
         ),
+        ChangeNotifierProxyProvider<MypageProvider, PostingDetailProvider>(
+          create: (context) => PostingDetailProvider(
+            mypageProvider: Provider.of<MypageProvider>(context, listen: false),
+          ),
+          update: (context, mypageProvider, previous) =>
+              PostingDetailProvider(mypageProvider: mypageProvider),
+        ),
       ],
       child: const MyApp(),
     ),
