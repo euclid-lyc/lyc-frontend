@@ -46,9 +46,22 @@ class PostingDetailProvider extends ChangeNotifier {
   bool isSaved = false;
 
   bool initialized = false;
+  CoordiPostingResult? _posting;
 
-  Future<CoordiPostingResult> initialize(int postingId) async {
-    return getDetail();
+  bool loadingState = true;
+
+  get posting => _posting;
+
+  Future<CoordiPostingResult> initialize() async {
+    if (_posting == null) {
+      getDetail();
+    }
+    return _posting!;
+  }
+
+  void setLoadingState() {
+    loadingState = true;
+    notifyListeners();
   }
 
   void pressLike() {
@@ -78,19 +91,21 @@ class PostingDetailProvider extends ChangeNotifier {
   Future<void> delete() async {
     final resp = await mypageProvider.mypageRepositoryProvider.mypageRepository
         .deleteCoordi(postingId: postingId);
-    if (resp.isSuccess) {
-      mypageProvider.getList(refresh: true, type: 0);
-    } else {
+    if (!resp.isSuccess) {
       Exception(resp.message);
     }
   }
 
-  Future<CoordiPostingResult> getDetail() async {
+  Future<void> getDetail() async {
     try {
-      final resp = await mypageProvider
-          .mypageRepositoryProvider.mypageRepository
-          .getCoordi(postingId: postingId);
-      return resp.result;
+      if (_posting == null) {
+        final resp = await mypageProvider
+            .mypageRepositoryProvider.mypageRepository
+            .getCoordi(postingId: postingId);
+        _posting = resp.result;
+        loadingState = false;
+        notifyListeners();
+      }
     } catch (e) {
       rethrow;
     }

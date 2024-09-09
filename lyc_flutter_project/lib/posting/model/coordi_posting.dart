@@ -145,3 +145,13 @@ class SavedResult {
   factory SavedResult.fromJson(Map<String, dynamic> json) =>
       _$SavedResultFromJson(json);
 }
+
+@JsonSerializable()
+class DelPosting {
+  final int postingId;
+
+  DelPosting({required this.postingId});
+
+  factory DelPosting.fromJson(Map<String, dynamic> json) =>
+      _$DelPostingFromJson(json);
+}

@@ -385,14 +385,14 @@ class _MypageRepository implements MypageRepository {
   }
 
   @override
-  Future<ApiResponse<int>> deleteCoordi({required int postingId}) async {
+  Future<ApiResponse<DelPosting>> deleteCoordi({required int postingId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'accessToken': 'true'};
     _headers.removeWhere((k, v) => v == null);
     final Map<String, dynamic>? _data = null;
-    final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<ApiResponse<int>>(Options(
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ApiResponse<DelPosting>>(Options(
       method: 'DELETE',
       headers: _headers,
       extra: _extra,
@@ -408,9 +408,9 @@ class _MypageRepository implements MypageRepository {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = ApiResponse<int>.fromJson(
+    final value = ApiResponse<DelPosting>.fromJson(
       _result.data!,
-      (json) => json as int,
+      (json) => DelPosting.fromJson(json as Map<String, dynamic>),
     );
     return value;
   }
