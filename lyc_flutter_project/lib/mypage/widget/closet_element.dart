@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:lyc_flutter_project/common/widget/image_networking.dart';
 
 class ClosetElement extends StatelessWidget {
   final String title;
@@ -35,12 +36,7 @@ class ClosetElement extends StatelessWidget {
                     child: SvgPicture.asset("assets/icon_plus.svg"),
                   )
                 : image != null
-                    ? Image.network(
-                        image!,
-                        fit: BoxFit.cover,
-                        height: 50,
-                        width: 50,
-                      )
+                    ? ImageNetworking(image!)
                     : const SizedBox(),
           ),
           const SizedBox(width: 10.0),

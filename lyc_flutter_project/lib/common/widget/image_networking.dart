@@ -15,7 +15,7 @@ class ImageNetworking extends StatelessWidget {
       fit: BoxFit.cover,
       errorBuilder: (context, error, stackTrace) {
         return Image.asset(
-          "assets/default_profile.png",
+          "assets/image_not_found.png",
           fit: BoxFit.cover,
         );
       },
