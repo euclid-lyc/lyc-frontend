@@ -213,15 +213,16 @@ class MypageProvider extends ChangeNotifier {
       switch (type) {
         case 0:
           if (myCoordi.isNotEmpty) {
-            paginateQuery.copyWith(cursorDateTime: myCoordi.last.createdAt);
+            paginateQuery = paginateQuery.copyWith(cursorDateTime: myCoordi.last.createdAt);
           }
         case 1:
           if (savedCoordi.isNotEmpty) {
-            paginateQuery.copyWith(cursorDateTime: savedCoordi.last.createdAt);
+            paginateQuery = paginateQuery.copyWith(cursorDateTime: savedCoordi.last.createdAt);
           }
         case 2:
           if (myCloset.isNotEmpty) {
-            paginateQuery.copyWith(cursorDateTime: myCloset.last.createdAt);
+
+            paginateQuery = paginateQuery.copyWith(cursorDateTime: myCloset.last.createdAt);
           }
       }
     }
@@ -269,7 +270,7 @@ class MypageProvider extends ChangeNotifier {
                 ];
           updateHasMore(resp.result.clothesList.length >= pageSize);
         default:
-          Exception();
+          throw Exception("카테고리 오류");
       }
     } catch (e) {
       Exception(e);

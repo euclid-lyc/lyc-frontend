@@ -42,10 +42,9 @@ class _GridWidgetWithButtonState extends State<GridWidgetWithButton> {
   }
 
   void listener() {
-    if (controller.offset > controller.position.maxScrollExtent - 200) {
+    if (controller.offset > controller.position.maxScrollExtent - 300) {
       if (!widget.provider.getLoading() && widget.provider.getHasMore()) {
         widget.provider.getList();
-        print("데이터 추가 요청");
       }
     }
   }
