@@ -52,6 +52,7 @@ class PostingDetailProvider extends ChangeNotifier {
 
   bool isLiked = false;
   bool isSaved = false;
+  bool isMyPosting = false;
 
   bool initialized = false;
   CoordiPostingResult? _posting;
@@ -60,10 +61,20 @@ class PostingDetailProvider extends ChangeNotifier {
 
   get posting => _posting;
 
-  Future<CoordiPostingResult> initialize() async {
+  Future<CoordiPostingResult> initialize(bool isMyPosting) async {
+    this.isMyPosting = isMyPosting;
+    final lResp = await coordiRepositoryProvider.repository
+        .getLikedStatus(postingId: postingId);
+    isLiked = lResp.result;
+    if (!isMyPosting) {
+      final sResp = await coordiRepositoryProvider.repository
+          .getSaveStatus(postingId: postingId);
+      isSaved = sResp.result;
+    }
     if (_posting == null) {
       getDetail();
     }
+    notifyListeners();
     return _posting!;
   }
 

@@ -38,4 +38,16 @@ abstract class CoordiRepository {
     @Part(name: "linkDTO") required linkDTO,
     @Part() required List<MultipartFile> multipartFiles,
   });
+
+  @GET("/{postingId}/like-status")
+  @Headers({"accessToken": "true"})
+  Future<ApiResponse<bool>> getLikedStatus({
+    @Path() required postingId,
+  });
+
+  @GET("/{postingId}/save-status")
+  @Headers({"accessToken": "true"})
+  Future<ApiResponse<bool>> getSaveStatus({
+    @Path() required postingId,
+  });
 }

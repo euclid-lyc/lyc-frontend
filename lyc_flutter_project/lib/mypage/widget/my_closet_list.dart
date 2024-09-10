@@ -86,7 +86,7 @@ class _MyClosetListState extends State<MyClosetList> {
                   return PostingDetailScreen(
                     postingId: posting.clothesId,
                     isCloset: true,
-                    isMyposting: true,
+                    isMyPosting: true,
                   );
                 },
               ),
