@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 
 class ImageNetworking extends StatelessWidget {
   final String image;
-  final bool profile;
 
   const ImageNetworking(
     this.image, {
     super.key,
-    this.profile = true,
   });
 
   Widget build(BuildContext context) {
@@ -16,10 +14,37 @@ class ImageNetworking extends StatelessWidget {
       fit: BoxFit.cover,
       errorBuilder: (context, error, stackTrace) {
         return Image.asset(
-          profile ? "assets/default_profile.png" : "assets/image_not_found.png",
+          "assets/default_profile.png",
           fit: BoxFit.cover,
         );
       },
+    );
+  }
+}
+
+class ProfileImageNetworking extends StatelessWidget {
+  final String image;
+
+  const ProfileImageNetworking(
+      this.image, {
+        super.key,
+      });
+
+  Widget build(BuildContext context) {
+    return AspectRatio(
+      aspectRatio: 1,
+      child: ClipOval(
+        child: Image.network(
+          image,
+          fit: BoxFit.cover,
+          errorBuilder: (context, error, stackTrace) {
+            return Image.asset(
+              "assets/default_profile.png",
+              fit: BoxFit.cover,
+            );
+          },
+        ),
+      ),
     );
   }
 }
