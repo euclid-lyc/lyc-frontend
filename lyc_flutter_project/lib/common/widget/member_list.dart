@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/common/widget/image_networking.dart';
-import 'package:lyc_flutter_project/common/widget/round_image.dart';
 
 class MemberList extends StatelessWidget {
   final String profile;
