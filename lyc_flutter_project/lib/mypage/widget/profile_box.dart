@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lyc_flutter_project/common/widget/image_networking.dart';
 import 'package:lyc_flutter_project/common/widget/round_image.dart';
 import 'package:lyc_flutter_project/mypage/model/profile.dart';
 import 'package:lyc_flutter_project/mypage/screen/follow_list_screen.dart';
@@ -42,12 +43,7 @@ class ProfileBox extends StatelessWidget {
           // 사진
           Expanded(
             flex: 5,
-            child: RoundImage(
-              image: Image.network(
-                profileImage,
-                fit: BoxFit.cover,
-              ),
-            ),
+            child: ProfileImageNetworking(profileImage),
           ),
           // 이름, 아이디, 팔로워, 팔로잉
           const SizedBox(width: 20),

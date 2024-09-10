@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/common/widget/confirm_alter_dialog.dart';
 import 'package:lyc_flutter_project/common/widget/custom_loading.dart';
+import 'package:lyc_flutter_project/common/widget/image_networking.dart';
 import 'package:lyc_flutter_project/common/widget/posting_top.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -102,11 +103,8 @@ class _PostingDetailScreenState extends State<PostingDetailScreen> {
                                 children: [
                                   Row(
                                     children: [
-                                      RoundImage(
-                                        image: Image.network(
-                                          value.posting.fromMember.profileImage,
-                                          fit: BoxFit.cover,
-                                        ),
+                                      ProfileImageNetworking(
+                                        value.posting.fromMember.profileImage,
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.all(3),
@@ -114,12 +112,9 @@ class _PostingDetailScreenState extends State<PostingDetailScreen> {
                                           'assets/icon_arrow.svg',
                                         ),
                                       ),
-                                      RoundImage(
-                                        image: Image.asset(
-                                          value.posting.toMember.profileImage,
-                                          fit: BoxFit.cover,
-                                        ),
-                                      )
+                                      ProfileImageNetworking(
+                                        value.posting.toMember.profileImage,
+                                      ),
                                     ],
                                   ),
                                   const SizedBox(width: 20),
