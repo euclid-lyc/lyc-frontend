@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/common/style/custom_grid_delegate.dart';
 import 'package:lyc_flutter_project/common/widget/custom_loading.dart';
+import 'package:lyc_flutter_project/common/widget/image_networking.dart';
 import 'package:lyc_flutter_project/mypage/model/mypage_posting_preview.dart';
 import 'package:lyc_flutter_project/mypage/provider/mypage_provider.dart';
 import 'package:lyc_flutter_project/mypage/screen/review_list_screen.dart';
@@ -141,10 +142,7 @@ class _GridWidgetWithButtonState extends State<GridWidgetWithButton> {
               tag: posting.postingId,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(15),
-                child: Image.network(
-                  posting.image,
-                  fit: BoxFit.cover,
-                ),
+                child: ImageNetworking(posting.image),
               ),
             ),
           );

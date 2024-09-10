@@ -179,9 +179,8 @@ class _PostingDetailScreenState extends State<PostingDetailScreen> {
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(20),
                                 child: value.posting.imageInfo.isNotEmpty
-                                    ? Image.network(
+                                    ? ImageNetworking(
                                         value.posting.imageInfo[0].image,
-                                        fit: BoxFit.cover,
                                       )
                                     : Image.asset(
                                         "assets/image_not_found.png",
