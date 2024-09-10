@@ -8,6 +8,7 @@ class ImageNetworking extends StatelessWidget {
     super.key,
   });
 
+  @override
   Widget build(BuildContext context) {
     return Image.network(
       image,
@@ -30,6 +31,7 @@ class ProfileImageNetworking extends StatelessWidget {
         super.key,
       });
 
+  @override
   Widget build(BuildContext context) {
     return AspectRatio(
       aspectRatio: 1,

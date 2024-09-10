@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/common/widget/image_networking.dart';
-import 'package:lyc_flutter_project/common/widget/round_image.dart';
 import 'package:lyc_flutter_project/mypage/model/profile.dart';
 import 'package:lyc_flutter_project/mypage/screen/follow_list_screen.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
