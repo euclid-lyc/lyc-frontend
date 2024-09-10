@@ -122,7 +122,7 @@ class _GridWidgetWithButtonState extends State<GridWidgetWithButton> {
                 MaterialPageRoute(
                   builder: (context) => PostingDetailScreen(
                     postingId: posting.postingId,
-                    isMyposting: widget.category == 0,
+                    isMyPosting: widget.category == 0,
                   ),
                 ),
               );

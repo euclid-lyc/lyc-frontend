@@ -14,13 +14,13 @@ import 'package:provider/provider.dart';
 
 class PostingDetailScreen extends StatefulWidget {
   final int postingId;
-  final bool isMyposting;
+  final bool isMyPosting;
   final bool isCloset;
 
   const PostingDetailScreen({
     super.key,
     required this.postingId,
-    this.isMyposting = false,
+    this.isMyPosting = false,
     this.isCloset = false,
   });
 
@@ -36,7 +36,7 @@ class _PostingDetailScreenState extends State<PostingDetailScreen> {
     super.initState();
     provider = Provider.of<PostingDetailProviderFactory>(context, listen: false)
         .getProvider(widget.postingId);
-    provider.initialize();
+    provider.initialize(widget.isMyPosting);
   }
 
   @override
@@ -54,7 +54,7 @@ class _PostingDetailScreenState extends State<PostingDetailScreen> {
         builder: (context, value, child) {
           return Scaffold(
             backgroundColor: AppColor.lightGrey,
-            appBar: widget.isMyposting
+            appBar: widget.isMyPosting
                 ? NormalAppbar(
                     icon: SvgPicture.asset("assets/icon_delete.svg"),
                     onTap: () async {
@@ -214,7 +214,7 @@ class _PostingDetailScreenState extends State<PostingDetailScreen> {
                                             size: 30,
                                           ),
                                         ),
-                                        !widget.isMyposting
+                                        !widget.isMyPosting
                                             ? IconButton(
                                                 onPressed: () =>
                                                     value.pressSave(),
