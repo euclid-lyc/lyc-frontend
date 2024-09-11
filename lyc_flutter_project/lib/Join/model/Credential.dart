@@ -9,9 +9,7 @@ class Credential {
 
   Credential({required this.loginId, required this.loginPw});
 
-  Map<String, dynamic> toJson() => {
-    "loginId": loginId,
-    "loginPw": loginPw,
-  };
-}
 
+  factory Credential.fromJson(Map<String, dynamic> json) => _$CredentialFromJson(json);
+  Map<String, dynamic> toJson() => _$CredentialToJson(this);
+}

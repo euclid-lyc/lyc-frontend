@@ -3,32 +3,34 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:lyc_flutter_project/Join/model/Credential.dart';
 import 'package:lyc_flutter_project/common/const/data.dart';
+import 'package:lyc_flutter_project/common/dio/dio.dart';
 import 'package:lyc_flutter_project/mypage/screen/my_page_screen.dart';
 import '../Screens/login_screen.dart';
 
 class LoginProvider extends ChangeNotifier {
-  final Dio dio;
-  final FlutterSecureStorage storage;
+final DioProvider dioProvider;
+late final Dio dio;
+late final FlutterSecureStorage storage;
 
   bool _isLoading = false;
   bool _isLoggedIn = false;
   int? _memberId;
 
   bool get isLoading => _isLoading;
+
   bool get isLoggedIn => _isLoggedIn;
+
   int? get memberId => _memberId;
 
-  LoginProvider({
-    required this.dio,
-    required this.storage,
-  });
+  LoginProvider(this.dioProvider){
+    dio = dioProvider.dio;
+    storage = dioProvider.storage;
+  }
 
   Future<void> login(String id, String pw, BuildContext context) async {
     _setLoading(true);
     try {
-
       final requestBody = Credential(loginId: id, loginPw: pw);
-
 
       final response = await dio.post(
         'http://$ip/lyc/auths/sign-in',
@@ -47,20 +49,10 @@ class LoginProvider extends ChangeNotifier {
         final accessToken = headers.value("access-token") ?? '';
         final responseData = response.data as Map<String, dynamic>;
         final result = responseData["result"] as Map<String, dynamic>;
-        print('Response Data: $result');
         final memberId = result["memberId"];
 
-        print('Response Headers: ${response.headers}');
-        print('Access Token: ${response.headers.value('access-token')}');
-        print('Refresh Token: ${response.headers.value('refresh-token')}');
-
-
-
-          await storage.write(key: refreshTokenKey, value: refreshToken);
-
-
-          await storage.write(key: accessTokenKey, value: accessToken);
-
+        await storage.write(key: refreshTokenKey, value: refreshToken);
+        await storage.write(key: accessTokenKey, value: accessToken);
 
         _isLoggedIn = true;
         _memberId = memberId;

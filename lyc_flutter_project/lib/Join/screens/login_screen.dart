@@ -1,9 +1,6 @@
-import 'dart:convert';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:lyc_flutter_project/common/widget/bottom_bar.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
-import 'package:lyc_flutter_project/mypage/screen/my_page_screen.dart';
 import 'package:lyc_flutter_project/screens/find_id_screen_1.dart';
 import 'package:lyc_flutter_project/screens/find_password_screen_1.dart';
 import 'package:lyc_flutter_project/Join/Screens/join_membership_screen_1.dart';
@@ -28,14 +25,14 @@ class LoginScreen extends StatelessWidget {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: AppColor.beige,
-        toolbarHeight: 200,
-        flexibleSpace: Center(
-          child: Text(
-            'LEAD YOUR CLOSET',
-            style: app_text_style.title,
-            textAlign: TextAlign.center,
-          ),
-        ),
+        toolbarHeight: 100,
+        title: Center(
+        child: Text(
+        'LEAD YOUR CLOSET',
+        style: app_text_style.title,
+        textAlign: TextAlign.center,
+    ),
+      ),
       ),
       body: Center(
         child: Column(
@@ -111,10 +108,7 @@ class LoginScreen extends StatelessWidget {
                             loginProvider.memberId != null) {
                           Navigator.of(context).pushReplacement(
                             MaterialPageRoute(
-                              builder: (context) => MyPageScreen(
-                                memberId:
-                                    loginProvider.memberId!,
-                              ),
+                              builder: (context) => const BottomBar()
                             ),
                           );
                         }

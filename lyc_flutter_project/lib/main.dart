@@ -1,6 +1,4 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:lyc_flutter_project/Join/Provider/login_provider.dart';
 import 'package:lyc_flutter_project/common/dio/dio.dart';
 import 'package:lyc_flutter_project/common/screen/splash_screen.dart';
@@ -12,10 +10,7 @@ import 'package:provider/provider.dart';
 
 void main() {
   Provider.debugCheckInvalidValueType = null;
-
-  final dio = Dio(); // Dio 인스턴스를 생성합니다.
-  final storage = FlutterSecureStorage();
-
+  DioProvider dioProvider = DioProvider();
   runApp(
     MultiProvider(
       providers: [
@@ -28,8 +23,7 @@ void main() {
         ChangeNotifierProvider(create: (context) => FollowProvider()),
         ChangeNotifierProvider(
           create: (context) => LoginProvider(
-            dio: dio,
-            storage: storage,
+            dioProvider
           ),
         ),
         // 다른 프로바이더들도 여기에 추가
