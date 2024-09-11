@@ -25,7 +25,8 @@ class AddClothesPostingScreen extends StatefulWidget {
 }
 
 class _AddClothesPostingScreenState extends State<AddClothesPostingScreen> {
-  bool photoSelected = true;
+  int curSelected = 1;
+
   late XFile? _image;
   final ImagePicker picker = ImagePicker();
 
@@ -122,7 +123,7 @@ class _AddClothesPostingScreenState extends State<AddClothesPostingScreen> {
               child: Column(
                 children: <Widget>[
                   Container(
-                    height: 40.0,
+                    height: MediaQuery.of(context).size.height / 20,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(20),
@@ -131,26 +132,30 @@ class _AddClothesPostingScreenState extends State<AddClothesPostingScreen> {
                       children: [
                         SwitchCategoryButton(
                           text: '사진 업로드',
-                          isSelected: photoSelected,
-                          onPressed: _onPressed,
+                          isSelected: curSelected == 1,
+                          onPressed: () => setState(() {
+                            curSelected = 1;
+                          }),
                           color: AppColor.deepGrey,
                         ),
                         SwitchCategoryButton(
                           text: '텍스트 업로드',
-                          isSelected: !photoSelected,
-                          onPressed: _onPressed,
+                          isSelected: curSelected == 2,
+                          onPressed: () => setState(() {
+                            curSelected = 2;
+                          }),
                           color: AppColor.deepGrey,
                         ),
                       ],
                     ),
                   ),
-                  const SizedBox(height: 16.0),
-                  Expanded(child: photoSelected ? addPhoto() : addText()),
-                  const SizedBox(height: 16.0),
+                  const SizedBox(height: 20.0),
+                  Expanded(child: curSelected == 1 ? addPhoto() : addText()),
+                  const SizedBox(height: 20.0),
                   TwoButtons(
                     fstOnPressed: () => Navigator.pop,
                     scdOnPressed: () {
-                      photoSelected ? value.uploadImage() : value.uploadText();
+                      curSelected == 1 ? value.uploadImage() : value.uploadText();
                     },
                     scdLabel: "추가",
                   )
@@ -170,13 +175,13 @@ class _AddClothesPostingScreenState extends State<AddClothesPostingScreen> {
           onImageSelected: _onImageSelected,
           picker: picker,
         ),
-        const SizedBox(height: 16.0),
+        const SizedBox(height: 20.0),
         PostingContentTextField(
           controller: iTitleController,
           hint: "옷의 이름을 입력해주세요.",
           maxLines: 1,
         ),
-        const SizedBox(height: 16.0),
+        const SizedBox(height: 20.0),
         PostingContentTextField(
           controller: iContentController,
           hint: '텍스트를 입력해주세요.',
@@ -192,7 +197,7 @@ class _AddClothesPostingScreenState extends State<AddClothesPostingScreen> {
           'Step 1. 옷의 이름은 무엇인가요?',
           style: PostingTextStyle.stepTitle,
         ),
-        const SizedBox(height: 12.0),
+        const SizedBox(height: 14.0),
         Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
@@ -209,7 +214,7 @@ class _AddClothesPostingScreenState extends State<AddClothesPostingScreen> {
           'Step 2. 소재감은 어떤가요?',
           style: PostingTextStyle.stepTitle,
         ),
-        const SizedBox(height: 12.0),
+        const SizedBox(height: 14.0),
         Row(
           children: [
             for (var i = 0; i < 4; i++)
@@ -240,30 +245,12 @@ class _AddClothesPostingScreenState extends State<AddClothesPostingScreen> {
               ),
           ],
         ),
-        const SizedBox(height: 16.0),
-        const Text(
-          '기타 재질 입력',
-          style: TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        const SizedBox(height: 12.0),
-        TextField(
-          decoration: InputDecoration(
-            filled: true,
-            fillColor: AppColor.grey,
-            enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(20),
-                borderSide: BorderSide.none),
-          ),
-        ),
-        const SizedBox(height: 24),
+        const SizedBox(height: 24.0),
         const Text(
           'Step 3. 핏은 어떤가요? ',
           style: PostingTextStyle.stepTitle,
         ),
-        const SizedBox(height: 12.0),
+        const SizedBox(height: 14.0),
         Row(
           children: [
             for (var i = 0; i < 4; i++)
@@ -293,44 +280,19 @@ class _AddClothesPostingScreenState extends State<AddClothesPostingScreen> {
                 ),
               ),
           ],
-        ),
-        const SizedBox(height: 16),
-        const Text(
-          '기타 핏 입력',
-          style: TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        const SizedBox(height: 12.0),
-        TextField(
-          decoration: InputDecoration(
-            filled: true,
-            fillColor: AppColor.grey,
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(20),
-              borderSide: BorderSide.none,
-            ),
-          ),
         ),
         const SizedBox(height: 24.0),
         const Text(
           'Step 4. 더 자세한 사항을 입력해주세요.',
           style: PostingTextStyle.stepTitle,
         ),
-        const SizedBox(height: 12.0),
+        const SizedBox(height: 14.0),
         PostingContentTextField(
           controller: tTextController,
           hint: "ex: 거의 무릎까지 오는 기장입니다.\n봄, 여름에 입기 좋은 두께감입니다.",
         ),
       ],
     );
-  }
-
-  void _onPressed() {
-    setState(() {
-      photoSelected = !photoSelected;
-    });
   }
 
   void _onImageSelected(XFile image) {

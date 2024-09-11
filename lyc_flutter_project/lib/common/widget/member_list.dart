@@ -50,12 +50,7 @@ class MemberList extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(width: 8),
-                      Text(
-                        "@$id",
-                        style: const TextStyle(
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
+
                     ],
                   ),
                   const SizedBox(height: 3),

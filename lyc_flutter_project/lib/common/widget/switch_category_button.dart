@@ -6,12 +6,14 @@ class SwitchCategoryButton extends StatelessWidget {
   final bool isSelected;
   final VoidCallback onPressed;
   final Color color;
+  final double size;
 
   const SwitchCategoryButton({
     required this.text,
     required this.isSelected,
     required this.onPressed,
     this.color = AppColor.brown,
+    this.size = 14.0,
   });
 
   @override
@@ -31,6 +33,7 @@ class SwitchCategoryButton extends StatelessWidget {
             style: TextStyle(
               color: isSelected ? Colors.white : color,
               fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
+              fontSize: size,
             ),
           ),
         ),
