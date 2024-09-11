@@ -5,50 +5,8 @@ import '../../styles/app_text_style.dart';
 import '../../widget/controller.dart';
 import '../../widget/normal_appbar.dart';
 import 'join_membership_screen_5.dart';
+import '../../data/style_list.dart';
 
-const List<String> styleOptions = [
-  '클래식',
-  '캐주얼',
-  '힙',
-  '그런지',
-  '프레피',
-  '빈티지',
-  '모던시크',
-  '스트릿'
-];
-
-const List<String> materialOptions = [
-  '면',
-  '니트',
-  '린넨',
-  '시폰',
-  '코듀로이',
-  '가죽',
-  '데님',
-  '나일론'
-];
-
-const List<String> fitOptions = [
-  '오버핏',
-  '노멀핏',
-  '슬림핏',
-  '루즈핏',
-  '와이드',
-  '부츠컷',
-  '스트레이트',
-  '스키니'
-];
-
-const List<String> BodyParts = [
-  '어깨',
-  '가슴',
-  '전완',
-  '하완',
-  '엉덩이',
-  '종아리',
-  '허벅지',
-  '복부',
-];
 
 class JoinMembershipScreen4 extends StatefulWidget {
   const JoinMembershipScreen4({super.key});
@@ -72,6 +30,8 @@ class JoinMembershipScreenState4 extends State<JoinMembershipScreen4> {
   final Controller _Controller7 = Controller();
   final Controller _Controller8 = Controller();
   final Controller _Controller9 = Controller();
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +63,7 @@ class JoinMembershipScreenState4 extends State<JoinMembershipScreen4> {
                     notifier: context
                         .read<MembershipState>()
                         ._selected2,
-                    styles: styleOptions,
+                    styles: styleList.styleOptions,
                     text: '기타 스타일 입력',
                     controller: _Controller2,
                   ),
@@ -115,7 +75,7 @@ class JoinMembershipScreenState4 extends State<JoinMembershipScreen4> {
                     notifier: context
                         .read<MembershipState>()
                         ._selected3,
-                    styles: styleOptions,
+                    styles:  styleList.styleOptions,
                     text: '기타 스타일 입력',
                     controller: _Controller3,
                   ),
@@ -127,7 +87,7 @@ class JoinMembershipScreenState4 extends State<JoinMembershipScreen4> {
                     notifier: context
                         .read<MembershipState>()
                         ._selected4,
-                    styles: materialOptions,
+                    styles:  styleList.materialOptions,
                     text: '기타 소재 입력',
                     controller: _Controller4,
                   ),
@@ -139,7 +99,7 @@ class JoinMembershipScreenState4 extends State<JoinMembershipScreen4> {
                     notifier: context
                         .read<MembershipState>()
                         ._selected5,
-                    styles: materialOptions,
+                    styles:  styleList.materialOptions,
                     text: '기타 소재 입력',
                     controller: _Controller5,
                   ),
@@ -151,7 +111,7 @@ class JoinMembershipScreenState4 extends State<JoinMembershipScreen4> {
                     notifier: context
                         .read<MembershipState>()
                         ._selected6,
-                    styles: fitOptions,
+                    styles:  styleList.fitOptions,
                     text: '기타 핏 입력',
                     controller: _Controller6,
                   ),
@@ -163,7 +123,7 @@ class JoinMembershipScreenState4 extends State<JoinMembershipScreen4> {
                     notifier: context
                         .read<MembershipState>()
                         ._selected7,
-                    styles: fitOptions,
+                    styles:  styleList.fitOptions,
                     text: '기타 핏 입력',
                     controller: _Controller7,
                   ),
@@ -175,7 +135,7 @@ class JoinMembershipScreenState4 extends State<JoinMembershipScreen4> {
                     notifier: context
                         .read<MembershipState>()
                         ._selected8,
-                    styles: BodyParts,
+                    styles:  styleList.BodyParts,
                     text: '기타 핏 입력',
                     controller: _Controller8,
                   ),

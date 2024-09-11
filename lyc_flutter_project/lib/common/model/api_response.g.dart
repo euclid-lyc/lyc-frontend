@@ -15,6 +15,10 @@ ApiResponse<T> _$ApiResponseFromJson<T>(
       message: json['message'] as String,
       result: fromJsonT(json['result']),
       isSuccess: json['isSuccess'] as bool,
+      headers: (json['headers'] as Map<String, dynamic>?)?.map(
+        (k, e) =>
+            MapEntry(k, (e as List<dynamic>).map((e) => e as String).toList()),
+      ),
     );
 
 Map<String, dynamic> _$ApiResponseToJson<T>(
@@ -26,4 +30,5 @@ Map<String, dynamic> _$ApiResponseToJson<T>(
       'message': instance.message,
       'result': toJsonT(instance.result),
       'isSuccess': instance.isSuccess,
+      'headers': instance.headers,
     };

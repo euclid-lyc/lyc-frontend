@@ -187,7 +187,7 @@ class JoinMembershipScreenState2 extends State<JoinMembershipScreen2> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const JoinMembershipScreen1()),
+                                builder: (context) => JoinMembershipScreen1()),
                           );
                         },
                         style: TextButton.styleFrom(
@@ -236,6 +236,4 @@ class JoinMembershipScreenState2 extends State<JoinMembershipScreen2> {
       ),
     );
   }
-
-
 }
