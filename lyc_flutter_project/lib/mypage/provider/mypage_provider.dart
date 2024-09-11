@@ -54,12 +54,6 @@ class MypageProvider extends ChangeNotifier {
           myCloset.length
       };
 
-  bool isSaved(int postingId) {
-    return savedCoordi.any(
-      (element) => element.postingId == postingId,
-    );
-  }
-
   Future<void> save(int postingId) async {
     final resp = await mypageRepositoryProvider.mypageRepository.savePosting(postingId: postingId);
     if (resp.isSuccess) {

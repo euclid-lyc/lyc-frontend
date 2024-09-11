@@ -18,7 +18,7 @@ GestureDetector SelectButtonsInPosting(List<String> name, List<String> selected,
         child: Text(
           _text,
           style: TextStyle(
-            fontWeight: FontWeight.w400,
+            fontWeight: selected.contains(_text) ? FontWeight.w600 :FontWeight.w400,
             color: selected.contains(_text) ? Colors.white : Colors.black,
           ),
         ),
