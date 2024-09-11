@@ -156,6 +156,7 @@ class _AddClothesPostingScreenState extends State<AddClothesPostingScreen> {
                     fstOnPressed: () => Navigator.pop,
                     scdOnPressed: () {
                       curSelected == 1 ? value.uploadImage() : value.uploadText();
+                      Navigator.of(context).pop();
                     },
                     scdLabel: "추가",
                   )
