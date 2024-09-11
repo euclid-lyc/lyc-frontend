@@ -2,15 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lyc_flutter_project/common/widget/two_buttons.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
+import 'package:lyc_flutter_project/posting/provider/clothes_provider.dart';
 import 'package:lyc_flutter_project/styles/posting_text_style.dart';
 import 'package:lyc_flutter_project/widget/image_picker_widget.dart';
 import 'package:lyc_flutter_project/widget/normal_appbar.dart';
 import 'package:lyc_flutter_project/widget/posting_content_text_field.dart';
 import 'package:lyc_flutter_project/widget/select_buttons_in_posting.dart';
 import 'package:lyc_flutter_project/common/widget/switch_category_button.dart';
+import 'package:provider/provider.dart';
 
 class AddClothesPostingScreen extends StatefulWidget {
-  const AddClothesPostingScreen({super.key});
+  final ClothesProvider clothesProvider;
+
+  const AddClothesPostingScreen({
+    super.key,
+    required this.clothesProvider,
+  });
 
   @override
   State<AddClothesPostingScreen> createState() =>
@@ -22,10 +29,11 @@ class _AddClothesPostingScreenState extends State<AddClothesPostingScreen> {
   late XFile? _image;
   final ImagePicker picker = ImagePicker();
 
-  TextEditingController writePostController = TextEditingController();
-  TextEditingController clothesNameController = TextEditingController();
-  TextEditingController textureController = TextEditingController();
-  TextEditingController fitController = TextEditingController();
+  late TextEditingController iTitleController;
+  late TextEditingController iContentController;
+
+  late TextEditingController tTitleController;
+  late TextEditingController tTextController;
 
   List<String> textures = [
     '면',
@@ -52,46 +60,104 @@ class _AddClothesPostingScreenState extends State<AddClothesPostingScreen> {
   List<String> selectedFits = [];
 
   @override
+  void initState() {
+    super.initState();
+    iTitleController = TextEditingController();
+    iContentController = TextEditingController();
+
+    tTitleController = TextEditingController();
+    tTextController = TextEditingController();
+
+    iTitleController.addListener(_updateTitle);
+    iContentController.addListener(_updateContent);
+
+    tTitleController.addListener(_tUpdateTitle);
+    tTextController.addListener(_tUpdateText);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+
+    iTitleController.removeListener(_updateTitle);
+    iContentController.removeListener(_updateContent);
+
+    tTitleController.removeListener(_tUpdateTitle);
+    tTextController.removeListener(_tUpdateText);
+
+    iTitleController.dispose();
+    iContentController.dispose();
+
+    tTitleController.dispose();
+    tTitleController.dispose();
+  }
+
+  _updateTitle() {
+    widget.clothesProvider.iUpdateTitle(iTitleController.text);
+  }
+
+  _updateContent() {
+    widget.clothesProvider.iUpdateContent(iContentController.text);
+  }
+
+  _tUpdateTitle() {
+    widget.clothesProvider.tUpdateTitle(tTitleController.text);
+  }
+
+  _tUpdateText() {
+    widget.clothesProvider.tUpdateText(tTextController.text);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColor.lightGrey,
-      appBar: const NormalAppbar(title: '옷 추가'),
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(20, 25, 20, 20),
-        child: Column(
-          children: <Widget>[
-            Container(
-              height: 40.0,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Row(
-                children: [
-                  SwitchCategoryButton(
-                    text: '사진 업로드',
-                    isSelected: photoSelected,
-                    onPressed: _onPressed,
-                    color: AppColor.deepGrey,
+    return ChangeNotifierProvider.value(
+      value: widget.clothesProvider,
+      child: Scaffold(
+        backgroundColor: AppColor.lightGrey,
+        appBar: const NormalAppbar(title: '옷 추가'),
+        body: Consumer<ClothesProvider>(
+          builder: (context, value, child) {
+            return Padding(
+              padding: const EdgeInsets.fromLTRB(20, 25, 20, 20),
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    height: 40.0,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Row(
+                      children: [
+                        SwitchCategoryButton(
+                          text: '사진 업로드',
+                          isSelected: photoSelected,
+                          onPressed: _onPressed,
+                          color: AppColor.deepGrey,
+                        ),
+                        SwitchCategoryButton(
+                          text: '텍스트 업로드',
+                          isSelected: !photoSelected,
+                          onPressed: _onPressed,
+                          color: AppColor.deepGrey,
+                        ),
+                      ],
+                    ),
                   ),
-                  SwitchCategoryButton(
-                    text: '텍스트 업로드',
-                    isSelected: !photoSelected,
-                    onPressed: _onPressed,
-                    color: AppColor.deepGrey,
-                  ),
+                  const SizedBox(height: 16.0),
+                  Expanded(child: photoSelected ? addPhoto() : addText()),
+                  const SizedBox(height: 16.0),
+                  TwoButtons(
+                    fstOnPressed: () => Navigator.pop,
+                    scdOnPressed: () {
+                      photoSelected ? value.uploadImage() : value.uploadText();
+                    },
+                    scdLabel: "추가",
+                  )
                 ],
               ),
-            ),
-            const SizedBox(height: 16.0),
-            Expanded(child: photoSelected ? addPhoto() : addText()),
-            const SizedBox(height: 16.0),
-            TwoButtons(
-              fstOnPressed: () => Navigator.pop,
-              scdOnPressed: () {},
-              scdLabel: "추가",
-            )
-          ],
+            );
+          },
         ),
       ),
     );
@@ -100,10 +166,19 @@ class _AddClothesPostingScreenState extends State<AddClothesPostingScreen> {
   ListView addPhoto() {
     return ListView(
       children: [
-        ImagePickerWidget(onImageSelected: _onImageSelected, picker: picker),
-        const SizedBox(height: 40),
+        ImagePickerWidget(
+          onImageSelected: _onImageSelected,
+          picker: picker,
+        ),
+        const SizedBox(height: 16.0),
         PostingContentTextField(
-          controller: writePostController,
+          controller: iTitleController,
+          hint: "옷의 이름을 입력해주세요.",
+          maxLines: 1,
+        ),
+        const SizedBox(height: 16.0),
+        PostingContentTextField(
+          controller: iContentController,
           hint: '텍스트를 입력해주세요.',
         ),
       ],
@@ -119,34 +194,53 @@ class _AddClothesPostingScreenState extends State<AddClothesPostingScreen> {
         ),
         const SizedBox(height: 12.0),
         Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              color: Colors.white,
-            ),
-            child: PostingContentTextField(
-                controller: clothesNameController, hint: 'ex. 파란색 크롭 반팔 티셔츠')),
-        const SizedBox(height: 40),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            color: Colors.white,
+          ),
+          child: PostingContentTextField(
+            maxLines: 1,
+            controller: tTitleController,
+            hint: 'ex. 파란색 크롭 반팔 티셔츠',
+          ),
+        ),
+        const SizedBox(height: 24.0),
         const Text(
           'Step 2. 소재감은 어떤가요?',
           style: PostingTextStyle.stepTitle,
         ),
         const SizedBox(height: 12.0),
-        Wrap(
-          direction: Axis.horizontal,
-          alignment: WrapAlignment.start,
+        Row(
           children: [
-            for (var i = 0; i < 8; i++)
-              SelectButtonsInPosting(
-                textures,
-                selectedTextures,
-                i,
-                () => _onTextureButtonPressed(textures[i]),
-                AppColor.deepGrey,
-                Colors.white,
+            for (var i = 0; i < 4; i++)
+              Expanded(
+                child: SelectButtonsInPosting(
+                  textures,
+                  selectedTextures,
+                  i,
+                  () => _onTextureButtonPressed(textures[i]),
+                  AppColor.deepGrey,
+                  Colors.white,
+                ),
               ),
           ],
         ),
-        const SizedBox(height: 12.0),
+        Row(
+          children: [
+            for (var i = 4; i < 8; i++)
+              Expanded(
+                child: SelectButtonsInPosting(
+                  textures,
+                  selectedTextures,
+                  i,
+                  () => _onTextureButtonPressed(textures[i]),
+                  AppColor.deepGrey,
+                  Colors.white,
+                ),
+              ),
+          ],
+        ),
+        const SizedBox(height: 16.0),
         const Text(
           '기타 재질 입력',
           style: TextStyle(
@@ -156,7 +250,6 @@ class _AddClothesPostingScreenState extends State<AddClothesPostingScreen> {
         ),
         const SizedBox(height: 12.0),
         TextField(
-          controller: textureController,
           decoration: InputDecoration(
             filled: true,
             fillColor: AppColor.grey,
@@ -165,28 +258,43 @@ class _AddClothesPostingScreenState extends State<AddClothesPostingScreen> {
                 borderSide: BorderSide.none),
           ),
         ),
-        const SizedBox(height: 40),
+        const SizedBox(height: 24),
         const Text(
           'Step 3. 핏은 어떤가요? ',
           style: PostingTextStyle.stepTitle,
         ),
         const SizedBox(height: 12.0),
-        Wrap(
-          direction: Axis.horizontal,
-          alignment: WrapAlignment.start,
+        Row(
           children: [
-            for (var i = 0; i < 8; i++)
-              SelectButtonsInPosting(
-                fits,
-                selectedFits,
-                i,
-                () => _onFitButtonPressed(fits[i]),
-                AppColor.deepGrey,
-                Colors.white,
+            for (var i = 0; i < 4; i++)
+              Expanded(
+                child: SelectButtonsInPosting(
+                  fits,
+                  selectedFits,
+                  i,
+                  () => _onFitButtonPressed(fits[i]),
+                  AppColor.deepGrey,
+                  Colors.white,
+                ),
               ),
           ],
         ),
-        const SizedBox(height: 20),
+        Row(
+          children: [
+            for (var i = 4; i < 8; i++)
+              Expanded(
+                child: SelectButtonsInPosting(
+                  fits,
+                  selectedFits,
+                  i,
+                  () => _onFitButtonPressed(fits[i]),
+                  AppColor.deepGrey,
+                  Colors.white,
+                ),
+              ),
+          ],
+        ),
+        const SizedBox(height: 16),
         const Text(
           '기타 핏 입력',
           style: TextStyle(
@@ -196,7 +304,6 @@ class _AddClothesPostingScreenState extends State<AddClothesPostingScreen> {
         ),
         const SizedBox(height: 12.0),
         TextField(
-          controller: fitController,
           decoration: InputDecoration(
             filled: true,
             fillColor: AppColor.grey,
@@ -205,6 +312,16 @@ class _AddClothesPostingScreenState extends State<AddClothesPostingScreen> {
               borderSide: BorderSide.none,
             ),
           ),
+        ),
+        const SizedBox(height: 24.0),
+        const Text(
+          'Step 4. 더 자세한 사항을 입력해주세요.',
+          style: PostingTextStyle.stepTitle,
+        ),
+        const SizedBox(height: 12.0),
+        PostingContentTextField(
+          controller: tTextController,
+          hint: "ex: 거의 무릎까지 오는 기장입니다.\n봄, 여름에 입기 좋은 두께감입니다.",
         ),
       ],
     );
@@ -220,21 +337,34 @@ class _AddClothesPostingScreenState extends State<AddClothesPostingScreen> {
     setState(() {
       _image = image;
     });
+    widget.clothesProvider.iUpdateImage(image);
   }
 
   void _onTextureButtonPressed(String element) {
     setState(() {
-      selectedTextures.contains(element)
-          ? selectedTextures.remove(element)
-          : selectedTextures.add(element);
+      if (selectedTextures.contains(element)) {
+        selectedTextures.remove(element);
+      } else {
+        if (selectedTextures.isNotEmpty) {
+          selectedTextures.clear();
+        }
+        selectedTextures.add(element);
+        widget.clothesProvider.tUpdateMaterial(element);
+      }
     });
   }
 
   void _onFitButtonPressed(String element) {
     setState(() {
-      selectedFits.contains(element)
-          ? selectedFits.remove(element)
-          : selectedFits.add(element);
+      if (selectedFits.contains(element)) {
+        selectedFits.remove(element);
+      } else {
+        if (selectedFits.isNotEmpty) {
+          selectedFits.clear();
+        }
+        selectedFits.add(element);
+        widget.clothesProvider.tUpdateFit(element);
+      }
     });
   }
 }

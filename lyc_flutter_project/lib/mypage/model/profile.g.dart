@@ -17,7 +17,7 @@ Profile _$ProfileFromJson(Map<String, dynamic> json) => Profile(
 
 Map<String, dynamic> _$ProfileToJson(Profile instance) => <String, dynamic>{
       'memberId': instance.memberId,
-      'nickName': instance.nickName,
+      'nickname': instance.nickname,
       'loginId': instance.loginId,
       'follower': instance.follower,
       'following': instance.following,

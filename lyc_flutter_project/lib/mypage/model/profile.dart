@@ -4,7 +4,7 @@ part 'profile.g.dart';
 @JsonSerializable()
 class Profile {
   final int memberId;
-  final String nickName;
+  final String nickname;
   final String loginId;
   final int follower;
   final int following;
@@ -12,13 +12,13 @@ class Profile {
 
   Profile({
     required this.memberId,
-    required this.nickName,
+    required this.nickname,
     required this.loginId,
     required this.follower,
     required this.following,
     required this.profileImage,
   });
-  
+
   factory Profile.fromJson(Map<String, dynamic> json)
   => _$ProfileFromJson(json);
 }

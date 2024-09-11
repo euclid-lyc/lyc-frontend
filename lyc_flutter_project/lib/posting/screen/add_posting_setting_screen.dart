@@ -1,21 +1,26 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:lyc_flutter_project/common/widget/two_buttons.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
+import 'package:lyc_flutter_project/posting/provider/coordi_provider.dart';
+import 'package:lyc_flutter_project/posting/widget/link_box.dart';
+import 'package:lyc_flutter_project/posting/widget/mini_link_box.dart';
+import 'package:lyc_flutter_project/posting/widget/temp_box.dart';
+import 'package:lyc_flutter_project/posting/widget/weather_icon.dart';
+import 'package:lyc_flutter_project/styles/default_padding.dart';
 import 'package:lyc_flutter_project/styles/posting_text_style.dart';
 import 'package:lyc_flutter_project/widget/normal_appbar.dart';
 import 'package:lyc_flutter_project/widget/select_buttons_in_posting.dart';
+import 'package:provider/provider.dart';
 
 class AddPostingSettingScreen extends StatefulWidget {
-  final XFile image;
   final int purpose;
+  final CoordiProvider coordiProvider;
 
   const AddPostingSettingScreen({
     super.key,
-    required this.image,
     required this.purpose,
+    required this.coordiProvider,
   });
 
   @override
@@ -24,14 +29,9 @@ class AddPostingSettingScreen extends StatefulWidget {
 }
 
 class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
-  List<Map<String, dynamic>> _points = [];
-  List<String> selectedStyle = [];
-  int minTempValue = 3;
-  int maxTempValue = 10;
-
   final GlobalKey _imageKey = GlobalKey();
 
-  final List<String> styleButtons = [
+  final List<String> styles = [
     '클래식',
     '캐주얼',
     '힙',
@@ -41,17 +41,19 @@ class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
     '모던시크',
     '스트릿'
   ];
+  List<String> selected = [];
 
   @override
   Widget build(BuildContext context) {
+    final coordiProvider = Provider.of<CoordiProvider>(context);
     return Scaffold(
       backgroundColor: AppColor.lightGrey,
       appBar: NormalAppbar(
         backButton: false,
         title: widget.purpose == 0 ? '코디 업로드' : '리뷰 업로드',
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(30),
+      body: DefaultPadding(
+        bottom: 20.0,
         child: ListView(
           children: [
             // Step1
@@ -61,11 +63,17 @@ class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
-                WeatherIcon(),
+                const WeatherIcon(),
                 const SizedBox(width: 10),
-                TempInputField('최저기온'),
+                TempBox(
+                  label: "최저기온",
+                  onChanged: coordiProvider.updateMinTemp,
+                ),
                 const SizedBox(width: 10),
-                TempInputField('최고기온'),
+                TempBox(
+                  label: "최고기온",
+                  onChanged: coordiProvider.updateMaxTemp,
+                ),
               ],
             ),
             const SizedBox(height: 40),
@@ -75,19 +83,34 @@ class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
               style: PostingTextStyle.stepTitle,
             ),
             const SizedBox(height: 15),
-            Wrap(
-              direction: Axis.horizontal,
-              alignment: WrapAlignment.start,
+            Row(
               children: [
-                for (var i = 0; i < 8; i++)
-                  SelectButtonsInPosting(
-                    styleButtons,
-                    selectedStyle,
-                    i,
-                    () => onStyleButtonPressed(styleButtons[i]),
-                    AppColor.deepGrey,
-                    Colors.white,
-                  )
+                for (var i = 0; i < 4; i++)
+                  Expanded(
+                    child: SelectButtonsInPosting(
+                      styles,
+                      selected,
+                      i,
+                          () => _onStyleButtonPressed(styles[i]),
+                      AppColor.deepGrey,
+                      Colors.white,
+                    ),
+                  ),
+              ],
+            ),
+            Row(
+              children: [
+                for (var i = 4; i < 8; i++)
+                  Expanded(
+                    child: SelectButtonsInPosting(
+                      styles,
+                      selected,
+                      i,
+                          () => _onStyleButtonPressed(styles[i]),
+                      AppColor.deepGrey,
+                      Colors.white,
+                    ),
+                  ),
               ],
             ),
             const SizedBox(height: 40),
@@ -105,9 +128,9 @@ class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
             GestureDetector(
               onTapDown: (details) {
                 final RenderBox renderBox =
-                    _imageKey.currentContext?.findRenderObject() as RenderBox;
+                _imageKey.currentContext?.findRenderObject() as RenderBox;
                 final localOffset =
-                    renderBox.globalToLocal(details.globalPosition);
+                renderBox.globalToLocal(details.globalPosition);
                 _addPoint(localOffset); // Pass Offset directly
               },
               child: Stack(
@@ -117,14 +140,16 @@ class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
                     child: ClipRRect(
                       key: _imageKey,
                       borderRadius: BorderRadius.circular(20),
-                      child: Image.file(
-                        File(widget.image.path),
+                      child: coordiProvider.image != null
+                          ? Image.file(
+                        File(widget.coordiProvider.image),
                         fit: BoxFit.cover,
-                      ),
+                      )
+                          : const SizedBox(),
                     ),
                   ),
-                  ..._points.map(
-                    (e) {
+                  ...widget.coordiProvider.points.map(
+                        (e) {
                       Offset offset = e["offset"];
                       final RenderBox renderBox = _imageKey.currentContext
                           ?.findRenderObject() as RenderBox;
@@ -152,180 +177,35 @@ class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
                       return Positioned(
                         left: left,
                         top: top,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: const Color(0xff252525),
-                          ),
-                          padding: const EdgeInsets.all(10),
-                          child: Text(
-                            '링크${_points.indexOf(e) + 1}',
-                            style: const TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
+                        child: MiniLinkBox(
+                          index: (widget.coordiProvider.points.indexOf(e) + 1)
+                              .toString(),
                         ),
                       );
                     },
-                  ).toList(),
+                  ),
                 ],
               ),
             ),
             const SizedBox(height: 10),
-            ..._points.map(
-              (e) {
-                return Container(
-                  margin: const EdgeInsets.symmetric(vertical: 8),
-                  padding: const EdgeInsets.only(right: 10),
-                  height: 40,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.white,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        flex: 9,
-                        child: Row(
-                          children: [
-                            Container(
-                              width: 80,
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                                color: AppColor.deepGrey,
-                              ),
-                              child: Text(
-                                '링크${_points.indexOf(e) + 1}',
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(width: 10),
-                            Expanded(
-                              child: Text(
-                                e['link'],
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Expanded(
-                        child: SizedBox(
-                          child: SvgPicture.asset(
-                            'assets/icon_eraser.svg',
-                            color: AppColor.deepGrey,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+            ...widget.coordiProvider.points.map(
+                  (e) {
+                return LinkBox(
+                  index:
+                  (widget.coordiProvider.points.indexOf(e) + 1).toString(),
+                  link: e["link"],
                 );
               },
             ),
             const SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  flex: 2,
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: AppColor.grey,
-                        borderRadius: BorderRadius.circular(30)),
-                    child: TextButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: const Text(
-                        '취소',
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16),
-                      ),
-                    ),
-                  ),
-                ),
-                const Expanded(flex: 1, child: SizedBox()),
-                Expanded(
-                  flex: 2,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: AppColor.beige,
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    child: TextButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: const Text(
-                        '저장',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
-  void onStyleButtonPressed(String element) {
-    setState(() {
-      selectedStyle.contains(element)
-          ? selectedStyle.remove(element)
-          : selectedStyle.add(element);
-    });
-  }
-
-  Widget WeatherIcon() {
-    return Expanded(
-      child: Container(
-        height: 80,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          color: Colors.white,
-        ),
-        child: const Icon(
-          Icons.wb_sunny_sharp,
-          color: Colors.yellow,
-          size: 50,
-        ),
-      ),
-    );
-  }
-
-  Widget TempInputField(String label) {
-    return Expanded(
-      child: Container(
-        height: 80,
-        padding: const EdgeInsets.all(10),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          color: Colors.white,
-        ),
-        child: Column(
-          children: [
-            Text(
-              label,
-              style: const TextStyle(
-                fontWeight: FontWeight.w600,
-              ),
+            TwoButtons(
+              fstOnPressed: () {
+                Navigator.pop(context);
+              },
+              scdOnPressed: () {
+                Navigator.pop(context);
+              },
             ),
-            label == '최저기온' ? Text('$minTempValue°C') : Text('$maxTempValue°C')
           ],
         ),
       ),
@@ -334,7 +214,7 @@ class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
 
   void _addPoint(Offset localOffset) {
     final RenderBox renderBox =
-        _imageKey.currentContext?.findRenderObject() as RenderBox;
+    _imageKey.currentContext?.findRenderObject() as RenderBox;
     final size = renderBox.size;
 
     double relativeDx = localOffset.dx / size.width;
@@ -343,28 +223,43 @@ class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
     TextEditingController _linkController = TextEditingController();
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('링크를 입력해주세요'),
-        content: TextField(controller: _linkController),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('취소'),
+      builder: (context) =>
+          AlertDialog(
+            title: const Text('링크를 입력해주세요'),
+            content: TextField(controller: _linkController),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text('취소'),
+              ),
+              TextButton(
+                onPressed: () {
+                  setState(() {
+                    widget.coordiProvider.points.add({
+                      "offset": Offset(relativeDx, relativeDy),
+                      "link": _linkController.text
+                    });
+                  });
+                  Navigator.of(context).pop();
+                },
+                child: const Text('추가하기'),
+              ),
+            ],
           ),
-          TextButton(
-            onPressed: () {
-              setState(() {
-                _points.add({
-                  "offset": Offset(relativeDx, relativeDy),
-                  "link": _linkController.text
-                });
-              });
-              Navigator.of(context).pop();
-            },
-            child: const Text('추가하기'),
-          ),
-        ],
-      ),
     );
+  }
+
+  void _onStyleButtonPressed(String element) {
+    setState(() {
+      if (selected.contains(element)) {
+        selected.remove(element);
+      } else {
+        if (selected.isNotEmpty) {
+          selected.clear();
+        }
+        selected.add(element);
+        widget.coordiProvider.updateStyle(element);
+      }
+    });
   }
 }

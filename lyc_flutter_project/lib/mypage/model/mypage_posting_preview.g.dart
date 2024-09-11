@@ -7,41 +7,41 @@ part of 'mypage_posting_preview.dart';
 // **************************************************************************
 
 BasePostingPreview _$BasePostingPreviewFromJson(Map<String, dynamic> json) =>
-    BasePostingPreview(
-      image: json['image'] as String,
-    );
+    BasePostingPreview();
 
 Map<String, dynamic> _$BasePostingPreviewToJson(BasePostingPreview instance) =>
-    <String, dynamic>{
-      'image': instance.image,
-    };
+    <String, dynamic>{};
 
 CoordiPostingPreview _$CoordiPostingPreviewFromJson(
         Map<String, dynamic> json) =>
     CoordiPostingPreview(
       postingId: (json['postingId'] as num).toInt(),
       image: json['image'] as String,
+      cursorDateTime: json['cursorDateTime'] as String,
     );
 
 Map<String, dynamic> _$CoordiPostingPreviewToJson(
         CoordiPostingPreview instance) =>
     <String, dynamic>{
-      'image': instance.image,
       'postingId': instance.postingId,
+      'image': instance.image,
+      'cursorDateTime': instance.cursorDateTime,
     };
 
 ClosetPostingPreview _$ClosetPostingPreviewFromJson(
         Map<String, dynamic> json) =>
     ClosetPostingPreview(
       clothesId: (json['clothesId'] as num).toInt(),
-      image: json['image'] as String,
+      image: json['image'] as String?,
       title: json['title'] as String,
+      cursorDateTime: json['cursorDateTime'] as String,
     );
 
 Map<String, dynamic> _$ClosetPostingPreviewToJson(
         ClosetPostingPreview instance) =>
     <String, dynamic>{
-      'image': instance.image,
       'clothesId': instance.clothesId,
       'title': instance.title,
+      'image': instance.image,
+      'cursorDateTime': instance.cursorDateTime,
     };

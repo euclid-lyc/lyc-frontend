@@ -1,23 +1,27 @@
 import 'package:flutter/material.dart';
 
 class PostingContentTextField extends StatelessWidget {
+  final TextEditingController controller;
+  final String hint;
+  final int maxLines;
+
   const PostingContentTextField({
     super.key,
     required this.controller,
     required this.hint,
+    this.maxLines = 3,
   });
-
-  final TextEditingController controller;
-  final String hint;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(10),
+
+      padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
           color: Colors.white, borderRadius: BorderRadius.circular(30)),
       child: TextField(
-        maxLines: 3,
+        autofocus: false,
+        maxLines: maxLines,
         controller: controller,
         decoration: InputDecoration(
           hintText: hint,
