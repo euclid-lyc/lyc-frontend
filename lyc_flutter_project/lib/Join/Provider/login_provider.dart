@@ -4,13 +4,13 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:lyc_flutter_project/Join/model/Credential.dart';
 import 'package:lyc_flutter_project/common/const/data.dart';
 import 'package:lyc_flutter_project/common/dio/dio.dart';
-import 'package:lyc_flutter_project/mypage/screen/my_page_screen.dart';
+import 'package:lyc_flutter_project/common/widget/bottom_bar.dart';
 import '../Screens/login_screen.dart';
 
 class LoginProvider extends ChangeNotifier {
-final DioProvider dioProvider;
-late final Dio dio;
-late final FlutterSecureStorage storage;
+  final DioProvider dioProvider;
+  late final Dio dio;
+  late final FlutterSecureStorage storage;
 
   bool _isLoading = false;
   bool _isLoggedIn = false;
@@ -60,7 +60,7 @@ late final FlutterSecureStorage storage;
 
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
-            builder: (context) => MyPageScreen(memberId: _memberId ?? 0),
+            builder: (context) => BottomBar(),
           ),
         );
       } else {

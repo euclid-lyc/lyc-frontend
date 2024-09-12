@@ -9,7 +9,6 @@ class DioProvider extends ChangeNotifier {
   final FlutterSecureStorage _storage = FlutterSecureStorage();
 
   DioProvider() {
-
     _dio.interceptors.add(CustomInterceptor(_storage));
     _dio.interceptors.add(LogInterceptor(
         responseBody: true, requestBody: true, responseHeader: true));
@@ -62,8 +61,6 @@ class CustomInterceptor extends Interceptor {
 
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
-
-
     print(
         "[RES] [${response.requestOptions.method}] ${response.requestOptions.uri}");
 

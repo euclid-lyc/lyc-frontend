@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lyc_flutter_project/screens/login_screen.dart';
+import 'package:lyc_flutter_project/Join/Screens/login_screen.dart';
 import 'package:lyc_flutter_project/common/widget/bottom_bar.dart';
 
 class TempScreen extends StatelessWidget {
@@ -14,12 +14,6 @@ class TempScreen extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
-            // 텍스트 버튼 양식
-            // TextButton(onPressed: () {
-            //  Navigator.push(context, MaterialPageRoute(builder: (context) => 스크린클래스이름(),));
-            //  }, child: Text('이 화면에 표시될 문구')),
-
-            // My Page 이동 버튼->member id 1을 전달합니다
             TextButton(
               onPressed: () {
                 Navigator.push(
@@ -31,17 +25,16 @@ class TempScreen extends StatelessWidget {
               child: const Text('My Page'),
             ),
 
-            // 남의 페이지 이동 버튼->member id 2를 전달합니다
             TextButton(
-              onPressed: () {
-                Navigator.push(
+                onPressed: () {
+                  Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const LoginScreen(),
-                    ));
-              },
-              child: const Text('Login'),
-            ),
+                      builder: (context) => LoginScreen(),
+                    ),
+                  );
+                },
+                child: const Text('Login')),
           ],
         ),
       ),

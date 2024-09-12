@@ -62,12 +62,16 @@ void main() {
             mypageRepositoryProvider: context.read<MypageRepositoryProvider>(),
           ),
         ),
-        ChangeNotifierProxyProvider<MypageProvider, PostingDetailProviderFactory>(
+        ChangeNotifierProxyProvider2<MypageProvider, CoordiRepositoryProvider, PostingDetailProviderFactory>(
           create: (context) => PostingDetailProviderFactory(
             mypageProvider: Provider.of<MypageProvider>(context, listen: false),
+            coordiRepositoryProvider: Provider.of<CoordiRepositoryProvider>(context, listen: false),
           ),
-          update: (context, mypageProvider, previous) =>
-          previous ?? PostingDetailProviderFactory(mypageProvider: mypageProvider),
+          update: (context, mypageProvider, postingRepositoryProvider, previous) =>
+          previous ?? PostingDetailProviderFactory(
+            mypageProvider: mypageProvider,
+            coordiRepositoryProvider: postingRepositoryProvider,
+          ),
         ),
       ],
       child: const MyApp(),
