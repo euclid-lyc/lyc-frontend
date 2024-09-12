@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lyc_flutter_project/common/widget/two_buttons.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
-import 'package:lyc_flutter_project/model/coordi.dart';
 import 'package:lyc_flutter_project/posting/provider/coordi_provider.dart';
 import 'package:lyc_flutter_project/posting/screen/add_posting_setting_screen.dart';
 import 'package:lyc_flutter_project/styles/default_padding.dart';

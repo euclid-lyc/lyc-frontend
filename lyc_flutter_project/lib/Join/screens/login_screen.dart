@@ -18,7 +18,7 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final loginProvider = Provider.of<LoginProvider>(context);
+    final loginProvider = Provider.of<LoginProvider>(context, listen: false);
 
     return Scaffold(
       backgroundColor: AppColor.lightGrey,
@@ -103,7 +103,6 @@ class LoginScreen extends StatelessWidget {
                         final pw = _pwController.controller.text;
 
                         await loginProvider.login(id, pw, context); // 로그인 요청
-
                         if (loginProvider.isLoggedIn &&
                             loginProvider.memberId != null) {
                           Navigator.of(context).pushReplacement(

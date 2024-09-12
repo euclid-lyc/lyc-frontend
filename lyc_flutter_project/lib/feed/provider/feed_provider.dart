@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
-import 'package:lyc_flutter_project/common/dio/dio.dart';
 import 'package:lyc_flutter_project/common/model/api_response.dart';
 import 'package:lyc_flutter_project/config/secret.dart';
 import 'package:lyc_flutter_project/feed/model/weather_model.dart';
@@ -55,7 +54,6 @@ class FeedProvider extends ChangeNotifier {
     final String y = lat.toString();
 
     final Dio dio = Dio();
-    dio.interceptors.add(CustomInterceptor());
     try {
       final resp = await dio.get(
         "https://dapi.kakao.com/v2/local/geo/coord2regioncode.json",
