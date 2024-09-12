@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
-import 'package:lyc_flutter_project/common/dio/dio.dart';
 import 'package:lyc_flutter_project/common/model/api_response.dart';
 import 'package:lyc_flutter_project/config/secret.dart';
 import 'package:lyc_flutter_project/feed/model/weather_model.dart';

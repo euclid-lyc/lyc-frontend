@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/common/widget/member_list.dart';
 import 'package:lyc_flutter_project/common/widget/right_button_in_list.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
-import 'package:lyc_flutter_project/posting/screen/add_posting_screen.dart';
 import 'package:lyc_flutter_project/widget/normal_appbar.dart';
 
 class ReviewListScreen extends StatelessWidget {

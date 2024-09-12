@@ -4,7 +4,6 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:lyc_flutter_project/Join/model/Credential.dart';
 import 'package:lyc_flutter_project/common/const/data.dart';
 import 'package:lyc_flutter_project/common/dio/dio.dart';
-import 'package:lyc_flutter_project/common/widget/bottom_bar.dart';
 import '../Screens/login_screen.dart';
 
 class LoginProvider extends ChangeNotifier {
