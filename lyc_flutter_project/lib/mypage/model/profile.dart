@@ -18,7 +18,7 @@ class Profile {
     required this.following,
     required this.profileImage,
   });
-
+  
   factory Profile.fromJson(Map<String, dynamic> json)
   => _$ProfileFromJson(json);
 }

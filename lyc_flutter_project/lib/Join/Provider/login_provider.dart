@@ -4,7 +4,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:lyc_flutter_project/Join/model/Credential.dart';
 import 'package:lyc_flutter_project/common/const/data.dart';
 import 'package:lyc_flutter_project/common/dio/dio.dart';
-import 'package:lyc_flutter_project/mypage/screen/my_page_screen.dart';
+import 'package:lyc_flutter_project/common/widget/bottom_bar.dart';
 import '../Screens/login_screen.dart';
 
 class LoginProvider extends ChangeNotifier {
@@ -42,7 +42,6 @@ late final FlutterSecureStorage storage;
           },
         ),
       );
-
       if (response.statusCode == 200) {
         final headers = response.headers;
         final refreshToken = headers.value("refresh-token") ?? '';
@@ -57,12 +56,6 @@ late final FlutterSecureStorage storage;
         _isLoggedIn = true;
         _memberId = memberId;
         notifyListeners();
-
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => MyPageScreen(memberId: _memberId ?? 0),
-          ),
-        );
       } else {
         _showErrorDialog(context, '로그인 실패', 'API 요청이 실패했습니다.');
       }

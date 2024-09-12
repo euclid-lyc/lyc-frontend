@@ -95,6 +95,7 @@ class CustomInterceptor extends Interceptor {
   }
 
   @override
+
   void onError(DioException err, ErrorInterceptorHandler handler) {
     print("[ERR] [${err.message}]");
 

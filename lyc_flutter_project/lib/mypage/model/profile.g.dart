@@ -8,7 +8,7 @@ part of 'profile.dart';
 
 Profile _$ProfileFromJson(Map<String, dynamic> json) => Profile(
       memberId: (json['memberId'] as num).toInt(),
-      nickName: json['nickName'] as String,
+      nickname: json['nickname'] as String,
       loginId: json['loginId'] as String,
       follower: (json['follower'] as num).toInt(),
       following: (json['following'] as num).toInt(),

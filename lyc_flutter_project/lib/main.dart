@@ -16,7 +16,6 @@ import 'package:provider/provider.dart';
 
 void main() {
   Provider.debugCheckInvalidValueType = null;
-  DioProvider dioProvider = DioProvider();
   runApp(
 
     MultiProvider(providers: [
@@ -60,14 +59,13 @@ void main() {
         create: (context) => HomeProvider(
           feedRepositoryProvider: context.read<FeedRepositoryProvider>(),
         ),
-      )  ChangeNotifierProvider(
+      ),ChangeNotifierProvider(
           create: (context) => LoginProvider(
-            dioProvider
+            Provider.of<DioProvider>(context, listen: false),
           ),
         ),
       // 다른 프로바이더들도 여기에 추가
     ], child: const MyApp()),
-
   );
 }
 
