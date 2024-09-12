@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:lyc_flutter_project/common/const/data.dart';
 import 'package:lyc_flutter_project/config/secret.dart';
 import 'package:lyc_flutter_project/common/model/api_response.dart';
 
@@ -39,25 +40,12 @@ class CustomInterceptor extends Interceptor {
       options.headers.remove('accessToken');
     }
 
-    final token = await storage.read(key: ACCESS_TOKEN);
+    final token = await storage.read(key: accessTokenKey);
+    print("토큰을 꺼냈습니다 : $token");
     options.headers.addAll({
-      "authorization": "Bearer $token",
+      "Authorization": "Bearer $token",
     });
-
-    if (token != null) {
-      options.headers['Authorization'] = 'Bearer $token';
-    }
-
-    if (options.headers['refreshToken'] == 'true') {
-      options.headers.remove('refreshToken');
-
-      /* final token = await storage.read(key: REFRESH_TOKEN);
-    options.headers.addAll({
-       'authorization': 'Bearer $token',
-    });*/
-    }
-
-    handler.next(options);
+    print("토큰을 추가했습니다 : ${options.headers}");
   }
 
   @override
