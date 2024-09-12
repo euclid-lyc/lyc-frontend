@@ -37,10 +37,20 @@ class CustomInterceptor extends Interceptor {
       options.headers.remove('accessToken');
     }
 
-    final token = await storage.read(key: accessTokenKey);
+    final accessToken = await storage.read(key: accessTokenKey);
     options.headers.addAll({
-      "Authorization": "Bearer $token",
+      "Authorization": "Bearer $accessToken",
     });
+
+    if (options.headers['refreshToken'] == 'true') {
+      options.headers.remove('refreshToken');
+
+      final refreshToken = await storage.read(key: refreshTokenKey);
+      options.headers.addAll({
+        'authorization': 'Bearer $refreshToken',
+      });
+    }
+
   }
 
   @override
