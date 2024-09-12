@@ -134,13 +134,14 @@ class MypageProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> getProfile() async {
+  Future<bool> getProfile() async {
     final resp = await mypageRepositoryProvider.mypageRepository
         .getProfile(memberId: cur_member);
     if (resp.isSuccess) {
       _profile = resp.result;
       _hasProfile = true;
       notifyListeners();
+      return true;
     } else {
       throw Exception(resp.message);
     }

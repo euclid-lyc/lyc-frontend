@@ -9,7 +9,7 @@ class DioProvider extends ChangeNotifier {
   final FlutterSecureStorage _storage = const FlutterSecureStorage();
 
   DioProvider() {
-    _dio.interceptors.add(CustomInterceptor(_storage));
+    _dio.interceptors.add(CustomInterceptor(_storage, _dio));
     _dio.interceptors.add(LogInterceptor(responseBody: true));
     _dio.options.connectTimeout = const Duration(seconds: 5);
     _dio.options.receiveTimeout = const Duration(seconds: 3);
@@ -22,8 +22,9 @@ class DioProvider extends ChangeNotifier {
 
 class CustomInterceptor extends Interceptor {
   final FlutterSecureStorage storage;
+  final Dio dio;
 
-  CustomInterceptor(this.storage);
+  CustomInterceptor(this.storage, this.dio);
 
   @override
   Future<void> onRequest(
@@ -86,11 +87,36 @@ class CustomInterceptor extends Interceptor {
   }
 
   @override
-
-  void onError(DioException err, ErrorInterceptorHandler handler) {
+  Future<void> onError(DioException err, ErrorInterceptorHandler handler) async {
     print("[ERR] [${err.message}]");
 
-    // 에러 응답 처리 (예: 토큰 만료 시 재시도 로직 추가 가능)
+    if (err.response?.statusCode == 401) {
+      final errorCode = err.response?.data['code'];
+
+      if (errorCode == 'AA4004') {
+        // 로그아웃->재로그인 유도
+      } else if (errorCode == 'AA4008') {
+        final newAccessToken = err.response?.headers.value('access-token');
+        final newRefreshToken = err.response?.headers.value('refresh-token');
+
+        if (newAccessToken != null && newRefreshToken != null) {
+          await storage.write(key: 'accessTokenKey', value: newAccessToken);
+          await storage.write(key: 'refreshTokenKey', value: newRefreshToken);
+
+          final options = err.requestOptions;
+          options.headers['Authorization'] = "Bearer $newAccessToken";
+
+          try {
+            final response = await dio.fetch(options);
+            handler.resolve(response);
+            return;
+          } on DioException catch (e) {
+            handler.next(e);
+            return;
+          }
+        }
+      }
+    }
     handler.next(err);
   }
 }
