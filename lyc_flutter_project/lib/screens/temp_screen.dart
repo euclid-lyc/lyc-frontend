@@ -14,6 +14,10 @@ class TempScreen extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
+            // 텍스트 버튼 양식
+            // TextButton(onPressed: () {
+            //  Navigator.push(context, MaterialPageRoute(builder: (context) => 스크린클래스이름(),));
+            //  }, child: Text('이 화면에 표시될 문구')),
             TextButton(
               onPressed: () {
                 Navigator.push(
@@ -24,17 +28,16 @@ class TempScreen extends StatelessWidget {
               },
               child: const Text('My Page'),
             ),
-
             TextButton(
-                onPressed: () {
-                  Navigator.push(
+              onPressed: () {
+                Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => LoginScreen(),
-                    ),
-                  );
-                },
-                child: const Text('Login')),
+                    ));
+              },
+              child: const Text('Login'),
+            ),
           ],
         ),
       ),

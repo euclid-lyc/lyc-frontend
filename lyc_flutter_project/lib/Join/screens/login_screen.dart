@@ -18,7 +18,7 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final loginProvider = Provider.of<LoginProvider>(context);
+    final loginProvider = Provider.of<LoginProvider>(context, listen: false);
 
     return Scaffold(
       backgroundColor: AppColor.lightGrey,
@@ -27,12 +27,12 @@ class LoginScreen extends StatelessWidget {
         backgroundColor: AppColor.beige,
         toolbarHeight: 100,
         title: Center(
-        child: Text(
-        'LEAD YOUR CLOSET',
-        style: app_text_style.title,
-        textAlign: TextAlign.center,
-    ),
-      ),
+          child: Text(
+            'LEAD YOUR CLOSET',
+            style: app_text_style.title,
+            textAlign: TextAlign.center,
+          ),
+        ),
       ),
       body: Center(
         child: Column(
@@ -103,12 +103,11 @@ class LoginScreen extends StatelessWidget {
                         final pw = _pwController.controller.text;
 
                         await loginProvider.login(id, pw, context); // 로그인 요청
-
                         if (loginProvider.isLoggedIn &&
                             loginProvider.memberId != null) {
                           Navigator.of(context).pushReplacement(
                             MaterialPageRoute(
-                              builder: (context) => const BottomBar()
+                                builder: (context) => const BottomBar()
                             ),
                           );
                         }

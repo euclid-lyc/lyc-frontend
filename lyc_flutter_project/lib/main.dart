@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lyc_flutter_project/Join/Provider/login_provider.dart';
 import 'package:lyc_flutter_project/common/dio/dio.dart';
 import 'package:lyc_flutter_project/common/screen/splash_screen.dart';
 import 'package:lyc_flutter_project/Join/Screens/join_membership_screen_4.dart';
