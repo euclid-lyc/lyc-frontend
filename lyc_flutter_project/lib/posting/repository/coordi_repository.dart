@@ -26,9 +26,8 @@ abstract class CoordiRepository {
 
   @POST("")
   @Headers({"accessToken": "true"})
-  @MultiPart()
   Future<ApiResponse<CoordiPostingResult>> uploadCoordi({
-    @Part(name: "postingSaveDTO") required postingSaveDTO,
+    @Body() required postingSaveDTO,
   });
 
   @POST("/{postingId}")
@@ -40,15 +39,15 @@ abstract class CoordiRepository {
     @Part() required List<MultipartFile> multipartFiles,
   });
 
-  @GET("/{postingId}")
+  @GET("/{postingId}/like-status")
   @Headers({"accessToken": "true"})
-  Future<ApiResponse<CoordiPostingResult>> getCoordi({
-    @Path() required int postingId,
+  Future<ApiResponse<bool>> getLikedStatus({
+    @Path() required postingId,
   });
 
-  @DELETE("/{postingId}")
+  @GET("/{postingId}/save-status")
   @Headers({"accessToken": "true"})
-  Future<ApiResponse<int>> deleteCoordi({
-    @Path() required int postingId,
+  Future<ApiResponse<bool>> getSaveStatus({
+    @Path() required postingId,
   });
 }

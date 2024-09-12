@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:lyc_flutter_project/data/app_color.dart';
 
 class SwitchCategoryButton extends StatelessWidget {
   final String text;
   final bool isSelected;
   final VoidCallback onPressed;
   final Color color;
+  final double size;
 
   const SwitchCategoryButton({
     required this.text,
     required this.isSelected,
     required this.onPressed,
-    required this.color,
+    this.color = AppColor.brown,
+    this.size = 14.0,
   });
 
   @override
@@ -30,6 +33,7 @@ class SwitchCategoryButton extends StatelessWidget {
             style: TextStyle(
               color: isSelected ? Colors.white : color,
               fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
+              fontSize: size,
             ),
           ),
         ),

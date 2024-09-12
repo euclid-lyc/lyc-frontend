@@ -17,7 +17,7 @@ CoordiPostingPreview _$CoordiPostingPreviewFromJson(
     CoordiPostingPreview(
       postingId: (json['postingId'] as num).toInt(),
       image: json['image'] as String,
-      cursorDateTime: json['cursorDateTime'] as String,
+      createdAt: json['createdAt'] as String,
     );
 
 Map<String, dynamic> _$CoordiPostingPreviewToJson(
@@ -25,7 +25,7 @@ Map<String, dynamic> _$CoordiPostingPreviewToJson(
     <String, dynamic>{
       'postingId': instance.postingId,
       'image': instance.image,
-      'cursorDateTime': instance.cursorDateTime,
+      'createdAt': instance.createdAt,
     };
 
 ClosetPostingPreview _$ClosetPostingPreviewFromJson(
@@ -34,7 +34,7 @@ ClosetPostingPreview _$ClosetPostingPreviewFromJson(
       clothesId: (json['clothesId'] as num).toInt(),
       image: json['image'] as String?,
       title: json['title'] as String,
-      cursorDateTime: json['cursorDateTime'] as String,
+      createdAt: json['createdAt'] as String,
     );
 
 Map<String, dynamic> _$ClosetPostingPreviewToJson(
@@ -43,5 +43,5 @@ Map<String, dynamic> _$ClosetPostingPreviewToJson(
       'clothesId': instance.clothesId,
       'title': instance.title,
       'image': instance.image,
-      'cursorDateTime': instance.cursorDateTime,
+      'createdAt': instance.createdAt,
     };

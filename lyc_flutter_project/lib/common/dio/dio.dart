@@ -6,13 +6,11 @@ import 'package:lyc_flutter_project/common/model/api_response.dart';
 
 class DioProvider extends ChangeNotifier {
   final Dio _dio = Dio();
-  final FlutterSecureStorage _storage = FlutterSecureStorage();
+  final FlutterSecureStorage _storage = const FlutterSecureStorage();
 
   DioProvider() {
-
     _dio.interceptors.add(CustomInterceptor(_storage));
-    _dio.interceptors.add(LogInterceptor(
-        responseBody: true, requestBody: true, responseHeader: true));
+    _dio.interceptors.add(LogInterceptor(responseBody: true));
     _dio.options.connectTimeout = const Duration(seconds: 5);
     _dio.options.receiveTimeout = const Duration(seconds: 3);
   }
@@ -40,17 +38,13 @@ class CustomInterceptor extends Interceptor {
     }
 
     final token = await storage.read(key: accessTokenKey);
-    print("토큰을 꺼냈습니다 : $token");
     options.headers.addAll({
       "Authorization": "Bearer $token",
     });
-    print("토큰을 추가했습니다 : ${options.headers}");
   }
 
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
-
-
     print(
         "[RES] [${response.requestOptions.method}] ${response.requestOptions.uri}");
 

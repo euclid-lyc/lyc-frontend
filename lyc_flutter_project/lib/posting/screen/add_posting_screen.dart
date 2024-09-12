@@ -116,6 +116,7 @@ class _AddPostingScreenState extends State<AddPostingScreen> {
               scdLabel: "등록",
               scdOnPressed: () {
                 widget.coordiProvider.upload();
+                Navigator.of(context).pop();
               },
             ),
           ],

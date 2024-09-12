@@ -1,234 +1,276 @@
-import 'package:flutter/material.dart';
-import 'package:lyc_flutter_project/common/widget/switch_category_button.dart';
-import 'package:lyc_flutter_project/data/app_color.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:lyc_flutter_project/common/model/api_response.dart';
+import 'package:lyc_flutter_project/common/model/paginate_query.dart';
+import 'package:lyc_flutter_project/common/widget/custom_loading.dart';
 import 'package:lyc_flutter_project/data/temp_member_data.dart';
+import 'package:lyc_flutter_project/mypage/model/mypage_posting_preview.dart';
 import 'package:lyc_flutter_project/mypage/model/profile.dart';
 import 'package:lyc_flutter_project/mypage/model/result.dart';
-import 'package:lyc_flutter_project/mypage/provider/block_provider.dart';
-import 'package:lyc_flutter_project/mypage/provider/category_provider.dart';
-import 'package:lyc_flutter_project/mypage/provider/follow_provider.dart';
-import 'package:lyc_flutter_project/mypage/provider/notify_provider.dart';
 import 'package:lyc_flutter_project/mypage/repository/mypage_repository.dart';
-import 'package:lyc_flutter_project/mypage/widget/blocked_widget.dart';
 import 'package:lyc_flutter_project/mypage/widget/grid_widget_with_button.dart';
-import 'package:lyc_flutter_project/mypage/widget/icons_in_profile_box.dart';
 import 'package:lyc_flutter_project/mypage/widget/my_closet_list.dart';
-import 'package:lyc_flutter_project/mypage/widget/notified_widget.dart';
-import 'package:lyc_flutter_project/mypage/widget/profile_box.dart';
-import 'package:lyc_flutter_project/widget/bottom_buttons.dart';
 
 class MypageProvider extends ChangeNotifier {
-  final int memberId;
-  final BlockProvider blockProvider;
-  final FollowProvider followProvider;
-  final NotifyProvider notifyProvider;
-  final CategoryProvider categoryProvider;
   final MypageRepositoryProvider mypageRepositoryProvider;
 
-  final bool _isMypage;
-
-  bool get isMypage => _isMypage;
-
-  Profile? _cachedProfile;
-
   MypageProvider({
-    required this.memberId,
-    required this.blockProvider,
-    required this.followProvider,
-    required this.notifyProvider,
-    required this.categoryProvider,
     required this.mypageRepositoryProvider,
-  }) : _isMypage = (cur_member == memberId) {
-    blockProvider.addListener(_listener);
-    followProvider.addListener(_listener);
-    notifyProvider.addListener(_listener);
-    categoryProvider.addListener(_listener);
+  }) {
+    getProfile();
+    getList();
   }
 
-  void _listener() {
+  Profile? _profile;
+  bool _hasProfile = false;
+
+  bool _loadingCoordi = false;
+  bool _loadingSaved = false;
+  bool _loadingCloset = false;
+
+  bool _hasMoreCoordi = true;
+  bool _hasMoreSaved = true;
+  bool _hasMoreCloset = true;
+
+  List<CoordiPostingPreview> myCoordi = [];
+  List<CoordiPostingPreview> savedCoordi = [];
+  List<ClosetPostingPreview> myCloset = [];
+
+  List<int> blockMember = [];
+
+  int _category = 0;
+
+  get profile => _profile;
+
+  get category => _category;
+
+  get hasProfile => _hasProfile;
+
+  get listLength => {
+        if (_category == 0)
+          myCoordi.length
+        else if (_category == 1)
+          savedCoordi.length
+        else
+          myCloset.length
+      };
+
+  Future<void> save(int postingId) async {
+    final resp = await mypageRepositoryProvider.mypageRepository.savePosting(postingId: postingId);
+    if (resp.isSuccess) {
+      getList(type: 1, refresh: true);
+    }
+    else {
+      Exception(resp.message);
+    }
+  }
+
+  Future<void> unsave(int postingId) async {
+    final resp = await mypageRepositoryProvider.mypageRepository.unsavePosting(postingId: postingId);
+    if (resp.isSuccess) {
+      getList(type: 1, refresh: true);
+    }
+    else {
+      Exception(resp.message);
+    }
+  }
+
+  Future<void> like(int postingId) async {
+    final resp = await mypageRepositoryProvider.mypageRepository
+        .likePosting(postingId: postingId);
+    if (!resp.isSuccess) Exception(resp.message);
+  }
+
+  Future<void> dislike(int postingId) async {
+    final resp = await mypageRepositoryProvider.mypageRepository
+        .dislikePosting(postingId: postingId);
+    if (!resp.isSuccess) Exception(resp.message);
+  }
+
+  bool getLoading() {
+    switch (category) {
+      case 0:
+        return _loadingCoordi;
+      case 1:
+        return _loadingSaved;
+      case 2:
+        return _loadingCloset;
+      default:
+        return true;
+    }
+  }
+
+  void updateLoading(bool boolean) {
+    switch (category) {
+      case 0:
+        _loadingCoordi = boolean;
+      case 1:
+        _loadingSaved = boolean;
+      case 2:
+        _loadingCloset = boolean;
+    }
+  }
+
+  void updateHasMore(bool boolean) {
+    switch (category) {
+      case 0:
+        _hasMoreCoordi = boolean;
+      case 1:
+        _hasMoreSaved = boolean;
+      case 2:
+        _hasMoreCloset = boolean;
+    }
+  }
+
+  bool getHasMore() {
+    switch (category) {
+      case 0:
+        return _hasMoreCoordi;
+      case 1:
+        return _hasMoreSaved;
+      case 2:
+        return _hasMoreCloset;
+      default:
+        return false;
+    }
+  }
+
+  Future<void> getProfile() async {
+    final resp = await mypageRepositoryProvider.mypageRepository
+        .getProfile(memberId: cur_member);
+    if (resp.isSuccess) {
+      _profile = resp.result;
+      _hasProfile = true;
+      notifyListeners();
+    } else {
+      throw Exception(resp.message);
+    }
+  }
+
+  void categorySelected(int selected) {
+    _category = selected;
+    getList();
     notifyListeners();
   }
 
-  @override
-  void dispose() {
-    blockProvider.removeListener(_listener);
-    followProvider.removeListener(_listener);
-    notifyProvider.removeListener(_listener);
-    categoryProvider.removeListener(_listener);
-    super.dispose();
+  Widget renderList() {
+    if (getLoading()) {
+      const Center(
+        child: CustomLoading(),
+      );
+      notifyListeners();
+    }
+    switch (_category) {
+      case 0:
+        return GridWidgetWithButton(
+          postings: myCoordi,
+          category: 0,
+          provider: this,
+        );
+      case 1:
+        return GridWidgetWithButton(
+          postings: savedCoordi,
+          category: 1,
+          provider: this,
+        );
+      case 2:
+        return MyClosetList(
+          postings: myCloset,
+          provider: this,
+        );
+      default:
+        return const CustomLoading();
+    }
   }
 
-  Widget renderTop() {
-    return Container(
-      color: AppColor.beige,
-      padding: const EdgeInsets.symmetric(horizontal: 30.0),
-      child: Column(
-        children: [
-          Expanded(
-            flex: 12,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Expanded(
-                  flex: 13,
-                  child: (_cachedProfile == null)
-                      ? FutureBuilder<Profile>(
-                          future: getProfile(),
-                          builder: (context, snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
-                              return const SizedBox();
-                            } else if (snapshot.hasError) {
-                              return Text("${snapshot.error}");
-                            } else if (snapshot.hasData) {
-                              final profile = snapshot.data!;
-                              return ProfileBox.fromModel(profile: profile);
-                            } else {
-                              return const Text("[Error] 응답 없음");
-                            }
-                          },
-                        )
-                      : ProfileBox.fromModel(profile: _cachedProfile!),
-                ),
-                Expanded(
-                  flex: 5,
-                  child: IconsInProfileBox(
-                    memberId: memberId,
-                    isMypage: isMypage,
-                    blockProvider: isMypage ? null : blockProvider,
-                    followProvider: isMypage ? null : followProvider,
-                    notifyProvider: isMypage ? null : notifyProvider,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 20),
-          Expanded(
-            flex: 4,
-            child: BottomButtons(memberId: memberId),
-          ),
-          const SizedBox(height: 20),
-        ],
-      ),
+  Future<void> refresh() async {
+    getList(refresh: true);
+  }
+
+  void getList({
+    bool refresh = false,
+    int type = 5,
+    int pageSize = 10,
+    String cursorDateTime = "9999-12-31T23:59:59.0000",
+  }) async {
+    if (getLoading() || !getHasMore()) return;
+
+    if (type == 5) {
+      type = _category;
+    }
+
+    PaginateQuery paginateQuery = PaginateQuery(
+      pageSize: pageSize,
+      cursorDateTime: cursorDateTime,
     );
-  }
 
-  Widget renderBody() {
-    if (!_isMypage) {
-      if (blockProvider.isBlocked(memberId)) {
-        return const BlockedWidget();
-      } else if (notifyProvider.isNotified(memberId)) {
-        return const NotifiedWidget();
+    if (!refresh) {
+      switch (type) {
+        case 0:
+          if (myCoordi.isNotEmpty) {
+            paginateQuery = paginateQuery.copyWith(cursorDateTime: myCoordi.last.createdAt);
+          }
+        case 1:
+          if (savedCoordi.isNotEmpty) {
+            paginateQuery = paginateQuery.copyWith(cursorDateTime: savedCoordi.last.createdAt);
+          }
+        case 2:
+          if (myCloset.isNotEmpty) {
+
+            paginateQuery = paginateQuery.copyWith(cursorDateTime: myCloset.last.createdAt);
+          }
       }
     }
-    return SizedBox(
-      child: Column(
-        children: [
-          Container(
-            height: 40,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(30),
-            ),
-            child: Row(
-              children: [
-                SwitchCategoryButton(
-                  text: _isMypage ? '나의 코디' : '윈터의 코디',
-                  isSelected: categoryProvider.curCategory == 0,
-                  onPressed: () => categoryProvider.onSelected(0),
-                  color: AppColor.brown,
-                ),
-                SwitchCategoryButton(
-                  text: "저장한 코디",
-                  isSelected: categoryProvider.curCategory == 1,
-                  onPressed: () => categoryProvider.onSelected(1),
-                  color: AppColor.brown,
-                ),
-                SwitchCategoryButton(
-                  text: _isMypage ? '나의 옷장' : '윈터의 옷장',
-                  isSelected: categoryProvider.curCategory == 2,
-                  onPressed: () => categoryProvider.onSelected(2),
-                  color: AppColor.brown,
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 20.0),
-          Expanded(
-            child: FutureBuilder<BaseResult>(
-              future: getList(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        CircularProgressIndicator(),
-                        SizedBox(height: 20.0),
-                      ],
-                    ),
-                  );
-                } else if (snapshot.hasError) {
-                  return Center(child: Text("Error: ${snapshot.error}"));
-                } else if (snapshot.hasData) {
-                  // print("[Success] ${snapshot.data}");
-                  final result = snapshot.data!;
-                  if (result is CoordieResult) {
-                    final lst = result.imageList;
-                    return GridWidgetWithButton(
-                      postings: lst,
-                      category: categoryProvider.curCategory,
-                    );
-                  } else if (result is ClosetResult) {
-                    final lst = result.clothesList;
-                    return MyClosetList(postings: lst);
-                  } else {
-                    return const Text("[Error] 잘못된 데이터 타입");
-                  }
-                } else {
-                  return const Center(child: Text("[Error] 응답 없음"));
-                }
-              },
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 
-  Future<BaseResult> getList() async {
     try {
-      switch (categoryProvider.curCategory) {
+      updateLoading(true);
+      switch (type) {
         case 0:
-          final resp = await mypageRepositoryProvider.mypageRepository
-              .getMyCoorides(memberId: memberId);
-          return resp.result;
+          final ApiResponse<CoordieResult> resp =
+              await mypageRepositoryProvider.mypageRepository.getMyCoorides(
+            memberId: cur_member,
+            paginateQuery: paginateQuery,
+          );
+          myCoordi = refresh
+              ? [...resp.result.imageList]
+              : [
+                  ...myCoordi,
+                  ...resp.result.imageList,
+                ];
+          updateHasMore(resp.result.imageList.length >= pageSize);
         case 1:
-          final resp = await mypageRepositoryProvider.mypageRepository
-              .getSavedCoordies(memberId: memberId);
-          return resp.result;
+          final resp =
+              await mypageRepositoryProvider.mypageRepository.getSavedCoordies(
+            memberId: cur_member,
+            paginateQuery: paginateQuery,
+          );
+          savedCoordi = refresh
+              ? [...resp.result.imageList]
+              : [
+                  ...savedCoordi,
+                  ...resp.result.imageList,
+                ];
+          updateHasMore(resp.result.imageList.length >= pageSize);
         case 2:
-          final resp = await mypageRepositoryProvider.mypageRepository
-              .getMyCloset(memberId: memberId);
-          return resp.result;
+          final resp =
+              await mypageRepositoryProvider.mypageRepository.getMyCloset(
+            memberId: cur_member,
+            paginateQuery: paginateQuery,
+          );
+          myCloset = refresh
+              ? [...resp.result.clothesList]
+              : [
+                  ...myCloset,
+                  ...resp.result.clothesList,
+                ];
+          updateHasMore(resp.result.clothesList.length >= pageSize);
         default:
-          throw Exception("Invalid category");
+          throw Exception("카테고리 오류");
       }
     } catch (e) {
-      print("Error in getList: $e");
-      rethrow;
-    }
-  }
-
-  Future<Profile> getProfile() async {
-    final resp = await mypageRepositoryProvider.mypageRepository
-        .getProfile(memberId: memberId);
-    if (resp.isSuccess) {
-      _cachedProfile = resp.result;
-      return _cachedProfile!;
-    } else {
-      throw Exception(resp.message);
+      Exception(e);
+    } finally {
+      updateLoading(false);
+      notifyListeners();
     }
   }
 }

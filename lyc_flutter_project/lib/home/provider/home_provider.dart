@@ -12,7 +12,6 @@ class HomeProvider extends ChangeNotifier {
   Future<List<CoordiPostingPreview>> getPostingPreview() async {
     try {
       final resp = await feedRepositoryProvider.repository.getFeedPreview();
-      print(resp.result);
       return resp.result;
     } catch (e) {
       rethrow;

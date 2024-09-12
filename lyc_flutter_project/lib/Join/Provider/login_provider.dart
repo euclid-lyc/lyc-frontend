@@ -7,9 +7,9 @@ import 'package:lyc_flutter_project/common/dio/dio.dart';
 import '../Screens/login_screen.dart';
 
 class LoginProvider extends ChangeNotifier {
-final DioProvider dioProvider;
-late final Dio dio;
-late final FlutterSecureStorage storage;
+  final DioProvider dioProvider;
+  late final Dio dio;
+  late final FlutterSecureStorage storage;
 
   bool _isLoading = false;
   bool _isLoggedIn = false;

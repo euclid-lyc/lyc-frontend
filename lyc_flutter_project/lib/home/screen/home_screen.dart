@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:lyc_flutter_project/common/widget/image_networking.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/common/widget/round_image.dart';
 import 'package:lyc_flutter_project/home/provider/home_provider.dart';
@@ -67,10 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           horizontal: 8.0,
                                         ),
                                         decoration: buildWhiteRoundBox(),
-                                        child: Image.network(
-                                          posting.image,
-                                          fit: BoxFit.cover,
-                                        ),
+                                        child: ImageNetworking(posting.image),
                                       );
                                     },
                                   ),

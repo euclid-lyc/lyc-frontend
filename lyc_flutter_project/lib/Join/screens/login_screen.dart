@@ -27,12 +27,12 @@ class LoginScreen extends StatelessWidget {
         backgroundColor: AppColor.beige,
         toolbarHeight: 100,
         title: Center(
-        child: Text(
-        'LEAD YOUR CLOSET',
-        style: app_text_style.title,
-        textAlign: TextAlign.center,
-    ),
-      ),
+          child: Text(
+            'LEAD YOUR CLOSET',
+            style: app_text_style.title,
+            textAlign: TextAlign.center,
+          ),
+        ),
       ),
       body: Center(
         child: Column(
@@ -107,7 +107,7 @@ class LoginScreen extends StatelessWidget {
                             loginProvider.memberId != null) {
                           Navigator.of(context).pushReplacement(
                             MaterialPageRoute(
-                              builder: (context) => const BottomBar()
+                                builder: (context) => const BottomBar()
                             ),
                           );
                         }

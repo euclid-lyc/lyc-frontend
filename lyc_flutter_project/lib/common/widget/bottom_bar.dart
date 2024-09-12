@@ -2,19 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/common/widget/round_image.dart';
 import 'package:lyc_flutter_project/director/screen/director_search_screen.dart';
 import 'package:lyc_flutter_project/feed/screen/feed_screen.dart';
-import 'package:lyc_flutter_project/mypage/screen/my_page_screen.dart';
+import 'package:lyc_flutter_project/mypage/provider/mypage_provider.dart';
 import 'package:lyc_flutter_project/home/screen/home_screen.dart';
+import 'package:lyc_flutter_project/mypage/screen/mypage_screen.dart';
 import 'package:lyc_flutter_project/setting/screen/setting_screen.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
-class BottomBar extends StatelessWidget {
+class BottomBar extends StatefulWidget {
   const BottomBar({super.key});
 
+  @override
+  State<BottomBar> createState() => _BottomBarState();
+}
+
+class _BottomBarState extends State<BottomBar> {
   List<PersistentTabConfig> _tabs() => [
         PersistentTabConfig(
-          screen: HomeScreen(),
+          screen: const HomeScreen(),
           item: ItemConfig(
             icon: SvgPicture.asset(
               'assets/icon_home.svg',
@@ -22,12 +29,12 @@ class BottomBar extends StatelessWidget {
             ),
             inactiveIcon: SvgPicture.asset(
               'assets/icon_home.svg',
-              color: Color(0xffBBBBBB), // Active color
+              color: const Color(0xffBBBBBB), // Active color
             ),
           ),
         ),
         PersistentTabConfig(
-          screen: FeedScreen(),
+          screen: const FeedScreen(),
           item: ItemConfig(
             icon: SvgPicture.asset(
               'assets/icon_feed.svg',
@@ -35,12 +42,12 @@ class BottomBar extends StatelessWidget {
             ),
             inactiveIcon: SvgPicture.asset(
               'assets/icon_feed.svg',
-              color: Color(0xffBBBBBB), // Active color
+              color: const Color(0xffBBBBBB), // Active color
             ),
           ),
         ),
         PersistentTabConfig(
-          screen: MyPageScreen(memberId: 1),
+          screen: const MypageScreen(),
           item: ItemConfig(
             icon: RoundImage(
               image: Image.asset(
@@ -51,7 +58,7 @@ class BottomBar extends StatelessWidget {
           ),
         ),
         PersistentTabConfig(
-          screen: DirectorSearchScreen(),
+          screen: const DirectorSearchScreen(),
           item: ItemConfig(
             icon: SvgPicture.asset(
               'assets/icon_find_director.svg',
@@ -59,12 +66,12 @@ class BottomBar extends StatelessWidget {
             ),
             inactiveIcon: SvgPicture.asset(
               'assets/icon_find_director.svg',
-              color: Color(0xffBBBBBB), // Active color
+              color: const Color(0xffBBBBBB), // Active color
             ),
           ),
         ),
         PersistentTabConfig(
-          screen: SettingScreen(),
+          screen: const SettingScreen(),
           item: ItemConfig(
             icon: SvgPicture.asset(
               'assets/icon_setting.svg',
@@ -72,12 +79,17 @@ class BottomBar extends StatelessWidget {
             ),
             inactiveIcon: SvgPicture.asset(
               'assets/icon_setting.svg',
-              color: Color(0xffBBBBBB), // Active color
+              color: const Color(0xffBBBBBB), // Active color
             ),
           ),
         ),
       ];
 
+  @override
+  void initState() {
+    super.initState();
+    context.read<MypageProvider>().getProfile();
+  }
   @override
   Widget build(BuildContext context) {
     return PersistentTabView(
@@ -85,7 +97,7 @@ class BottomBar extends StatelessWidget {
       tabs: _tabs(),
       navBarBuilder: (navBarConfig) => Style13BottomNavBar(
         navBarConfig: navBarConfig,
-        navBarDecoration: NavBarDecoration(
+        navBarDecoration: const NavBarDecoration(
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(20),
             topRight: Radius.circular(20),

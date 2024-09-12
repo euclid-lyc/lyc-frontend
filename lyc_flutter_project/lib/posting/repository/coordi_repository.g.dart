@@ -25,17 +25,12 @@ class _CoordiRepository implements CoordiRepository {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'accessToken': 'true'};
     _headers.removeWhere((k, v) => v == null);
-    final _data = FormData();
-    _data.fields.add(MapEntry(
-      'postingSaveDTO',
-      postingSaveDTO,
-    ));
+    final _data = postingSaveDTO;
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ApiResponse<CoordiPostingResult>>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
-      contentType: 'multipart/form-data',
     )
             .compose(
               _dio.options,
@@ -98,53 +93,21 @@ class _CoordiRepository implements CoordiRepository {
   }
 
   @override
-  Future<ApiResponse<CoordiPostingResult>> getCoordi(
-      {required int postingId}) async {
-    const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{r'accessToken': 'true'};
-    _headers.removeWhere((k, v) => v == null);
-    final Map<String, dynamic>? _data = null;
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<ApiResponse<CoordiPostingResult>>(Options(
-      method: 'GET',
-      headers: _headers,
-      extra: _extra,
-    )
-            .compose(
-              _dio.options,
-              '/${postingId}',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(
-                baseUrl: _combineBaseUrls(
-              _dio.options.baseUrl,
-              baseUrl,
-            ))));
-    final value = ApiResponse<CoordiPostingResult>.fromJson(
-      _result.data!,
-      (json) => CoordiPostingResult.fromJson(json as Map<String, dynamic>),
-    );
-    return value;
-  }
-
-  @override
-  Future<ApiResponse<int>> deleteCoordi({required int postingId}) async {
+  Future<ApiResponse<bool>> getLikedStatus({required dynamic postingId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'accessToken': 'true'};
     _headers.removeWhere((k, v) => v == null);
     final Map<String, dynamic>? _data = null;
     final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<ApiResponse<int>>(Options(
-      method: 'DELETE',
+        .fetch<Map<String, dynamic>>(_setStreamType<ApiResponse<bool>>(Options(
+      method: 'GET',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              '/${postingId}',
+              '/${postingId}/like-status',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -153,9 +116,40 @@ class _CoordiRepository implements CoordiRepository {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = ApiResponse<int>.fromJson(
+    final value = ApiResponse<bool>.fromJson(
       _result.data!,
-      (json) => json as int,
+      (json) => json as bool,
+    );
+    return value;
+  }
+
+  @override
+  Future<ApiResponse<bool>> getSaveStatus({required dynamic postingId}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'accessToken': 'true'};
+    _headers.removeWhere((k, v) => v == null);
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<ApiResponse<bool>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/${postingId}/save-status',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = ApiResponse<bool>.fromJson(
+      _result.data!,
+      (json) => json as bool,
     );
     return value;
   }

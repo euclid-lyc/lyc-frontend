@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lyc_flutter_project/common/widget/round_image.dart';
+import 'package:lyc_flutter_project/common/widget/image_networking.dart';
 
 class MemberList extends StatelessWidget {
   final String profile;
@@ -34,12 +34,7 @@ class MemberList extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: RoundImage(
-                  image: Image.asset(
-                    profile,
-                    fit: BoxFit.cover,
-                  ),
-                ),
+                child: ProfileImageNetworking(profile),
               ),
               const SizedBox(width: 4.0),
               Column(
@@ -55,19 +50,14 @@ class MemberList extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(width: 8),
-                      Text(
-                        "@$id",
-                        style: const TextStyle(
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
+
                     ],
                   ),
                   const SizedBox(height: 3),
                   if (content != null)
                     Text(
                       content!,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 12.0,
                         overflow: TextOverflow.ellipsis,
                       ),

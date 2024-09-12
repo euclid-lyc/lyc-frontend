@@ -30,14 +30,13 @@ class CoordiProvider extends ChangeNotifier {
 
   void resetSetting() {
     _posting = CoordiPosting(
-      writerId: _posting.writerId,
-      image: _posting.image,
-      content: _posting.content,
-      toMemberId: _posting.toMemberId,
-      fromMemberId: _posting.fromMemberId,
-      maxTemp: 0,
-      minTemp: 0
-    );
+        writerId: _posting.writerId,
+        image: _posting.image,
+        content: _posting.content,
+        toMemberId: _posting.toMemberId,
+        fromMemberId: _posting.fromMemberId,
+        maxTemp: 0,
+        minTemp: 0);
   }
 
   void updateMinTemp(int temp) {
@@ -115,11 +114,10 @@ class CoordiProvider extends ChangeNotifier {
         "toMemberId": _posting.toMemberId,
         "writerId": _posting.writerId,
       });
-      print("posingSaveDTO = $postingSaveDTO");
       final resp = await repositoryProvider.repository
           .uploadCoordi(postingSaveDTO: postingSaveDTO);
       if (!resp.isSuccess) {
-        print(resp.message);
+        Exception(resp.message);
         return;
       }
 

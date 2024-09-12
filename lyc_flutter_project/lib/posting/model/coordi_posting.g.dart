@@ -100,3 +100,23 @@ Map<String, dynamic> _$LinkListToJson(LinkList instance) => <String, dynamic>{
       'imageUrlId': instance.imageUrlId,
       'link': instance.link,
     };
+
+SavedResult _$SavedResultFromJson(Map<String, dynamic> json) => SavedResult(
+      postingId: (json['postingId'] as num).toInt(),
+      savedPostingId: (json['savedPostingId'] as num).toInt(),
+    );
+
+Map<String, dynamic> _$SavedResultToJson(SavedResult instance) =>
+    <String, dynamic>{
+      'postingId': instance.postingId,
+      'savedPostingId': instance.savedPostingId,
+    };
+
+DelPosting _$DelPostingFromJson(Map<String, dynamic> json) => DelPosting(
+      postingId: (json['postingId'] as num).toInt(),
+    );
+
+Map<String, dynamic> _$DelPostingToJson(DelPosting instance) =>
+    <String, dynamic>{
+      'postingId': instance.postingId,
+    };
