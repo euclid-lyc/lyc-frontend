@@ -95,7 +95,20 @@ class CustomInterceptor extends Interceptor {
 
       if (errorCode == 'AA4004') {
         // 로그아웃->재로그인 유도
-      } else if (errorCode == 'AA4008') {
+      } else if (errorCode == 'AA4005') {
+        final token = await storage.read(key: accessTokenKey);
+        final options = err.requestOptions;
+        options.headers["Authorization"] = "Bearer $token";
+        try {
+          final response = await dio.fetch(options);
+          handler.resolve(response);
+          return;
+        } on DioException catch (e) {
+          handler.next(e);
+          return;
+        }
+      }
+      else if (errorCode == 'AA4008') {
         final newAccessToken = err.response?.headers.value('access-token');
         final newRefreshToken = err.response?.headers.value('refresh-token');
 
