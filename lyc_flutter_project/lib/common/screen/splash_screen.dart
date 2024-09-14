@@ -26,6 +26,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void checkTokenAndNavigate() async {
     final loginProvider = Provider.of<LoginProvider>(context);
+    final mypageProvider = Provider.of<MypageProvider>(context);
     await loginProvider.checkLoginStatus();
     if (!loginProvider.isLoggedIn) {
       navigateToLogin();
@@ -33,11 +34,15 @@ class _SplashScreenState extends State<SplashScreen> {
     }
 
     try {
-      final success = await context.read<MypageProvider>().getProfile();
+      final success = await mypageProvider.getProfile();
       if (success) {
         navigateToHome();
       } else {
-        navigateToLogin();
+        if (mypageProvider.hasProfile) {
+          navigateToHome();
+        } else {
+          navigateToLogin();
+        }
       }
     } catch (e) {
       navigateToLogin();
