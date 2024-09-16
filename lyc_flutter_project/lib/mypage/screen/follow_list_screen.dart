@@ -80,7 +80,6 @@ class _FollowListScreenState extends State<FollowListScreen> {
                       label: "삭제",
                       onPressed: () {},
                       fontWeight: FontWeight.w400,
-                      padding: 3.0,
                     ),
                     content: "상태메시지",
                   );
