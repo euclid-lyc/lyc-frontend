@@ -58,6 +58,7 @@ class FollowProvider extends ChangeNotifier {
     required int memberId,
   }) async {
     await repositoryProvider.mypageRepository.unfollowUser(memberId: memberId);
+    getList(refresh: true);
   }
 
   Future<void> getList({

@@ -75,7 +75,7 @@ class FollowMorePaginateQuery extends FollowPaginateQuery {
 class FollowActingResult {
   final int memberId;
   final String nickname;
-  final int loginId;
+  final String loginId;
   final int follower;
   final int following;
   final String profileImage;

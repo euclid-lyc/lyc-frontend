@@ -75,7 +75,7 @@ FollowActingResult _$FollowActingResultFromJson(Map<String, dynamic> json) =>
     FollowActingResult(
       memberId: (json['memberId'] as num).toInt(),
       nickname: json['nickname'] as String,
-      loginId: (json['loginId'] as num).toInt(),
+      loginId: json['loginId'] as String,
       follower: (json['follower'] as num).toInt(),
       following: (json['following'] as num).toInt(),
       profileImage: json['profileImage'] as String,
