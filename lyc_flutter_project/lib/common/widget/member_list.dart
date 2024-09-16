@@ -58,7 +58,7 @@ class MemberList extends StatelessWidget {
                     Text(
                       content!,
                       style: const TextStyle(
-                        fontSize: 12.0,
+                        fontSize: 14.0,
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
