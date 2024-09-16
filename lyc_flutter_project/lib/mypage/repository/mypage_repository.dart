@@ -127,14 +127,14 @@ abstract class MypageRepository {
 
   @GET("/socials/members/{memberId}/followers")
   @Headers({"accessToken": "true"})
-  Future<ApiResponse<List<FollowListModel>>> getFollowerList({
+  Future<ApiResponse<FollowListResult>> getFollowerList({
     @Path() required int memberId,
     @Queries() required FollowPaginateQuery paginateQuery,
   });
 
   @GET("/socials/members/{memberId}/followings")
   @Headers({"accessToken": "true"})
-  Future<ApiResponse<List<FollowListModel>>> getFollowingList({
+  Future<ApiResponse<FollowListResult>> getFollowingList({
     @Path() required int memberId,
     @Queries() required FollowPaginateQuery paginateQuery,
   });

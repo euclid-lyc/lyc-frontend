@@ -96,26 +96,28 @@ class _FollowListContentState extends State<_FollowListContent> {
                         padding: EdgeInsets.only(top: 20.0),
                         child: Text("비어있습니다."),
                       );
+                    } else {
+                      return ListView.builder(
+                        itemCount: snapshot.data!.length,
+                        itemBuilder: (context, index) {
+                          final FollowListModel user = snapshot.data![index];
+                          return MemberList(
+                            profile: user.profileImage,
+                            nickname: user.nickname,
+                            button: RightButtonInList(
+                              backgroundColor: const Color(0xffFFDD85),
+                              foregroundColor: Colors.black,
+                              label: "삭제",
+                              onPressed: () {},
+                              fontWeight: FontWeight.w400,
+                            ),
+                            content: user.introduction,
+                          );
+                        },
+                      );
                     }
-                    return ListView.builder(
-                      itemBuilder: (context, index) {
-                        final FollowListModel user = snapshot.data![index];
-                        return MemberList(
-                          profile: user.profileImage,
-                          nickname: user.nickname,
-                          button: RightButtonInList(
-                            backgroundColor: const Color(0xffFFDD85),
-                            foregroundColor: Colors.black,
-                            label: "삭제",
-                            onPressed: () {},
-                            fontWeight: FontWeight.w400,
-                          ),
-                          content: user.introduction,
-                        );
-                      },
-                    );
                   } else {
-                    return const CustomLoading();
+                    return const Center(child: CustomLoading());
                   }
                 },
               ),

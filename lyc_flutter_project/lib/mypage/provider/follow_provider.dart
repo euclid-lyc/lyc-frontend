@@ -64,17 +64,16 @@ class FollowProvider extends ChangeNotifier {
 
     FollowPaginateQuery paginateQuery = FollowPaginateQuery(
       pageSize: pageSize,
-      cursorNickname: cursorNickname,
     );
 
     if (!refresh) {
       if (_isFollower) {
         if (follower.isNotEmpty) {
-          paginateQuery.copyWith(cursorNickname: follower.last.nickname);
+          paginateQuery = FollowMorePaginateQuery(pageSize: pageSize, cursorNickname: follower.last.nickname);
         }
       } else {
         if (following.isNotEmpty) {
-          paginateQuery.copyWith(cursorNickname: following.last.nickname);
+          paginateQuery = FollowMorePaginateQuery(pageSize: pageSize, cursorNickname: following.last.nickname);
         }
       }
     }
@@ -86,15 +85,17 @@ class FollowProvider extends ChangeNotifier {
           memberId: cur_member,
           paginateQuery: paginateQuery,
         );
-        follower = refresh ? [...follower] : [...follower, ...resp.result];
-        updateHasMore(resp.result.length >= pageSize);
+        final lst = resp.result.members;
+        follower = refresh ? [...follower] : [...follower, ...lst];
+        updateHasMore(lst.length >= pageSize);
       } else {
         final resp = await repositoryProvider.mypageRepository.getFollowingList(
           memberId: cur_member,
           paginateQuery: paginateQuery,
         );
-        follower = refresh ? [...following] : [...following, ...resp.result];
-        updateHasMore(resp.result.length >= pageSize);
+        final lst = resp.result.members;
+        follower = refresh ? [...following] : [...following, ...lst];
+        updateHasMore(lst.length >= pageSize);
       }
     } catch (e) {
       Exception(e);

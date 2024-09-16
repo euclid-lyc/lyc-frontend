@@ -23,29 +23,52 @@ class FollowListModel {
 }
 
 @JsonSerializable()
+class FollowListResult {
+  final List<FollowListModel> members;
+
+  FollowListResult({
+    required this.members,
+  });
+
+  Map<String, dynamic> toJson() => _$FollowListResultToJson(this);
+
+  factory FollowListResult.fromJson(Map<String, dynamic> json) =>
+      _$FollowListResultFromJson(json);
+}
+
+@JsonSerializable()
 class FollowPaginateQuery {
   final int pageSize;
-  final String? cursorNickname;
 
   FollowPaginateQuery({
     required this.pageSize,
-    this.cursorNickname,
   });
-
-  FollowPaginateQuery copyWith({
-    int? pageSize,
-    String? cursorNickname,
-  }) {
-    return FollowPaginateQuery(
-      pageSize: pageSize ?? this.pageSize,
-      cursorNickname: cursorNickname ?? this.cursorNickname,
-    );
-  }
 
   Map<String, dynamic> toJson() => _$FollowPaginateQueryToJson(this);
 
   factory FollowPaginateQuery.fromJson(Map<String, dynamic> json) =>
       _$FollowPaginateQueryFromJson(json);
+}
+
+@JsonSerializable()
+class FollowFirstPaginateQuery extends FollowPaginateQuery {
+  FollowFirstPaginateQuery({
+    required super.pageSize,
+  });
+
+  Map<String, dynamic> toJson() => _$FollowFirstPaginateQueryToJson(this);
+}
+
+@JsonSerializable()
+class FollowMorePaginateQuery extends FollowPaginateQuery {
+  final String cursorNickname;
+
+  FollowMorePaginateQuery({
+    required super.pageSize,
+    required this.cursorNickname,
+  });
+
+  Map<String, dynamic> toJson() => _$FollowMorePaginateQueryToJson(this);
 }
 
 @JsonSerializable()

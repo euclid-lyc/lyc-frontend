@@ -22,14 +22,50 @@ Map<String, dynamic> _$FollowListModelToJson(FollowListModel instance) =>
       'introduction': instance.introduction,
     };
 
+FollowListResult _$FollowListResultFromJson(Map<String, dynamic> json) =>
+    FollowListResult(
+      members: (json['members'] as List<dynamic>)
+          .map((e) => FollowListModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$FollowListResultToJson(FollowListResult instance) =>
+    <String, dynamic>{
+      'members': instance.members,
+    };
+
 FollowPaginateQuery _$FollowPaginateQueryFromJson(Map<String, dynamic> json) =>
     FollowPaginateQuery(
       pageSize: (json['pageSize'] as num).toInt(),
-      cursorNickname: json['cursorNickname'] as String?,
     );
 
 Map<String, dynamic> _$FollowPaginateQueryToJson(
         FollowPaginateQuery instance) =>
+    <String, dynamic>{
+      'pageSize': instance.pageSize,
+    };
+
+FollowFirstPaginateQuery _$FollowFirstPaginateQueryFromJson(
+        Map<String, dynamic> json) =>
+    FollowFirstPaginateQuery(
+      pageSize: (json['pageSize'] as num).toInt(),
+    );
+
+Map<String, dynamic> _$FollowFirstPaginateQueryToJson(
+        FollowFirstPaginateQuery instance) =>
+    <String, dynamic>{
+      'pageSize': instance.pageSize,
+    };
+
+FollowMorePaginateQuery _$FollowMorePaginateQueryFromJson(
+        Map<String, dynamic> json) =>
+    FollowMorePaginateQuery(
+      pageSize: (json['pageSize'] as num).toInt(),
+      cursorNickname: json['cursorNickname'] as String,
+    );
+
+Map<String, dynamic> _$FollowMorePaginateQueryToJson(
+        FollowMorePaginateQuery instance) =>
     <String, dynamic>{
       'pageSize': instance.pageSize,
       'cursorNickname': instance.cursorNickname,
