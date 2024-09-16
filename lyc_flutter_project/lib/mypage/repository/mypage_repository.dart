@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/common/const/data.dart';
 import 'package:lyc_flutter_project/common/model/api_response.dart';
 import 'package:lyc_flutter_project/common/model/paginate_query.dart';
+import 'package:lyc_flutter_project/mypage/model/follow_model.dart';
 import 'package:lyc_flutter_project/mypage/model/profile.dart';
 import 'package:lyc_flutter_project/mypage/model/result.dart';
 import 'package:lyc_flutter_project/posting/model/coordi_posting.dart';
@@ -123,5 +124,33 @@ abstract class MypageRepository {
   @Headers({"accessToken": "true"})
   Future<ApiResponse<DelPosting>> deleteCoordi({
     @Path() required int postingId,
+  });
+
+  @GET("/socials/members/{memberId}/followers")
+  @Headers({"accessToken": "true"})
+  Future<ApiResponse<FollowListModel>> getFollowerList({
+    @Path() required int memberId,
+    @Queries() required FollowPaginateQuery paginateQuery,
+  });
+
+  @GET("/socials/members/{memberId}/followings")
+  @Headers({"accessToken": "true"})
+  Future<ApiResponse<FollowListModel>> getFollowingList({
+    @Path() required int memberId,
+    @Queries() required FollowPaginateQuery paginateQuery,
+  });
+
+  @POST("/socials/members/{memberId}/followings")
+  @Headers({"accessToken": "true"})
+  Future<ApiResponse<FollowActingResult>> followUser({
+    @Path() required int memberId,
+    @Queries() required FollowPaginateQuery paginateQuery,
+  });
+
+  @DELETE("/socials/members/{memberId}/followings")
+  @Headers({"accessToken": "true"})
+  Future<ApiResponse<FollowActingResult>> unfollowUser({
+    @Path() required int memberId,
+    @Queries() required FollowPaginateQuery paginateQuery,
   });
 }
