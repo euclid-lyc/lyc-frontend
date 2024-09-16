@@ -7,7 +7,6 @@ import 'package:lyc_flutter_project/mypage/model/follow_model.dart';
 import 'package:lyc_flutter_project/mypage/model/profile.dart';
 import 'package:lyc_flutter_project/mypage/model/result.dart';
 import 'package:lyc_flutter_project/posting/model/coordi_posting.dart';
-import 'package:retrofit/http.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'mypage_repository.g.dart';
@@ -128,14 +127,14 @@ abstract class MypageRepository {
 
   @GET("/socials/members/{memberId}/followers")
   @Headers({"accessToken": "true"})
-  Future<ApiResponse<FollowListModel>> getFollowerList({
+  Future<ApiResponse<List<FollowListModel>>> getFollowerList({
     @Path() required int memberId,
     @Queries() required FollowPaginateQuery paginateQuery,
   });
 
   @GET("/socials/members/{memberId}/followings")
   @Headers({"accessToken": "true"})
-  Future<ApiResponse<FollowListModel>> getFollowingList({
+  Future<ApiResponse<List<FollowListModel>>> getFollowingList({
     @Path() required int memberId,
     @Queries() required FollowPaginateQuery paginateQuery,
   });

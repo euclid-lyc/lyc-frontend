@@ -25,7 +25,7 @@ Map<String, dynamic> _$FollowListModelToJson(FollowListModel instance) =>
 FollowPaginateQuery _$FollowPaginateQueryFromJson(Map<String, dynamic> json) =>
     FollowPaginateQuery(
       pageSize: (json['pageSize'] as num).toInt(),
-      cursorNickname: json['cursorNickname'] as String,
+      cursorNickname: json['cursorNickname'] as String?,
     );
 
 Map<String, dynamic> _$FollowPaginateQueryToJson(

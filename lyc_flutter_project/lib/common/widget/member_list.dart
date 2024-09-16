@@ -4,7 +4,7 @@ import 'package:lyc_flutter_project/common/widget/image_networking.dart';
 class MemberList extends StatelessWidget {
   final String profile;
   final String nickname;
-  final String id;
+  final String? id;
   final String? content;
   final Widget? button;
 
@@ -12,7 +12,7 @@ class MemberList extends StatelessWidget {
     super.key,
     required this.profile,
     required this.nickname,
-    required this.id,
+    this.id,
     this.button,
     this.content,
   });

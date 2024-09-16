@@ -491,7 +491,7 @@ class _MypageRepository implements MypageRepository {
   }
 
   @override
-  Future<ApiResponse<FollowListModel>> getFollowerList({
+  Future<ApiResponse<List<FollowListModel>>> getFollowerList({
     required int memberId,
     required FollowPaginateQuery paginateQuery,
   }) async {
@@ -501,7 +501,7 @@ class _MypageRepository implements MypageRepository {
     final _headers = <String, dynamic>{r'accessToken': 'true'};
     _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<ApiResponse<FollowListModel>>(Options(
+    final _options = _setStreamType<ApiResponse<List<FollowListModel>>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -518,11 +518,16 @@ class _MypageRepository implements MypageRepository {
           baseUrl,
         )));
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late ApiResponse<FollowListModel> _value;
+    late ApiResponse<List<FollowListModel>> _value;
     try {
-      _value = ApiResponse<FollowListModel>.fromJson(
+      _value = ApiResponse<List<FollowListModel>>.fromJson(
         _result.data!,
-        (json) => FollowListModel.fromJson(json as Map<String, dynamic>),
+        (json) => json is List<dynamic>
+            ? json
+                .map<FollowListModel>(
+                    (i) => FollowListModel.fromJson(i as Map<String, dynamic>))
+                .toList()
+            : List.empty(),
       );
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
@@ -532,7 +537,7 @@ class _MypageRepository implements MypageRepository {
   }
 
   @override
-  Future<ApiResponse<FollowListModel>> getFollowingList({
+  Future<ApiResponse<List<FollowListModel>>> getFollowingList({
     required int memberId,
     required FollowPaginateQuery paginateQuery,
   }) async {
@@ -542,7 +547,7 @@ class _MypageRepository implements MypageRepository {
     final _headers = <String, dynamic>{r'accessToken': 'true'};
     _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<ApiResponse<FollowListModel>>(Options(
+    final _options = _setStreamType<ApiResponse<List<FollowListModel>>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -559,11 +564,16 @@ class _MypageRepository implements MypageRepository {
           baseUrl,
         )));
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late ApiResponse<FollowListModel> _value;
+    late ApiResponse<List<FollowListModel>> _value;
     try {
-      _value = ApiResponse<FollowListModel>.fromJson(
+      _value = ApiResponse<List<FollowListModel>>.fromJson(
         _result.data!,
-        (json) => FollowListModel.fromJson(json as Map<String, dynamic>),
+        (json) => json is List<dynamic>
+            ? json
+                .map<FollowListModel>(
+                    (i) => FollowListModel.fromJson(i as Map<String, dynamic>))
+                .toList()
+            : List.empty(),
       );
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);

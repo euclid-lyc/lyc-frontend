@@ -25,12 +25,22 @@ class FollowListModel {
 @JsonSerializable()
 class FollowPaginateQuery {
   final int pageSize;
-  final String cursorNickname;
+  final String? cursorNickname;
 
   FollowPaginateQuery({
     required this.pageSize,
-    required this.cursorNickname,
+    this.cursorNickname,
   });
+
+  FollowPaginateQuery copyWith({
+    int? pageSize,
+    String? cursorNickname,
+  }) {
+    return FollowPaginateQuery(
+      pageSize: pageSize ?? this.pageSize,
+      cursorNickname: cursorNickname ?? this.cursorNickname,
+    );
+  }
 
   Map<String, dynamic> toJson() => _$FollowPaginateQueryToJson(this);
 

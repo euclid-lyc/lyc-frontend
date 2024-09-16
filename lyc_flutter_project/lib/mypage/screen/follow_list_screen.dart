@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:lyc_flutter_project/common/widget/custom_loading.dart';
 import 'package:lyc_flutter_project/common/widget/member_list.dart';
 import 'package:lyc_flutter_project/common/widget/right_button_in_list.dart';
 import 'package:lyc_flutter_project/common/widget/switch_category_button.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
+import 'package:lyc_flutter_project/mypage/model/follow_model.dart';
+import 'package:lyc_flutter_project/mypage/provider/follow_provider.dart';
 import 'package:lyc_flutter_project/styles/default_padding.dart';
 import 'package:lyc_flutter_project/widget/normal_appbar.dart';
+import 'package:provider/provider.dart';
 
 class FollowListScreen extends StatefulWidget {
   final bool follower;
@@ -16,18 +20,15 @@ class FollowListScreen extends StatefulWidget {
 }
 
 class _FollowListScreenState extends State<FollowListScreen> {
+  late FollowProvider provider;
   late bool isFollower;
 
   @override
   void initState() {
     super.initState();
-    isFollower = widget.follower;
-  }
-
-  void followerSelected(bool select) {
-    setState(() {
-      isFollower = select;
-    });
+    provider = Provider.of<FollowProvider>(context);
+    provider.setCategory(isFollower: widget.follower);
+    provider.getList();
   }
 
   @override
@@ -50,14 +51,14 @@ class _FollowListScreenState extends State<FollowListScreen> {
                   SwitchCategoryButton(
                     text: "팔로워",
                     isSelected: isFollower,
-                    onPressed: () => followerSelected(true),
+                    onPressed: () => provider.setCategory(isFollower: true),
                     color: AppColor.brown,
                     size: 16.0,
                   ),
                   SwitchCategoryButton(
                     text: "팔로잉",
                     isSelected: !isFollower,
-                    onPressed: () => followerSelected(false),
+                    onPressed: () => provider.setCategory(isFollower: false),
                     color: AppColor.brown,
                     size: 16.0,
                   ),
@@ -67,21 +68,28 @@ class _FollowListScreenState extends State<FollowListScreen> {
             const SizedBox(height: 10),
             // list view
             Expanded(
-              child: ListView.builder(
-                itemCount: 10,
-                itemBuilder: (context, index) {
-                  return MemberList(
-                    profile: "assets/ex_profile.png",
-                    nickname: "카리나",
-                    id: "katarinabluu",
-                    button: RightButtonInList(
-                      backgroundColor: const Color(0xffFFDD85),
-                      foregroundColor: Colors.black,
-                      label: "삭제",
-                      onPressed: () {},
-                      fontWeight: FontWeight.w400,
-                    ),
-                    content: "상태메시지",
+              child: FutureBuilder(
+                future: provider.renderList(),
+                builder: (context, snapshot) {
+                  return ListView.builder(
+                    itemBuilder: (context, index) {
+                      if (provider.getLoading()) {
+                        return CustomLoading();
+                      }
+                      final FollowListModel user = snapshot.data![index];
+                      return MemberList(
+                        profile: user.profileImage,
+                        nickname: user.nickname,
+                        button: RightButtonInList(
+                          backgroundColor: const Color(0xffFFDD85),
+                          foregroundColor: Colors.black,
+                          label: "삭제",
+                          onPressed: () {},
+                          fontWeight: FontWeight.w400,
+                        ),
+                        content: user.introduction,
+                      );
+                    },
                   );
                 },
               ),
