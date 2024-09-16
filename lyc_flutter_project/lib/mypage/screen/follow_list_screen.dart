@@ -6,33 +6,52 @@ import 'package:lyc_flutter_project/common/widget/switch_category_button.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/mypage/model/follow_model.dart';
 import 'package:lyc_flutter_project/mypage/provider/follow_provider.dart';
+import 'package:lyc_flutter_project/mypage/repository/mypage_repository.dart';
 import 'package:lyc_flutter_project/styles/default_padding.dart';
 import 'package:lyc_flutter_project/widget/normal_appbar.dart';
 import 'package:provider/provider.dart';
 
-class FollowListScreen extends StatefulWidget {
+class FollowListScreen extends StatelessWidget {
   final bool follower;
 
   const FollowListScreen({super.key, required this.follower});
 
   @override
-  State<FollowListScreen> createState() => _FollowListScreenState();
+  Widget build(BuildContext context) {
+    return ChangeNotifierProxyProvider<MypageRepositoryProvider, FollowProvider>(
+      create: (context) => FollowProvider(
+        repositoryProvider: context.read<MypageRepositoryProvider>(),
+      ),
+      update: (context, myPageRepo, previous) =>
+      previous ?? FollowProvider(repositoryProvider: myPageRepo),
+      child: _FollowListContent(follower: follower),
+    );
+  }
 }
 
-class _FollowListScreenState extends State<FollowListScreen> {
-  late FollowProvider provider;
-  late bool isFollower;
+class _FollowListContent extends StatefulWidget {
+  final bool follower;
 
+  const _FollowListContent({required this.follower});
+
+  @override
+  _FollowListContentState createState() => _FollowListContentState();
+}
+
+class _FollowListContentState extends State<_FollowListContent> {
   @override
   void initState() {
     super.initState();
-    provider = Provider.of<FollowProvider>(context);
-    provider.setCategory(isFollower: widget.follower);
-    provider.getList();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final provider = context.read<FollowProvider>();
+      provider.setCategory(isFollower: widget.follower);
+      provider.getList();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    final provider = context.watch<FollowProvider>();
     return Scaffold(
       backgroundColor: AppColor.lightGrey,
       appBar: const NormalAppbar(),
@@ -50,14 +69,14 @@ class _FollowListScreenState extends State<FollowListScreen> {
                 children: [
                   SwitchCategoryButton(
                     text: "팔로워",
-                    isSelected: isFollower,
+                    isSelected: provider.isFollower,
                     onPressed: () => provider.setCategory(isFollower: true),
                     color: AppColor.brown,
                     size: 16.0,
                   ),
                   SwitchCategoryButton(
                     text: "팔로잉",
-                    isSelected: !isFollower,
+                    isSelected: !provider.isFollower,
                     onPressed: () => provider.setCategory(isFollower: false),
                     color: AppColor.brown,
                     size: 16.0,
@@ -71,26 +90,33 @@ class _FollowListScreenState extends State<FollowListScreen> {
               child: FutureBuilder(
                 future: provider.renderList(),
                 builder: (context, snapshot) {
-                  return ListView.builder(
-                    itemBuilder: (context, index) {
-                      if (provider.getLoading()) {
-                        return CustomLoading();
-                      }
-                      final FollowListModel user = snapshot.data![index];
-                      return MemberList(
-                        profile: user.profileImage,
-                        nickname: user.nickname,
-                        button: RightButtonInList(
-                          backgroundColor: const Color(0xffFFDD85),
-                          foregroundColor: Colors.black,
-                          label: "삭제",
-                          onPressed: () {},
-                          fontWeight: FontWeight.w400,
-                        ),
-                        content: user.introduction,
+                  if (snapshot.hasData) {
+                    if (snapshot.data!.isEmpty) {
+                      return const Padding(
+                        padding: EdgeInsets.only(top: 20.0),
+                        child: Text("비어있습니다."),
                       );
-                    },
-                  );
+                    }
+                    return ListView.builder(
+                      itemBuilder: (context, index) {
+                        final FollowListModel user = snapshot.data![index];
+                        return MemberList(
+                          profile: user.profileImage,
+                          nickname: user.nickname,
+                          button: RightButtonInList(
+                            backgroundColor: const Color(0xffFFDD85),
+                            foregroundColor: Colors.black,
+                            label: "삭제",
+                            onPressed: () {},
+                            fontWeight: FontWeight.w400,
+                          ),
+                          content: user.introduction,
+                        );
+                      },
+                    );
+                  } else {
+                    return const CustomLoading();
+                  }
                 },
               ),
             )
