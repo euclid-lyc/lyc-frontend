@@ -10,16 +10,13 @@ part of 'feed_repository.dart';
 
 class _FeedRepository implements FeedRepository {
   _FeedRepository(
-    this._dio, {
-    this.baseUrl,
-    this.errorLogger,
-  });
+      this._dio, {
+        this.baseUrl,
+      });
 
   final Dio _dio;
 
   String? baseUrl;
-
-  final ParseErrorLogger? errorLogger;
 
   @override
   Future<ApiResponse<List<CoordiPostingPreview>>> getFeedPreview() async {
@@ -29,38 +26,32 @@ class _FeedRepository implements FeedRepository {
     _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
     final _options =
-        _setStreamType<ApiResponse<List<CoordiPostingPreview>>>(Options(
+    _setStreamType<ApiResponse<List<CoordiPostingPreview>>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
-            .compose(
-              _dio.options,
-              '/preview',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(
-                baseUrl: _combineBaseUrls(
-              _dio.options.baseUrl,
-              baseUrl,
-            )));
+        .compose(
+      _dio.options,
+      '/preview',
+      queryParameters: queryParameters,
+      data: _data,
+    )
+        .copyWith(
+        baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late ApiResponse<List<CoordiPostingPreview>> _value;
-    try {
-      _value = ApiResponse<List<CoordiPostingPreview>>.fromJson(
-        _result.data!,
-        (json) => json is List<dynamic>
-            ? json
-                .map<CoordiPostingPreview>((i) =>
-                    CoordiPostingPreview.fromJson(i as Map<String, dynamic>))
-                .toList()
-            : List.empty(),
-      );
-    } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options);
-      rethrow;
-    }
+    final _value = ApiResponse<List<CoordiPostingPreview>>.fromJson(
+      _result.data!,
+          (json) => json is List<dynamic>
+          ? json
+          .map<CoordiPostingPreview>((i) =>
+          CoordiPostingPreview.fromJson(i as Map<String, dynamic>))
+          .toList()
+          : List.empty(),
+    );
     return _value;
   }
 
@@ -78,9 +69,9 @@ class _FeedRepository implements FeedRepository {
   }
 
   String _combineBaseUrls(
-    String dioBaseUrl,
-    String? baseUrl,
-  ) {
+      String dioBaseUrl,
+      String? baseUrl,
+      ) {
     if (baseUrl == null || baseUrl.trim().isEmpty) {
       return dioBaseUrl;
     }
