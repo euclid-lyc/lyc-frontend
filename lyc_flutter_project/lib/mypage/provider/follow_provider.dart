@@ -71,7 +71,7 @@ class FollowProvider extends ChangeNotifier {
     // 0=팔로워, 1=팔로잉
     int category = _isFollower ? 0 : 1;
 
-    if (forceCategory != null) {
+    if (forceCategory != null && (forceCategory == 0 || forceCategory == 1)) {
       category = forceCategory;
     }
 
@@ -83,12 +83,16 @@ class FollowProvider extends ChangeNotifier {
       if (category == 0) {
         if (_follower.isNotEmpty) {
           paginateQuery = FollowMorePaginateQuery(
-              pageSize: pageSize, cursorNickname: _follower.last.nickname);
+            pageSize: pageSize,
+            cursorNickname: _follower.last.nickname,
+          );
         }
       } else {
         if (_following.isNotEmpty) {
           paginateQuery = FollowMorePaginateQuery(
-              pageSize: pageSize, cursorNickname: _following.last.nickname);
+            pageSize: pageSize,
+            cursorNickname: _following.last.nickname,
+          );
         }
       }
     }
@@ -109,7 +113,7 @@ class FollowProvider extends ChangeNotifier {
           paginateQuery: paginateQuery,
         );
         final lst = resp.result.members;
-        _follower = refresh ? [...lst] : [..._following, ...lst];
+        _following = refresh ? [...lst] : [..._following, ...lst];
         updateHasMore(lst.length >= pageSize);
       }
     } catch (e) {
