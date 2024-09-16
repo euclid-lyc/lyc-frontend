@@ -18,21 +18,25 @@ class FollowListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProxyProvider<MypageRepositoryProvider, FollowProvider>(
+    return ChangeNotifierProxyProvider<MypageRepositoryProvider,
+        FollowProvider>(
       create: (context) => FollowProvider(
         repositoryProvider: context.read<MypageRepositoryProvider>(),
+        initialIsFollower: follower,
       ),
       update: (context, myPageRepo, previous) =>
-      previous ?? FollowProvider(repositoryProvider: myPageRepo),
-      child: _FollowListContent(follower: follower),
+          previous ??
+          FollowProvider(
+            repositoryProvider: myPageRepo,
+            initialIsFollower: follower,
+          ),
+      child: const _FollowListContent(),
     );
   }
 }
 
 class _FollowListContent extends StatefulWidget {
-  final bool follower;
-
-  const _FollowListContent({required this.follower});
+  const _FollowListContent();
 
   @override
   _FollowListContentState createState() => _FollowListContentState();
@@ -40,18 +44,7 @@ class _FollowListContent extends StatefulWidget {
 
 class _FollowListContentState extends State<_FollowListContent> {
   @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final provider = context.read<FollowProvider>();
-      provider.setCategory(isFollower: widget.follower);
-      provider.getList();
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final provider = context.watch<FollowProvider>();
     return Scaffold(
       backgroundColor: AppColor.lightGrey,
       appBar: const NormalAppbar(),
@@ -60,68 +53,75 @@ class _FollowListContentState extends State<_FollowListContent> {
         child: Column(
           children: [
             // switch button
-            Container(
-              height: MediaQuery.of(context).size.height / 20,
-              margin: const EdgeInsets.symmetric(horizontal: 10.0),
-              decoration: BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.circular(30)),
-              child: Row(
-                children: [
-                  SwitchCategoryButton(
-                    text: "팔로워",
-                    isSelected: provider.isFollower,
-                    onPressed: () => provider.setCategory(isFollower: true),
-                    color: AppColor.brown,
-                    size: 16.0,
+            Consumer<FollowProvider>(
+              builder: (context, value, child) {
+                return Container(
+                  height: MediaQuery.of(context).size.height / 20,
+                  margin: const EdgeInsets.symmetric(horizontal: 10.0),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(30)),
+                  child: Row(
+                    children: [
+                      SwitchCategoryButton(
+                        text: "팔로워",
+                        isSelected: value.isFollower,
+                        onPressed: () => value.setCategory(
+                          isFollower: true,
+                        ),
+                        color: AppColor.brown,
+                        size: 16.0,
+                      ),
+                      SwitchCategoryButton(
+                        text: "팔로잉",
+                        isSelected: !value.isFollower,
+                        onPressed: () => value.setCategory(
+                          isFollower: false,
+                        ),
+                        color: AppColor.brown,
+                        size: 16.0,
+                      ),
+                    ],
                   ),
-                  SwitchCategoryButton(
-                    text: "팔로잉",
-                    isSelected: !provider.isFollower,
-                    onPressed: () => provider.setCategory(isFollower: false),
-                    color: AppColor.brown,
-                    size: 16.0,
-                  ),
-                ],
-              ),
+                );
+              },
             ),
             const SizedBox(height: 10),
             // list view
-            Expanded(
-              child: FutureBuilder(
-                future: provider.renderList(),
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    if (snapshot.data!.isEmpty) {
-                      return const Padding(
-                        padding: EdgeInsets.only(top: 20.0),
-                        child: Text("비어있습니다."),
-                      );
-                    } else {
-                      return ListView.builder(
-                        itemCount: snapshot.data!.length,
-                        itemBuilder: (context, index) {
-                          final FollowListModel user = snapshot.data![index];
-                          return MemberList(
-                            profile: user.profileImage,
-                            nickname: user.nickname,
-                            button: RightButtonInList(
-                              backgroundColor: const Color(0xffFFDD85),
-                              foregroundColor: Colors.black,
-                              label: "삭제",
-                              onPressed: () {},
-                              fontWeight: FontWeight.w400,
-                            ),
-                            content: user.introduction,
-                          );
-                        },
-                      );
-                    }
+            Expanded(child: Consumer<FollowProvider>(
+              builder: (context, value, child) {
+                var list = value.list;
+                if (value.getLoading()) {
+                  return const Center(child: CustomLoading());
+                } else {
+                  if (list.isEmpty) {
+                    return const Padding(
+                      padding: EdgeInsets.only(top: 20.0),
+                      child: Text("비어있습니다."),
+                    );
                   } else {
-                    return const Center(child: CustomLoading());
+                    return ListView.builder(
+                      itemCount: list.length,
+                      itemBuilder: (context, index) {
+                        final FollowListModel user = list[index];
+                        return MemberList(
+                          profile: user.profileImage,
+                          nickname: user.nickname,
+                          button: RightButtonInList(
+                            backgroundColor: const Color(0xffFFDD85),
+                            foregroundColor: Colors.black,
+                            onPressed: () {},
+                            fontWeight: FontWeight.w400,
+                            label: "삭제",
+                          ),
+                          content: user.introduction,
+                        );
+                      },
+                    );
                   }
-                },
-              ),
-            )
+                }
+              },
+            ))
           ],
         ),
       ),

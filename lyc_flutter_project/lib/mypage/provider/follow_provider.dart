@@ -5,12 +5,18 @@ import 'package:lyc_flutter_project/mypage/repository/mypage_repository.dart';
 
 class FollowProvider extends ChangeNotifier {
   final MypageRepositoryProvider repositoryProvider;
+  final bool initialIsFollower;
 
-  FollowProvider({required this.repositoryProvider});
+  FollowProvider({
+    required this.repositoryProvider,
+    required this.initialIsFollower,
+  }) {
+    setCategory(isFollower: initialIsFollower);
+  }
 
   bool _isFollower = true;
-  List<FollowListModel> follower = [];
-  List<FollowListModel> following = [];
+  List<FollowListModel> _follower = [];
+  List<FollowListModel> _following = [];
 
   bool _loadingFollower = false;
   bool _loadingFollowing = false;
@@ -20,17 +26,15 @@ class FollowProvider extends ChangeNotifier {
 
   get isFollower => _isFollower;
 
-  void setCategory({bool? isFollower}) {
+  get list => _isFollower ? _follower : _following;
+
+  Future<void> setCategory({bool? isFollower}) async {
     if (isFollower != null) {
       _isFollower = isFollower;
     } else {
-      if (_isFollower) {
-        _isFollower = false;
-      } else {
-        _isFollower = true;
-      }
+      _isFollower = !_isFollower;
     }
-    getList();
+    await getList(refresh: true);
     notifyListeners();
   }
 
@@ -50,43 +54,54 @@ class FollowProvider extends ChangeNotifier {
     _isFollower ? _hasMoreFollower = status : _hasMoreFollowing = status;
   }
 
-  Future<List<FollowListModel>> renderList() async {
-    await getList();
-    return _isFollower ? follower : following;
+  Future<void> unfollowUser({
+    required int memberId,
+  }) async {
+    await repositoryProvider.mypageRepository.unfollowUser(memberId: memberId);
   }
 
   Future<void> getList({
     bool refresh = false,
     int pageSize = 10,
     String? cursorNickname,
+    int? forceCategory,
   }) async {
     if (getLoading() || !getHasMore()) return;
+
+    // 0=팔로워, 1=팔로잉
+    int category = _isFollower ? 0 : 1;
+
+    if (forceCategory != null) {
+      category = forceCategory;
+    }
 
     FollowPaginateQuery paginateQuery = FollowPaginateQuery(
       pageSize: pageSize,
     );
 
     if (!refresh) {
-      if (_isFollower) {
-        if (follower.isNotEmpty) {
-          paginateQuery = FollowMorePaginateQuery(pageSize: pageSize, cursorNickname: follower.last.nickname);
+      if (category == 0) {
+        if (_follower.isNotEmpty) {
+          paginateQuery = FollowMorePaginateQuery(
+              pageSize: pageSize, cursorNickname: _follower.last.nickname);
         }
       } else {
-        if (following.isNotEmpty) {
-          paginateQuery = FollowMorePaginateQuery(pageSize: pageSize, cursorNickname: following.last.nickname);
+        if (_following.isNotEmpty) {
+          paginateQuery = FollowMorePaginateQuery(
+              pageSize: pageSize, cursorNickname: _following.last.nickname);
         }
       }
     }
 
     try {
       updateLoading(true);
-      if (_isFollower) {
+      if (category == 0) {
         final resp = await repositoryProvider.mypageRepository.getFollowerList(
           memberId: cur_member,
           paginateQuery: paginateQuery,
         );
         final lst = resp.result.members;
-        follower = refresh ? [...follower] : [...follower, ...lst];
+        _follower = refresh ? [...lst] : [..._follower, ...lst];
         updateHasMore(lst.length >= pageSize);
       } else {
         final resp = await repositoryProvider.mypageRepository.getFollowingList(
@@ -94,7 +109,7 @@ class FollowProvider extends ChangeNotifier {
           paginateQuery: paginateQuery,
         );
         final lst = resp.result.members;
-        follower = refresh ? [...following] : [...following, ...lst];
+        _follower = refresh ? [...lst] : [..._following, ...lst];
         updateHasMore(lst.length >= pageSize);
       }
     } catch (e) {

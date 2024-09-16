@@ -143,13 +143,11 @@ abstract class MypageRepository {
   @Headers({"accessToken": "true"})
   Future<ApiResponse<FollowActingResult>> followUser({
     @Path() required int memberId,
-    @Queries() required FollowPaginateQuery paginateQuery,
   });
 
   @DELETE("/socials/members/{memberId}/followings")
   @Headers({"accessToken": "true"})
   Future<ApiResponse<FollowActingResult>> unfollowUser({
     @Path() required int memberId,
-    @Queries() required FollowPaginateQuery paginateQuery,
   });
 }

@@ -573,13 +573,10 @@ class _MypageRepository implements MypageRepository {
   }
 
   @override
-  Future<ApiResponse<FollowActingResult>> followUser({
-    required int memberId,
-    required FollowPaginateQuery paginateQuery,
-  }) async {
+  Future<ApiResponse<FollowActingResult>> followUser(
+      {required int memberId}) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    queryParameters.addAll(paginateQuery.toJson());
     final _headers = <String, dynamic>{r'accessToken': 'true'};
     _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
@@ -614,13 +611,10 @@ class _MypageRepository implements MypageRepository {
   }
 
   @override
-  Future<ApiResponse<FollowActingResult>> unfollowUser({
-    required int memberId,
-    required FollowPaginateQuery paginateQuery,
-  }) async {
+  Future<ApiResponse<FollowActingResult>> unfollowUser(
+      {required int memberId}) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    queryParameters.addAll(paginateQuery.toJson());
     final _headers = <String, dynamic>{r'accessToken': 'true'};
     _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
