@@ -112,7 +112,9 @@ class _FollowListContentState extends State<_FollowListContent> {
                               : RightButtonInList(
                                   backgroundColor: const Color(0xffFFDD85),
                                   foregroundColor: Colors.black,
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    value.unfollowUser(memberId: user.memberId);
+                                  },
                                   fontWeight: FontWeight.w400,
                                   label: "삭제",
                                 ),
