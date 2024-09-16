@@ -107,13 +107,15 @@ class _FollowListContentState extends State<_FollowListContent> {
                         return MemberList(
                           profile: user.profileImage,
                           nickname: user.nickname,
-                          button: RightButtonInList(
-                            backgroundColor: const Color(0xffFFDD85),
-                            foregroundColor: Colors.black,
-                            onPressed: () {},
-                            fontWeight: FontWeight.w400,
-                            label: "삭제",
-                          ),
+                          button: value.isFollower
+                              ? const SizedBox.shrink()
+                              : RightButtonInList(
+                                  backgroundColor: const Color(0xffFFDD85),
+                                  foregroundColor: Colors.black,
+                                  onPressed: () {},
+                                  fontWeight: FontWeight.w400,
+                                  label: "삭제",
+                                ),
                           content: user.introduction,
                         );
                       },
