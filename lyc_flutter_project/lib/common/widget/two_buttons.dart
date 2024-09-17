@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lyc_flutter_project/common/widget/custom_text_button.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 
 class TwoButtons extends StatelessWidget {
@@ -30,43 +31,27 @@ class TwoButtons extends StatelessWidget {
       children: [
         Expanded(
           flex: 2,
-          child: Container(
-            decoration: BoxDecoration(
-              color: fstBackColor,
-              borderRadius: BorderRadius.circular(30),
-            ),
-            child: TextButton(
-              onPressed: fstOnPressed,
-              child: Text(
-                fstLabel,
-                style: TextStyle(
-                  color: fstForeColor,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                ),
-              ),
-            ),
+          child: CustomTextButton(
+            label: fstLabel,
+            borderRadius: 30.0,
+            fontSize: 16.0,
+            fontWeight: FontWeight.bold,
+            onPressed: fstOnPressed,
+            textColor: fstForeColor,
+            backgroundColor: fstBackColor,
           ),
         ),
         const Expanded(flex: 1, child: SizedBox()),
         Expanded(
           flex: 2,
-          child: Container(
-            decoration: BoxDecoration(
-              color: scdBackColor,
-              borderRadius: BorderRadius.circular(30),
-            ),
-            child: TextButton(
-              onPressed: scdOnPressed,
-              child: Text(
-                scdLabel,
-                style: TextStyle(
-                  color: scdForeColor,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                ),
-              ),
-            ),
+          child: CustomTextButton(
+            label: scdLabel,
+            borderRadius: 30.0,
+            fontSize: 16.0,
+            fontWeight: FontWeight.bold,
+            onPressed: scdOnPressed,
+            textColor: scdForeColor,
+            backgroundColor: scdBackColor,
           ),
         ),
       ],

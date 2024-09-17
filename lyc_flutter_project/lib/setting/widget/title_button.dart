@@ -24,20 +24,16 @@ class TitleButton extends StatelessWidget {
       margin: const EdgeInsets.only(top: 10.0),
       child: TextButton(
         onPressed: onPressed,
-        style: ButtonStyle(
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20.0),
-            ),
+        style: TextButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.0),
           ),
-          foregroundColor: MaterialStateProperty.all(foregroundColor),
-          backgroundColor: MaterialStateProperty.all(backgroundColor),
-          textStyle: MaterialStateProperty.all(
-            const TextStyle(
-              fontWeight: FontWeight.w700,
-              fontSize: 16.0,
-              overflow: TextOverflow.ellipsis,
-            ),
+          foregroundColor: foregroundColor,
+          backgroundColor: backgroundColor,
+          textStyle: const TextStyle(
+            fontWeight: FontWeight.w700,
+            fontSize: 16.0,
+            overflow: TextOverflow.ellipsis,
           ),
         ),
         child: Align(
