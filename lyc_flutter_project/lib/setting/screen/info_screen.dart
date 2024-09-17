@@ -114,10 +114,12 @@ class _InfoScreenState extends State<InfoScreen> {
                           const SizedBox(height: 20.0),
                           TwoButtons(
                             fstOnPressed: () {
+                              refresh();
                               Navigator.pop(context);
                             },
                             scdOnPressed: () {
-                              value.saveMemberInfo();
+                              save();
+                              refresh();
                               Navigator.pop(context);
                             },
                           ),
@@ -129,6 +131,14 @@ class _InfoScreenState extends State<InfoScreen> {
         );
       },
     );
+  }
+
+  Future<void> refresh() async {
+    await context.read<SettingProvider>().getProfile(refresh: true);
+  }
+
+  Future<void> save() async {
+    await context.read<SettingProvider>().saveMemberInfo();
   }
 }
 
