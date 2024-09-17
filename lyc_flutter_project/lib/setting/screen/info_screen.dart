@@ -88,9 +88,11 @@ class _InfoScreenState extends State<InfoScreen> {
                           const SizedBox(height: 20.0),
                           InfoTextFormField(
                             initialValue: member!.nickname,
+                            onChanged: (text) => value.updateNickname(text),
                           ),
                           InfoTextFormField(
                             initialValue: member!.loginId,
+                            onChanged: (text) => value.updateLoginId(text),
                           ),
                           const InfoTextFormField(
                             readOnly: true,
@@ -99,6 +101,7 @@ class _InfoScreenState extends State<InfoScreen> {
                           InfoTextFormField(
                             initialValue: member!.introduction,
                             maxLines: 5,
+                            onChanged: (text) => value.updateIntroduction(text),
                           ),
                           const CommonButton(
                             label: "배송지 변경",
@@ -114,6 +117,7 @@ class _InfoScreenState extends State<InfoScreen> {
                               Navigator.pop(context);
                             },
                             scdOnPressed: () {
+                              value.saveMemberInfo();
                               Navigator.pop(context);
                             },
                           ),

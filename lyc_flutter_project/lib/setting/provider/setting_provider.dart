@@ -59,6 +59,7 @@ class SettingProvider extends ChangeNotifier {
 
   void saveMemberInfo() {
     if (canSaveMemberInfo()) {
+      print("save : nick=${_memberModel!.nickname}, id=${_memberModel!.loginId}, intro=${_memberModel!.introduction}, image=${_memberModel!.profileImage}");
       repositoryProvider.repository.updateMemberInfo(
         memberModel: _memberModel!,
       );
