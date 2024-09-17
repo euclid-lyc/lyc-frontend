@@ -34,6 +34,20 @@ class MemberModel {
     required this.loginId,
   });
 
+  MemberModel copyWith({
+    String? profileImage,
+    String? nickname,
+    String? introduction,
+    String? loginId,
+  }) {
+    return MemberModel(
+      profileImage: profileImage ?? this.profileImage,
+      nickname: nickname ?? this.nickname,
+      introduction: introduction ?? this.introduction,
+      loginId: loginId ?? this.loginId,
+    );
+  }
+
   Map<String, dynamic> toJson() => _$MemberModelToJson(this);
 
   factory MemberModel.fromJson(Map<String, dynamic> json) =>
@@ -78,6 +92,6 @@ class PasswordModel {
 
   Map<String, dynamic> toJson() => _$PasswordModelToJson(this);
 
-  factory PasswordModel.fromJson(Map<String, dynamic> json)
-  => _$PasswordModelFromJson(json);
+  factory PasswordModel.fromJson(Map<String, dynamic> json) =>
+      _$PasswordModelFromJson(json);
 }

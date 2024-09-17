@@ -58,7 +58,7 @@ class InfoTextFormField extends StatelessWidget {
           enabledBorder: baseBorder,
           focusedBorder: baseBorder.copyWith(
             borderSide: baseBorder.borderSide.copyWith(
-              width: 2.0,
+              width: 4.0,
               color: AppColor.brown,
             ),
           ),
