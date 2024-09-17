@@ -30,20 +30,38 @@ class SettingProvider extends ChangeNotifier {
   }
 
   void updateProfileImage(XFile newImage) {
-    _memberModel = _memberModel!.copyWith(profileImage: newImage.path.toString());
+    _memberModel =
+        _memberModel!.copyWith(profileImage: newImage.path.toString());
     print("update image : ${_memberModel!.profileImage}");
-    notifyListeners();
   }
 
   void updateNickname(String newNickname) {
     _memberModel = _memberModel!.copyWith(nickname: newNickname);
+    print("new nick: ${_memberModel!.nickname}");
+    notifyListeners();
   }
 
   void updateLoginId(String newLoginId) {
     _memberModel = _memberModel!.copyWith(loginId: newLoginId);
+    print("new id: ${_memberModel!.loginId}");
+
   }
 
   void updateIntroduction(String newIntroduction) {
     _memberModel = _memberModel!.copyWith(introduction: newIntroduction);
+    print("new intro: ${_memberModel!.introduction}");
+
+  }
+
+  bool canSaveMemberInfo() {
+    return true;
+  }
+
+  void saveMemberInfo() {
+    if (canSaveMemberInfo()) {
+      repositoryProvider.repository.updateMemberInfo(
+        memberModel: _memberModel!,
+      );
+    }
   }
 }
