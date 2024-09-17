@@ -29,10 +29,46 @@ class _InfoScreenState extends State<InfoScreen> {
   bool picked = false;
   String? newProfile;
 
+  late TextEditingController nicknameController;
+  late TextEditingController loginIdController;
+  late TextEditingController introductionController;
+
   @override
   void initState() {
     super.initState();
     context.read<SettingProvider>().getProfile();
+
+    nicknameController = TextEditingController();
+    loginIdController = TextEditingController();
+    introductionController = TextEditingController();
+
+    nicknameController.addListener(nicknameListener);
+    loginIdController.addListener(loginIdListener);
+    introductionController.addListener(introductionListener);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    nicknameController.removeListener(nicknameListener);
+    loginIdController.removeListener(loginIdListener);
+    introductionController.removeListener(introductionListener);
+
+    nicknameController.dispose();
+    loginIdController.dispose();
+    introductionController.dispose();
+  }
+
+  void nicknameListener() {
+    context.read<SettingProvider>().updateNickname(nicknameController.text);
+  }
+
+  void loginIdListener() {
+    context.read<SettingProvider>().updateLoginId(loginIdController.text);
+  }
+
+  void introductionListener() {
+    context.read<SettingProvider>().updateIntroduction(introductionController.text);
   }
 
   @override
