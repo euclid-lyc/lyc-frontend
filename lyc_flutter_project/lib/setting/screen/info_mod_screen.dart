@@ -26,79 +26,85 @@ class _InfoModScreenState extends State<InfoModScreen> {
       backgroundColor: AppColor.lightGrey,
       appBar: const NormalAppbar(title: "푸시알림 설정"),
       body: DefaultPadding(
+        bottom: 40.0,
         child: Center(
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SwitchBox(
-                  label: "DM 알림",
-                  isChecked: isDM,
-                  onChanged: (value) {
-                    setState(() {
-                      isDM = value;
-                    });
-                  },
+          child: Column(
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SwitchBox(
+                        label: "DM 알림",
+                        isChecked: isDM,
+                        onChanged: (value) {
+                          setState(() {
+                            isDM = value;
+                          });
+                        },
+                      ),
+                      SwitchBox(
+                        label: "피드 알림",
+                        isChecked: isFeed,
+                        onChanged: (value) {
+                          setState(() {
+                            isFeed = value;
+                          });
+                        },
+                        note: "팔로워의 피드가 업데이트 되었을 때 알림을 전송합니다",
+                      ),
+                      SwitchBox(
+                        label: "일정 알림",
+                        isChecked: isSchedule,
+                        onChanged: (value) {
+                          setState(() {
+                            isSchedule = value;
+                          });
+                        },
+                        note: "등록된 일정의 종료가 임박했을 때 알림을 전송합니다",
+                      ),
+                      SwitchBox(
+                        label: "좋아요 알림",
+                        isChecked: isLiked,
+                        onChanged: (value) {
+                          setState(() {
+                            isLiked = value;
+                          });
+                        },
+                      ),
+                      SwitchBox(
+                        label: "이벤트 알림",
+                        isChecked: isEvent,
+                        onChanged: (value) {
+                          setState(() {
+                            isEvent = value;
+                          });
+                        },
+                        note: "진행중인 이벤트 및 결과 발표에 대한 알림을 전송합니다.",
+                      ),
+                      SwitchBox(
+                        label: "광고 알림",
+                        isChecked: isAd,
+                        onChanged: (value) {
+                          setState(() {
+                            isAd = value;
+                          });
+                        },
+                      ),
+                    ],
+                  ),
                 ),
-                SwitchBox(
-                  label: "피드 알림",
-                  isChecked: isFeed,
-                  onChanged: (value) {
-                    setState(() {
-                      isFeed = value;
-                    });
-                  },
-                  note: "팔로워의 피드가 업데이트 되었을 때 알림을 전송합니다",
-                ),
-                SwitchBox(
-                  label: "일정 알림",
-                  isChecked: isSchedule,
-                  onChanged: (value) {
-                    setState(() {
-                      isSchedule = value;
-                    });
-                  },
-                  note: "등록된 일정의 종료가 임박했을 때 알림을 전송합니다",
-                ),
-                SwitchBox(
-                  label: "좋아요 알림",
-                  isChecked: isLiked,
-                  onChanged: (value) {
-                    setState(() {
-                      isLiked = value;
-                    });
-                  },
-                ),
-                SwitchBox(
-                  label: "이벤트 알림",
-                  isChecked: isEvent,
-                  onChanged: (value) {
-                    setState(() {
-                      isEvent = value;
-                    });
-                  },
-                  note: "진행중인 이벤트 및 결과 발표에 대한 알림을 전송합니다.",
-                ),
-                SwitchBox(
-                  label: "광고 알림",
-                  isChecked: isAd,
-                  onChanged: (value) {
-                    setState(() {
-                      isAd = value;
-                    });
-                  },
-                ),
-                const SizedBox(height: 20.0),
-                TwoButtons(
-                  fstOnPressed: () {
-                    Navigator.pop(context);
-                  },
-                  scdOnPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ],
-            ),
+              ),
+              TwoButtons(
+                fstOnPressed: () {
+                  Navigator.pop(context);
+                },
+                scdOnPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ],
           ),
         ),
       ),
