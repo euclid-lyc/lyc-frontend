@@ -10,6 +10,7 @@ import 'package:lyc_flutter_project/common/widget/two_buttons.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/setting/model/member_model.dart';
 import 'package:lyc_flutter_project/setting/provider/setting_provider.dart';
+import 'package:lyc_flutter_project/setting/widget/address_dialog.dart';
 import 'package:lyc_flutter_project/setting/widget/common_button.dart';
 import 'package:lyc_flutter_project/setting/widget/info_text_form_field.dart';
 import 'package:lyc_flutter_project/styles/default_padding.dart';
@@ -103,9 +104,12 @@ class _InfoScreenState extends State<InfoScreen> {
                             maxLines: 5,
                             onChanged: (text) => value.updateIntroduction(text),
                           ),
-                          const CommonButton(
+                          CommonButton(
                             label: "배송지 변경",
-                            onPressed: tmp,
+                            onPressed: () => showDialog(
+                              context: context,
+                              builder: (context) => const AddressDialog(),
+                            ),
                           ),
                           const CommonButton(
                             label: "패스워드 변경",

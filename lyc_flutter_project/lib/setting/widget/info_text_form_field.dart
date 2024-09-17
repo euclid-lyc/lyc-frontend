@@ -9,6 +9,8 @@ class InfoTextFormField extends StatelessWidget {
   final String? hint;
   final int maxLines;
   final bool obscureText;
+  final Color fillColor;
+  final double borderRadius;
 
   const InfoTextFormField({
     super.key,
@@ -19,12 +21,14 @@ class InfoTextFormField extends StatelessWidget {
     this.hint,
     this.maxLines = 1,
     this.obscureText = false,
+    this.fillColor = Colors.white,
+    this.borderRadius = 20.0,
   });
 
   @override
   Widget build(BuildContext context) {
     final baseBorder = OutlineInputBorder(
-      borderRadius: BorderRadius.circular(20.0),
+      borderRadius: BorderRadius.circular(borderRadius),
       borderSide: BorderSide.none,
     );
 
@@ -53,7 +57,7 @@ class InfoTextFormField extends StatelessWidget {
             fontSize: 16.0,
           ),
           filled: true,
-          fillColor: Colors.white,
+          fillColor: fillColor,
           border: baseBorder,
           enabledBorder: baseBorder,
           focusedBorder: baseBorder.copyWith(
