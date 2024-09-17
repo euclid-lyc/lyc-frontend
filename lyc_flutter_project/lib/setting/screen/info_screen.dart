@@ -116,7 +116,8 @@ class _InfoScreenState extends State<InfoScreen> {
                             label: "패스워드 변경",
                             onPressed: () => showDialog(
                               context: context,
-                              builder: (context) => const PasswordChangeDialog(),
+                              builder: (context) =>
+                                  const PasswordChangeDialog(),
                             ),
                           ),
                           const SizedBox(height: 20.0),

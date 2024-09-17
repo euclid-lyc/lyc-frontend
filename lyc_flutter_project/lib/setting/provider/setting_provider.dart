@@ -13,6 +13,10 @@ class SettingProvider extends ChangeNotifier {
   MemberModel? _memberModel;
   bool _loadingMember = true;
 
+  String? _oldPassword;
+  String? _newPassword;
+  String? _confirmPassword;
+
   get member => _memberModel;
 
   get loadingMember => _loadingMember;
@@ -55,6 +59,36 @@ class SettingProvider extends ChangeNotifier {
       await repositoryProvider.repository.updateMemberInfo(
         memberModel: _memberModel!,
       );
+    }
+  }
+
+  void setOldPassword(String pw) {
+    _oldPassword = pw;
+  }
+
+  void setNewPassword(String pw) {
+    _newPassword = pw;
+  }
+
+  void setConfirmPassword(String pw) {
+    _confirmPassword = pw;
+  }
+
+  Future<void> saveNewPassword() async {
+    if (_oldPassword == null ||
+        _newPassword == null ||
+        _confirmPassword == null) return;
+    try {
+      PasswordModel model = PasswordModel(
+        oldPassword: _oldPassword!,
+        newPassword: _newPassword!,
+        confirmPassword: _confirmPassword!,
+      );
+      await repositoryProvider.repository.updatePassword(
+        passwordModel: model,
+      );
+    } catch (e) {
+      Exception(e);
     }
   }
 }
