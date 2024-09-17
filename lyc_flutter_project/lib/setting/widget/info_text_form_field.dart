@@ -44,6 +44,7 @@ class InfoTextFormField extends StatelessWidget {
           color: Colors.black,
           fontWeight: FontWeight.w500,
           fontSize: 16.0,
+          overflow: TextOverflow.ellipsis,
         ),
         controller: controller,
         cursorColor: Colors.grey,
@@ -55,6 +56,7 @@ class InfoTextFormField extends StatelessWidget {
             color: Colors.grey,
             fontWeight: FontWeight.w500,
             fontSize: 16.0,
+            overflow: TextOverflow.ellipsis
           ),
           filled: true,
           fillColor: fillColor,
