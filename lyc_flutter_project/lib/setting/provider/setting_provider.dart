@@ -31,12 +31,19 @@ class SettingProvider extends ChangeNotifier {
   Future<void> getProfile({
     bool refresh = false,
   }) async {
-    if (_memberModel == null || refresh) {
-      _loadingMember = true;
-      final resp = await repositoryProvider.repository.getMemberInfo();
-      _memberModel = resp.result;
-      _loadingMember = false;
+    try {
+      if (_memberModel == null || refresh) {
+        _loadingMember = true;
+        notifyListeners();
+        final resp = await repositoryProvider.repository.getMemberInfo();
+        _memberModel = resp.result;
+        _loadingMember = false;
+        notifyListeners();
+      }
+    } catch (e) {
+      _loadingPushAlarm = false; // 에러 발생 시에도 로딩 상태를 false로 설정합니다.
       notifyListeners();
+      throw Exception(e);
     }
   }
 
@@ -99,19 +106,6 @@ class SettingProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> getPushAlarm({bool refresh = false}) async {
-    if (_loadingPushAlarm || !refresh) return;
-    try {
-      _loadingPushAlarm = true;
-      final resp = await repositoryProvider.repository.getPushAlarms();
-      _pushAlarmModel = resp.result;
-      _loadingPushAlarm = false;
-      notifyListeners();
-    } catch (e) {
-      Exception(e);
-    }
-  }
-
   void updatePushAlarm({
     bool dm = false,
     bool feed = false,
@@ -127,22 +121,5 @@ class SettingProvider extends ChangeNotifier {
     if (event) _pushAlarmModel = _pushAlarmModel!.copyWith(event: event);
     if (ad) _pushAlarmModel = _pushAlarmModel!.copyWith(ad: ad);
     notifyListeners();
-  }
-
-  Future<void> refreshAlarm() async {
-    try {
-      await getPushAlarm(refresh: true);
-    } catch (e) {
-      Exception(e);
-    }
-  }
-
-  Future<void> savePushAlarm() async {
-    try {
-      await repositoryProvider.repository
-          .updatePushAlarms(pushAlarmModel: _pushAlarmModel!);
-    } catch (e) {
-      Exception(e);
-    }
   }
 }

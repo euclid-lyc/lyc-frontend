@@ -37,35 +37,41 @@ class InfoModScreen extends StatelessWidget {
                                 SwitchBox(
                                   label: "DM 알림",
                                   isChecked: alarmModel!.dm,
-                                  onChanged: (newValue) => value.updatePushAlarm(dm: newValue),
+                                  onChanged: (newValue) =>
+                                      value.updatePushAlarm(dm: newValue),
                                 ),
                                 SwitchBox(
                                   label: "피드 알림",
                                   isChecked: alarmModel!.feed,
-                                  onChanged: (newValue) => value.updatePushAlarm(feed: newValue),
+                                  onChanged: (newValue) =>
+                                      value.updatePushAlarm(feed: newValue),
                                   note: "팔로워의 피드가 업데이트 되었을 때 알림을 전송합니다",
                                 ),
                                 SwitchBox(
                                   label: "일정 알림",
                                   isChecked: alarmModel!.schedule,
-                                  onChanged: (newValue) => value.updatePushAlarm(schedule: newValue),
+                                  onChanged: (newValue) =>
+                                      value.updatePushAlarm(schedule: newValue),
                                   note: "등록된 일정의 종료가 임박했을 때 알림을 전송합니다",
                                 ),
                                 SwitchBox(
                                   label: "좋아요 알림",
                                   isChecked: alarmModel!.likeMark,
-                                  onChanged: (newValue) => value.updatePushAlarm(likeMark: newValue),
+                                  onChanged: (newValue) =>
+                                      value.updatePushAlarm(likeMark: newValue),
                                 ),
                                 SwitchBox(
                                   label: "이벤트 알림",
                                   isChecked: alarmModel!.event,
-                                  onChanged: (newValue) => value.updatePushAlarm(event: newValue),
+                                  onChanged: (newValue) =>
+                                      value.updatePushAlarm(event: newValue),
                                   note: "진행중인 이벤트 및 결과 발표에 대한 알림을 전송합니다.",
                                 ),
                                 SwitchBox(
                                   label: "광고 알림",
                                   isChecked: alarmModel!.ad,
-                                  onChanged: (newValue) => value.updatePushAlarm(ad: newValue),
+                                  onChanged: (newValue) =>
+                                      value.updatePushAlarm(ad: newValue),
                                 ),
                               ],
                             ),
@@ -73,12 +79,9 @@ class InfoModScreen extends StatelessWidget {
                         ),
                         TwoButtons(
                           fstOnPressed: () {
-                            value.refreshAlarm();
                             Navigator.pop(context);
                           },
                           scdOnPressed: () {
-                            value.savePushAlarm();
-                            value.refreshAlarm();
                             Navigator.pop(context);
                           },
                         ),

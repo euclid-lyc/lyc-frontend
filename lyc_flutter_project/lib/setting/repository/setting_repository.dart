@@ -31,7 +31,7 @@ abstract class SettingRepository {
   @Headers({"accessToken": "true"})
   Future<DeliveryModel> updateDeliveryInfo({
     @Body() required DeliveryModel deliveryModel,
-});
+  });
 
   @GET("/info")
   @Headers({"accessToken": "true"})
@@ -41,16 +41,6 @@ abstract class SettingRepository {
   @Headers({"accessToken": "true"})
   Future<MemberModel> updateMemberInfo({
     @Body() required MemberModel memberModel,
-});
-
-  @GET("/push-sets")
-  @Headers({"accessToken": "true"})
-  Future<ApiResponse<PushAlarmModel>> getPushAlarms();
-
-  @PATCH("/push-sets")
-  @Headers({"accessToken": "true"})
-  Future<ApiResponse<PushAlarmModel>> updatePushAlarms({
-    @Body() required PushAlarmModel pushAlarmModel,
   });
 
   @PATCH("/pw-info")
