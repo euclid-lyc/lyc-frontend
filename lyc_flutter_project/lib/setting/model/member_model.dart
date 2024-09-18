@@ -72,6 +72,24 @@ class PushAlarmModel {
     required this.ad,
   });
 
+  PushAlarmModel copyWith({
+    bool? dm,
+    bool? feed,
+    bool? schedule,
+    bool? likeMark,
+    bool? event,
+    bool? ad,
+  }) {
+    return PushAlarmModel(
+      dm: dm ?? this.dm,
+      feed: feed ?? this.feed,
+      schedule: schedule ?? this.schedule,
+      likeMark: likeMark ?? this.likeMark,
+      event: event ?? this.event,
+      ad: ad ?? this.ad,
+    );
+  }
+
   Map<String, dynamic> toJson() => _$PushAlarmModelToJson(this);
 
   factory PushAlarmModel.fromJson(Map<String, dynamic> json) =>

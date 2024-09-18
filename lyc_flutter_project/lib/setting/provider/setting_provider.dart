@@ -17,9 +17,16 @@ class SettingProvider extends ChangeNotifier {
   String? _newPassword;
   String? _confirmPassword;
 
+  PushAlarmModel? _pushAlarmModel;
+  bool _loadingPushAlarm = true;
+
   get member => _memberModel;
 
   get loadingMember => _loadingMember;
+
+  get alarm => _pushAlarmModel;
+
+  get loadingPushAlarm => _loadingPushAlarm;
 
   Future<void> getProfile({
     bool refresh = false,
@@ -87,6 +94,53 @@ class SettingProvider extends ChangeNotifier {
       await repositoryProvider.repository.updatePassword(
         passwordModel: model,
       );
+    } catch (e) {
+      Exception(e);
+    }
+  }
+
+  Future<void> getPushAlarm({bool refresh = false}) async {
+    if (_loadingPushAlarm || !refresh) return;
+    try {
+      _loadingPushAlarm = true;
+      final resp = await repositoryProvider.repository.getPushAlarms();
+      _pushAlarmModel = resp.result;
+      _loadingPushAlarm = false;
+      notifyListeners();
+    } catch (e) {
+      Exception(e);
+    }
+  }
+
+  void updatePushAlarm({
+    bool dm = false,
+    bool feed = false,
+    bool schedule = false,
+    bool likeMark = false,
+    bool event = false,
+    bool ad = false,
+  }) async {
+    if (dm) _pushAlarmModel = _pushAlarmModel!.copyWith(dm: dm);
+    if (feed) _pushAlarmModel = _pushAlarmModel!.copyWith(feed: feed);
+    if (schedule) _pushAlarmModel = _pushAlarmModel!.copyWith(schedule: schedule);
+    if (likeMark) _pushAlarmModel = _pushAlarmModel!.copyWith(likeMark: likeMark);
+    if (event) _pushAlarmModel = _pushAlarmModel!.copyWith(event: event);
+    if (ad) _pushAlarmModel = _pushAlarmModel!.copyWith(ad: ad);
+    notifyListeners();
+  }
+
+  Future<void> refreshAlarm() async {
+    try {
+      await getPushAlarm(refresh: true);
+    } catch (e) {
+      Exception(e);
+    }
+  }
+
+  Future<void> savePushAlarm() async {
+    try {
+      await repositoryProvider.repository
+          .updatePushAlarms(pushAlarmModel: _pushAlarmModel!);
     } catch (e) {
       Exception(e);
     }
