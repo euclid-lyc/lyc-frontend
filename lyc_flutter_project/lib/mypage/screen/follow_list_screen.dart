@@ -52,7 +52,6 @@ class _FollowListContentState extends State<_FollowListContent> {
         bottom: 0.0,
         child: Column(
           children: [
-            // switch button
             Consumer<FollowProvider>(
               builder: (context, value, child) {
                 return Container(
@@ -114,6 +113,7 @@ class _FollowListContentState extends State<_FollowListContent> {
                                   foregroundColor: Colors.black,
                                   onPressed: () {
                                     value.unfollowUser(memberId: user.memberId);
+                                    value.getList(refresh: true);
                                   },
                                   fontWeight: FontWeight.w400,
                                   label: "삭제",

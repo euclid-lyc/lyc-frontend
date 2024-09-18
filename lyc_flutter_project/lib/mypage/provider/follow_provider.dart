@@ -61,6 +61,15 @@ class FollowProvider extends ChangeNotifier {
     getList(refresh: true);
   }
 
+  Future<void> refresh() async {
+    try {
+      await getList(refresh: true);
+      notifyListeners();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   Future<void> getList({
     bool refresh = false,
     int pageSize = 10,
