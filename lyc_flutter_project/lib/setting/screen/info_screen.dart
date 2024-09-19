@@ -134,7 +134,7 @@ class _InfoScreenState extends State<InfoScreen> {
                             ),
                           ),
                           CommonButton(
-                            label: "패스워드 변경",
+                            label: "비밀번호 변경",
                             onPressed: () async {
                               final changePw = await showDialog<bool>(
                                 context: context,

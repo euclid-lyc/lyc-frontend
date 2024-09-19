@@ -48,9 +48,8 @@ class _PasswordChangeDialogState extends State<PasswordChangeDialog> {
                         color: Colors.black,
                       ),
                     ),
-                    const SizedBox(height: 16.0),
+                    const SizedBox(height: 10.0),
                     const _SubTitle(label: "비밀번호 입력"),
-                    const SizedBox(height: 8.0),
                     CustomTextFormField(
                       fillColor: AppColor.lightGrey,
                       hint: "기존 비밀번호를 입력해주세요",
@@ -63,9 +62,8 @@ class _PasswordChangeDialogState extends State<PasswordChangeDialog> {
                         if (checkOldMsg != null) return (checkOldMsg);
                       },
                     ),
-                    const SizedBox(height: 16.0),
+                    const SizedBox(height: 10.0),
                     const _SubTitle(label: "새 비밀번호 입력"),
-                    const SizedBox(height: 8.0),
                     CustomTextFormField(
                       fillColor: AppColor.lightGrey,
                       hint: "새로운 비밀번호를 입력해주세요",
@@ -77,9 +75,9 @@ class _PasswordChangeDialogState extends State<PasswordChangeDialog> {
                         if (pw.length > 255) return ("비밀번호를 255자 이내로 입력해주세요");
                       },
                     ),
-                    const SizedBox(height: 16.0),
+                    const SizedBox(height: 10.0),
                     const _SubTitle(label: "새 비밀번호 확인"),
-                    const SizedBox(height: 8.0),
+                    //const SizedBox(height: 8.0),
                     CustomTextFormField(
                       fillColor: AppColor.lightGrey,
                       hint: "새 비밀번호를 다시 입력해주세요",
@@ -91,7 +89,7 @@ class _PasswordChangeDialogState extends State<PasswordChangeDialog> {
                         if (pw != value.newPassword) return ("비밀번호가 다릅니다");
                       },
                     ),
-                    const SizedBox(height: 24.0),
+                    const SizedBox(height: 20.0),
                     SizedBox(
                       height: 50.0,
                       width: double.infinity,
