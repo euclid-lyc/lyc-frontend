@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/common/widget/two_buttons.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/setting/style/text_style.dart';
-import 'package:lyc_flutter_project/setting/widget/info_text_form_field.dart';
+import 'package:lyc_flutter_project/setting/widget/custom_text_form_field.dart';
 import 'package:lyc_flutter_project/styles/default_padding.dart';
 import 'package:lyc_flutter_project/widget/normal_appbar.dart';
 
@@ -57,7 +57,7 @@ class WithdrawalScreen extends StatelessWidget {
                   color: Colors.black,
                 ),
               ),
-              const InfoTextFormField(
+              const CustomTextFormField(
                 obscureText: true,
                 hint: "패스워드를 입력해주세요",
               ),

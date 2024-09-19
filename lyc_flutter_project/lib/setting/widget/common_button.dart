@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lyc_flutter_project/common/widget/custom_text_button.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 
 class CommonButton extends StatelessWidget {
@@ -17,25 +18,15 @@ class CommonButton extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       height: 60.0,
       width: double.infinity,
-      child: TextButton(
+      child: CustomTextButton(
         onPressed: onPressed,
-        style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(Colors.white),
-          foregroundColor: MaterialStateProperty.all(AppColor.brown),
-          alignment: AlignmentDirectional.center,
-          textStyle: MaterialStateProperty.all(
-            const TextStyle(
-              fontWeight: FontWeight.w700,
-              fontSize: 16.0,
-            ),
-          ),
-          shape: MaterialStateProperty.all(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20.0),
-            ),
-          ),
-        ),
-        child: Text(label),
+        backgroundColor: Colors.white,
+        textColor: AppColor.brown,
+        fontWeight: FontWeight.w700,
+        fontSize: 16.0,
+        borderRadius: 20.0,
+        overlayColor: AppColor.grey,
+        label: label,
       ),
     );
   }

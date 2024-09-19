@@ -1,13 +1,19 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 
 class ImagePickerWidget extends StatefulWidget {
   final Function(XFile) onImageSelected;
   final ImagePicker picker;
+  final SvgPicture? icon;
 
-  ImagePickerWidget({required this.onImageSelected, required this.picker});
+  const ImagePickerWidget({
+    required this.onImageSelected,
+    required this.picker,
+    this.icon,
+  });
 
   @override
   _ImagePickerWidgetState createState() => _ImagePickerWidgetState();
@@ -34,7 +40,7 @@ class _ImagePickerWidgetState extends State<ImagePickerWidget> {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text(
+              title: const Text(
                 '사진 불러오기',
                 style: TextStyle(
                     color: AppColor.brown,
@@ -53,7 +59,7 @@ class _ImagePickerWidgetState extends State<ImagePickerWidget> {
                       getImage(ImageSource.camera);
                     },
                   ),
-                  Spacer(),
+                  const Spacer(),
                   TextButton(
                     child: Text(
                       '갤러리',
@@ -70,34 +76,35 @@ class _ImagePickerWidgetState extends State<ImagePickerWidget> {
           },
         );
       },
-      child: AspectRatio(
-        aspectRatio: (3/4),
-        child: Container(
-          width: double.infinity,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(30),
-          ),
-          child: (_image != null)
-              ? ClipRRect(
+      child: widget.icon ??
+          AspectRatio(
+            aspectRatio: (3 / 4),
+            child: Container(
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: Colors.white,
                 borderRadius: BorderRadius.circular(30),
-                child: Image.file(
-                  File(_image!.path),
-                  fit: BoxFit.cover,
-                ),
-              )
-              : Icon(
-                  Icons.camera_alt_outlined,
-                  color: AppColor.grey,
-                  size: 100,
-                ),
-        ),
-      ),
+              ),
+              child: (_image != null)
+                  ? ClipRRect(
+                      borderRadius: BorderRadius.circular(30),
+                      child: Image.file(
+                        File(_image!.path),
+                        fit: BoxFit.cover,
+                      ),
+                    )
+                  : const Icon(
+                      Icons.camera_alt_outlined,
+                      color: AppColor.grey,
+                      size: 100,
+                    ),
+            ),
+          ),
     );
   }
 
   TextStyle _pickerDialogTextStyle() {
-    return TextStyle(
+    return const TextStyle(
       color: AppColor.brown,
       fontSize: 16,
       fontWeight: FontWeight.w500,

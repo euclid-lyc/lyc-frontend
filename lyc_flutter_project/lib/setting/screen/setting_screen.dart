@@ -37,7 +37,7 @@ class SettingScreen extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) {
-                      return InfoScreen();
+                      return const InfoScreen();
                     },
                   ),
                 ),
@@ -52,7 +52,7 @@ class SettingScreen extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) {
-                      return InfoModScreen();
+                      return const InfoModScreen();
                     },
                   ),
                 ),
@@ -63,7 +63,7 @@ class SettingScreen extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) {
-                      return BlockModScreen();
+                      return const BlockModScreen();
                     },
                   ),
                 ),
@@ -92,7 +92,7 @@ class SettingScreen extends StatelessWidget {
                 onPressed: () {
                   showDialog(
                     context: context,
-                    builder: (context) => LogoutDialog(),
+                    builder: (context) => const LogoutDialog(),
                   );
                 },
               ),
@@ -102,7 +102,7 @@ class SettingScreen extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) {
-                      return WithdrawalScreen();
+                      return const WithdrawalScreen();
                     },
                   ),
                 ),

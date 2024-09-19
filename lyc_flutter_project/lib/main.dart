@@ -12,6 +12,8 @@ import 'package:lyc_flutter_project/mypage/repository/mypage_repository.dart';
 import 'package:lyc_flutter_project/posting/provider/posting_detail_provider.dart';
 import 'package:lyc_flutter_project/posting/repository/clothes_repository.dart';
 import 'package:lyc_flutter_project/posting/repository/coordi_repository.dart';
+import 'package:lyc_flutter_project/setting/provider/setting_provider.dart';
+import 'package:lyc_flutter_project/setting/repository/setting_repository.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -62,20 +64,36 @@ void main() {
             mypageRepositoryProvider: context.read<MypageRepositoryProvider>(),
           ),
         ),
-        ChangeNotifierProxyProvider2<MypageProvider, CoordiRepositoryProvider, PostingDetailProviderFactory>(
+        ChangeNotifierProxyProvider2<MypageProvider, CoordiRepositoryProvider,
+            PostingDetailProviderFactory>(
           create: (context) => PostingDetailProviderFactory(
             mypageProvider: Provider.of<MypageProvider>(context, listen: false),
-            coordiRepositoryProvider: Provider.of<CoordiRepositoryProvider>(context, listen: false),
+            coordiRepositoryProvider:
+                Provider.of<CoordiRepositoryProvider>(context, listen: false),
           ),
-          update: (context, mypageProvider, postingRepositoryProvider, previous) =>
-          previous ?? PostingDetailProviderFactory(
-            mypageProvider: mypageProvider,
-            coordiRepositoryProvider: postingRepositoryProvider,
-          ),
+          update:
+              (context, mypageProvider, postingRepositoryProvider, previous) =>
+                  previous ??
+                  PostingDetailProviderFactory(
+                    mypageProvider: mypageProvider,
+                    coordiRepositoryProvider: postingRepositoryProvider,
+                  ),
         ),
         ChangeNotifierProvider(
           create: (context) => LoginProvider(
             Provider.of<DioProvider>(context, listen: false),
+          ),
+        ),
+        ChangeNotifierProvider(
+          create: (context) =>
+              SettingRepositoryProvider(dio: context.read<DioProvider>().dio),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => SettingProvider(
+            repositoryProvider: Provider.of<SettingRepositoryProvider>(
+              context,
+              listen: false,
+            ),
           ),
         ),
       ],
