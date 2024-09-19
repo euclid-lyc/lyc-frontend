@@ -22,7 +22,7 @@ class FeedRepositoryProvider extends ChangeNotifier {
 @RestApi()
 abstract class FeedRepository {
   factory FeedRepository(Dio dio, {String baseUrl}) = _FeedRepository;
-  
+
   @GET("/preview")
   @Headers({"accessToken": "true"})
   Future<ApiResponse<List<CoordiPostingPreview>>> getFeedPreview();
