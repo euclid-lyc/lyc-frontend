@@ -76,9 +76,9 @@ class CustomInterceptor extends Interceptor {
 
   @override
   Future<void> onError(
-    DioException err,
-    ErrorInterceptorHandler handler,
-  ) async {
+      DioException err,
+      ErrorInterceptorHandler handler,
+      ) async {
     print("[ERR] [${err.message}]");
 
     if (err.response?.statusCode == 401) {
