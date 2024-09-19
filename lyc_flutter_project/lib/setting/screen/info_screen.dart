@@ -12,7 +12,7 @@ import 'package:lyc_flutter_project/setting/model/member_model.dart';
 import 'package:lyc_flutter_project/setting/provider/setting_provider.dart';
 import 'package:lyc_flutter_project/setting/widget/address_dialog.dart';
 import 'package:lyc_flutter_project/setting/widget/common_button.dart';
-import 'package:lyc_flutter_project/setting/widget/info_text_form_field.dart';
+import 'package:lyc_flutter_project/setting/widget/custom_text_form_field.dart';
 import 'package:lyc_flutter_project/setting/widget/password_change_dialog.dart';
 import 'package:lyc_flutter_project/styles/default_padding.dart';
 import 'package:lyc_flutter_project/widget/image_picker_widget.dart';
@@ -30,6 +30,7 @@ class _InfoScreenState extends State<InfoScreen> {
   final ImagePicker picker = ImagePicker();
   bool picked = false;
   String? newProfile;
+  final TextEditingController nicknameController = TextEditingController();
 
   @override
   void initState() {
@@ -50,7 +51,7 @@ class _InfoScreenState extends State<InfoScreen> {
                   child: CustomLoading(),
                 )
               : DefaultPadding(
-                  bottom: 20,
+                  bottom: 40,
                   child: Center(
                     child: SingleChildScrollView(
                       keyboardDismissBehavior:
@@ -88,19 +89,39 @@ class _InfoScreenState extends State<InfoScreen> {
                             ],
                           ),
                           const SizedBox(height: 20.0),
-                          InfoTextFormField(
+                          CustomTextFormField(
                             initialValue: member!.nickname,
                             onChanged: (text) => value.updateNickname(text),
+                            validator: (value) {
+                              if (value == null ||
+                                  value.isEmpty ||
+                                  value.length < 2) {
+                                return ("닉네임을 2자 이상 입력해주세요");
+                              }
+                              if (value.length > 10) {
+                                return ("10자 이내로 입력해주세요");
+                              } else {
+                                return null;
+                              }
+                            },
                           ),
-                          InfoTextFormField(
+                          CustomTextFormField(
                             initialValue: member!.loginId,
                             onChanged: (text) => value.updateLoginId(text),
+                            validator: (value) {
+                              if (value == null ||
+                                  value.isEmpty ||
+                                  value.length < 6) {
+                                return ("아이디를 6자 이상 입력해주세요");
+                              }
+                              if (value.length > 30) {
+                                return ("30자 이내로 입력해주세요");
+                              } else {
+                                return null;
+                              }
+                            },
                           ),
-                          const InfoTextFormField(
-                            readOnly: true,
-                            initialValue: "karina123@gmail.com",
-                          ),
-                          InfoTextFormField(
+                          CustomTextFormField(
                             initialValue: member!.introduction,
                             maxLines: 5,
                             onChanged: (text) => value.updateIntroduction(text),
@@ -114,13 +135,22 @@ class _InfoScreenState extends State<InfoScreen> {
                           ),
                           CommonButton(
                             label: "패스워드 변경",
-                            onPressed: () => showDialog(
-                              context: context,
-                              builder: (context) =>
-                                  const PasswordChangeDialog(),
-                            ),
+                            onPressed: () async {
+                              final changePw = await showDialog<bool>(
+                                context: context,
+                                builder: (context) =>
+                                    const PasswordChangeDialog(),
+                              );
+                              if (changePw == true) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text("비밀번호가 변경되었습니다"),
+                                  ),
+                                );
+                              }
+                            },
                           ),
-                          const SizedBox(height: 20.0),
+                          const SizedBox(height: 20),
                           TwoButtons(
                             fstOnPressed: () {
                               refresh();
@@ -150,5 +180,3 @@ class _InfoScreenState extends State<InfoScreen> {
     await context.read<SettingProvider>().saveMemberInfo();
   }
 }
-
-void tmp() {}

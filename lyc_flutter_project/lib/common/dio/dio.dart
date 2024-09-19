@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:lyc_flutter_project/common/const/data.dart';
-import 'package:lyc_flutter_project/common/model/api_response.dart';
 
 class DioProvider extends ChangeNotifier {
   final Dio _dio = Dio();
@@ -33,7 +32,6 @@ class CustomInterceptor extends Interceptor {
 
     print("[REQ] [${options.method}] ${options.uri}");
 
-    // 토큰을 Authorization 헤더에 추가
     if (options.headers['accessToken'] == 'true') {
       options.headers.remove('accessToken');
     }
@@ -42,16 +40,6 @@ class CustomInterceptor extends Interceptor {
     options.headers.addAll({
       "Authorization": "Bearer $accessToken",
     });
-
-    if (options.headers['refreshToken'] == 'true') {
-      options.headers.remove('refreshToken');
-
-      final refreshToken = await storage.read(key: refreshTokenKey);
-      options.headers.addAll({
-        'authorization': 'Bearer $refreshToken',
-      });
-    }
-
   }
 
   @override
@@ -87,34 +75,38 @@ class CustomInterceptor extends Interceptor {
   }
 
   @override
-  Future<void> onError(DioException err, ErrorInterceptorHandler handler) async {
+  Future<void> onError(
+    DioException err,
+    ErrorInterceptorHandler handler,
+  ) async {
     print("[ERR] [${err.message}]");
 
     if (err.response?.statusCode == 401) {
       final errorCode = err.response?.data['code'];
 
-      if (errorCode == 'AA4004') {
-        // 로그아웃->재로그인 유도
-      } else if (errorCode == 'AA4005') {
-        final token = await storage.read(key: accessTokenKey);
+      if (errorCode == "AA4005") {
+        final accessToken = await storage.read(key: accessTokenKey);
         final options = err.requestOptions;
-        options.headers["Authorization"] = "Bearer $token";
+        options.headers['Authorization'] = "Bearer $accessToken";
+
         try {
           final response = await dio.fetch(options);
           handler.resolve(response);
           return;
         } on DioException catch (e) {
-          handler.next(e);
-          return;
+          if (e.response?.statusCode == 401) {
+            handler.next(e);
+          }
         }
       }
-      else if (errorCode == 'AA4008') {
+
+      if (errorCode == 'AA4008') {
         final newAccessToken = err.response?.headers.value('access-token');
         final newRefreshToken = err.response?.headers.value('refresh-token');
 
         if (newAccessToken != null && newRefreshToken != null) {
-          await storage.write(key: 'accessTokenKey', value: newAccessToken);
-          await storage.write(key: 'refreshTokenKey', value: newRefreshToken);
+          await storage.write(key: accessTokenKey, value: newAccessToken);
+          await storage.write(key: refreshTokenKey, value: newRefreshToken);
 
           final options = err.requestOptions;
           options.headers['Authorization'] = "Bearer $newAccessToken";
@@ -124,8 +116,10 @@ class CustomInterceptor extends Interceptor {
             handler.resolve(response);
             return;
           } on DioException catch (e) {
-            handler.next(e);
-            return;
+            if (e.response?.statusCode == 401) {
+              // 로그아웃
+              return;
+            }
           }
         }
       }

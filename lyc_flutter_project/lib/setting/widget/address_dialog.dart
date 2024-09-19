@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/common/widget/custom_text_button.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
-import 'package:lyc_flutter_project/setting/widget/info_text_form_field.dart';
+import 'package:lyc_flutter_project/setting/widget/custom_text_form_field.dart';
 
 class AddressDialog extends StatelessWidget {
   const AddressDialog({super.key});
@@ -41,7 +41,7 @@ class AddressDialog extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-                  child: InfoTextFormField(
+                  child: CustomTextFormField(
                     fillColor: AppColor.lightGrey,
                     hint: "우편번호",
                     readOnly: true,
@@ -55,13 +55,13 @@ class AddressDialog extends StatelessWidget {
                 ),
               ],
             ),
-            InfoTextFormField(
+            CustomTextFormField(
               fillColor: AppColor.lightGrey,
               hint: "주소",
               readOnly: true,
               borderRadius: 10.0,
             ),
-            InfoTextFormField(
+            CustomTextFormField(
               fillColor: AppColor.lightGrey,
               hint: "상세주소",
               borderRadius: 10.0,

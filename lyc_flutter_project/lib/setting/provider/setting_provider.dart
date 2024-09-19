@@ -1,4 +1,6 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lyc_flutter_project/setting/model/member_model.dart';
 import 'package:lyc_flutter_project/setting/repository/setting_repository.dart';
@@ -28,6 +30,8 @@ class SettingProvider extends ChangeNotifier {
 
   get loadingPushAlarm => _loadingPushAlarm;
 
+  get newPassword => _newPassword;
+
   Future<void> getProfile({
     bool refresh = false,
   }) async {
@@ -41,7 +45,7 @@ class SettingProvider extends ChangeNotifier {
         notifyListeners();
       }
     } catch (e) {
-      _loadingPushAlarm = false; // 에러 발생 시에도 로딩 상태를 false로 설정합니다.
+      _loadingPushAlarm = false;
       notifyListeners();
       throw Exception(e);
     }
@@ -88,10 +92,29 @@ class SettingProvider extends ChangeNotifier {
     _confirmPassword = pw;
   }
 
-  Future<void> saveNewPassword() async {
+  Future<bool> checkOldPassword(String? pw) async {
+    if (pw == null || pw.isEmpty) return false;
+    try {
+      PasswordModel tempModel =
+          PasswordModel(oldPassword: pw, newPassword: "", confirmPassword: " ");
+      await repositoryProvider.repository
+          .updatePassword(passwordModel: tempModel);
+      return false;
+    } on DioException catch (e) {
+      if (e.response?.data["code"] == "MEMBER4013") {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  }
+
+  Future<bool> saveNewPassword() async {
     if (_oldPassword == null ||
         _newPassword == null ||
-        _confirmPassword == null) return;
+        _confirmPassword == null) {
+      return false;
+    }
     try {
       PasswordModel model = PasswordModel(
         oldPassword: _oldPassword!,
@@ -101,8 +124,13 @@ class SettingProvider extends ChangeNotifier {
       await repositoryProvider.repository.updatePassword(
         passwordModel: model,
       );
-    } catch (e) {
-      Exception(e);
+      return true;
+    } on DioException catch (e) {
+      if (e.response?.data["code"] == "MEMBER2014") {
+        return true;
+      } else {
+        return false;
+      }
     }
   }
 
@@ -116,8 +144,10 @@ class SettingProvider extends ChangeNotifier {
   }) async {
     if (dm) _pushAlarmModel = _pushAlarmModel!.copyWith(dm: dm);
     if (feed) _pushAlarmModel = _pushAlarmModel!.copyWith(feed: feed);
-    if (schedule) _pushAlarmModel = _pushAlarmModel!.copyWith(schedule: schedule);
-    if (likeMark) _pushAlarmModel = _pushAlarmModel!.copyWith(likeMark: likeMark);
+    if (schedule)
+      _pushAlarmModel = _pushAlarmModel!.copyWith(schedule: schedule);
+    if (likeMark)
+      _pushAlarmModel = _pushAlarmModel!.copyWith(likeMark: likeMark);
     if (event) _pushAlarmModel = _pushAlarmModel!.copyWith(event: event);
     if (ad) _pushAlarmModel = _pushAlarmModel!.copyWith(ad: ad);
     notifyListeners();

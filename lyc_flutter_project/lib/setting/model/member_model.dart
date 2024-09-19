@@ -24,13 +24,13 @@ class DeliveryModel {
 class MemberModel {
   final String profileImage;
   final String nickname;
-  final String introduction;
+  final String? introduction;
   final String loginId;
 
   MemberModel({
     required this.profileImage,
     required this.nickname,
-    required this.introduction,
+    this.introduction,
     required this.loginId,
   });
 

@@ -23,7 +23,7 @@ Map<String, dynamic> _$DeliveryModelToJson(DeliveryModel instance) =>
 MemberModel _$MemberModelFromJson(Map<String, dynamic> json) => MemberModel(
       profileImage: json['profileImage'] as String,
       nickname: json['nickname'] as String,
-      introduction: json['introduction'] as String,
+      introduction: json['introduction'] as String?,
       loginId: json['loginId'] as String,
     );
 

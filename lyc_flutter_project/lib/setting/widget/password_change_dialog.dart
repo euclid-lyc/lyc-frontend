@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/common/widget/custom_text_button.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/setting/provider/setting_provider.dart';
-import 'package:lyc_flutter_project/setting/widget/info_text_form_field.dart';
+import 'package:lyc_flutter_project/setting/widget/custom_text_form_field.dart';
 import 'package:provider/provider.dart';
 
 class PasswordChangeDialog extends StatefulWidget {
@@ -13,6 +13,7 @@ class PasswordChangeDialog extends StatefulWidget {
 }
 
 class _PasswordChangeDialogState extends State<PasswordChangeDialog> {
+  String? checkOldMsg = "기존 비밀번호와 다릅니다";
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -50,29 +51,45 @@ class _PasswordChangeDialogState extends State<PasswordChangeDialog> {
                     const SizedBox(height: 16.0),
                     const _SubTitle(label: "비밀번호 입력"),
                     const SizedBox(height: 8.0),
-                    InfoTextFormField(
+                    CustomTextFormField(
                       fillColor: AppColor.lightGrey,
                       hint: "기존 비밀번호를 입력해주세요",
                       borderRadius: 10.0,
-                      onChanged: (pw) => value.setOldPassword(pw),
+                      obscureText: true,
+                      onChanged: (pw) {
+                        _onChagedOldPw(pw);
+                      },
+                      validator: (pw) {
+                        if (checkOldMsg != null) return (checkOldMsg);
+                      },
                     ),
                     const SizedBox(height: 16.0),
                     const _SubTitle(label: "새 비밀번호 입력"),
                     const SizedBox(height: 8.0),
-                    InfoTextFormField(
+                    CustomTextFormField(
                       fillColor: AppColor.lightGrey,
                       hint: "새로운 비밀번호를 입력해주세요",
                       borderRadius: 10.0,
                       onChanged: (pw) => value.setNewPassword(pw),
+                      obscureText: true,
+                      validator: (pw) {
+                        if (pw == null || pw.isEmpty || pw.length < 6) return ("비밀번호를 6자 이상 입력해주세요");
+                        if (pw.length > 255) return ("비밀번호를 255자 이내로 입력해주세요");
+                      },
                     ),
                     const SizedBox(height: 16.0),
                     const _SubTitle(label: "새 비밀번호 확인"),
                     const SizedBox(height: 8.0),
-                    InfoTextFormField(
+                    CustomTextFormField(
                       fillColor: AppColor.lightGrey,
                       hint: "새 비밀번호를 다시 입력해주세요",
                       borderRadius: 10.0,
                       onChanged: (pw) => value.setConfirmPassword(pw),
+                      obscureText: true,
+                      validator: (pw) {
+                        if (pw==null || pw.isEmpty) return ("새 비밀번호를 다시 입력해주세요");
+                        if (pw != value.newPassword) return ("비밀번호가 다릅니다");
+                      },
                     ),
                     const SizedBox(height: 24.0),
                     SizedBox(
@@ -81,9 +98,9 @@ class _PasswordChangeDialogState extends State<PasswordChangeDialog> {
                       child: CustomTextButton(
                         label: "저장",
                         fontSize: 16.0,
-                        onPressed: () {
-                          save();
-                          Navigator.of(context).pop();
+                        onPressed: () async {
+                          bool result = await value.saveNewPassword();
+                          if (result) Navigator.of(context).pop(true);
                         },
                       ),
                     ),
@@ -97,15 +114,23 @@ class _PasswordChangeDialogState extends State<PasswordChangeDialog> {
     );
   }
 
-  Future<void> save() async {
-    await context.read<SettingProvider>().saveNewPassword();
+  Future<void> _onChagedOldPw(String pw) async {
+    final result = await context.read<SettingProvider>().checkOldPassword(pw);
+    setState(() {
+      if (result) {
+        checkOldMsg = null;
+        context.read<SettingProvider>().setOldPassword(pw);
+      } else {
+        checkOldMsg = "기존 비밀번호와 다릅니다";
+      }
+    });
   }
 }
 
 class _SubTitle extends StatelessWidget {
   final String label;
 
-  const _SubTitle({Key? key, required this.label}) : super(key: key);
+  const _SubTitle({required this.label});
 
   @override
   Widget build(BuildContext context) {
