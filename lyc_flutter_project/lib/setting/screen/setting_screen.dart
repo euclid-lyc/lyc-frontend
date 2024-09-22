@@ -1,21 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:lyc_flutter_project/Join/Provider/login_provider.dart';
+import 'package:lyc_flutter_project/common/screen/splash_screen.dart';
+import 'package:lyc_flutter_project/common/widget/custom_alert_dialog.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/setting/screen/block_mod_screen.dart';
 import 'package:lyc_flutter_project/setting/screen/info_mod_screen.dart';
 import 'package:lyc_flutter_project/setting/screen/info_screen.dart';
 import 'package:lyc_flutter_project/setting/screen/withdrawal_screen.dart';
-import 'package:lyc_flutter_project/setting/widget/logout_dialog.dart';
 import 'package:lyc_flutter_project/setting/widget/title_button.dart';
 import 'package:lyc_flutter_project/setting/widget/title_text.dart';
 import 'package:lyc_flutter_project/styles/default_padding.dart';
 import 'package:lyc_flutter_project/widget/normal_appbar.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
+import 'package:provider/provider.dart';
 
 class SettingScreen extends StatelessWidget {
   const SettingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    Future<void> _logout() async {
+      await context.read<LoginProvider>().logout();
+      if (!context.read<LoginProvider>().isLoggedIn) {
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          "/login",
+          (Route<dynamic> route) => false,
+        );
+      }
+    }
+
     return Scaffold(
       backgroundColor: AppColor.lightGrey,
       appBar: const NormalAppbar(
@@ -92,7 +106,21 @@ class SettingScreen extends StatelessWidget {
                 onPressed: () {
                   showDialog(
                     context: context,
-                    builder: (context) => const LogoutDialog(),
+                    builder: (context) => CustomAlertDialog(
+                      title: "로그아웃하시겠습니까",
+                      leftButtonLabel: "아니오",
+                      rightButtonLabel: "네",
+                      leftButtonPressed: () => Navigator.pop(context),
+                      rightButtonPressed: () {
+                        pushReplacementWithoutNavBar(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const SplashScreen(),
+                          ),
+                        );
+                        _logout();
+                      },
+                    ),
                   );
                 },
               ),

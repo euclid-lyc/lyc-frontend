@@ -12,6 +12,7 @@ import 'package:lyc_flutter_project/mypage/repository/mypage_repository.dart';
 import 'package:lyc_flutter_project/posting/provider/posting_detail_provider.dart';
 import 'package:lyc_flutter_project/posting/repository/clothes_repository.dart';
 import 'package:lyc_flutter_project/posting/repository/coordi_repository.dart';
+import 'package:lyc_flutter_project/routes/routes.dart';
 import 'package:lyc_flutter_project/setting/provider/setting_provider.dart';
 import 'package:lyc_flutter_project/setting/repository/setting_repository.dart';
 import 'package:provider/provider.dart';
@@ -108,10 +109,10 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
+      routes: routes,
       title: 'Lead Your Closet',
       debugShowCheckedModeBanner: false,
-      home: SplashScreen(),
     );
   }
 }
