@@ -150,7 +150,7 @@ class _HomeScreenState extends State<HomeScreen> {
               const MarginBox(),
               Container(
                 padding:
-                const EdgeInsets.symmetric(horizontal: 30, vertical: 40),
+                    const EdgeInsets.symmetric(horizontal: 30, vertical: 40),
                 color: const Color(0xffF4F5F6),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -158,7 +158,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     const Text(
                       '유클리드',
                       style:
-                      TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
                     ),
                     const MarginBox(),
                     Row(
@@ -250,7 +250,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     Text(
                       'Copyright © 2024. All rights reserved.',
                       style:
-                      TextStyle(color: AppColor.deepGrey.withOpacity(0.8)),
+                          TextStyle(color: AppColor.deepGrey.withOpacity(0.8)),
                     )
                   ],
                 ),
@@ -269,27 +269,31 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget renderFeedPreview(
-      {required bool isLoading, required List<CoordiPostingPreview> list,}) {
+  Widget renderFeedPreview({
+    required bool isLoading,
+    required List<CoordiPostingPreview> list,
+  }) {
     if (isLoading) return const Center(child: CustomLoading());
     if (list.isEmpty) return const Text("불러올 게시글이 없습니다");
-    return
-      ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemCount: list!.length,
-        itemBuilder: (context, index) {
-          final posting = list[index];
-          return Container(
-            height: 190,
-            width: 135,
-            margin: const EdgeInsets.symmetric(
-              horizontal: 8.0,
-            ),
-            decoration: buildWhiteRoundBox(),
+    return ListView.builder(
+      scrollDirection: Axis.horizontal,
+      itemCount: list!.length,
+      itemBuilder: (context, index) {
+        final posting = list[index];
+        return Container(
+          height: 190,
+          width: 142,
+          margin: const EdgeInsets.symmetric(
+            horizontal: 8.0,
+          ),
+          decoration: buildWhiteRoundBox(),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(20.0),
             child: ImageNetworking(posting.image),
-          );
-        },
-      );
+          ),
+        );
+      },
+    );
   }
 }
 
