@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lyc_flutter_project/common/widget/round_image.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
+import 'package:lyc_flutter_project/mypage/provider/mypage_provider.dart';
+import 'package:provider/provider.dart';
 
 class HomeAppbar extends StatelessWidget implements PreferredSizeWidget {
   const HomeAppbar({
@@ -13,6 +15,8 @@ class HomeAppbar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    final String profile = context.read<MypageProvider>().profile.profileImage;
+
     return AppBar(
       backgroundColor: AppColor.beige,
       automaticallyImplyLeading: false,
@@ -61,23 +65,26 @@ class HomeAppbar extends StatelessWidget implements PreferredSizeWidget {
                           flex: 3,
                           child: GestureDetector(
                             onTap: () {},
-                            child: SvgPicture.asset('assets/icon_dm.svg',
-                                color: Colors.white),
+                            child: SvgPicture.asset(
+                              'assets/icon_dm.svg',
+                              color: Colors.white,
+                            ),
                           )),
                       const Expanded(child: SizedBox()),
                       Expanded(
-                          flex: 3,
-                          child: GestureDetector(
-                            onTap: () {},
-                            child: SizedBox(
-                              child: RoundImage(
-                                image: Image.asset(
-                                  'assets/ex_profile.png',
-                                  fit: BoxFit.cover,
-                                ),
+                        flex: 3,
+                        child: GestureDetector(
+                          onTap: () {},
+                          child: SizedBox(
+                            child: RoundImage(
+                              image: Image.asset(
+                                'assets/ex_profile.png',
+                                fit: BoxFit.cover,
                               ),
                             ),
-                          )),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
