@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lyc_flutter_project/common/widget/confirm_alter_dialog.dart';
+import 'package:lyc_flutter_project/common/widget/custom_alert_dialog.dart';
 import 'package:lyc_flutter_project/common/widget/custom_loading.dart';
 import 'package:lyc_flutter_project/common/widget/image_networking.dart';
 import 'package:lyc_flutter_project/common/widget/posting_top.dart';
@@ -61,7 +61,7 @@ class _PostingDetailScreenState extends State<PostingDetailScreen> {
                       final delete = await showDialog<bool>(
                         context: context,
                         builder: (context) {
-                          return CustomAlterDialog(
+                          return CustomAlertDialog(
                             title: "정말 삭제하시겠습니까?",
                             leftButtonLabel: "취소",
                             rightButtonLabel: "삭제",

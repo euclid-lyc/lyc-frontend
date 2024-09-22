@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 
-class CustomAlterDialog extends StatelessWidget {
+class CustomAlertDialog extends StatelessWidget {
   final String title;
   final String leftButtonLabel;
   final String rightButtonLabel;
@@ -14,7 +14,7 @@ class CustomAlterDialog extends StatelessWidget {
   final Color rightBackgroundColor;
   final Color rightForegroundColor;
 
-  const CustomAlterDialog({
+  const CustomAlertDialog({
     super.key,
     required this.title,
     required this.leftButtonLabel,

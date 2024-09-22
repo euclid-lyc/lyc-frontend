@@ -4,7 +4,6 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:lyc_flutter_project/Join/model/Credential.dart';
 import 'package:lyc_flutter_project/common/const/data.dart';
 import 'package:lyc_flutter_project/common/dio/dio.dart';
-import '../Screens/login_screen.dart';
 
 class LoginProvider extends ChangeNotifier {
   final DioProvider dioProvider;
@@ -21,7 +20,7 @@ class LoginProvider extends ChangeNotifier {
 
   int? get memberId => _memberId;
 
-  LoginProvider(this.dioProvider){
+  LoginProvider(this.dioProvider) {
     dio = dioProvider.dio;
     storage = dioProvider.storage;
   }
@@ -99,19 +98,19 @@ class LoginProvider extends ChangeNotifier {
     );
   }
 
-  Future<void> logout(BuildContext context) async {
+  Future<void> logout() async {
     try {
-      await storage.delete(key: refreshTokenKey);
-      await storage.delete(key: accessTokenKey);
-      _isLoggedIn = false;
-      _memberId = null;
-      notifyListeners();
-
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) => LoginScreen(),
-        ),
+      final resp = await dio.post(
+        'http://$ip/lyc/auths/sign-out',
+        options: Options(headers: {"accessToken": "true"}),
       );
+      if (resp.statusCode == 200) {
+        await storage.delete(key: refreshTokenKey);
+        await storage.delete(key: accessTokenKey);
+        _isLoggedIn = false;
+        _memberId = null;
+        notifyListeners();
+      }
     } catch (e) {
       print("Error in logout: $e");
     }
