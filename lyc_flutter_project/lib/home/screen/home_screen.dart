@@ -6,6 +6,7 @@ import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/common/widget/round_image.dart';
 import 'package:lyc_flutter_project/home/provider/home_provider.dart';
 import 'package:lyc_flutter_project/mypage/model/mypage_posting_preview.dart';
+import 'package:lyc_flutter_project/posting/screen/posting_detail_screen.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -289,7 +290,19 @@ class _HomeScreenState extends State<HomeScreen> {
           decoration: buildWhiteRoundBox(),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(20.0),
-            child: ImageNetworking(posting.image),
+            child: GestureDetector(
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return PostingDetailScreen(
+                      postingId: posting.postingId,
+                    );
+                  },
+                ),
+              ),
+              child: ImageNetworking(posting.image),
+            ),
           ),
         );
       },
