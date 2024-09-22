@@ -58,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     const TitleRow(label: '둘러보기', onTap: _onTap),
                     const Line(),
                     SizedBox(
-                      height: 200.0,
+                      height: 150.0,
                       child: renderFeedPreview(
                         isLoading: value.loadingFeedPreview,
                         list: value.feedPreviewList,
@@ -283,8 +283,8 @@ class _HomeScreenState extends State<HomeScreen> {
       itemBuilder: (context, index) {
         final posting = list[index];
         return Container(
-          height: 190,
-          width: 142,
+          height: 150,
+          width: 112,
           margin: const EdgeInsets.symmetric(
             horizontal: 8.0,
           ),
@@ -336,7 +336,7 @@ class DescriptTitle extends StatelessWidget {
       label,
       style: const TextStyle(
         fontWeight: FontWeight.w600,
-        fontSize: 18,
+        fontSize: 16,
       ),
     );
   }
@@ -352,7 +352,7 @@ class DescriptText extends StatelessWidget {
     return Text(
       label,
       style: const TextStyle(
-        fontSize: 16,
+        fontSize: 14,
         fontWeight: FontWeight.w400,
         color: Color(0xff353945),
       ),
@@ -394,7 +394,7 @@ class TitleRow extends StatelessWidget {
           style: const TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.bold,
-            fontSize: 20,
+            fontSize: 18,
           ),
         ),
         GestureDetector(
@@ -416,6 +416,6 @@ class MarginBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SizedBox(height: 40);
+    return const SizedBox(height: 60);
   }
 }
