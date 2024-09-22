@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:lyc_flutter_project/common/widget/custom_loading.dart';
 import 'package:lyc_flutter_project/common/widget/image_networking.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/common/widget/round_image.dart';
@@ -17,6 +18,17 @@ class HomeScreen extends StatefulWidget {
 void _onTap() {}
 
 class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+
+    getFeedPreviewList();
+  }
+
+  Future<void> getFeedPreviewList() async {
+    await context.read<HomeProvider>().getPostingPreview();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<HomeProvider>(
@@ -43,57 +55,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     // 둘러보기
                     const TitleRow(label: '둘러보기', onTap: _onTap),
                     const Line(),
-                    FutureBuilder<List<CoordiPostingPreview>>(
-                      future: value.getPostingPreview(),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return const CircularProgressIndicator();
-                        } else if (snapshot.hasError) {
-                          return Text("Error: ${snapshot.error.toString()}");
-                        } else if (snapshot.hasData) {
-                          return SizedBox(
-                            height: 200,
-                            child: snapshot.data!.isEmpty
-                                ? const Text("게시글이 없습니다")
-                                : ListView.builder(
-                                    scrollDirection: Axis.horizontal,
-                                    itemCount: snapshot.data!.length,
-                                    itemBuilder: (context, index) {
-                                      final posting = snapshot.data![index];
-                                      return Container(
-                                        height: 190,
-                                        width: 135,
-                                        margin: const EdgeInsets.symmetric(
-                                          horizontal: 8.0,
-                                        ),
-                                        decoration: buildWhiteRoundBox(),
-                                        child: ImageNetworking(posting.image),
-                                      );
-                                    },
-                                  ),
-                          );
-                        } else {
-                          return const SizedBox();
-                        }
-                      },
+                    SizedBox(
+                      height: 200.0,
+                      child: renderFeedPreview(
+                        isLoading: value.loadingFeedPreview,
+                        list: value.feedPreviewList,
+                      ),
                     ),
-                    // SizedBox(
-                    //   height: 200,
-                    //   child: ListView(
-                    //     scrollDirection: Axis.horizontal,
-                    //     children: [
-                    //       for (var i = 0; i < 10; i++)
-                    //         Container(
-                    //           margin: const EdgeInsets.symmetric(horizontal: 8),
-                    //           decoration: buildWhiteRoundBox(),
-                    //           height: 190,
-                    //           width: 135,
-                    //         ),
-                    //     ],
-                    //   ),
-                    // ),
-
                     // 오늘의 디렉터
                     const MarginBox(),
                     const TitleRow(label: '오늘의 디렉터', onTap: _onTap),
@@ -182,7 +150,7 @@ class _HomeScreenState extends State<HomeScreen> {
               const MarginBox(),
               Container(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 30, vertical: 40),
+                const EdgeInsets.symmetric(horizontal: 30, vertical: 40),
                 color: const Color(0xffF4F5F6),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -190,7 +158,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     const Text(
                       '유클리드',
                       style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+                      TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
                     ),
                     const MarginBox(),
                     Row(
@@ -282,7 +250,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     Text(
                       'Copyright © 2024. All rights reserved.',
                       style:
-                          TextStyle(color: AppColor.deepGrey.withOpacity(0.8)),
+                      TextStyle(color: AppColor.deepGrey.withOpacity(0.8)),
                     )
                   ],
                 ),
@@ -299,6 +267,29 @@ class _HomeScreenState extends State<HomeScreen> {
       color: Colors.white,
       borderRadius: BorderRadius.circular(20),
     );
+  }
+
+  Widget renderFeedPreview(
+      {required bool isLoading, required List<CoordiPostingPreview> list,}) {
+    if (isLoading) return const Center(child: CustomLoading());
+    if (list.isEmpty) return const Text("불러올 게시글이 없습니다");
+    return
+      ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: list!.length,
+        itemBuilder: (context, index) {
+          final posting = list[index];
+          return Container(
+            height: 190,
+            width: 135,
+            margin: const EdgeInsets.symmetric(
+              horizontal: 8.0,
+            ),
+            decoration: buildWhiteRoundBox(),
+            child: ImageNetworking(posting.image),
+          );
+        },
+      );
   }
 }
 
