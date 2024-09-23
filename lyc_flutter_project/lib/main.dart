@@ -64,20 +64,21 @@ void main() {
             mypageRepositoryProvider: context.read<MypageRepositoryProvider>(),
           ),
         ),
-        ChangeNotifierProxyProvider2<MypageProvider, CoordiRepositoryProvider,
-            PostingDetailProviderFactory>(
+        ChangeNotifierProxyProvider2<MypageRepositoryProvider,
+            CoordiRepositoryProvider, PostingDetailProviderFactory>(
           create: (context) => PostingDetailProviderFactory(
-            mypageProvider: Provider.of<MypageProvider>(context, listen: false),
+            mypageRepositoryProvider:
+                Provider.of<MypageRepositoryProvider>(context, listen: false),
             coordiRepositoryProvider:
                 Provider.of<CoordiRepositoryProvider>(context, listen: false),
           ),
-          update:
-              (context, mypageProvider, postingRepositoryProvider, previous) =>
-                  previous ??
-                  PostingDetailProviderFactory(
-                    mypageProvider: mypageProvider,
-                    coordiRepositoryProvider: postingRepositoryProvider,
-                  ),
+          update: (context, mypageRepositoryProvider, postingRepositoryProvider,
+                  previous) =>
+              previous ??
+              PostingDetailProviderFactory(
+                mypageRepositoryProvider: mypageRepositoryProvider,
+                coordiRepositoryProvider: postingRepositoryProvider,
+              ),
         ),
         ChangeNotifierProvider(
           create: (context) => LoginProvider(

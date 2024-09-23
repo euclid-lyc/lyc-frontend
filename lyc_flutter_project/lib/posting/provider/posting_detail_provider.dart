@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:lyc_flutter_project/mypage/provider/mypage_provider.dart';
+import 'package:lyc_flutter_project/mypage/repository/mypage_repository.dart';
 import 'package:lyc_flutter_project/posting/model/coordi_posting.dart';
 import 'package:lyc_flutter_project/posting/repository/coordi_repository.dart';
 
 class PostingDetailProviderFactory extends ChangeNotifier {
-  final MypageProvider mypageProvider;
+  final MypageRepositoryProvider mypageRepositoryProvider;
   final CoordiRepositoryProvider coordiRepositoryProvider;
   final Map<int, PostingDetailProvider> _providers = {};
 
   PostingDetailProviderFactory({
-    required this.mypageProvider,
+    required this.mypageRepositoryProvider,
     required this.coordiRepositoryProvider,
   });
 
   PostingDetailProvider getProvider(int postingId) {
     if (!_providers.containsKey(postingId)) {
       _providers[postingId] = PostingDetailProvider(
-        mypageProvider: mypageProvider,
+        mypageRepositoryProvider: mypageRepositoryProvider,
         coordiRepositoryProvider: coordiRepositoryProvider,
         postingId: postingId,
       );
@@ -40,12 +40,12 @@ class PostingDetailProviderFactory extends ChangeNotifier {
 }
 
 class PostingDetailProvider extends ChangeNotifier {
-  final MypageProvider mypageProvider;
+  final MypageRepositoryProvider mypageRepositoryProvider;
   final CoordiRepositoryProvider coordiRepositoryProvider;
   final int postingId;
 
   PostingDetailProvider({
-    required this.mypageProvider,
+    required this.mypageRepositoryProvider,
     required this.coordiRepositoryProvider,
     required this.postingId,
   });
@@ -87,11 +87,15 @@ class PostingDetailProvider extends ChangeNotifier {
     if (isLiked) {
       isLiked = false;
       notifyListeners();
-      mypageProvider.dislike(postingId);
+      mypageRepositoryProvider.mypageRepository.dislikePosting(
+        postingId: postingId,
+      );
     } else {
       isLiked = true;
       notifyListeners();
-      mypageProvider.like(postingId);
+      mypageRepositoryProvider.mypageRepository.likePosting(
+        postingId: postingId,
+      );
     }
   }
 
@@ -99,17 +103,22 @@ class PostingDetailProvider extends ChangeNotifier {
     if (isSaved) {
       isSaved = false;
       notifyListeners();
-      mypageProvider.unsave(postingId);
+      mypageRepositoryProvider.mypageRepository.unsavePosting(
+        postingId: postingId,
+      );
     } else {
       isSaved = true;
       notifyListeners();
-      mypageProvider.save(postingId);
+      mypageRepositoryProvider.mypageRepository.savePosting(
+        postingId: postingId,
+      );
     }
   }
 
   Future<void> delete() async {
-    final resp = await mypageProvider.mypageRepositoryProvider.mypageRepository
-        .deleteCoordi(postingId: postingId);
+    final resp = await mypageRepositoryProvider.mypageRepository.deleteCoordi(
+      postingId: postingId,
+    );
     if (!resp.isSuccess) {
       Exception(resp.message);
     }
@@ -118,9 +127,9 @@ class PostingDetailProvider extends ChangeNotifier {
   Future<void> getDetail() async {
     try {
       if (_posting == null) {
-        final resp = await mypageProvider
-            .mypageRepositoryProvider.mypageRepository
-            .getCoordi(postingId: postingId);
+        final resp = await mypageRepositoryProvider.mypageRepository.getCoordi(
+          postingId: postingId,
+        );
         _posting = resp.result;
         loadingState = false;
         notifyListeners();
