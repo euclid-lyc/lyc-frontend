@@ -13,11 +13,13 @@ import 'package:provider/provider.dart';
 class MyClosetList extends StatefulWidget {
   final List<ClosetPostingPreview> postings;
   final MypageProvider provider;
+  final int memberId;
 
   const MyClosetList({
     super.key,
     required this.postings,
     required this.provider,
+    required this.memberId,
   });
 
   @override
@@ -52,6 +54,7 @@ class _MyClosetListState extends State<MyClosetList> {
             onTap: () {
               final clothesProvider = ClothesProvider(
                 repositoryProvider: context.read<ClothesRepositoryProvider>(),
+                memberId: widget.memberId,
               );
               pushWithoutNavBar(
                 context,

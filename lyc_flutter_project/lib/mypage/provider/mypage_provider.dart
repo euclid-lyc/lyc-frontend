@@ -173,8 +173,9 @@ class MypageProvider extends ChangeNotifier {
   }
 
   Future<bool> getProfile() async {
-    final resp = await mypageRepositoryProvider.mypageRepository
-        .getProfile(memberId: memberId);
+    final resp = await mypageRepositoryProvider.mypageRepository.getProfile(
+      memberId: memberId,
+    );
     if (resp.isSuccess) {
       _profile = resp.result;
       _hasProfile = true;
@@ -215,6 +216,7 @@ class MypageProvider extends ChangeNotifier {
         return MyClosetList(
           postings: myCloset,
           provider: this,
+          memberId: memberId,
         );
       default:
         return const CustomLoading();

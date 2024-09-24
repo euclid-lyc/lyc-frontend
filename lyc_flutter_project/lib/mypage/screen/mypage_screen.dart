@@ -37,7 +37,6 @@ class _MypageScreenState extends State<MypageScreen> {
     } else {
       memberId = widget.memberId!;
     }
-    print("---memberId 구함: $memberId-----");
     provider =
         Provider.of<MypageProviderFactory>(context, listen: false).getProvider(
       memberId,
@@ -94,6 +93,7 @@ class _MypageScreenState extends State<MypageScreen> {
                     Expanded(
                       child: BottomButtons(
                         memberId: memberId,
+                        isLoginUser: widget.isLoginUser,
                       ),
                     ),
                     const SizedBox(height: 20),
