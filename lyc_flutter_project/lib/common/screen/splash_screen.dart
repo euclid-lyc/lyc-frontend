@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/Join/Provider/login_provider.dart';
 import 'package:lyc_flutter_project/Join/Screens/login_screen.dart';
 import 'package:lyc_flutter_project/common/widget/bottom_bar.dart';
-import 'package:lyc_flutter_project/mypage/provider/mypage_provider.dart';
 import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -26,7 +25,6 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void checkTokenAndNavigate() async {
     final loginProvider = Provider.of<LoginProvider>(context);
-    final mypageProvider = Provider.of<MypageProvider>(context);
     await loginProvider.checkLoginStatus();
     if (!loginProvider.isLoggedIn) {
       navigateToLogin();
@@ -34,11 +32,11 @@ class _SplashScreenState extends State<SplashScreen> {
     }
 
     try {
-      final success = await mypageProvider.getProfile();
+      final success = await loginProvider.getProfile();
       if (success) {
         navigateToHome();
       } else {
-        if (mypageProvider.hasProfile) {
+        if (loginProvider.hasProfile) {
           navigateToHome();
         } else {
           navigateToLogin();

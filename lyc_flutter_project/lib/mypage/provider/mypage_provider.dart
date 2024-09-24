@@ -10,11 +10,49 @@ import 'package:lyc_flutter_project/mypage/repository/mypage_repository.dart';
 import 'package:lyc_flutter_project/mypage/widget/grid_widget_with_button.dart';
 import 'package:lyc_flutter_project/mypage/widget/my_closet_list.dart';
 
+class MypageProviderFactory extends ChangeNotifier {
+  final MypageRepositoryProvider mypageRepositoryProvider;
+  final int? memberId;
+  final Map<int, MypageProvider> _providers = {};
+
+  MypageProviderFactory({
+    required this.mypageRepositoryProvider,
+    required this.memberId,
+  });
+
+  MypageProvider getProvider(int memberId) {
+    if (memberId == null) Exception;
+    if (!_providers.containsKey(memberId)) {
+      _providers[memberId] = MypageProvider(
+        mypageRepositoryProvider: mypageRepositoryProvider,
+        memberId: memberId,
+      );
+    }
+    return _providers[memberId]!;
+  }
+
+  void disposeProvider(int memberId) {
+    _providers.remove(memberId)?.dispose();
+    notifyListeners();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    for (var provider in _providers.values) {
+      provider.dispose();
+    }
+    _providers.clear();
+  }
+}
+
 class MypageProvider extends ChangeNotifier {
   final MypageRepositoryProvider mypageRepositoryProvider;
+  final int memberId;
 
   MypageProvider({
     required this.mypageRepositoryProvider,
+    required this.memberId,
   }) {
     getProfile();
     getList();
@@ -55,21 +93,21 @@ class MypageProvider extends ChangeNotifier {
       };
 
   Future<void> save(int postingId) async {
-    final resp = await mypageRepositoryProvider.mypageRepository.savePosting(postingId: postingId);
+    final resp = await mypageRepositoryProvider.mypageRepository
+        .savePosting(postingId: postingId);
     if (resp.isSuccess) {
       getList(type: 1, refresh: true);
-    }
-    else {
+    } else {
       Exception(resp.message);
     }
   }
 
   Future<void> unsave(int postingId) async {
-    final resp = await mypageRepositoryProvider.mypageRepository.unsavePosting(postingId: postingId);
+    final resp = await mypageRepositoryProvider.mypageRepository
+        .unsavePosting(postingId: postingId);
     if (resp.isSuccess) {
       getList(type: 1, refresh: true);
-    }
-    else {
+    } else {
       Exception(resp.message);
     }
   }
@@ -208,16 +246,18 @@ class MypageProvider extends ChangeNotifier {
       switch (type) {
         case 0:
           if (myCoordi.isNotEmpty) {
-            paginateQuery = paginateQuery.copyWith(cursorDateTime: myCoordi.last.createdAt);
+            paginateQuery =
+                paginateQuery.copyWith(cursorDateTime: myCoordi.last.createdAt);
           }
         case 1:
           if (savedCoordi.isNotEmpty) {
-            paginateQuery = paginateQuery.copyWith(cursorDateTime: savedCoordi.last.createdAt);
+            paginateQuery = paginateQuery.copyWith(
+                cursorDateTime: savedCoordi.last.createdAt);
           }
         case 2:
           if (myCloset.isNotEmpty) {
-
-            paginateQuery = paginateQuery.copyWith(cursorDateTime: myCloset.last.createdAt);
+            paginateQuery =
+                paginateQuery.copyWith(cursorDateTime: myCloset.last.createdAt);
           }
       }
     }
