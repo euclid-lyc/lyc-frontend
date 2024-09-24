@@ -24,6 +24,17 @@ void main() {
         ChangeNotifierProvider(
           create: (context) => DioProvider(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => MypageRepositoryProvider(
+            dio: context.read<DioProvider>().dio,
+          ),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => LoginProvider(
+            Provider.of<DioProvider>(context, listen: false,),
+            context.read<MypageRepositoryProvider>().mypageRepository,
+          ),
+        ),
         ChangeNotifierProvider(create: (context) => MembershipState()),
         ChangeNotifierProvider(
           create: (context) =>
@@ -54,22 +65,17 @@ void main() {
             feedRepositoryProvider: context.read<FeedRepositoryProvider>(),
           ),
         ),
-        ChangeNotifierProvider(
-          create: (context) => MypageRepositoryProvider(
-            dio: context.read<DioProvider>().dio,
-          ),
-        ),
         ChangeNotifierProxyProvider<MypageRepositoryProvider,
             MypageProviderFactory>(
           create: (context) => MypageProviderFactory(
             mypageRepositoryProvider: context.read<MypageRepositoryProvider>(),
-            memberId: context.read<LoginProvider>().memberId,
+            memberId: context.read<LoginProvider>().memberId!,
           ),
           update: (context, value, previous) =>
               previous ??
               MypageProviderFactory(
                 mypageRepositoryProvider: value,
-                memberId: context.read<LoginProvider>().memberId,
+                memberId: context.read<LoginProvider>().memberId!,
               ),
         ),
         ChangeNotifierProxyProvider2<MypageRepositoryProvider,
@@ -87,12 +93,6 @@ void main() {
                 mypageRepositoryProvider: mypageRepositoryProvider,
                 coordiRepositoryProvider: postingRepositoryProvider,
               ),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => LoginProvider(
-            Provider.of<DioProvider>(context, listen: false,),
-            context.read<MypageRepositoryProvider>().mypageRepository,
-          ),
         ),
         ChangeNotifierProvider(
           create: (context) =>

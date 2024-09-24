@@ -12,7 +12,7 @@ import 'package:lyc_flutter_project/mypage/widget/my_closet_list.dart';
 
 class MypageProviderFactory extends ChangeNotifier {
   final MypageRepositoryProvider mypageRepositoryProvider;
-  final int? memberId;
+  final int memberId;
   final Map<int, MypageProvider> _providers = {};
 
   MypageProviderFactory({
