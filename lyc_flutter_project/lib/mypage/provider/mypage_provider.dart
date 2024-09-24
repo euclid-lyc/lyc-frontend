@@ -174,7 +174,7 @@ class MypageProvider extends ChangeNotifier {
 
   Future<bool> getProfile() async {
     final resp = await mypageRepositoryProvider.mypageRepository
-        .getProfile(memberId: cur_member);
+        .getProfile(memberId: memberId);
     if (resp.isSuccess) {
       _profile = resp.result;
       _hasProfile = true;
@@ -268,7 +268,7 @@ class MypageProvider extends ChangeNotifier {
         case 0:
           final ApiResponse<CoordieResult> resp =
               await mypageRepositoryProvider.mypageRepository.getMyCoorides(
-            memberId: cur_member,
+            memberId: memberId,
             paginateQuery: paginateQuery,
           );
           myCoordi = refresh
@@ -281,7 +281,7 @@ class MypageProvider extends ChangeNotifier {
         case 1:
           final resp =
               await mypageRepositoryProvider.mypageRepository.getSavedCoordies(
-            memberId: cur_member,
+            memberId: memberId,
             paginateQuery: paginateQuery,
           );
           savedCoordi = refresh
@@ -294,7 +294,7 @@ class MypageProvider extends ChangeNotifier {
         case 2:
           final resp =
               await mypageRepositoryProvider.mypageRepository.getMyCloset(
-            memberId: cur_member,
+            memberId: memberId,
             paginateQuery: paginateQuery,
           );
           myCloset = refresh

@@ -5,6 +5,7 @@ import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/common/widget/round_image.dart';
 import 'package:lyc_flutter_project/home/provider/home_provider.dart';
 import 'package:lyc_flutter_project/mypage/model/mypage_posting_preview.dart';
+import 'package:lyc_flutter_project/mypage/screen/mypage_screen.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -26,6 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
           appBar: const HomeAppbar(),
           body: ListView(
             children: [
+              ElevatedButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => MypageScreen(isLoginUser: false, memberId: 2,),)), child: Text("테스트 페이지")),
               const MarginBox(),
               // 배너
               Container(
