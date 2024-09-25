@@ -6,12 +6,12 @@ import 'package:lyc_flutter_project/mypage/model/mypage_posting_preview.dart';
 import 'package:lyc_flutter_project/mypage/provider/mypage_provider.dart';
 import 'package:lyc_flutter_project/posting/screen/posting_detail_screen.dart';
 
-class GridWidgetNoButton extends StatefulWidget {
+class DirectorCoordiGridView extends StatefulWidget {
   final List<CoordiPostingPreview> postings;
   final int category;
   final MypageProvider provider;
 
-  const GridWidgetNoButton({
+  const DirectorCoordiGridView({
     super.key,
     required this.postings,
     required this.category,
@@ -19,10 +19,10 @@ class GridWidgetNoButton extends StatefulWidget {
   });
 
   @override
-  State<GridWidgetNoButton> createState() => _GridWidgetNoButtonState();
+  State<DirectorCoordiGridView> createState() => _DirectorCoordiGridViewState();
 }
 
-class _GridWidgetNoButtonState extends State<GridWidgetNoButton> {
+class _DirectorCoordiGridViewState extends State<DirectorCoordiGridView> {
   final ScrollController controller = ScrollController();
 
   @override
