@@ -6,6 +6,7 @@ import 'package:lyc_flutter_project/mypage/model/mypage_posting_preview.dart';
 import 'package:lyc_flutter_project/mypage/model/profile.dart';
 import 'package:lyc_flutter_project/mypage/model/result.dart';
 import 'package:lyc_flutter_project/mypage/repository/mypage_repository.dart';
+import 'package:lyc_flutter_project/mypage/widget/director_closet_list.dart';
 import 'package:lyc_flutter_project/mypage/widget/grid_widget_no_button.dart';
 import 'package:lyc_flutter_project/mypage/widget/grid_widget_with_button.dart';
 import 'package:lyc_flutter_project/mypage/widget/my_closet_list.dart';
@@ -216,21 +217,29 @@ class MypageProvider extends ChangeNotifier {
                 provider: this,
               );
       case 1:
-        return isLoginUser ? GridWidgetWithButton(
-          postings: savedCoordi,
-          category: 1,
-          provider: this,
-        ) : GridWidgetNoButton(
-          postings: myCoordi,
-          category: 1,
-          provider: this,
-        );
+        return isLoginUser
+            ? GridWidgetWithButton(
+                postings: savedCoordi,
+                category: 1,
+                provider: this,
+              )
+            : GridWidgetNoButton(
+                postings: myCoordi,
+                category: 1,
+                provider: this,
+              );
       case 2:
-        return MyClosetList(
-          postings: myCloset,
-          provider: this,
-          memberId: memberId,
-        );
+        return isLoginUser
+            ? MyClosetList(
+                postings: myCloset,
+                provider: this,
+                memberId: memberId,
+              )
+            : DirectorClosetList(
+                postings: myCloset,
+                provider: this,
+                memberId: memberId,
+              );
       default:
         return const CustomLoading();
     }
