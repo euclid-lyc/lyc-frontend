@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lyc_flutter_project/Join/Provider/login_provider.dart';
-import 'package:lyc_flutter_project/Join/Screens/login_screen.dart';
 import 'package:lyc_flutter_project/common/widget/round_image.dart';
 import 'package:lyc_flutter_project/director/screen/director_search_screen.dart';
 import 'package:lyc_flutter_project/feed/screen/feed_screen.dart';
@@ -51,7 +49,7 @@ class _BottomBarState extends State<BottomBar> {
         PersistentTabConfig(
           screen: Consumer<MypageProviderFactory>(
             builder: (context, value, child) {
-              return MypageScreen(
+              return const MypageScreen(
                 isLoginUser: true,
               );
             },

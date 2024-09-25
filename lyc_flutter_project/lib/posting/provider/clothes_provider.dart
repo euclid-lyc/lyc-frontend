@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:lyc_flutter_project/data/temp_member_data.dart';
 import 'package:lyc_flutter_project/posting/model/clothes_posting.dart';
 import 'package:lyc_flutter_project/posting/repository/clothes_repository.dart';
 
