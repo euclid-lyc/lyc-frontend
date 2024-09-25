@@ -2,11 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:lyc_flutter_project/common/model/api_response.dart';
 import 'package:lyc_flutter_project/common/model/paginate_query.dart';
 import 'package:lyc_flutter_project/common/widget/custom_loading.dart';
-import 'package:lyc_flutter_project/data/temp_member_data.dart';
 import 'package:lyc_flutter_project/mypage/model/mypage_posting_preview.dart';
 import 'package:lyc_flutter_project/mypage/model/profile.dart';
 import 'package:lyc_flutter_project/mypage/model/result.dart';
 import 'package:lyc_flutter_project/mypage/repository/mypage_repository.dart';
+import 'package:lyc_flutter_project/mypage/widget/grid_widget_no_button.dart';
 import 'package:lyc_flutter_project/mypage/widget/grid_widget_with_button.dart';
 import 'package:lyc_flutter_project/mypage/widget/my_closet_list.dart';
 
@@ -20,12 +20,13 @@ class MypageProviderFactory extends ChangeNotifier {
     required this.memberId,
   });
 
-  MypageProvider getProvider(int memberId) {
+  MypageProvider getProvider(int memberId, bool isLoginUser) {
     if (memberId == null) Exception;
     if (!_providers.containsKey(memberId)) {
       _providers[memberId] = MypageProvider(
         mypageRepositoryProvider: mypageRepositoryProvider,
         memberId: memberId,
+        isLoginUser: isLoginUser,
       );
     }
     return _providers[memberId]!;
@@ -49,10 +50,12 @@ class MypageProviderFactory extends ChangeNotifier {
 class MypageProvider extends ChangeNotifier {
   final MypageRepositoryProvider mypageRepositoryProvider;
   final int memberId;
+  final bool isLoginUser;
 
   MypageProvider({
     required this.mypageRepositoryProvider,
     required this.memberId,
+    required this.isLoginUser,
   }) {
     getProfile();
     getList();
@@ -201,14 +204,24 @@ class MypageProvider extends ChangeNotifier {
     }
     switch (_category) {
       case 0:
-        return GridWidgetWithButton(
-          postings: myCoordi,
-          category: 0,
-          provider: this,
-        );
+        return isLoginUser
+            ? GridWidgetWithButton(
+                postings: myCoordi,
+                category: 0,
+                provider: this,
+              )
+            : GridWidgetNoButton(
+                postings: myCoordi,
+                category: 0,
+                provider: this,
+              );
       case 1:
-        return GridWidgetWithButton(
+        return isLoginUser ? GridWidgetWithButton(
           postings: savedCoordi,
+          category: 1,
+          provider: this,
+        ) : GridWidgetNoButton(
+          postings: myCoordi,
           category: 1,
           provider: this,
         );

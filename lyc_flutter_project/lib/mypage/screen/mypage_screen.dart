@@ -40,6 +40,7 @@ class _MypageScreenState extends State<MypageScreen> {
     provider =
         Provider.of<MypageProviderFactory>(context, listen: false).getProvider(
       memberId,
+          widget.isLoginUser,
     );
   }
 
