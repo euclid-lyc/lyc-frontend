@@ -13,16 +13,13 @@ import 'package:lyc_flutter_project/mypage/widget/my_closet_list.dart';
 
 class MypageProviderFactory extends ChangeNotifier {
   final MypageRepositoryProvider mypageRepositoryProvider;
-  final int memberId;
   final Map<int, MypageProvider> _providers = {};
 
   MypageProviderFactory({
     required this.mypageRepositoryProvider,
-    required this.memberId,
   });
 
   MypageProvider getProvider(int memberId, bool isLoginUser) {
-    if (memberId == null) Exception;
     if (!_providers.containsKey(memberId)) {
       _providers[memberId] = MypageProvider(
         mypageRepositoryProvider: mypageRepositoryProvider,

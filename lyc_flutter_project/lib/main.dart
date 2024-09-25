@@ -69,13 +69,11 @@ void main() {
             MypageProviderFactory>(
           create: (context) => MypageProviderFactory(
             mypageRepositoryProvider: context.read<MypageRepositoryProvider>(),
-            memberId: context.read<LoginProvider>().memberId!,
           ),
           update: (context, value, previous) =>
               previous ??
               MypageProviderFactory(
                 mypageRepositoryProvider: value,
-                memberId: context.read<LoginProvider>().memberId!,
               ),
         ),
         ChangeNotifierProxyProvider2<MypageRepositoryProvider,

@@ -43,7 +43,12 @@ class _MyClosetListState extends State<MyClosetList> {
     }
   }
 
-  //Todo dispose 추가
+  @override
+  void dispose() {
+    super.dispose();
+    controller.removeListener(listener);
+    controller.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
