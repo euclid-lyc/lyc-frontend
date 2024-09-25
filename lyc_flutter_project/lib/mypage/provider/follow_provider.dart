@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:lyc_flutter_project/data/temp_member_data.dart';
 import 'package:lyc_flutter_project/mypage/model/follow_model.dart';
 import 'package:lyc_flutter_project/mypage/repository/mypage_repository.dart';
 

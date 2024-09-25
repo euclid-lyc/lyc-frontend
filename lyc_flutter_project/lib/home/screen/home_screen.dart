@@ -27,7 +27,6 @@ class _HomeScreenState extends State<HomeScreen> {
           appBar: const HomeAppbar(),
           body: ListView(
             children: [
-              ElevatedButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => MypageScreen(isLoginUser: false, memberId: 2,),)), child: Text("테스트 페이지")),
               const MarginBox(),
               // 배너
               Container(
