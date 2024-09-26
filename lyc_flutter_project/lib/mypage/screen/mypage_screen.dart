@@ -31,13 +31,13 @@ class MypageScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Expanded(
-                          flex: 13,
+                          flex: 2,
                           child: value.hasProfile
                               ? ProfileBox.fromModel(profile: value.profile)
                               : const CustomLoading(),
                         ),
                         const Expanded(
-                          flex: 5,
+                          flex: 1,
                           child: IconsInProfileBox(
                             memberId: cur_member,
                             isMypage: true,
