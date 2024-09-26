@@ -2,6 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:lyc_flutter_project/common/model/api_response.dart';
+import 'package:lyc_flutter_project/setting/model/block_member.dart';
 import 'package:lyc_flutter_project/setting/model/member_model.dart';
 import 'package:lyc_flutter_project/setting/repository/setting_repository.dart';
 
@@ -14,6 +16,10 @@ class SettingProvider extends ChangeNotifier {
 
   MemberModel? _memberModel;
   bool _loadingMember = true;
+
+  List<BlockMember> _blockMembers = [];
+  bool _loadingBlockMembers = false;
+  bool _hasMoreBlockMembers = true;
 
   String? _oldPassword;
   String? _newPassword;
@@ -31,6 +37,10 @@ class SettingProvider extends ChangeNotifier {
   get loadingPushAlarm => _loadingPushAlarm;
 
   get newPassword => _newPassword;
+
+  get blockMembers => _blockMembers;
+
+  get loadingBlockMembers => _loadingBlockMembers;
 
   Future<void> getProfile({
     bool refresh = false,
@@ -131,6 +141,44 @@ class SettingProvider extends ChangeNotifier {
       } else {
         return false;
       }
+    }
+  }
+
+  Future<void> getBlockMembers({
+    bool refresh = false,
+    int pageSize = 10,
+    int? blockMemberId,
+  }) async {
+    if (_loadingBlockMembers || !_hasMoreBlockMembers) return;
+
+    if (!refresh & _blockMembers.isNotEmpty) {
+      blockMemberId = _blockMembers.last.memberId;
+    }
+
+    try {
+      _loadingBlockMembers = true;
+      notifyListeners();
+      final resp = await repositoryProvider.repository.getBlockMembers(
+        pageSize: pageSize,
+        blockMemberId: blockMemberId,
+      );
+      final list = resp.result.members;
+      _blockMembers = refresh
+          ? [...list]
+          : [
+              ..._blockMembers,
+              ...list,
+            ];
+      _hasMoreBlockMembers = list.length >= pageSize;
+    } catch (e) {
+      if (e is ApiResponse) {
+        print("error in getRanking: ${e.message}");
+      } else {
+        print("error in getRanking");
+      }
+    } finally {
+      _loadingBlockMembers = false;
+      notifyListeners();
     }
   }
 

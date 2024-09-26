@@ -2,6 +2,7 @@ import 'package:dio/dio.dart' hide Headers;
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/common/const/data.dart';
 import 'package:lyc_flutter_project/common/model/api_response.dart';
+import 'package:lyc_flutter_project/setting/model/block_member.dart';
 import 'package:lyc_flutter_project/setting/model/member_model.dart';
 import 'package:retrofit/retrofit.dart';
 
@@ -51,7 +52,7 @@ abstract class SettingRepository {
 
   @GET("/socials/block-members")
   @Headers({"accessToken": "true"})
-  Future<ApiResponse> getBlockMembers({
+  Future<ApiResponse<BlockMemberList>> getBlockMembers({
     @Query("pageSize") required int pageSize,
     @Query("blockMemberId") int? blockMemberId,
   });

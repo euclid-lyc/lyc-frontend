@@ -207,7 +207,7 @@ class _SettingRepository implements SettingRepository {
   }
 
   @override
-  Future<ApiResponse<dynamic>> getBlockMembers({
+  Future<ApiResponse<BlockMemberList>> getBlockMembers({
     required int pageSize,
     int? blockMemberId,
   }) async {
@@ -220,7 +220,7 @@ class _SettingRepository implements SettingRepository {
     final _headers = <String, dynamic>{r'accessToken': 'true'};
     _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<ApiResponse<dynamic>>(Options(
+    final _options = _setStreamType<ApiResponse<BlockMemberList>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -237,11 +237,11 @@ class _SettingRepository implements SettingRepository {
           baseUrl,
         )));
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late ApiResponse<dynamic> _value;
+    late ApiResponse<BlockMemberList> _value;
     try {
-      _value = ApiResponse<dynamic>.fromJson(
+      _value = ApiResponse<BlockMemberList>.fromJson(
         _result.data!,
-        (json) => json as dynamic,
+        (json) => BlockMemberList.fromJson(json as Map<String, dynamic>),
       );
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
