@@ -5,7 +5,6 @@ import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/common/widget/round_image.dart';
 import 'package:lyc_flutter_project/home/provider/home_provider.dart';
 import 'package:lyc_flutter_project/mypage/model/mypage_posting_preview.dart';
-import 'package:lyc_flutter_project/mypage/screen/mypage_screen.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {

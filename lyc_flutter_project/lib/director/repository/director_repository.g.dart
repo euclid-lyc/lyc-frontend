@@ -21,6 +21,50 @@ class _DirectorRepository implements DirectorRepository {
 
   final ParseErrorLogger? errorLogger;
 
+  @override
+  Future<ApiResponse<DirectorRankingList>> getDirectorRanking({
+    required int pageSize,
+    int? followerCount,
+  }) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'pageSize': pageSize,
+      r'followerCount': followerCount,
+    };
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{r'accessToken': 'true'};
+    _headers.removeWhere((k, v) => v == null);
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<ApiResponse<DirectorRankingList>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          '',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late ApiResponse<DirectorRankingList> _value;
+    try {
+      _value = ApiResponse<DirectorRankingList>.fromJson(
+        _result.data!,
+        (json) => DirectorRankingList.fromJson(json as Map<String, dynamic>),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&
         !(requestOptions.responseType == ResponseType.bytes ||
@@ -49,11 +93,5 @@ class _DirectorRepository implements DirectorRepository {
     }
 
     return Uri.parse(dioBaseUrl).resolveUri(url).toString();
-  }
-
-  @override
-  getDirectorRanking() {
-    // TODO: implement getDirectorRanking
-    throw UnimplementedError();
   }
 }
