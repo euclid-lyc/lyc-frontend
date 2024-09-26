@@ -22,7 +22,7 @@ class MemberList extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 10),
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 14.0),
-      height: 100,
+      height: 80,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
@@ -45,7 +45,7 @@ class MemberList extends StatelessWidget {
                       Text(
                         nickname,
                         style: const TextStyle(
-                          fontSize: 20,
+                          fontSize: 16,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -58,7 +58,7 @@ class MemberList extends StatelessWidget {
                     Text(
                       content!,
                       style: const TextStyle(
-                        fontSize: 14.0,
+                        fontSize: 12.0,
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),

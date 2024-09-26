@@ -55,7 +55,7 @@ class _DirectorSearchScreenState extends State<DirectorSearchScreen> {
 
   Container renderButtons() {
     return Container(
-      height: 45,
+      height: MediaQuery.of(context).size.height / 22,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20.0),
         color: Colors.white,
