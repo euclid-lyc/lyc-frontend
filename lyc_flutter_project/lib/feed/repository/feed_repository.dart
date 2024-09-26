@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/common/const/data.dart';
 import 'package:lyc_flutter_project/common/model/api_response.dart';
 import 'package:lyc_flutter_project/mypage/model/mypage_posting_preview.dart';
-import 'package:retrofit/http.dart';
+import 'package:retrofit/retrofit.dart';
 
 part 'feed_repository.g.dart';
 
