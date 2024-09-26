@@ -14,7 +14,7 @@ class SettingRepositoryProvider extends ChangeNotifier {
   SettingRepositoryProvider({required this.dio}) {
     repository = SettingRepository(
       dio,
-      baseUrl: "http://$ip/lyc/members",
+      baseUrl: "http://$ip/lyc",
     );
   }
 }
@@ -23,29 +23,36 @@ class SettingRepositoryProvider extends ChangeNotifier {
 abstract class SettingRepository {
   factory SettingRepository(Dio dio, {String baseUrl}) = _SettingRepository;
 
-  @GET("/delivery")
+  @GET("/members/delivery")
   @Headers({"accessToken": "true"})
   Future<ApiResponse<DeliveryModel>> getDeliveryInfo();
 
-  @PATCH("/delivery")
+  @PATCH("/members/delivery")
   @Headers({"accessToken": "true"})
   Future<DeliveryModel> updateDeliveryInfo({
     @Body() required DeliveryModel deliveryModel,
   });
 
-  @GET("/info")
+  @GET("/members/info")
   @Headers({"accessToken": "true"})
   Future<ApiResponse<MemberModel>> getMemberInfo();
 
-  @PATCH("/info")
+  @PATCH("/members/info")
   @Headers({"accessToken": "true"})
   Future<MemberModel> updateMemberInfo({
     @Body() required MemberModel memberModel,
   });
 
-  @PATCH("/pw-info")
+  @PATCH("/members/pw-info")
   @Headers({"accessToken": "true"})
   Future<ApiResponse<MemberModel>> updatePassword({
     @Body() required PasswordModel passwordModel,
+  });
+
+  @GET("/socials/block-members")
+  @Headers({"accessToken": "true"})
+  Future<ApiResponse> getBlockMembers({
+    @Query("pageSize") required int pageSize,
+    @Query("blockMemberId") int? blockMemberId,
   });
 }
