@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'weather_repository.dart';
+part of 'director_repository.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,8 +8,8 @@ part of 'weather_repository.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element
 
-class _WeatherRepository implements WeatherRepository {
-  _WeatherRepository(
+class _DirectorRepository implements DirectorRepository {
+  _DirectorRepository(
     this._dio, {
     this.baseUrl,
     this.errorLogger,
@@ -22,15 +22,20 @@ class _WeatherRepository implements WeatherRepository {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<ApiResponse<WeatherResult>> getWeather(
-      {required WeatherQuery weatherQuery}) async {
+  Future<ApiResponse<DirectorRankingList>> getDirectorRanking({
+    required int pageSize,
+    int? followerCount,
+  }) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    queryParameters.addAll(weatherQuery.toJson());
+    final queryParameters = <String, dynamic>{
+      r'pageSize': pageSize,
+      r'followerCount': followerCount,
+    };
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{r'accessToken': 'true'};
     _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<ApiResponse<WeatherResult>>(Options(
+    final _options = _setStreamType<ApiResponse<DirectorRankingList>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -47,11 +52,11 @@ class _WeatherRepository implements WeatherRepository {
           baseUrl,
         )));
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late ApiResponse<WeatherResult> _value;
+    late ApiResponse<DirectorRankingList> _value;
     try {
-      _value = ApiResponse<WeatherResult>.fromJson(
+      _value = ApiResponse<DirectorRankingList>.fromJson(
         _result.data!,
-        (json) => WeatherResult.fromJson(json as Map<String, dynamic>),
+        (json) => DirectorRankingList.fromJson(json as Map<String, dynamic>),
       );
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);

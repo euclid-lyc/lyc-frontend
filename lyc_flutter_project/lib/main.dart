@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/Join/Provider/login_provider.dart';
 import 'package:lyc_flutter_project/common/dio/dio.dart';
 import 'package:lyc_flutter_project/Join/Screens/join_membership_screen_4.dart';
+import 'package:lyc_flutter_project/director/provider/director_provider.dart';
+import 'package:lyc_flutter_project/director/repository/director_repository.dart';
 import 'package:lyc_flutter_project/feed/provider/feed_provider.dart';
 import 'package:lyc_flutter_project/feed/repository/feed_repository.dart';
 import 'package:lyc_flutter_project/feed/repository/weather_repository.dart';
@@ -31,7 +33,10 @@ void main() {
         ),
         ChangeNotifierProvider(
           create: (context) => LoginProvider(
-            Provider.of<DioProvider>(context, listen: false,),
+            Provider.of<DioProvider>(
+              context,
+              listen: false,
+            ),
             context.read<MypageRepositoryProvider>().mypageRepository,
           ),
         ),
@@ -102,6 +107,15 @@ void main() {
               context,
               listen: false,
             ),
+          ),
+        ),
+        ChangeNotifierProvider(
+          create: (context) =>
+              DirectorRepositoryProvider(dio: context.read<DioProvider>().dio),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => DirectorProvider(
+            repositoryProvider: context.read<DirectorRepositoryProvider>(),
           ),
         ),
       ],
