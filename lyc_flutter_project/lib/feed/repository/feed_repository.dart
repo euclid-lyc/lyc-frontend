@@ -25,5 +25,5 @@ abstract class FeedRepository {
 
   @GET("/preview")
   @Headers({"accessToken": "true"})
-  Future<ApiResponse<List<CoordiPostingPreview>>> getFeedPreview();
+  Future<ApiResponse> getFeedPreview();
 }
