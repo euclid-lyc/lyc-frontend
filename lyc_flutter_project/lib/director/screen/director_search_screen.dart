@@ -63,6 +63,7 @@ class _DirectorSearchScreenState extends State<DirectorSearchScreen> {
                               final DirectorRanking director =
                                   value.directors[index];
                               return MemberList(
+                                memberId: director.memberId,
                                 profile: director.profileImage,
                                 nickname: director.nickname,
                                 // button: ActiveState(),
