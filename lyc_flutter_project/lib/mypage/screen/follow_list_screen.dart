@@ -13,8 +13,13 @@ import 'package:provider/provider.dart';
 
 class FollowListScreen extends StatelessWidget {
   final bool follower;
+  final int memberId;
 
-  const FollowListScreen({super.key, required this.follower});
+  const FollowListScreen({
+    super.key,
+    required this.follower,
+    required this.memberId,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -23,12 +28,14 @@ class FollowListScreen extends StatelessWidget {
       create: (context) => FollowProvider(
         repositoryProvider: context.read<MypageRepositoryProvider>(),
         initialIsFollower: follower,
+        memberId: memberId,
       ),
       update: (context, myPageRepo, previous) =>
           previous ??
           FollowProvider(
             repositoryProvider: myPageRepo,
             initialIsFollower: follower,
+            memberId: memberId,
           ),
       child: const _FollowListContent(),
     );

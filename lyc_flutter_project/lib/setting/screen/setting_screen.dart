@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/Join/Provider/login_provider.dart';
+import 'package:lyc_flutter_project/Join/Screens/login_screen.dart';
 import 'package:lyc_flutter_project/common/screen/splash_screen.dart';
 import 'package:lyc_flutter_project/common/widget/custom_alert_dialog.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
@@ -115,7 +116,7 @@ class SettingScreen extends StatelessWidget {
                         pushReplacementWithoutNavBar(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const SplashScreen(),
+                            builder: (context) => LoginScreen(),
                           ),
                         );
                         _logout();

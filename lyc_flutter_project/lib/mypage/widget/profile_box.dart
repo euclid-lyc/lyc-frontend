@@ -75,8 +75,9 @@ class ProfileBox extends StatelessWidget {
                       pushWithoutNavBar(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const FollowListScreen(
+                          builder: (context) => FollowListScreen(
                             follower: true,
+                            memberId: memberId,
                           ),
                         ),
                       );
@@ -94,8 +95,9 @@ class ProfileBox extends StatelessWidget {
                       pushWithoutNavBar(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const FollowListScreen(
+                          builder: (context) => FollowListScreen(
                             follower: false,
+                            memberId: memberId,
                           ),
                         ),
                       );

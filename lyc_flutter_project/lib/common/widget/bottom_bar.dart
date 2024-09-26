@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/common/widget/round_image.dart';
 import 'package:lyc_flutter_project/director/screen/director_search_screen.dart';
 import 'package:lyc_flutter_project/feed/screen/feed_screen.dart';
-import 'package:lyc_flutter_project/mypage/provider/mypage_provider.dart';
 import 'package:lyc_flutter_project/home/screen/home_screen.dart';
+import 'package:lyc_flutter_project/mypage/provider/mypage_provider.dart';
 import 'package:lyc_flutter_project/mypage/screen/mypage_screen.dart';
 import 'package:lyc_flutter_project/setting/screen/setting_screen.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
@@ -47,7 +47,13 @@ class _BottomBarState extends State<BottomBar> {
           ),
         ),
         PersistentTabConfig(
-          screen: const MypageScreen(),
+          screen: Consumer<MypageProviderFactory>(
+            builder: (context, value, child) {
+              return const MypageScreen(
+                isLoginUser: true,
+              );
+            },
+          ),
           item: ItemConfig(
             icon: RoundImage(
               image: Image.asset(
@@ -85,11 +91,6 @@ class _BottomBarState extends State<BottomBar> {
         ),
       ];
 
-  @override
-  void initState() {
-    super.initState();
-    context.read<MypageProvider>().getProfile();
-  }
   @override
   Widget build(BuildContext context) {
     return PersistentTabView(

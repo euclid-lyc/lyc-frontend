@@ -17,12 +17,12 @@ import 'package:provider/provider.dart';
 /// 1 저장한 코디
 /// 3 리뷰
 
-class GridWidgetWithButton extends StatefulWidget {
+class MyCoordiGridView extends StatefulWidget {
   final List<CoordiPostingPreview> postings;
   final int category;
   final MypageProvider provider;
 
-  const GridWidgetWithButton({
+  const MyCoordiGridView({
     super.key,
     required this.postings,
     required this.category,
@@ -30,10 +30,10 @@ class GridWidgetWithButton extends StatefulWidget {
   });
 
   @override
-  State<GridWidgetWithButton> createState() => _GridWidgetWithButtonState();
+  State<MyCoordiGridView> createState() => _MyCoordiGridViewState();
 }
 
-class _GridWidgetWithButtonState extends State<GridWidgetWithButton> {
+class _MyCoordiGridViewState extends State<MyCoordiGridView> {
   final ScrollController controller = ScrollController();
 
   @override

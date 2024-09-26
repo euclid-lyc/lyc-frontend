@@ -50,31 +50,34 @@ class HomeAppbar extends StatelessWidget implements PreferredSizeWidget {
                     children: [
                       const Expanded(flex: 6, child: SizedBox()),
                       Expanded(
-                          flex: 3,
-                          child: GestureDetector(
-                            onTap: () {},
-                            child: SvgPicture.asset('assets/icon_collage.svg',
-                                color: Colors.white),
-                          )),
+                        flex: 3,
+                        child: GestureDetector(
+                          onTap: () {},
+                          child: SvgPicture.asset('assets/icon_collage.svg',
+                              color: Colors.white),
+                        ),
+                      ),
                       const Expanded(child: SizedBox()),
                       Expanded(
-                          flex: 3,
-                          child: GestureDetector(
-                            onTap: () {},
-                            child: SvgPicture.asset('assets/icon_dm.svg',
-                                color: Colors.white),
-                          )),
+                        flex: 3,
+                        child: GestureDetector(
+                          onTap: () {},
+                          child: SvgPicture.asset('assets/icon_dm.svg',
+                              color: Colors.white),
+                        ),
+                      ),
                       const Expanded(child: SizedBox()),
                       Expanded(
-                          flex: 3,
-                          child: GestureDetector(
-                            onTap: () {},
-                            child: SizedBox(
-                              child: RoundImage(
-                                image: Image.asset('assets/ex_profile.png'),
-                              ),
+                        flex: 3,
+                        child: GestureDetector(
+                          onTap: () {},
+                          child: SizedBox(
+                            child: RoundImage(
+                              image: Image.asset('assets/ex_profile.png'),
                             ),
-                          )),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),

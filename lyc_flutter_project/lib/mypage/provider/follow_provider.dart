@@ -1,15 +1,16 @@
 import 'package:flutter/cupertino.dart';
-import 'package:lyc_flutter_project/data/temp_member_data.dart';
 import 'package:lyc_flutter_project/mypage/model/follow_model.dart';
 import 'package:lyc_flutter_project/mypage/repository/mypage_repository.dart';
 
 class FollowProvider extends ChangeNotifier {
   final MypageRepositoryProvider repositoryProvider;
   final bool initialIsFollower;
+  final int memberId;
 
   FollowProvider({
     required this.repositoryProvider,
     required this.initialIsFollower,
+    required this.memberId,
   }) {
     setCategory(isFollower: initialIsFollower);
   }
@@ -111,7 +112,7 @@ class FollowProvider extends ChangeNotifier {
       updateLoading(true);
       if (category == 0) {
         final resp = await repositoryProvider.mypageRepository.getFollowerList(
-          memberId: cur_member,
+          memberId: memberId,
           paginateQuery: paginateQuery,
         );
         final lst = resp.result.members;
@@ -119,7 +120,7 @@ class FollowProvider extends ChangeNotifier {
         updateHasMore(lst.length >= pageSize);
       } else {
         final resp = await repositoryProvider.mypageRepository.getFollowingList(
-          memberId: cur_member,
+          memberId: memberId,
           paginateQuery: paginateQuery,
         );
         final lst = resp.result.members;

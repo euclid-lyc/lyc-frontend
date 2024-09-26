@@ -2,25 +2,29 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:lyc_flutter_project/data/temp_member_data.dart';
 import 'package:lyc_flutter_project/posting/model/clothes_posting.dart';
 import 'package:lyc_flutter_project/posting/repository/clothes_repository.dart';
 
 class ClothesProvider extends ChangeNotifier {
   final ClothesRepositoryProvider repositoryProvider;
-  ClothesPostingImage _postingImage = ClothesPostingImage(
-    memberId: cur_member,
-  );
-  ClothesPostingText _postingText = ClothesPostingText(
-    title: "",
-    text: "",
-    material: "",
-    fit: "",
-  );
+  final int memberId;
+  late ClothesPostingImage _postingImage;
+  late ClothesPostingText _postingText;
 
   ClothesProvider({
     required this.repositoryProvider,
-  });
+    required this.memberId,
+  }) {
+    _postingImage = ClothesPostingImage(
+      memberId: memberId,
+    );
+    _postingText = ClothesPostingText(
+      title: "",
+      text: "",
+      material: "",
+      fit: "",
+    );
+  }
 
   void iUpdateImage(XFile image) {
     _postingImage = ClothesPostingImage(
@@ -45,19 +49,16 @@ class ClothesProvider extends ChangeNotifier {
   void tUpdateTitle(String text) {
     _postingText = _postingText.copyWith(title: text);
     notifyListeners();
-    print("title: ${_postingText.title}");
   }
 
   void tUpdateText(String text) {
     _postingText = _postingText.copyWith(text: text);
     notifyListeners();
-    print(_postingText.text);
   }
 
   void tUpdateMaterial(String text) {
     _postingText = _postingText.copyWith(material: text);
     notifyListeners();
-    print(_postingText.material);
   }
 
   void tUpdateFit(String text) {

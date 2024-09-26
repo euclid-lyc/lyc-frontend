@@ -7,20 +7,22 @@ import 'package:lyc_flutter_project/mypage/widget/custom_button_in_profile_box.d
 
 class BottomButtons extends StatelessWidget {
   final int memberId;
+  final bool isLoginUser;
 
   const BottomButtons({
     super.key,
     required this.memberId,
+    required this.isLoginUser,
   });
 
   @override
   Widget build(BuildContext context) {
-    if (memberId == cur_member) {
+    if (isLoginUser) {
       return Row(
         children: [
           // 스탬프 버튼
           CustomButtonInProfileBox(
-            memberId: cur_member,
+            memberId: memberId,
             text: '스탬프',
             onPressed: () => {
               showDialog(
@@ -34,7 +36,7 @@ class BottomButtons extends StatelessWidget {
           const SizedBox(width: 15),
           // 리뷰 버튼
           CustomButtonInProfileBox(
-            memberId: cur_member,
+            memberId: memberId,
             text: '리뷰',
             onPressed: () => Navigator.push(context, MaterialPageRoute(
               builder: (context) {
@@ -45,7 +47,7 @@ class BottomButtons extends StatelessWidget {
           const SizedBox(width: 15),
           // 출석체크 버튼
           CustomButtonInProfileBox(
-            memberId: cur_member,
+            memberId: memberId,
             text: '출석체크',
             onPressed: () => {
               Navigator.push(

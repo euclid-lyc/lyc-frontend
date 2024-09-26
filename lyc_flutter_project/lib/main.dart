@@ -24,6 +24,17 @@ void main() {
         ChangeNotifierProvider(
           create: (context) => DioProvider(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => MypageRepositoryProvider(
+            dio: context.read<DioProvider>().dio,
+          ),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => LoginProvider(
+            Provider.of<DioProvider>(context, listen: false,),
+            context.read<MypageRepositoryProvider>().mypageRepository,
+          ),
+        ),
         ChangeNotifierProvider(create: (context) => MembershipState()),
         ChangeNotifierProvider(
           create: (context) =>
@@ -54,35 +65,32 @@ void main() {
             feedRepositoryProvider: context.read<FeedRepositoryProvider>(),
           ),
         ),
-        ChangeNotifierProvider(
-          create: (context) => MypageRepositoryProvider(
-            dio: context.read<DioProvider>().dio,
-          ),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => MypageProvider(
+        ChangeNotifierProxyProvider<MypageRepositoryProvider,
+            MypageProviderFactory>(
+          create: (context) => MypageProviderFactory(
             mypageRepositoryProvider: context.read<MypageRepositoryProvider>(),
           ),
+          update: (context, value, previous) =>
+              previous ??
+              MypageProviderFactory(
+                mypageRepositoryProvider: value,
+              ),
         ),
-        ChangeNotifierProxyProvider2<MypageProvider, CoordiRepositoryProvider,
-            PostingDetailProviderFactory>(
+        ChangeNotifierProxyProvider2<MypageRepositoryProvider,
+            CoordiRepositoryProvider, PostingDetailProviderFactory>(
           create: (context) => PostingDetailProviderFactory(
-            mypageProvider: Provider.of<MypageProvider>(context, listen: false),
+            mypageRepositoryProvider:
+                Provider.of<MypageRepositoryProvider>(context, listen: false),
             coordiRepositoryProvider:
                 Provider.of<CoordiRepositoryProvider>(context, listen: false),
           ),
-          update:
-              (context, mypageProvider, postingRepositoryProvider, previous) =>
-                  previous ??
-                  PostingDetailProviderFactory(
-                    mypageProvider: mypageProvider,
-                    coordiRepositoryProvider: postingRepositoryProvider,
-                  ),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => LoginProvider(
-            Provider.of<DioProvider>(context, listen: false),
-          ),
+          update: (context, mypageRepositoryProvider, postingRepositoryProvider,
+                  previous) =>
+              previous ??
+              PostingDetailProviderFactory(
+                mypageRepositoryProvider: mypageRepositoryProvider,
+                coordiRepositoryProvider: postingRepositoryProvider,
+              ),
         ),
         ChangeNotifierProvider(
           create: (context) =>
