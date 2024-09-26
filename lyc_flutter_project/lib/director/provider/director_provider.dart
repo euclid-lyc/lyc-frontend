@@ -8,12 +8,16 @@ class DirectorProvider extends ChangeNotifier {
 
   DirectorProvider({
     required this.repositoryProvider,
-  });
+  }) {
+    getRanking();
+  }
 
   bool _loading = false;
   bool _hasMore = true;
 
   List<DirectorRanking> _directors = [];
+
+  get loading => _loading;
 
   get directors => _directors;
 

@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:lyc_flutter_project/common/widget/custom_loading.dart';
+import 'package:lyc_flutter_project/common/widget/custom_refresh_indicator.dart';
 import 'package:lyc_flutter_project/common/widget/home_appbar.dart';
 import 'package:lyc_flutter_project/common/widget/member_list.dart';
 import 'package:lyc_flutter_project/common/widget/switch_category_button.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
+import 'package:lyc_flutter_project/data/style_list.dart';
+import 'package:lyc_flutter_project/director/model/director_ranking.dart';
+import 'package:lyc_flutter_project/director/provider/director_provider.dart';
 import 'package:lyc_flutter_project/director/widget/custom_search_bar.dart';
 import 'package:lyc_flutter_project/styles/default_padding.dart';
+import 'package:provider/provider.dart';
 
 class DirectorSearchScreen extends StatefulWidget {
   const DirectorSearchScreen({super.key});
@@ -22,53 +28,60 @@ class _DirectorSearchScreenState extends State<DirectorSearchScreen> {
       resizeToAvoidBottomInset: true,
       backgroundColor: AppColor.lightGrey,
       appBar: const HomeAppbar(),
-      body: DefaultPadding(
-        bottom: 0,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            CustomSearchBar(
-              onChanged: (String value) {},
-            ),
-            const SizedBox(height: 16.0),
-            renderButtons(),
-            const SizedBox(height: 16.0),
-            const _PaddingText(
-              label: "디렉터 랭킹",
-              fontWeight: FontWeight.w600,
-              fontSize: 18.0,
-            ),
-            const _PaddingText(
-              label: "사용자의 취향에 맞는 코디를 추천드려요",
-              fontWeight: FontWeight.w400,
-              fontSize: 12.0,
-            ),
-            const SizedBox(height: 8.0),
-            Expanded(
-              child: ListView.builder(
-                itemBuilder: (context, index) {
-                  return const MemberList(
-                    profile: "assets/ex_profile.png",
-                    nickname: "karina",
-                    id: "katarinabluu",
-                    // button: ActiveState(),
-                  );
-                },
-                itemCount: 10,
+      body: Consumer<DirectorProvider>(
+        builder: (context, value, child) {
+          return CustomRefreshIndicator(
+            onRefresh: value.refreshRanking,
+            child: DefaultPadding(
+              bottom: 0,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CustomSearchBar(
+                    onChanged: (String value) {},
+                  ),
+                  const SizedBox(height: 16.0),
+                  renderButtons(),
+                  const SizedBox(height: 16.0),
+                  const _PaddingText(
+                    label: "디렉터 랭킹",
+                    fontWeight: FontWeight.w600,
+                    fontSize: 18.0,
+                  ),
+                  const _PaddingText(
+                    label: "사용자의 취향에 맞는 코디를 추천드려요",
+                    fontWeight: FontWeight.w400,
+                    fontSize: 12.0,
+                  ),
+                  const SizedBox(height: 8.0),
+                  Expanded(
+                    child: value.loading
+                        ? const Center(child: CustomLoading())
+                        : ListView.builder(
+                            itemCount: value.directors.length,
+                            itemBuilder: (context, index) {
+                              final DirectorRanking director =
+                                  value.directors[index];
+                              return MemberList(
+                                profile: director.profileImage,
+                                nickname: director.nickname,
+                                // button: ActiveState(),
+                              );
+                            },
+                          ),
+                  ),
+                ],
               ),
-            )
-          ],
-        ),
+            ),
+          );
+        },
       ),
     );
   }
 
   Container renderButtons() {
     return Container(
-      height: MediaQuery
-          .of(context)
-          .size
-          .height / 22,
+      height: MediaQuery.of(context).size.height / 22,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20.0),
         color: Colors.white,
@@ -78,19 +91,17 @@ class _DirectorSearchScreenState extends State<DirectorSearchScreen> {
           SwitchCategoryButton(
             text: "일반검색",
             isSelected: isNormal,
-            onPressed: () =>
-                setState(() {
-                  isNormal = true;
-                }),
+            onPressed: () => setState(() {
+              isNormal = true;
+            }),
             color: AppColor.brown,
           ),
           SwitchCategoryButton(
             text: "키워드검색",
             isSelected: !isNormal,
-            onPressed: () =>
-                setState(() {
-                  isNormal = false;
-                }),
+            onPressed: () => setState(() {
+              isNormal = false;
+            }),
             color: AppColor.brown,
           ),
         ],
