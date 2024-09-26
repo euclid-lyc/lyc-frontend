@@ -16,6 +16,7 @@ class IconsInProfileBox extends StatelessWidget {
   Widget build(BuildContext context) {
     if (isMypage) {
       return Row(
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
           IconButton(
             onPressed: () {},
@@ -27,14 +28,14 @@ class IconsInProfileBox extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) {
-                    return PointScreen();
+                    return const PointScreen();
                   },
                 ),
               );
             },
             icon: SvgPicture.asset(
               "assets/icon_p.svg",
-              width: 20,
+              width: 18,
             ),
           ),
         ],

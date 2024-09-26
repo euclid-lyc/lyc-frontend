@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:lyc_flutter_project/common/widget/custom_loading.dart';
+import 'package:lyc_flutter_project/common/widget/home_appbar.dart';
 import 'package:lyc_flutter_project/common/widget/image_networking.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/common/widget/round_image.dart';
 import 'package:lyc_flutter_project/home/provider/home_provider.dart';
 import 'package:lyc_flutter_project/mypage/model/mypage_posting_preview.dart';
-import 'package:lyc_flutter_project/mypage/screen/mypage_screen.dart';
+import 'package:lyc_flutter_project/posting/screen/posting_detail_screen.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -18,6 +20,17 @@ class HomeScreen extends StatefulWidget {
 void _onTap() {}
 
 class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+
+    getFeedPreviewList();
+  }
+
+  Future<void> getFeedPreviewList() async {
+    await context.read<HomeProvider>().getPostingPreview();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<HomeProvider>(
@@ -44,57 +57,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     // 둘러보기
                     const TitleRow(label: '둘러보기', onTap: _onTap),
                     const Line(),
-                    FutureBuilder<List<CoordiPostingPreview>>(
-                      future: value.getPostingPreview(),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return const CircularProgressIndicator();
-                        } else if (snapshot.hasError) {
-                          return Text("Error: ${snapshot.error.toString()}");
-                        } else if (snapshot.hasData) {
-                          return SizedBox(
-                            height: 200,
-                            child: snapshot.data!.isEmpty
-                                ? const Text("게시글이 없습니다")
-                                : ListView.builder(
-                                    scrollDirection: Axis.horizontal,
-                                    itemCount: snapshot.data!.length,
-                                    itemBuilder: (context, index) {
-                                      final posting = snapshot.data![index];
-                                      return Container(
-                                        height: 190,
-                                        width: 135,
-                                        margin: const EdgeInsets.symmetric(
-                                          horizontal: 8.0,
-                                        ),
-                                        decoration: buildWhiteRoundBox(),
-                                        child: ImageNetworking(posting.image),
-                                      );
-                                    },
-                                  ),
-                          );
-                        } else {
-                          return const SizedBox();
-                        }
-                      },
+                    SizedBox(
+                      height: 150.0,
+                      child: renderFeedPreview(
+                        isLoading: value.loadingFeedPreview,
+                        list: value.feedPreviewList,
+                      ),
                     ),
-                    // SizedBox(
-                    //   height: 200,
-                    //   child: ListView(
-                    //     scrollDirection: Axis.horizontal,
-                    //     children: [
-                    //       for (var i = 0; i < 10; i++)
-                    //         Container(
-                    //           margin: const EdgeInsets.symmetric(horizontal: 8),
-                    //           decoration: buildWhiteRoundBox(),
-                    //           height: 190,
-                    //           width: 135,
-                    //         ),
-                    //     ],
-                    //   ),
-                    // ),
-
                     // 오늘의 디렉터
                     const MarginBox(),
                     const TitleRow(label: '오늘의 디렉터', onTap: _onTap),
@@ -301,6 +270,45 @@ class _HomeScreenState extends State<HomeScreen> {
       borderRadius: BorderRadius.circular(20),
     );
   }
+
+  Widget renderFeedPreview({
+    required bool isLoading,
+    required List<CoordiPostingPreview> list,
+  }) {
+    if (isLoading) return const Center(child: CustomLoading());
+    if (list.isEmpty) return const Text("불러올 게시글이 없습니다");
+    return ListView.builder(
+      scrollDirection: Axis.horizontal,
+      itemCount: list!.length,
+      itemBuilder: (context, index) {
+        final posting = list[index];
+        return Container(
+          height: 150,
+          width: 112,
+          margin: const EdgeInsets.symmetric(
+            horizontal: 8.0,
+          ),
+          decoration: buildWhiteRoundBox(),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(20.0),
+            child: GestureDetector(
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return PostingDetailScreen(
+                      postingId: posting.postingId,
+                    );
+                  },
+                ),
+              ),
+              child: ImageNetworking(posting.image),
+            ),
+          ),
+        );
+      },
+    );
+  }
 }
 
 class MiniBox extends StatelessWidget {
@@ -328,7 +336,7 @@ class DescriptTitle extends StatelessWidget {
       label,
       style: const TextStyle(
         fontWeight: FontWeight.w600,
-        fontSize: 18,
+        fontSize: 16,
       ),
     );
   }
@@ -344,7 +352,7 @@ class DescriptText extends StatelessWidget {
     return Text(
       label,
       style: const TextStyle(
-        fontSize: 16,
+        fontSize: 14,
         fontWeight: FontWeight.w400,
         color: Color(0xff353945),
       ),
@@ -386,7 +394,7 @@ class TitleRow extends StatelessWidget {
           style: const TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.bold,
-            fontSize: 20,
+            fontSize: 18,
           ),
         ),
         GestureDetector(
@@ -401,93 +409,6 @@ class TitleRow extends StatelessWidget {
   }
 }
 
-class HomeAppbar extends StatelessWidget implements PreferredSizeWidget {
-  const HomeAppbar({
-    super.key,
-  });
-
-  @override
-  Size get preferredSize => const Size.fromHeight(90);
-
-  @override
-  Widget build(BuildContext context) {
-    return AppBar(
-      backgroundColor: AppColor.beige,
-      automaticallyImplyLeading: false,
-      toolbarHeight: 90,
-      flexibleSpace: Container(
-        padding: const EdgeInsets.all(15),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Expanded(
-                  flex: 5,
-                  child: Text(
-                    'LEAD YOUR CLOSET',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 22,
-                      color: Colors.white,
-                      shadows: [
-                        Shadow(
-                          color: Colors.grey,
-                          offset: Offset(1, 2),
-                          blurRadius: 3,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Expanded(
-                  flex: 4,
-                  child: Row(
-                    children: [
-                      const Expanded(flex: 6, child: SizedBox()),
-                      Expanded(
-                          flex: 3,
-                          child: GestureDetector(
-                            onTap: () {},
-                            child: SvgPicture.asset('assets/icon_collage.svg',
-                                color: Colors.white),
-                          )),
-                      const Expanded(child: SizedBox()),
-                      Expanded(
-                          flex: 3,
-                          child: GestureDetector(
-                            onTap: () {},
-                            child: SvgPicture.asset('assets/icon_dm.svg',
-                                color: Colors.white),
-                          )),
-                      const Expanded(child: SizedBox()),
-                      Expanded(
-                          flex: 3,
-                          child: GestureDetector(
-                            onTap: () {},
-                            child: SizedBox(
-                              child: RoundImage(
-                                image: Image.asset(
-                                  'assets/ex_profile.png',
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                          )),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
 class MarginBox extends StatelessWidget {
   const MarginBox({
     super.key,
@@ -495,6 +416,6 @@ class MarginBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SizedBox(height: 40);
+    return const SizedBox(height: 60);
   }
 }
