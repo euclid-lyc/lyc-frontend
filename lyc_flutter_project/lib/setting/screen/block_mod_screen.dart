@@ -18,11 +18,26 @@ class BlockModScreen extends StatefulWidget {
 }
 
 class _BlockModScreenState extends State<BlockModScreen> {
+  final ScrollController controller = ScrollController();
+
   @override
   void initState() {
     super.initState();
-
     context.read<SettingProvider>().getBlockMembers();
+    controller.addListener(listener);
+  }
+
+  void listener() {
+    if (controller.offset > controller.position.maxScrollExtent - 300) {
+      context.read<SettingProvider>().getBlockMembers();
+    }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    controller.removeListener(listener);
+    controller.dispose();
   }
 
   @override
@@ -46,19 +61,19 @@ class _BlockModScreenState extends State<BlockModScreen> {
                       : ListView.builder(
                           itemCount: value.blockMembers.length,
                           itemBuilder: (context, index) {
-                            final BlockMember member = value.blockMembers[index];
+                            final BlockMember member =
+                                value.blockMembers[index];
                             return MemberList(
                               memberId: member.memberId,
                               profile: member.profileImage,
                               nickname: member.nickname,
                               button: RightButtonInList(
-                                backgroundColor: AppColor.brown,
-                                foregroundColor: Colors.white,
-                                label: "해제",
-                                onPressed: () => value.unblockMember(
-                                  memberId: member.memberId,
-                                )
-                              ),
+                                  backgroundColor: AppColor.brown,
+                                  foregroundColor: Colors.white,
+                                  label: "해제",
+                                  onPressed: () => value.unblockMember(
+                                        memberId: member.memberId,
+                                      )),
                               content: member.introduction,
                             );
                           },

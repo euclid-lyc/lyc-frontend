@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/Join/Provider/login_provider.dart';
 import 'package:lyc_flutter_project/common/widget/custom_loading.dart';
+import 'package:lyc_flutter_project/common/widget/custom_refresh_indicator.dart';
 import 'package:lyc_flutter_project/common/widget/switch_category_button.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/mypage/layout/mypage_layout.dart';
@@ -60,7 +61,7 @@ class _MypageScreenState extends State<MypageScreen> {
       value: provider,
       child: Consumer<MypageProvider>(
         builder: (context, value, child) {
-          return RefreshIndicator(
+          return CustomRefreshIndicator(
             onRefresh: value.refresh,
             child: MypageLayout(
               top: Container(

@@ -5,7 +5,6 @@ import 'package:lyc_flutter_project/common/widget/home_appbar.dart';
 import 'package:lyc_flutter_project/common/widget/member_list.dart';
 import 'package:lyc_flutter_project/common/widget/switch_category_button.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
-import 'package:lyc_flutter_project/data/style_list.dart';
 import 'package:lyc_flutter_project/director/model/director_ranking.dart';
 import 'package:lyc_flutter_project/director/provider/director_provider.dart';
 import 'package:lyc_flutter_project/director/widget/custom_search_bar.dart';
@@ -21,6 +20,26 @@ class DirectorSearchScreen extends StatefulWidget {
 
 class _DirectorSearchScreenState extends State<DirectorSearchScreen> {
   bool isNormal = true;
+  final ScrollController controller = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    controller.addListener(listener);
+  }
+
+  void listener() {
+    if (controller.offset > controller.position.maxScrollExtent - 200) {
+      context.read<DirectorProvider>().getRanking();
+    }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    controller.removeListener(listener);
+    controller.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,6 +77,7 @@ class _DirectorSearchScreenState extends State<DirectorSearchScreen> {
                     child: value.loading
                         ? const Center(child: CustomLoading())
                         : ListView.builder(
+                      controller: controller,
                             itemCount: value.directors.length,
                             itemBuilder: (context, index) {
                               final DirectorRanking director =

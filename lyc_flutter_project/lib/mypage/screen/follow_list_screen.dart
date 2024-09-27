@@ -45,11 +45,34 @@ class FollowListScreen extends StatelessWidget {
 class _FollowListContent extends StatefulWidget {
   const _FollowListContent();
 
+
   @override
   _FollowListContentState createState() => _FollowListContentState();
 }
 
 class _FollowListContentState extends State<_FollowListContent> {
+  final ScrollController controller = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    controller.addListener(listener);
+  }
+
+  void listener() {
+    if (controller.offset > controller.position.maxScrollExtent - 300) {
+      context.read<FollowProvider>().getList();
+    }
+  }
+
+
+  @override
+  void dispose() {
+    super.dispose();
+    controller.removeListener(listener);
+    controller.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
