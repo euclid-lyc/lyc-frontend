@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/common/widget/custom_loading.dart';
-import 'package:lyc_flutter_project/common/widget/custom_refresh_indicator.dart';
 import 'package:lyc_flutter_project/common/widget/member_list.dart';
 import 'package:lyc_flutter_project/common/widget/right_button_in_list.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
@@ -10,8 +9,20 @@ import 'package:lyc_flutter_project/styles/default_padding.dart';
 import 'package:lyc_flutter_project/widget/normal_appbar.dart';
 import 'package:provider/provider.dart';
 
-class BlockModScreen extends StatelessWidget {
+class BlockModScreen extends StatefulWidget {
   const BlockModScreen({super.key});
+
+  @override
+  State<BlockModScreen> createState() => _BlockModScreenState();
+}
+
+class _BlockModScreenState extends State<BlockModScreen> {
+  @override
+  void initState() {
+    super.initState();
+
+    context.read<SettingProvider>().getBlockMembers();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,36 +35,39 @@ class BlockModScreen extends StatelessWidget {
           return DefaultPadding(
             bottom: 0,
             child: value.loadingBlockMembers
-                ? renderLoading(value)
-                : ListView.builder(
-                    itemCount: value.blockMembers.length,
-                    itemBuilder: (context, index) {
-                      final BlockMember member = value.blockMembers[index];
-                      return MemberList(
-                        memberId: member.memberId,
-                        profile: member.profileImage,
-                        nickname: member.nickname,
-                        button: const RightButtonInList(
-                          backgroundColor: AppColor.brown,
-                          foregroundColor: Colors.white,
-                          label: "해제",
-                          onPressed: tmp,
-                        ),
-                        content: member.introduction,
-                      );
-                      // return MemberList();
-                    },
-                  ),
+                ? const Center(
+                    child: CustomLoading(),
+                  )
+                : (value.blockMembers.isEmpty
+                    ? const SizedBox.shrink()
+                    : ListView.builder(
+                        itemCount: value.blockMembers.length,
+                        itemBuilder: (context, index) {
+                          final BlockMember member = value.blockMembers[index];
+                          return MemberList(
+                            memberId: member.memberId,
+                            profile: member.profileImage,
+                            nickname: member.nickname,
+                            button: RightButtonInList(
+                              backgroundColor: AppColor.brown,
+                              foregroundColor: Colors.white,
+                              label: "해제",
+                              onPressed: () => value.unblockMember(
+                                memberId: member.memberId,
+                              )
+                            ),
+                            content: member.introduction,
+                          );
+                        },
+                      )),
           );
         },
       ),
-    );
-  }
-
-  renderLoading(SettingProvider provider) {
-    provider.getBlockMembers();
-    return const Center(
-      child: CustomLoading(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          context.read<SettingProvider>().blockMember(memberId: 2);
+        },
+      ),
     );
   }
 }

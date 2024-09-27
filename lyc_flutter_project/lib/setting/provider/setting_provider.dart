@@ -182,6 +182,31 @@ class SettingProvider extends ChangeNotifier {
     }
   }
 
+  Future<void> blockMember({required int memberId}) async {
+    try {
+      await repositoryProvider.repository.blockMember(memberId: memberId);
+      await getBlockMembers(refresh: true);
+    } catch (e) {
+      if (e is ApiResponse) {
+        Exception(e.message);
+      } else {
+        Exception(e);
+      }
+    }
+  }
+
+  Future<void> unblockMember({required int memberId}) async {
+    try {
+      await repositoryProvider.repository.unblockMember(memberId: memberId);
+    } catch (e) {
+      if (e is ApiResponse) {
+        Exception(e.message);
+      } else {
+        Exception(e);
+      }
+    }
+  }
+
   void updatePushAlarm({
     bool dm = false,
     bool feed = false,
