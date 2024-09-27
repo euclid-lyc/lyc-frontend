@@ -144,12 +144,17 @@ class SettingProvider extends ChangeNotifier {
     }
   }
 
+  Future<void> refreshBlockMembers() async {
+    await getBlockMembers(refresh: true);
+    notifyListeners();
+  }
+
   Future<void> getBlockMembers({
     bool refresh = false,
     int pageSize = 10,
     int? blockMemberId,
   }) async {
-    if (_loadingBlockMembers || !_hasMoreBlockMembers) return;
+    if (_loadingBlockMembers || (!refresh && !_hasMoreBlockMembers)) return;
 
     if (!refresh & _blockMembers.isNotEmpty) {
       blockMemberId = _blockMembers.last.memberId;
@@ -198,6 +203,8 @@ class SettingProvider extends ChangeNotifier {
   Future<void> unblockMember({required int memberId}) async {
     try {
       await repositoryProvider.repository.unblockMember(memberId: memberId);
+      await getBlockMembers(refresh: true);
+      notifyListeners();
     } catch (e) {
       if (e is ApiResponse) {
         Exception(e.message);

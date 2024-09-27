@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/common/widget/custom_loading.dart';
+import 'package:lyc_flutter_project/common/widget/custom_refresh_indicator.dart';
 import 'package:lyc_flutter_project/common/widget/member_list.dart';
 import 'package:lyc_flutter_project/common/widget/right_button_in_list.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
@@ -32,42 +33,46 @@ class _BlockModScreenState extends State<BlockModScreen> {
       body: Consumer<SettingProvider>(
         //Todo: refresh
         builder: (context, value, child) {
-          return DefaultPadding(
-            bottom: 0,
-            child: value.loadingBlockMembers
-                ? const Center(
-                    child: CustomLoading(),
-                  )
-                : (value.blockMembers.isEmpty
-                    ? const SizedBox.shrink()
-                    : ListView.builder(
-                        itemCount: value.blockMembers.length,
-                        itemBuilder: (context, index) {
-                          final BlockMember member = value.blockMembers[index];
-                          return MemberList(
-                            memberId: member.memberId,
-                            profile: member.profileImage,
-                            nickname: member.nickname,
-                            button: RightButtonInList(
-                              backgroundColor: AppColor.brown,
-                              foregroundColor: Colors.white,
-                              label: "해제",
-                              onPressed: () => value.unblockMember(
-                                memberId: member.memberId,
-                              )
-                            ),
-                            content: member.introduction,
-                          );
-                        },
-                      )),
+          return CustomRefreshIndicator(
+            onRefresh: value.refreshBlockMembers,
+            child: DefaultPadding(
+              bottom: 0,
+              child: value.loadingBlockMembers
+                  ? const Center(
+                      child: CustomLoading(),
+                    )
+                  : (value.blockMembers.isEmpty
+                      ? const SizedBox.shrink()
+                      : ListView.builder(
+                          itemCount: value.blockMembers.length,
+                          itemBuilder: (context, index) {
+                            final BlockMember member = value.blockMembers[index];
+                            return MemberList(
+                              memberId: member.memberId,
+                              profile: member.profileImage,
+                              nickname: member.nickname,
+                              button: RightButtonInList(
+                                backgroundColor: AppColor.brown,
+                                foregroundColor: Colors.white,
+                                label: "해제",
+                                onPressed: () => value.unblockMember(
+                                  memberId: member.memberId,
+                                )
+                              ),
+                              content: member.introduction,
+                            );
+                          },
+                        )),
+            ),
           );
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          context.read<SettingProvider>().blockMember(memberId: 2);
-        },
-      ),
+      // 테스트 버튼
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {
+      //     context.read<SettingProvider>().blockMember(memberId: 2);
+      //   },
+      // ),
     );
   }
 }
