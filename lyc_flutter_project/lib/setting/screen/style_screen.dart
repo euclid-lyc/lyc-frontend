@@ -23,7 +23,7 @@ class StyleScreen extends StatelessWidget {
           keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
           children: [
             const ContentBox(
-              title: "본인의 체형을 알려주세요.",
+              title: "1. 본인의 체형을 알려주세요.",
               child: Column(
                 children: [
                   SpecInputLine(label: "키"),
@@ -34,63 +34,63 @@ class StyleScreen extends StatelessWidget {
               ),
             ),
             const ContentBox(
-              title: "평소 즐겨입는 스타일은 무엇인가요?",
+              title: "2. 평소 즐겨입는 스타일은 무엇인가요?",
               child: ButtonList(
                 name: styleList.styleOptions,
                 selected: [],
               ),
             ),
             const ContentBox(
-              title: "평소 즐겨입지 않는 스타일은 무엇인가요?",
+              title: "3. 평소 즐겨입지 않는 스타일은 무엇인가요?",
               child: ButtonList(
                 name: styleList.styleOptions,
                 selected: [],
               ),
             ),
             const ContentBox(
-              title: "선호하는 소재를 선택해주세요.",
+              title: "4. 선호하는 소재를 선택해주세요.",
               child: ButtonList(
                 name: styleList.materialOptions,
                 selected: [],
               ),
             ),
             const ContentBox(
-              title: "선호하지 않는 소재를 선택해주세요.",
+              title: "5. 선호하지 않는 소재를 선택해주세요.",
               child: ButtonList(
                 name: styleList.materialOptions,
                 selected: [],
               ),
             ),
             const ContentBox(
-              title: "선호하는 핏을 선택해주세요.",
+              title: "6. 선호하는 핏을 선택해주세요.",
               child: ButtonList(
                 name: styleList.fitOptions,
                 selected: [],
               ),
             ),
             const ContentBox(
-              title: "선호하지 않는 핏을 선택해주세요.",
+              title: "7. 선호하지 않는 핏을 선택해주세요.",
               child: ButtonList(
                 name: styleList.fitOptions,
                 selected: [],
               ),
             ),
             const ContentBox(
-              title: "보완하고 싶은 신체 부위가 있나요?",
+              title: "8. 보완하고 싶은 신체 부위가 있나요?",
               child: ButtonList(
                 name: styleList.BodyParts,
                 selected: [],
               ),
             ),
             const ContentBox(
-              title: "추가로 작성하고 싶은 내용이 있나요?",
+              title: "9. 추가로 작성하고 싶은 내용이 있나요?",
               child: CustomTextFormField(
                 hint: "ex. 종아리가 너무 두꺼운 게 고민이에요.",
                 maxLines: 5,
                 containerMargin: 0.0,
                 focusedBorderColor: Colors.transparent,
                 focusedBorderWidth: 0.0,
-                contentPaddingHorizontal: 0.0,
+                contentPaddingHorizontal: 8.0,
               ),
             ),
             const SizedBox(
@@ -190,15 +190,15 @@ class ContentBox extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            title,
-            style: const TextStyle(
-              fontWeight: FontWeight.w600,
-              fontSize: 16.0,
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              title,
+              style: const TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: 16.0,
+              ),
             ),
-          ),
-          const SizedBox(
-            height: 8.0,
           ),
           child,
         ],
