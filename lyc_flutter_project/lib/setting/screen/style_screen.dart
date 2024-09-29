@@ -43,14 +43,26 @@ class _StyleScreenState extends State<StyleScreen> {
                     keyboardDismissBehavior:
                         ScrollViewKeyboardDismissBehavior.onDrag,
                     children: [
-                      const ContentBox(
+                      ContentBox(
                         title: "1. 본인의 체형을 알려주세요.",
                         child: Column(
                           children: [
-                            SpecInputLine(label: "키"),
-                            SpecInputLine(label: "몸무게"),
-                            SpecInputLine(label: "상의 사이즈"),
-                            SpecInputLine(label: "하의 사이즈"),
+                            SpecInputLine(
+                              label: "키",
+                              initialValue: value.style.spec.height.toString(),
+                            ),
+                            SpecInputLine(
+                              label: "몸무게",
+                              initialValue: value.style.spec.weight.toString(),
+                            ),
+                            SpecInputLine(
+                              label: "상의 사이즈",
+                              initialValue: value.style.spec.topSize,
+                            ),
+                            SpecInputLine(
+                              label: "하의 사이즈",
+                              initialValue: value.style.spec.bottomSize,
+                            ),
                           ],
                         ),
                       ),
@@ -103,7 +115,7 @@ class _StyleScreenState extends State<StyleScreen> {
                           selected: [],
                         ),
                       ),
-                      const ContentBox(
+                      ContentBox(
                         title: "9. 추가로 작성하고 싶은 내용이 있나요?",
                         child: CustomTextFormField(
                           hint: "ex. 종아리가 너무 두꺼운 게 고민이에요.",
@@ -112,6 +124,7 @@ class _StyleScreenState extends State<StyleScreen> {
                           focusedBorderColor: Colors.transparent,
                           focusedBorderWidth: 0.0,
                           contentPaddingHorizontal: 8.0,
+                          initialValue: value.style.details,
                         ),
                       ),
                       const SizedBox(
@@ -232,10 +245,12 @@ class ContentBox extends StatelessWidget {
 
 class SpecInputLine extends StatelessWidget {
   final String label;
+  final String initialValue;
 
   const SpecInputLine({
     super.key,
     required this.label,
+    required this.initialValue,
   });
 
   @override
@@ -258,7 +273,7 @@ class SpecInputLine extends StatelessWidget {
           const SizedBox(
             width: 20.0,
           ),
-          const Expanded(
+          Expanded(
             child: CustomTextFormField(
               fillColor: Color(0xffE9E9E9),
               focusedBorderColor: Colors.black,
@@ -266,6 +281,7 @@ class SpecInputLine extends StatelessWidget {
               contentPaddingVertical: 4.0,
               fontSize: 16.0,
               isDense: true,
+              initialValue: initialValue,
             ),
           ),
         ],

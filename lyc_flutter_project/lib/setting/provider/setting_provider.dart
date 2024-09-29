@@ -48,6 +48,8 @@ class SettingProvider extends ChangeNotifier {
 
   get loadingStyleInfo => _loadingStyeInfo;
 
+  StyleModel get style => _styleInfo!;
+
   Future<void> getProfile({
     bool refresh = false,
   }) async {
@@ -223,6 +225,8 @@ class SettingProvider extends ChangeNotifier {
   Future<void> getStyleInfo({required int memberId}) async {
     if (_loadingStyeInfo) return;
     try {
+      _loadingStyeInfo = true;
+      notifyListeners();
       final resp = await repositoryProvider.repository.getStyleInfo(memberId: memberId);
       _styleInfo = resp.result;
     } catch (e) {
@@ -231,6 +235,9 @@ class SettingProvider extends ChangeNotifier {
       } else {
         Exception(e);
       }
+    } finally {
+      _loadingStyeInfo = false;
+      notifyListeners();
     }
   }
 
