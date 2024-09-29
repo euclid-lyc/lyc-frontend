@@ -6,7 +6,6 @@ import 'package:lyc_flutter_project/mypage/model/profile.dart';
 import 'package:lyc_flutter_project/setting/model/block_member.dart';
 import 'package:lyc_flutter_project/setting/model/member_model.dart';
 import 'package:lyc_flutter_project/setting/model/style_model.dart';
-import 'package:retrofit/http.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'setting_repository.g.dart';

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:lyc_flutter_project/Join/Provider/login_provider.dart';
+import 'package:lyc_flutter_project/common/widget/custom_loading.dart';
 import 'package:lyc_flutter_project/common/widget/two_buttons.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/data/style_list.dart';
@@ -9,8 +11,20 @@ import 'package:lyc_flutter_project/widget/normal_appbar.dart';
 import 'package:lyc_flutter_project/widget/select_buttons_in_posting.dart';
 import 'package:provider/provider.dart';
 
-class StyleScreen extends StatelessWidget {
+class StyleScreen extends StatefulWidget {
   const StyleScreen({super.key});
+
+  @override
+  State<StyleScreen> createState() => _StyleScreenState();
+}
+
+class _StyleScreenState extends State<StyleScreen> {
+  @override
+  void initState() {
+    super.initState();
+    final memberId = context.read<LoginProvider>().memberId;
+    context.read<SettingProvider>().getStyleInfo(memberId: memberId!);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,91 +35,97 @@ class StyleScreen extends StatelessWidget {
       ),
       body: DefaultPadding(
         bottom: 20.0,
-        child: ListView(
-          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-          children: [
-            ElevatedButton(onPressed: () {context.read<SettingProvider>().repositoryProvider.repository.getStyleInfo(memberId: 1);}, child: Text("테스트")),
-            const ContentBox(
-              title: "1. 본인의 체형을 알려주세요.",
-              child: Column(
-                children: [
-                  SpecInputLine(label: "키"),
-                  SpecInputLine(label: "몸무게"),
-                  SpecInputLine(label: "상의 사이즈"),
-                  SpecInputLine(label: "하의 사이즈"),
-                ],
-              ),
-            ),
-            const ContentBox(
-              title: "2. 평소 즐겨입는 스타일은 무엇인가요?",
-              child: ButtonList(
-                name: styleList.styleOptions,
-                selected: [],
-              ),
-            ),
-            const ContentBox(
-              title: "3. 평소 즐겨입지 않는 스타일은 무엇인가요?",
-              child: ButtonList(
-                name: styleList.styleOptions,
-                selected: [],
-              ),
-            ),
-            const ContentBox(
-              title: "4. 선호하는 소재를 선택해주세요.",
-              child: ButtonList(
-                name: styleList.materialOptions,
-                selected: [],
-              ),
-            ),
-            const ContentBox(
-              title: "5. 선호하지 않는 소재를 선택해주세요.",
-              child: ButtonList(
-                name: styleList.materialOptions,
-                selected: [],
-              ),
-            ),
-            const ContentBox(
-              title: "6. 선호하는 핏을 선택해주세요.",
-              child: ButtonList(
-                name: styleList.fitOptions,
-                selected: [],
-              ),
-            ),
-            const ContentBox(
-              title: "7. 선호하지 않는 핏을 선택해주세요.",
-              child: ButtonList(
-                name: styleList.fitOptions,
-                selected: [],
-              ),
-            ),
-            const ContentBox(
-              title: "8. 보완하고 싶은 신체 부위가 있나요?",
-              child: ButtonList(
-                name: styleList.BodyParts,
-                selected: [],
-              ),
-            ),
-            const ContentBox(
-              title: "9. 추가로 작성하고 싶은 내용이 있나요?",
-              child: CustomTextFormField(
-                hint: "ex. 종아리가 너무 두꺼운 게 고민이에요.",
-                maxLines: 5,
-                containerMargin: 0.0,
-                focusedBorderColor: Colors.transparent,
-                focusedBorderWidth: 0.0,
-                contentPaddingHorizontal: 8.0,
-              ),
-            ),
-            const SizedBox(
-              height: 20.0,
-            ),
-            TwoButtons(
-              fstOnPressed: () => Navigator.pop(context),
-              scdOnPressed: () {},
-              fstLabel: "이전",
-              scdLabel: "완료",
-            ),
-          ],
+        child: Consumer<SettingProvider>(
+          builder: (context, value, child) {
+            return value.loadingStyleInfo
+                ? const Center(child: CustomLoading())
+                : ListView(
+                    keyboardDismissBehavior:
+                        ScrollViewKeyboardDismissBehavior.onDrag,
+                    children: [
+                      const ContentBox(
+                        title: "1. 본인의 체형을 알려주세요.",
+                        child: Column(
+                          children: [
+                            SpecInputLine(label: "키"),
+                            SpecInputLine(label: "몸무게"),
+                            SpecInputLine(label: "상의 사이즈"),
+                            SpecInputLine(label: "하의 사이즈"),
+                          ],
+                        ),
+                      ),
+                      const ContentBox(
+                        title: "2. 평소 즐겨입는 스타일은 무엇인가요?",
+                        child: ButtonList(
+                          name: styleList.styleOptions,
+                          selected: [],
+                        ),
+                      ),
+                      const ContentBox(
+                        title: "3. 평소 즐겨입지 않는 스타일은 무엇인가요?",
+                        child: ButtonList(
+                          name: styleList.styleOptions,
+                          selected: [],
+                        ),
+                      ),
+                      const ContentBox(
+                        title: "4. 선호하는 소재를 선택해주세요.",
+                        child: ButtonList(
+                          name: styleList.materialOptions,
+                          selected: [],
+                        ),
+                      ),
+                      const ContentBox(
+                        title: "5. 선호하지 않는 소재를 선택해주세요.",
+                        child: ButtonList(
+                          name: styleList.materialOptions,
+                          selected: [],
+                        ),
+                      ),
+                      const ContentBox(
+                        title: "6. 선호하는 핏을 선택해주세요.",
+                        child: ButtonList(
+                          name: styleList.fitOptions,
+                          selected: [],
+                        ),
+                      ),
+                      const ContentBox(
+                        title: "7. 선호하지 않는 핏을 선택해주세요.",
+                        child: ButtonList(
+                          name: styleList.fitOptions,
+                          selected: [],
+                        ),
+                      ),
+                      const ContentBox(
+                        title: "8. 보완하고 싶은 신체 부위가 있나요?",
+                        child: ButtonList(
+                          name: styleList.BodyParts,
+                          selected: [],
+                        ),
+                      ),
+                      const ContentBox(
+                        title: "9. 추가로 작성하고 싶은 내용이 있나요?",
+                        child: CustomTextFormField(
+                          hint: "ex. 종아리가 너무 두꺼운 게 고민이에요.",
+                          maxLines: 5,
+                          containerMargin: 0.0,
+                          focusedBorderColor: Colors.transparent,
+                          focusedBorderWidth: 0.0,
+                          contentPaddingHorizontal: 8.0,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20.0,
+                      ),
+                      TwoButtons(
+                        fstOnPressed: () => Navigator.pop(context),
+                        scdOnPressed: () {},
+                        fstLabel: "이전",
+                        scdLabel: "완료",
+                      ),
+                    ],
+                  );
+          },
         ),
       ),
     );

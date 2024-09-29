@@ -5,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:lyc_flutter_project/common/model/api_response.dart';
 import 'package:lyc_flutter_project/setting/model/block_member.dart';
 import 'package:lyc_flutter_project/setting/model/member_model.dart';
+import 'package:lyc_flutter_project/setting/model/style_model.dart';
 import 'package:lyc_flutter_project/setting/repository/setting_repository.dart';
 
 class SettingProvider extends ChangeNotifier {
@@ -28,6 +29,9 @@ class SettingProvider extends ChangeNotifier {
   PushAlarmModel? _pushAlarmModel;
   bool _loadingPushAlarm = true;
 
+  bool _loadingStyeInfo = false;
+  StyleModel? _styleInfo;
+
   get member => _memberModel;
 
   get loadingMember => _loadingMember;
@@ -41,6 +45,8 @@ class SettingProvider extends ChangeNotifier {
   get blockMembers => _blockMembers;
 
   get loadingBlockMembers => _loadingBlockMembers;
+
+  get loadingStyleInfo => _loadingStyeInfo;
 
   Future<void> getProfile({
     bool refresh = false,
@@ -205,6 +211,20 @@ class SettingProvider extends ChangeNotifier {
       await repositoryProvider.repository.unblockMember(memberId: memberId);
       await getBlockMembers(refresh: true);
       notifyListeners();
+    } catch (e) {
+      if (e is ApiResponse) {
+        Exception(e.message);
+      } else {
+        Exception(e);
+      }
+    }
+  }
+
+  Future<void> getStyleInfo({required int memberId}) async {
+    if (_loadingStyeInfo) return;
+    try {
+      final resp = await repositoryProvider.repository.getStyleInfo(memberId: memberId);
+      _styleInfo = resp.result;
     } catch (e) {
       if (e is ApiResponse) {
         Exception(e.message);
