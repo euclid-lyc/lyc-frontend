@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/common/widget/two_buttons.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/data/style_list.dart';
+import 'package:lyc_flutter_project/setting/provider/setting_provider.dart';
 import 'package:lyc_flutter_project/setting/widget/custom_text_form_field.dart';
 import 'package:lyc_flutter_project/styles/default_padding.dart';
 import 'package:lyc_flutter_project/widget/normal_appbar.dart';
 import 'package:lyc_flutter_project/widget/select_buttons_in_posting.dart';
+import 'package:provider/provider.dart';
 
 class StyleScreen extends StatelessWidget {
   const StyleScreen({super.key});
@@ -22,6 +24,7 @@ class StyleScreen extends StatelessWidget {
         child: ListView(
           keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
           children: [
+            ElevatedButton(onPressed: () {context.read<SettingProvider>().repositoryProvider.repository.getStyleInfo(memberId: 1);}, child: Text("테스트")),
             const ContentBox(
               title: "1. 본인의 체형을 알려주세요.",
               child: Column(

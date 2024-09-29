@@ -12,18 +12,18 @@ StyleModel _$StyleModelFromJson(Map<String, dynamic> json) => StyleModel(
           json['preferredStyle'] as Map<String, dynamic>),
       nonPreferredStyle: StyleListModel.fromJson(
           json['nonPreferredStyle'] as Map<String, dynamic>),
-      preferredMaterials: StyleModel._materialsFromJson(
+      preferredMaterials: MaterialModel.fromJson(
           json['preferredMaterial'] as Map<String, dynamic>),
-      nonPreferredMaterials: StyleModel._materialsFromJson(
+      nonPreferredMaterials: MaterialModel.fromJson(
           json['nonPreferredMaterial'] as Map<String, dynamic>),
-      preferredFits: StyleModel._fitsFromJson(
-          json['preferredFit'] as Map<String, dynamic>),
-      nonPreferredFits: StyleModel._fitsFromJson(
-          json['nonPreferredFit'] as Map<String, dynamic>),
-      goodBodyTypes: StyleModel._bodyTypesFromJson(
-          json['goodBodyType'] as Map<String, dynamic>),
-      badBodyTypes: StyleModel._bodyTypesFromJson(
-          json['badBodyType'] as Map<String, dynamic>),
+      preferredFits:
+          FitModel.fromJson(json['preferredFit'] as Map<String, dynamic>),
+      nonPreferredFits:
+          FitModel.fromJson(json['nonPreferredFit'] as Map<String, dynamic>),
+      goodBodyTypes:
+          BodyTypeModel.fromJson(json['goodBodyType'] as Map<String, dynamic>),
+      badBodyTypes:
+          BodyTypeModel.fromJson(json['badBodyType'] as Map<String, dynamic>),
       details: json['details'] as String,
     );
 
@@ -32,14 +32,12 @@ Map<String, dynamic> _$StyleModelToJson(StyleModel instance) =>
       'spec': instance.spec,
       'preferredStyle': instance.preferredStyle,
       'nonPreferredStyle': instance.nonPreferredStyle,
-      'preferredMaterial':
-          StyleModel._materialsToJson(instance.preferredMaterials),
-      'nonPreferredMaterial':
-          StyleModel._materialsToJson(instance.nonPreferredMaterials),
-      'preferredFit': StyleModel._fitsToJson(instance.preferredFits),
-      'nonPreferredFit': StyleModel._fitsToJson(instance.nonPreferredFits),
-      'goodBodyType': StyleModel._bodyTypesToJson(instance.goodBodyTypes),
-      'badBodyType': StyleModel._bodyTypesToJson(instance.badBodyTypes),
+      'preferredMaterial': instance.preferredMaterials,
+      'nonPreferredMaterial': instance.nonPreferredMaterials,
+      'preferredFit': instance.preferredFits,
+      'nonPreferredFit': instance.nonPreferredFits,
+      'goodBodyType': instance.goodBodyTypes,
+      'badBodyType': instance.badBodyTypes,
       'details': instance.details,
     };
 
@@ -59,22 +57,41 @@ Map<String, dynamic> _$SpecModelToJson(SpecModel instance) => <String, dynamic>{
 
 StyleListModel _$StyleListModelFromJson(Map<String, dynamic> json) =>
     StyleListModel(
-      occasion: json['occasion'] as String,
-      styles: StyleListModel._listFromJson(
-          json['styleList'] as Map<String, dynamic>),
-      fits:
-          StyleListModel._listFromJson(json['fitList'] as Map<String, dynamic>),
-      materials: StyleListModel._listFromJson(
-          json['materialList'] as Map<String, dynamic>),
-      colors: StyleListModel._listFromJson(
-          json['colorList'] as Map<String, dynamic>),
+      styles:
+          (json['styles'] as List<dynamic>).map((e) => e as String).toList(),
     );
 
 Map<String, dynamic> _$StyleListModelToJson(StyleListModel instance) =>
     <String, dynamic>{
-      'occasion': instance.occasion,
-      'styleList': StyleListModel._listToJson(instance.styles),
-      'fitList': StyleListModel._listToJson(instance.fits),
-      'materialList': StyleListModel._listToJson(instance.materials),
-      'colorList': StyleListModel._listToJson(instance.colors),
+      'styles': instance.styles,
+    };
+
+MaterialModel _$MaterialModelFromJson(Map<String, dynamic> json) =>
+    MaterialModel(
+      materials:
+          (json['materials'] as List<dynamic>).map((e) => e as String).toList(),
+    );
+
+Map<String, dynamic> _$MaterialModelToJson(MaterialModel instance) =>
+    <String, dynamic>{
+      'materials': instance.materials,
+    };
+
+FitModel _$FitModelFromJson(Map<String, dynamic> json) => FitModel(
+      fits: (json['fits'] as List<dynamic>).map((e) => e as String).toList(),
+    );
+
+Map<String, dynamic> _$FitModelToJson(FitModel instance) => <String, dynamic>{
+      'fits': instance.fits,
+    };
+
+BodyTypeModel _$BodyTypeModelFromJson(Map<String, dynamic> json) =>
+    BodyTypeModel(
+      bodyTypes:
+          (json['bodyTypes'] as List<dynamic>).map((e) => e as String).toList(),
+    );
+
+Map<String, dynamic> _$BodyTypeModelToJson(BodyTypeModel instance) =>
+    <String, dynamic>{
+      'bodyTypes': instance.bodyTypes,
     };

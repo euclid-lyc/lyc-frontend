@@ -5,6 +5,8 @@ import 'package:lyc_flutter_project/common/model/api_response.dart';
 import 'package:lyc_flutter_project/mypage/model/profile.dart';
 import 'package:lyc_flutter_project/setting/model/block_member.dart';
 import 'package:lyc_flutter_project/setting/model/member_model.dart';
+import 'package:lyc_flutter_project/setting/model/style_model.dart';
+import 'package:retrofit/http.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'setting_repository.g.dart';
@@ -67,6 +69,12 @@ abstract class SettingRepository {
   @DELETE("/socials/block-members/{memberId}")
   @Headers({"accessToken": "true"})
   Future<ApiResponse<Profile>> unblockMember({
+    @Path() required int memberId,
+  });
+
+  @GET("/socials/members/{memberId}/styles")
+  @Headers({"accessToken": "true"})
+  Future<ApiResponse<StyleModel>> getStyleInfo({
     @Path() required int memberId,
   });
 }
