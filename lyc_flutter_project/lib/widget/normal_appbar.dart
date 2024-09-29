@@ -49,6 +49,7 @@ class NormalAppbar extends StatelessWidget implements PreferredSizeWidget {
                       : const SizedBox(),
                 ),
                 Expanded(
+                  flex: 6,
                   child: Container(
                     alignment: Alignment.center,
                     child: Text(

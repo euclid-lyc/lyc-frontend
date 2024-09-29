@@ -13,6 +13,13 @@ class CustomTextFormField extends StatefulWidget {
   final FormFieldValidator<String>? validator;
   final AutovalidateMode autoValidateMode;
   final FormFieldSetter<String>? onSaved;
+  final Color focusedBorderColor;
+  final double focusedBorderWidth;
+  final double contentPaddingVertical;
+  final double contentPaddingHorizontal;
+  final double fontSize;
+  final bool isDense;
+  final double containerMargin;
 
   const CustomTextFormField({
     super.key,
@@ -27,6 +34,13 @@ class CustomTextFormField extends StatefulWidget {
     this.validator,
     this.autoValidateMode = AutovalidateMode.onUserInteraction,
     this.onSaved,
+    this.focusedBorderColor = AppColor.brown,
+    this.focusedBorderWidth = 2.5,
+    this.contentPaddingVertical = 16.0,
+    this.contentPaddingHorizontal = 20.0,
+    this.fontSize = 16.0,
+    this.isDense = false,
+    this.containerMargin = 8.0,
   });
 
   @override
@@ -56,7 +70,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
     );
 
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 8.0),
+      margin: EdgeInsets.symmetric(vertical: widget.containerMargin),
       child: TextFormField(
         controller: _controller,
         validator: widget.validator,
@@ -65,24 +79,25 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         onChanged: widget.onChanged,
         readOnly: widget.readOnly,
         obscureText: widget.obscureText,
-        style: const TextStyle(
+        style: TextStyle(
           color: Colors.black,
           fontWeight: FontWeight.w500,
-          fontSize: 16.0,
+          fontSize: widget.fontSize,
           overflow: TextOverflow.ellipsis,
         ),
         onSaved: widget.onSaved,
         cursorColor: Colors.grey,
         decoration: InputDecoration(
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: 20.0,
-            vertical: 16.0,
+          isDense: widget.isDense,
+          contentPadding: EdgeInsets.symmetric(
+            horizontal: widget.contentPaddingHorizontal,
+            vertical: widget.contentPaddingVertical,
           ),
           hintText: widget.hint,
-          hintStyle: const TextStyle(
+          hintStyle: TextStyle(
             color: Colors.grey,
             fontWeight: FontWeight.w500,
-            fontSize: 16.0,
+            fontSize: widget.fontSize,
             overflow: TextOverflow.ellipsis,
           ),
           filled: true,
@@ -90,9 +105,9 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           border: baseBorder,
           enabledBorder: baseBorder,
           focusedBorder: baseBorder.copyWith(
-            borderSide: const BorderSide(
-              color: AppColor.brown,
-              width: 2.5,
+            borderSide: BorderSide(
+              color: widget.focusedBorderColor,
+              width: widget.focusedBorderWidth,
             ),
           ),
           errorBorder: baseBorder.copyWith(
