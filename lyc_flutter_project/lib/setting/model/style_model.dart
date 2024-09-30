@@ -34,8 +34,35 @@ class StyleModel {
     required this.details,
   });
 
-  factory StyleModel.fromJson(Map<String, dynamic> json)
-  => _$StyleModelFromJson(json);
+  StyleModel copyWith({
+    SpecModel? spec,
+    StyleListModel? preferredStyle,
+    StyleListModel? nonPreferredStyle,
+    MaterialModel? preferredMaterials,
+    MaterialModel? nonPreferredMaterials,
+    FitModel? preferredFits,
+    FitModel? nonPreferredFits,
+    BodyTypeModel? goodBodyTypes,
+    BodyTypeModel? badBodyTypes,
+    String? details,
+  }) {
+    return StyleModel(
+      spec: spec ?? this.spec,
+      preferredStyle: preferredStyle ?? this.preferredStyle,
+      nonPreferredStyle: nonPreferredStyle ?? this.nonPreferredStyle,
+      preferredMaterials: preferredMaterials ?? this.preferredMaterials,
+      nonPreferredMaterials:
+          nonPreferredMaterials ?? this.nonPreferredMaterials,
+      preferredFits: preferredFits ?? this.preferredFits,
+      nonPreferredFits: nonPreferredFits ?? this.nonPreferredFits,
+      goodBodyTypes: goodBodyTypes ?? this.goodBodyTypes,
+      badBodyTypes: badBodyTypes ?? this.badBodyTypes,
+      details: details ?? this.details,
+    );
+  }
+
+  factory StyleModel.fromJson(Map<String, dynamic> json) =>
+      _$StyleModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$StyleModelToJson(this);
 }
@@ -68,7 +95,8 @@ class StyleListModel {
     required this.styles,
   });
 
-  factory StyleListModel.fromJson(Map<String, dynamic> json) => _$StyleListModelFromJson(json);
+  factory StyleListModel.fromJson(Map<String, dynamic> json) =>
+      _$StyleListModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$StyleListModelToJson(this);
 }
@@ -79,7 +107,8 @@ class MaterialModel {
 
   const MaterialModel({required this.materials});
 
-  factory MaterialModel.fromJson(Map<String, dynamic> json) => _$MaterialModelFromJson(json);
+  factory MaterialModel.fromJson(Map<String, dynamic> json) =>
+      _$MaterialModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$MaterialModelToJson(this);
 }
@@ -90,7 +119,8 @@ class FitModel {
 
   const FitModel({required this.fits});
 
-  factory FitModel.fromJson(Map<String, dynamic> json) => _$FitModelFromJson(json);
+  factory FitModel.fromJson(Map<String, dynamic> json) =>
+      _$FitModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$FitModelToJson(this);
 }
@@ -101,7 +131,8 @@ class BodyTypeModel {
 
   const BodyTypeModel({required this.bodyTypes});
 
-  factory BodyTypeModel.fromJson(Map<String, dynamic> json) => _$BodyTypeModelFromJson(json);
+  factory BodyTypeModel.fromJson(Map<String, dynamic> json) =>
+      _$BodyTypeModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$BodyTypeModelToJson(this);
 }
