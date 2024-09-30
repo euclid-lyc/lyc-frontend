@@ -50,6 +50,83 @@ class SettingProvider extends ChangeNotifier {
 
   StyleModel get style => _styleInfo!;
 
+  void updatePreferredStyle({required String selected}) {
+    List<String> list = _styleInfo!.preferredStyle.styles;
+    if (list.contains(selected)) {
+      list.remove(selected);
+      notifyListeners();
+    } else {
+      list.add(selected);
+      notifyListeners();
+    }
+  }
+
+  void updateNonPreferredStyle({required String selected}) {
+    List<String> list = _styleInfo!.nonPreferredStyle.styles;
+    if (list.contains(selected)) {
+      list.remove(selected);
+      notifyListeners();
+    } else {
+      list.add(selected);
+      notifyListeners();
+    }
+  }
+
+  void updatePreferredMaterials({required String selected}) {
+    List<String> list = _styleInfo!.preferredMaterials.materials;
+    if (list.contains(selected)) {
+      list.remove(selected);
+      notifyListeners();
+    } else {
+      list.add(selected);
+      notifyListeners();
+    }
+  }
+
+  void updateNonPreferredMaterials({required String selected}) {
+    List<String> list = _styleInfo!.nonPreferredMaterials.materials;
+    if (list.contains(selected)) {
+      list.remove(selected);
+      notifyListeners();
+    } else {
+      list.add(selected);
+      notifyListeners();
+    }
+  }
+
+  void updatePreferredFits({required String selected}) {
+    List<String> list = _styleInfo!.preferredFits.fits;
+    if (list.contains(selected)) {
+      list.remove(selected);
+      notifyListeners();
+    } else {
+      list.add(selected);
+      notifyListeners();
+    }
+  }
+
+  void updateNonPreferredFits({required String selected}) {
+    List<String> list = _styleInfo!.nonPreferredFits.fits;
+    if (list.contains(selected)) {
+      list.remove(selected);
+      notifyListeners();
+    } else {
+      list.add(selected);
+      notifyListeners();
+    }
+  }
+
+  void updateBadBodyTypes({required String selected}) {
+    List<String> list = _styleInfo!.badBodyTypes.bodyTypes;
+    if (list.contains(selected)) {
+      list.remove(selected);
+      notifyListeners();
+    } else {
+      list.add(selected);
+      notifyListeners();
+    }
+  }
+
   Future<void> getProfile({
     bool refresh = false,
   }) async {
@@ -227,7 +304,8 @@ class SettingProvider extends ChangeNotifier {
     try {
       _loadingStyeInfo = true;
       notifyListeners();
-      final resp = await repositoryProvider.repository.getStyleInfo(memberId: memberId);
+      final resp =
+          await repositoryProvider.repository.getStyleInfo(memberId: memberId);
       _styleInfo = resp.result;
     } catch (e) {
       if (e is ApiResponse) {

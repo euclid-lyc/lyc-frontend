@@ -66,53 +66,60 @@ class _StyleScreenState extends State<StyleScreen> {
                           ],
                         ),
                       ),
-                      const ContentBox(
+                      ContentBox(
                         title: "2. 평소 즐겨입는 스타일은 무엇인가요?",
                         child: ButtonList(
                           name: styleList.styleOptions,
-                          selected: [],
+                          selected: value.style.preferredStyle.styles,
+                          onSelected: (v) => value.updatePreferredStyle(selected: v),
                         ),
                       ),
-                      const ContentBox(
+                      ContentBox(
                         title: "3. 평소 즐겨입지 않는 스타일은 무엇인가요?",
                         child: ButtonList(
                           name: styleList.styleOptions,
-                          selected: [],
+                          selected: value.style.nonPreferredStyle.styles,
+                          onSelected: (v) => value.updateNonPreferredStyle(selected: v),
                         ),
                       ),
-                      const ContentBox(
+                      ContentBox(
                         title: "4. 선호하는 소재를 선택해주세요.",
                         child: ButtonList(
                           name: styleList.materialOptions,
-                          selected: [],
+                          selected: value.style.preferredMaterials.materials,
+                          onSelected: (v) => value.updatePreferredMaterials(selected: v),
                         ),
                       ),
-                      const ContentBox(
+                      ContentBox(
                         title: "5. 선호하지 않는 소재를 선택해주세요.",
                         child: ButtonList(
                           name: styleList.materialOptions,
-                          selected: [],
+                          selected: value.style.nonPreferredMaterials.materials,
+                          onSelected: (v) => value.updateNonPreferredMaterials(selected: v),
                         ),
                       ),
-                      const ContentBox(
+                      ContentBox(
                         title: "6. 선호하는 핏을 선택해주세요.",
                         child: ButtonList(
                           name: styleList.fitOptions,
-                          selected: [],
+                          selected: value.style.preferredFits.fits,
+                          onSelected: (v) => value.updatePreferredFits(selected: v),
                         ),
                       ),
-                      const ContentBox(
+                      ContentBox(
                         title: "7. 선호하지 않는 핏을 선택해주세요.",
                         child: ButtonList(
                           name: styleList.fitOptions,
-                          selected: [],
+                          selected: value.style.nonPreferredFits.fits,
+                          onSelected: (v) => value.updateNonPreferredFits(selected: v),
                         ),
                       ),
-                      const ContentBox(
+                      ContentBox(
                         title: "8. 보완하고 싶은 신체 부위가 있나요?",
                         child: ButtonList(
                           name: styleList.BodyParts,
-                          selected: [],
+                          selected: value.style.badBodyTypes.bodyTypes,
+                          onSelected: (v) => value.updateBadBodyTypes(selected: v),
                         ),
                       ),
                       ContentBox(
@@ -150,11 +157,13 @@ class _StyleScreenState extends State<StyleScreen> {
 class ButtonList extends StatelessWidget {
   final List<String> name;
   final List<String> selected;
+  final Function(String) onSelected;
 
   const ButtonList({
     super.key,
     required this.name,
     required this.selected,
+    required this.onSelected,
   });
 
   @override
@@ -166,10 +175,10 @@ class ButtonList extends StatelessWidget {
             for (var i = 0; i < 4; i++)
               Expanded(
                 child: SelectButtonsInPosting(
-                  styleList.styleOptions,
-                  [],
+                  name,
+                  selected,
                   i,
-                  () {},
+                  () => onSelected(name[i]),
                   AppColor.brown,
                   AppColor.lightGrey,
                 ),
@@ -181,10 +190,10 @@ class ButtonList extends StatelessWidget {
             for (var i = 4; i < 8; i++)
               Expanded(
                 child: SelectButtonsInPosting(
-                  styleList.styleOptions,
-                  [],
+                  name,
+                  selected,
                   i,
-                  () {},
+                  () => onSelected(name[i]),
                   AppColor.brown,
                   AppColor.lightGrey,
                 ),
@@ -275,7 +284,7 @@ class SpecInputLine extends StatelessWidget {
           ),
           Expanded(
             child: CustomTextFormField(
-              fillColor: Color(0xffE9E9E9),
+              fillColor: const Color(0xffE9E9E9),
               focusedBorderColor: Colors.black,
               focusedBorderWidth: 1.5,
               contentPaddingVertical: 4.0,
