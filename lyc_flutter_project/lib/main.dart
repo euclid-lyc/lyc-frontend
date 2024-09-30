@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/Join/Provider/login_provider.dart';
 import 'package:lyc_flutter_project/common/dio/dio.dart';
-import 'package:lyc_flutter_project/Join/Screens/join_membership_screen_4.dart';
 import 'package:lyc_flutter_project/director/provider/director_provider.dart';
 import 'package:lyc_flutter_project/director/repository/director_repository.dart';
 import 'package:lyc_flutter_project/feed/provider/feed_provider.dart';
@@ -37,10 +36,9 @@ void main() {
               context,
               listen: false,
             ),
-            context.read<MypageRepositoryProvider>().mypageRepository,
+            context.read<LoginProvider>()
           ),
         ),
-        ChangeNotifierProvider(create: (context) => MembershipState()),
         ChangeNotifierProvider(
           create: (context) =>
               ClothesRepositoryProvider(dio: context.read<DioProvider>().dio),

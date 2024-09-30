@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/Join/Provider/login_provider.dart';
 import 'package:lyc_flutter_project/Join/Screens/login_screen.dart';
-import 'package:lyc_flutter_project/common/screen/splash_screen.dart';
 import 'package:lyc_flutter_project/common/widget/custom_alert_dialog.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/setting/screen/block_mod_screen.dart';
@@ -21,7 +20,7 @@ class SettingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future<void> _logout() async {
-      await context.read<LoginProvider>().logout();
+      await context.read<LoginProvider>().logout(contextyy);
       if (!context.read<LoginProvider>().isLoggedIn) {
         Navigator.pushNamedAndRemoveUntil(
           context,
