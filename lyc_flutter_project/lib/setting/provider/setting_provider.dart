@@ -54,77 +54,82 @@ class SettingProvider extends ChangeNotifier {
     List<String> list = _styleInfo!.preferredStyle.styles;
     if (list.contains(selected)) {
       list.remove(selected);
-      notifyListeners();
     } else {
       list.add(selected);
-      notifyListeners();
     }
+    _styleInfo =
+        _styleInfo!.copyWith(preferredStyle: StyleListModel(styles: list));
+    notifyListeners();
   }
 
   void updateNonPreferredStyle({required String selected}) {
     List<String> list = _styleInfo!.nonPreferredStyle.styles;
     if (list.contains(selected)) {
       list.remove(selected);
-      notifyListeners();
     } else {
       list.add(selected);
-      notifyListeners();
     }
+    _styleInfo =
+        _styleInfo!.copyWith(nonPreferredStyle: StyleListModel(styles: list));
+    notifyListeners();
   }
 
   void updatePreferredMaterials({required String selected}) {
     List<String> list = _styleInfo!.preferredMaterials.materials;
     if (list.contains(selected)) {
       list.remove(selected);
-      notifyListeners();
     } else {
       list.add(selected);
-      notifyListeners();
     }
+    _styleInfo = _styleInfo!
+        .copyWith(preferredMaterials: MaterialModel(materials: list));
+    notifyListeners();
   }
 
   void updateNonPreferredMaterials({required String selected}) {
     List<String> list = _styleInfo!.nonPreferredMaterials.materials;
     if (list.contains(selected)) {
       list.remove(selected);
-      notifyListeners();
     } else {
       list.add(selected);
-      notifyListeners();
     }
+    _styleInfo = _styleInfo!
+        .copyWith(nonPreferredMaterials: MaterialModel(materials: list));
+    notifyListeners();
   }
 
   void updatePreferredFits({required String selected}) {
     List<String> list = _styleInfo!.preferredFits.fits;
     if (list.contains(selected)) {
       list.remove(selected);
-      notifyListeners();
     } else {
       list.add(selected);
-      notifyListeners();
     }
+    _styleInfo = _styleInfo!.copyWith(preferredFits: FitModel(fits: list));
+    notifyListeners();
   }
 
   void updateNonPreferredFits({required String selected}) {
     List<String> list = _styleInfo!.nonPreferredFits.fits;
     if (list.contains(selected)) {
       list.remove(selected);
-      notifyListeners();
     } else {
       list.add(selected);
-      notifyListeners();
     }
+    _styleInfo = _styleInfo!.copyWith(nonPreferredFits: FitModel(fits: list));
+    notifyListeners();
   }
 
   void updateBadBodyTypes({required String selected}) {
     List<String> list = _styleInfo!.badBodyTypes.bodyTypes;
     if (list.contains(selected)) {
       list.remove(selected);
-      notifyListeners();
     } else {
       list.add(selected);
-      notifyListeners();
     }
+    _styleInfo =
+        _styleInfo!.copyWith(badBodyTypes: BodyTypeModel(bodyTypes: list));
+    notifyListeners();
   }
 
   Future<void> getProfile({
