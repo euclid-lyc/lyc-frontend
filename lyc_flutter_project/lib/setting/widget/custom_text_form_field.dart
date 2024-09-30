@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 
@@ -20,6 +21,7 @@ class CustomTextFormField extends StatefulWidget {
   final double fontSize;
   final bool isDense;
   final double containerMargin;
+  final TextInputType? keyboardType;
 
   const CustomTextFormField({
     super.key,
@@ -41,6 +43,7 @@ class CustomTextFormField extends StatefulWidget {
     this.fontSize = 16.0,
     this.isDense = false,
     this.containerMargin = 8.0,
+    this.keyboardType = TextInputType.text,
   });
 
   @override
@@ -72,6 +75,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
     return Container(
       margin: EdgeInsets.symmetric(vertical: widget.containerMargin),
       child: TextFormField(
+        keyboardType: widget.keyboardType,
         controller: _controller,
         validator: widget.validator,
         autovalidateMode: widget.autoValidateMode,

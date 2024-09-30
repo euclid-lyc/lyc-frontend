@@ -300,7 +300,7 @@ class SettingProvider extends ChangeNotifier {
   }
 
   Future<void> getStyleInfo({required int memberId}) async {
-    if (_loadingStyeInfo) return;
+    if (_loadingStyeInfo || _styleInfo != null) return;
     try {
       _loadingStyeInfo = true;
       notifyListeners();

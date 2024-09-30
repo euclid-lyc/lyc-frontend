@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/Join/Provider/login_provider.dart';
 import 'package:lyc_flutter_project/common/widget/custom_loading.dart';
+import 'package:lyc_flutter_project/common/widget/custom_number_picker.dart';
 import 'package:lyc_flutter_project/common/widget/two_buttons.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/data/style_list.dart';
@@ -57,11 +58,38 @@ class _StyleScreenState extends State<StyleScreen> {
                             ),
                             SpecInputLine(
                               label: "상의 사이즈",
-                              initialValue: value.style.spec.topSize,
+                              initialValue:
+                                  value.style.spec.topSize.substring(5),
+                              onTap: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => CustomNumberpicker(
+                                    title: "상의 사이즈를 선택해주세요.",
+                                    minValue: 80,
+                                    maxValue: 120,
+                                    value: 80,
+                                    onChanged: (p0) {},
+                                    step: 5,
+                                  ),
+                                );
+                              },
                             ),
                             SpecInputLine(
                               label: "하의 사이즈",
-                              initialValue: value.style.spec.bottomSize,
+                              initialValue:
+                                  value.style.spec.bottomSize.substring(5),
+                              onTap: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => CustomNumberpicker(
+                                    title: "하의 사이즈를 선택해주세요.",
+                                    minValue: 24,
+                                    maxValue: 42,
+                                    value: 24,
+                                    onChanged: (p0) {},
+                                  ),
+                                );
+                              },
                             ),
                           ],
                         ),
@@ -71,7 +99,8 @@ class _StyleScreenState extends State<StyleScreen> {
                         child: ButtonList(
                           name: styleList.styleOptions,
                           selected: value.style.preferredStyle.styles,
-                          onSelected: (v) => value.updatePreferredStyle(selected: v),
+                          onSelected: (v) =>
+                              value.updatePreferredStyle(selected: v),
                         ),
                       ),
                       ContentBox(
@@ -79,7 +108,8 @@ class _StyleScreenState extends State<StyleScreen> {
                         child: ButtonList(
                           name: styleList.styleOptions,
                           selected: value.style.nonPreferredStyle.styles,
-                          onSelected: (v) => value.updateNonPreferredStyle(selected: v),
+                          onSelected: (v) =>
+                              value.updateNonPreferredStyle(selected: v),
                         ),
                       ),
                       ContentBox(
@@ -87,7 +117,8 @@ class _StyleScreenState extends State<StyleScreen> {
                         child: ButtonList(
                           name: styleList.materialOptions,
                           selected: value.style.preferredMaterials.materials,
-                          onSelected: (v) => value.updatePreferredMaterials(selected: v),
+                          onSelected: (v) =>
+                              value.updatePreferredMaterials(selected: v),
                         ),
                       ),
                       ContentBox(
@@ -95,7 +126,8 @@ class _StyleScreenState extends State<StyleScreen> {
                         child: ButtonList(
                           name: styleList.materialOptions,
                           selected: value.style.nonPreferredMaterials.materials,
-                          onSelected: (v) => value.updateNonPreferredMaterials(selected: v),
+                          onSelected: (v) =>
+                              value.updateNonPreferredMaterials(selected: v),
                         ),
                       ),
                       ContentBox(
@@ -103,7 +135,8 @@ class _StyleScreenState extends State<StyleScreen> {
                         child: ButtonList(
                           name: styleList.fitOptions,
                           selected: value.style.preferredFits.fits,
-                          onSelected: (v) => value.updatePreferredFits(selected: v),
+                          onSelected: (v) =>
+                              value.updatePreferredFits(selected: v),
                         ),
                       ),
                       ContentBox(
@@ -111,7 +144,8 @@ class _StyleScreenState extends State<StyleScreen> {
                         child: ButtonList(
                           name: styleList.fitOptions,
                           selected: value.style.nonPreferredFits.fits,
-                          onSelected: (v) => value.updateNonPreferredFits(selected: v),
+                          onSelected: (v) =>
+                              value.updateNonPreferredFits(selected: v),
                         ),
                       ),
                       ContentBox(
@@ -119,7 +153,8 @@ class _StyleScreenState extends State<StyleScreen> {
                         child: ButtonList(
                           name: styleList.BodyParts,
                           selected: value.style.badBodyTypes.bodyTypes,
-                          onSelected: (v) => value.updateBadBodyTypes(selected: v),
+                          onSelected: (v) =>
+                              value.updateBadBodyTypes(selected: v),
                         ),
                       ),
                       ContentBox(
@@ -255,11 +290,13 @@ class ContentBox extends StatelessWidget {
 class SpecInputLine extends StatelessWidget {
   final String label;
   final String initialValue;
+  final VoidCallback? onTap;
 
   const SpecInputLine({
     super.key,
     required this.label,
     required this.initialValue,
+    this.onTap,
   });
 
   @override
@@ -283,14 +320,21 @@ class SpecInputLine extends StatelessWidget {
             width: 20.0,
           ),
           Expanded(
-            child: CustomTextFormField(
-              fillColor: const Color(0xffE9E9E9),
-              focusedBorderColor: Colors.black,
-              focusedBorderWidth: 1.5,
-              contentPaddingVertical: 4.0,
-              fontSize: 16.0,
-              isDense: true,
-              initialValue: initialValue,
+            child: GestureDetector(
+              onTap: onTap,
+              child: AbsorbPointer(
+                absorbing: label == "상의 사이즈" || label == "하의 사이즈",
+                child: CustomTextFormField(
+                  fillColor: const Color(0xffE9E9E9),
+                  focusedBorderColor: Colors.black,
+                  focusedBorderWidth: 1.5,
+                  contentPaddingVertical: 4.0,
+                  fontSize: 16.0,
+                  isDense: true,
+                  initialValue: initialValue,
+                  keyboardType: TextInputType.number,
+                ),
+              ),
             ),
           ),
         ],
