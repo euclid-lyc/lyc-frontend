@@ -58,35 +58,52 @@ class _StyleScreenState extends State<StyleScreen> {
                             ),
                             SpecInputLine(
                               label: "상의 사이즈",
-                              initialValue:
-                                  value.style.spec.topSize.substring(5),
+                              initialValue: "",
+                              getValue: (p0) => p0.topSize,
                               onTap: () {
                                 showDialog(
                                   context: context,
-                                  builder: (context) => CustomNumberpicker(
+                                  builder: (context) =>
+                                      CustomNumberPicker<SettingProvider>(
                                     title: "상의 사이즈를 선택해주세요.",
                                     minValue: 80,
                                     maxValue: 120,
-                                    value: 80,
-                                    onChanged: (p0) {},
                                     step: 5,
+                                    getValue: (p0) => p0.topSize,
+                                    updateValue: (p0, p1) => p0.updateTopSize(
+                                      selected: p1,
+                                    ),
+                                    fstOnPressed: () {
+                                      value.rollbackTopSize();
+                                      Navigator.pop(context);
+                                    },
+                                    scdOnPressed: () => Navigator.pop(context),
                                   ),
                                 );
                               },
                             ),
                             SpecInputLine(
                               label: "하의 사이즈",
-                              initialValue:
-                                  value.style.spec.bottomSize.substring(5),
+                              initialValue: "",
+                              getValue: (p0) => p0.bottomSize,
                               onTap: () {
                                 showDialog(
                                   context: context,
-                                  builder: (context) => CustomNumberpicker(
+                                  builder: (context) =>
+                                      CustomNumberPicker<SettingProvider>(
                                     title: "하의 사이즈를 선택해주세요.",
                                     minValue: 24,
                                     maxValue: 42,
-                                    value: 24,
-                                    onChanged: (p0) {},
+                                    getValue: (p0) => p0.bottomSize,
+                                    updateValue: (p0, p1) =>
+                                        p0.updateBottomSize(
+                                      selected: p1,
+                                    ),
+                                    fstOnPressed: () {
+                                      value.rollbackBottomSize();
+                                      Navigator.pop(context);
+                                    },
+                                    scdOnPressed: () => Navigator.pop(context),
                                   ),
                                 );
                               },
@@ -291,12 +308,14 @@ class SpecInputLine extends StatelessWidget {
   final String label;
   final String initialValue;
   final VoidCallback? onTap;
+  final int Function(SettingProvider)? getValue;
 
   const SpecInputLine({
     super.key,
     required this.label,
     required this.initialValue,
     this.onTap,
+    this.getValue,
   });
 
   @override
@@ -320,25 +339,66 @@ class SpecInputLine extends StatelessWidget {
             width: 20.0,
           ),
           Expanded(
-            child: GestureDetector(
-              onTap: onTap,
-              child: AbsorbPointer(
-                absorbing: label == "상의 사이즈" || label == "하의 사이즈",
-                child: CustomTextFormField(
-                  fillColor: const Color(0xffE9E9E9),
-                  focusedBorderColor: Colors.black,
-                  focusedBorderWidth: 1.5,
-                  contentPaddingVertical: 4.0,
-                  fontSize: 16.0,
-                  isDense: true,
-                  initialValue: initialValue,
-                  keyboardType: TextInputType.number,
-                ),
-              ),
-            ),
+            child: (label == "키" || label == "몸무게")
+                ? CustomTextFormField(
+                    fillColor: const Color(0xffE9E9E9),
+                    focusedBorderColor: Colors.black,
+                    focusedBorderWidth: 1.5,
+                    contentPaddingVertical: 4.0,
+                    fontSize: 16.0,
+                    isDense: true,
+                    initialValue: initialValue,
+                    keyboardType: TextInputType.number,
+                  )
+                : SpecSizeBox(
+                    onTap: onTap!,
+                    getValue: getValue!,
+                  ),
           ),
         ],
       ),
+    );
+  }
+}
+
+class SpecSizeBox extends StatelessWidget {
+  final VoidCallback onTap;
+  final int Function(SettingProvider) getValue;
+
+  const SpecSizeBox({
+    super.key,
+    required this.onTap,
+    required this.getValue,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<SettingProvider>(
+      builder: (context, value, child) {
+        return GestureDetector(
+          onTap: onTap,
+          child: Container(
+            margin: const EdgeInsets.symmetric(vertical: 8.0),
+            decoration: BoxDecoration(
+              color: const Color(0xffE9E9E9),
+              borderRadius: BorderRadius.circular(20.0),
+            ),
+            width: double.infinity,
+            alignment: Alignment.centerLeft,
+            padding: const EdgeInsets.symmetric(
+              vertical: 4.0,
+              horizontal: 20.0,
+            ),
+            child: Text(
+              getValue(value).toString(),
+              style: const TextStyle(
+                fontSize: 16.0,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }

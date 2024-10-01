@@ -32,6 +32,9 @@ class SettingProvider extends ChangeNotifier {
   bool _loadingStyeInfo = false;
   StyleModel? _styleInfo;
 
+  int? _topSize;
+  int? _bottomSize;
+
   get member => _memberModel;
 
   get loadingMember => _loadingMember;
@@ -48,7 +51,31 @@ class SettingProvider extends ChangeNotifier {
 
   get loadingStyleInfo => _loadingStyeInfo;
 
+  get topSize => _topSize;
+
+  get bottomSize => _bottomSize;
+
   StyleModel get style => _styleInfo!;
+
+  void updateTopSize({required int selected}) {
+    _topSize = selected;
+    notifyListeners();
+  }
+
+  void updateBottomSize({required int selected}) {
+    _bottomSize = selected;
+    notifyListeners();
+  }
+
+  void rollbackTopSize() {
+    _topSize = int.parse(_styleInfo!.spec.topSize.substring(5));
+    notifyListeners();
+  }
+
+  void rollbackBottomSize() {
+    _bottomSize = int.parse(_styleInfo!.spec.bottomSize.substring(5));
+    notifyListeners();
+  }
 
   void updatePreferredStyle({required String selected}) {
     List<String> list = _styleInfo!.preferredStyle.styles;
@@ -312,6 +339,8 @@ class SettingProvider extends ChangeNotifier {
       final resp =
           await repositoryProvider.repository.getStyleInfo(memberId: memberId);
       _styleInfo = resp.result;
+      _topSize = int.parse(style.spec.topSize.substring(5));
+      _bottomSize = int.parse(style.spec.bottomSize.substring(5));
     } catch (e) {
       if (e is ApiResponse) {
         Exception(e.message);
