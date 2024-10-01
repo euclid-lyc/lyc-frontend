@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/common/widget/bottom_bar.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
-import 'package:lyc_flutter_project/screens/find_id_screen_1.dart';
 import 'package:lyc_flutter_project/screens/find_password_screen_1.dart';
 import 'package:lyc_flutter_project/Join/Screens/join_membership_screen_1.dart';
 import 'package:provider/provider.dart';
+import '../../findID/Screens/find_id_screen_1.dart';
 import '../../styles/app_text_style.dart';
 import '../../widget/Controller.dart';
 import '../Provider/login_provider.dart';
@@ -62,7 +62,7 @@ class LoginScreen extends StatelessWidget {
                               context, '회원가입', JoinMembershipScreen1()),
                           buildMoveButton(context, '아이디 찾기', FindIdScreen1()),
                           buildMoveButton(
-                              context, '비밀번호 찾기', FindPasswordScreen1()),
+                              context, '비밀번호 찾기', const FindPasswordScreen1()),
                         ],
                       ),
                     ),

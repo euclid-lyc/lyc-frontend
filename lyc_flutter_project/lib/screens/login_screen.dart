@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
-import 'package:lyc_flutter_project/screens/find_id_screen_1.dart';
+import 'package:lyc_flutter_project/findID/Screens/find_id_screen_1.dart';
 import 'package:lyc_flutter_project/screens/find_password_screen_1.dart';
 import 'package:lyc_flutter_project/Join/Screens/join_membership_screen_1.dart';
 import '../styles/app_text_style.dart';
@@ -144,7 +144,7 @@ class LoginScreen extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        const FindIdScreen1()),
+                                         FindIdScreen1()),
                               );
                             },
                             child: Text(

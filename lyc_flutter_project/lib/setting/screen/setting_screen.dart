@@ -20,7 +20,7 @@ class SettingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future<void> _logout() async {
-      await context.read<LoginProvider>().logout(contextyy);
+      await context.read<LoginProvider>().logout();
       if (!context.read<LoginProvider>().isLoggedIn) {
         Navigator.pushNamedAndRemoveUntil(
           context,

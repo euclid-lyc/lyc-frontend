@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
-import 'package:lyc_flutter_project/screens/find_password_screen_1.dart';
-import 'package:lyc_flutter_project/Join/Screens/login_screen.dart';
+import 'package:lyc_flutter_project/findID/model/VerificationCode.dart';
 import 'package:lyc_flutter_project/widget/normal_appbar.dart';
-import '../styles/app_text_style.dart';
+import 'package:provider/provider.dart';
+import '../../styles/app_text_style.dart';
+import '../../widget/Controller.dart';
+import '../Provider/FindIdProvider.dart';
+import '../Provider/SendEmailProvider.dart';
+import 'find_id_screen_1.dart';
+import 'find_id_screen_3.dart';
 
-class FindIdScreen3 extends StatelessWidget {
-  const FindIdScreen3({super.key});
+class FindIdScreen2 extends StatelessWidget {
+  FindIdScreen2({super.key});
+
+  final Controller _codeController = Controller();
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +44,7 @@ class FindIdScreen3 extends StatelessWidget {
                       margin: EdgeInsets.fromLTRB(7, 0, 7, 43.5),
                       alignment: Alignment.topLeft,
                       child: Text(
-                        'Step 3. 아이디 확인',
+                        'Step 2. 본인인증',
                         style: app_text_style.littleTitle,
                       ),
                     ),
@@ -51,25 +57,42 @@ class FindIdScreen3 extends StatelessWidget {
                       width: 124,
                       height: 124,
                       child: Center(
-                        child: SvgPicture.network(
-                          'assets/icon_fanfare.svg',
-                          width: 120,
-                          height: 120,
+                        child: Icon(
+                          Icons.mail_outline_outlined, // 아이콘으로 변경
+                          size: 60, // 아이콘 크기 설정
+                          color: Colors.white, // 아이콘 색상 설정
                         ),
                       ),
                     ),
                     Container(
                       margin: EdgeInsets.fromLTRB(4, 0, 0, 18.5),
                       child: Text(
-                        '아이디 확인에 성공했습니다.',
+                        '선택하신 인증수단으로 \n 인증번호가 전송되었습니다.',
                         textAlign: TextAlign.center,
                         style: app_text_style.otherLoginTextStyle
                             .copyWith(color: Colors.black),
                       ),
                     ),
                     Container(
-                      child: Text("customer1234",
-                          style: app_text_style.littleTitle),
+                      decoration: BoxDecoration(
+                        color: AppColor.lightGrey,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      width: 252,
+                      height: 37, // 높이 설정
+                      child: TextField(
+                        controller: _codeController.controller,
+                        decoration: InputDecoration(
+                          hintText: '인증번호를 입력해 주세요',
+                          hintStyle: app_text_style.hint,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide: BorderSide.none,
+                          ),
+                          contentPadding: EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 10),
+                        ),
+                      ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 43),
@@ -87,13 +110,13 @@ class FindIdScreen3 extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      // '로그인 화면' 버튼
+                      // '이전' 버튼
                       TextButton(
                         onPressed: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>  LoginScreen()),
+                                builder: (context) =>  FindIdScreen1()),
                           );
                         },
                         style: TextButton.styleFrom(
@@ -104,20 +127,26 @@ class FindIdScreen3 extends StatelessWidget {
                           ),
                         ),
                         child: Text(
-                          '로그인 화면',
+                          '이전',
                           style: app_text_style.hint.copyWith(
                             color: Colors.black,
                             fontSize: 14,
                           ),
                         ),
                       ),
-                      // '비밀번호 찾기' 버튼
+                      // '다음' 버튼
                       TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => FindPasswordScreen1()),
+                        onPressed: () async {
+                          final name = Provider.of<SendEmailProvider>(context, listen: false).name;
+                          final email = Provider.of<SendEmailProvider>(context, listen: false).email;
+                          final verificationCode = _codeController.controller.text;
+                          final findIdProvider = Provider.of<FindIdProvider>(context, listen: false);
+
+                          // 인증 요청 보내기
+                          await findIdProvider.sendVerification(
+                            name: name,
+                            email: email,
+                            verificationCode: verificationCode,
                           );
                         },
                         style: TextButton.styleFrom(
@@ -128,7 +157,7 @@ class FindIdScreen3 extends StatelessWidget {
                           ),
                         ),
                         child: Text(
-                          '비밀번호 찾기',
+                          '다음',
                           style: app_text_style.button,
                           textAlign: TextAlign.center,
                         ),

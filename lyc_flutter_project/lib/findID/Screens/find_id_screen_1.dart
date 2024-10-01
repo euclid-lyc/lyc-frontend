@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/styles/app_text_style.dart';
-import '../widget/normal_appbar.dart';
+import 'package:provider/provider.dart';
+import '../../widget/Controller.dart';
+import '../../widget/normal_appbar.dart';
+import '../Provider/SendEmailProvider.dart';
 import 'find_id_screen_2.dart';
+import '../model/Info.dart';
 
 class FindIdScreen1 extends StatelessWidget {
-  const FindIdScreen1({super.key});
+  FindIdScreen1({super.key});
+  final Controller _nameController = Controller();
+  final Controller _emailController = Controller();
+
 
   @override
   Widget build(BuildContext context) {
+    final sendEmailProvider = Provider.of<SendEmailProvider>(context);
     return Scaffold(
       backgroundColor: AppColor.lightGrey,
       appBar: const NormalAppbar(title: "아이디 찾기"),
@@ -42,29 +50,39 @@ class FindIdScreen1 extends StatelessWidget {
                         '이름을 입력해주세요',
                         app_text_style.labelTextStyle,
                         app_text_style.hint,
-                        false),
+                        false,_nameController.controller),
                     buildInputField(
                         '가입한 이메일로 찾기',
                         '이메일을 입력해주세요',
                         app_text_style.labelTextStyle,
                         app_text_style.hint,
-                        true),
-                    buildInputField(
-                        '가입한 전화번호로 찾기',
-                        '전화번호를 입력해주세요',
-                        app_text_style.labelTextStyle,
-                        app_text_style.hint,
-                        true),
+                        true,_emailController.controller),
+                    // buildInputField(
+                    //     '가입한 전화번호로 찾기',
+                    //     '전화번호를 입력해주세요',
+                    //     app_text_style.labelTextStyle,
+                    //     app_text_style.hint,
+                    //     true,email),
                     Padding(
                       padding: EdgeInsets.only(top: 30.5), // 위아래 여백 설정
                       child: TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const FindIdScreen2(),
-                            ),
+                        onPressed: ()async {
+                          final info = Info(
+                            name: _nameController.controller.text,
+                            email: _emailController.controller.text,
                           );
+                          try {
+                            await sendEmailProvider.getVerificationCode(info: info);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>  FindIdScreen2(),
+                              ),
+                            );
+                          } catch (e) {
+                            // 에러 처리
+                            print('Error: $e');
+                          }
                         },
                         style: TextButton.styleFrom(
                           backgroundColor: AppColor.beige,
@@ -146,7 +164,7 @@ class FindIdScreen1 extends StatelessWidget {
   }
 
   Widget buildInputField(String label, String hint, TextStyle labelTextStyle,
-      TextStyle hintTextStyle, bool showCheckbox) {
+      TextStyle hintTextStyle, bool showCheckbox,TextEditingController controller) {
     return Container(
       margin: EdgeInsets.only(bottom: 8.5),
       child: Column(
@@ -204,6 +222,7 @@ class FindIdScreen1 extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.fromLTRB(18, 0, 18, 15), // 좌우 및 상하 여백 설정
               child: TextField(
+                controller: controller,
                 textAlignVertical: TextAlignVertical.center, // 텍스트 수직 정렬
                 textAlign: TextAlign.start, // 텍스트 수평 정렬
                 decoration: InputDecoration(
