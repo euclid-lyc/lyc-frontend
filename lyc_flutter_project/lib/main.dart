@@ -14,11 +14,15 @@ import 'package:lyc_flutter_project/posting/provider/posting_detail_provider.dar
 import 'package:lyc_flutter_project/posting/repository/clothes_repository.dart';
 import 'package:lyc_flutter_project/posting/repository/coordi_repository.dart';
 import 'package:lyc_flutter_project/routes/routes.dart';
+import 'package:lyc_flutter_project/setting/database/alarm_db.dart';
 import 'package:lyc_flutter_project/setting/provider/setting_provider.dart';
 import 'package:lyc_flutter_project/setting/repository/setting_repository.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
+Future<void> main() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  initializeAlarmDb();
   Provider.debugCheckInvalidValueType = null;
   runApp(
     MultiProvider(
@@ -127,7 +131,6 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
