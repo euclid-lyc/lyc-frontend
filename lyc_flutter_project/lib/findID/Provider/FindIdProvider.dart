@@ -34,9 +34,8 @@ class FindIdProvider extends ChangeNotifier {
     notifyListeners(); // UI 업데이트
 
     try {
-      print("토큰 읽기 시작");
+
       final tempToken = await storageService.read('temp-token');
-      print("불러온 토큰: $tempToken");
 
       if (tempToken == null) {
         _errorMessage = '토큰이 없습니다.'; // 오류 메시지 설정
@@ -44,7 +43,6 @@ class FindIdProvider extends ChangeNotifier {
         throw Exception(_errorMessage);
       }
 
-      print("불러온 토큰: $tempToken");
 
       final options = Options(headers: {
         'accept': '*/*',
@@ -68,13 +66,16 @@ class FindIdProvider extends ChangeNotifier {
 
       if (response.statusCode == 200) {
         // 인증 성공 처리
-        print('Verification successful');
+      final responseBody = response.data;
+      String loginId = responseBody["result"]["loginId"]; // 예시
+      await storageService.write('loginId', loginId);
+
       } else {
         _errorMessage = 'Verification failed with status: ${response.statusCode}';
         throw Exception(_errorMessage);
       }
-    } on DioError catch (e) {
-      _errorMessage = 'DioError: ${e.message}';
+    } on DioException catch (e) {
+      _errorMessage = 'DioException: ${e.message}';
       print(_errorMessage);
       if (e.response != null) {
         print('Response data: ${e.response?.data}');

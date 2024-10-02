@@ -81,16 +81,15 @@ class SendEmailProvider extends ChangeNotifier {
       if (response.statusCode == 200) {
         final headers = response.headers;
         final tempToken = headers.value("temp-token") ?? '';
-        print("11111 temp:$tempToken");
 
         await storageService.write('temp-token', tempToken); // StorageService 사용
 
-        print("2222 temp:$storageService.read('temp-token')");
+
       } else {
         throw Exception('Verification code request failed: ${response.statusCode}');
       }
-    } on DioError catch (e) {
-      print('DioError: ${e.message}');
+    } on DioException catch (e) {
+      print('DioException: ${e.message}');
       if (e.response != null) {
         print('Response data: ${e.response?.data}');
       }

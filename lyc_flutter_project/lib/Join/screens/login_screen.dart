@@ -187,7 +187,7 @@ class LoginScreen extends StatelessWidget {
               alignment: Alignment.center,
               child: Center(
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 18),
+                  padding: EdgeInsets.fromLTRB(18, 12, 18, 12),
                   child: TextField(
                     controller: controller.controller,
                     decoration: InputDecoration(

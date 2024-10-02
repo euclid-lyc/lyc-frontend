@@ -7,10 +7,12 @@ import 'package:lyc_flutter_project/widget/normal_appbar.dart';
 import '../../styles/app_text_style.dart';
 
 class FindIdScreen3 extends StatelessWidget {
-  const FindIdScreen3({super.key});
+  final String loginId;
+  const FindIdScreen3({super.key, required this.loginId});
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: AppColor.lightGrey,
       appBar: const NormalAppbar(title: "아이디 찾기"),
@@ -51,7 +53,7 @@ class FindIdScreen3 extends StatelessWidget {
                       width: 124,
                       height: 124,
                       child: Center(
-                        child: SvgPicture.network(
+                        child: SvgPicture.asset(
                           'assets/icon_fanfare.svg',
                           width: 120,
                           height: 120,
@@ -68,7 +70,7 @@ class FindIdScreen3 extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      child: Text("customer1234",
+                      child: Text(loginId,
                           style: app_text_style.littleTitle),
                     ),
                     Padding(
