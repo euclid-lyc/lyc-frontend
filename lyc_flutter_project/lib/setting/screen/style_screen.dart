@@ -26,7 +26,7 @@ class _StyleScreenState extends State<StyleScreen> {
   void initState() {
     super.initState();
     memberId = context.read<LoginProvider>().memberId!;
-    context.read<SettingProvider>().getStyleInfo(memberId: memberId!);
+    context.read<SettingProvider>().getStyleInfo(memberId: memberId);
   }
 
   @override
@@ -53,10 +53,14 @@ class _StyleScreenState extends State<StyleScreen> {
                             SpecInputLine(
                               label: "키",
                               initialValue: value.style.spec.height.toString(),
+                              onChanged: (p0) =>
+                                  value.updateHeight(selected: p0),
                             ),
                             SpecInputLine(
                               label: "몸무게",
                               initialValue: value.style.spec.weight.toString(),
+                              onChanged: (p0) =>
+                                  value.updateWeight(selected: p0),
                             ),
                             SpecInputLine(
                               label: "상의 사이즈",
@@ -186,15 +190,19 @@ class _StyleScreenState extends State<StyleScreen> {
                           focusedBorderWidth: 0.0,
                           contentPaddingHorizontal: 8.0,
                           initialValue: value.style.details,
+                          onChanged: (text) => value.updateDetails(text: text),
                         ),
                       ),
                       const SizedBox(
                         height: 20.0,
                       ),
                       TwoButtons(
-                        fstOnPressed: () {
+                        fstOnPressed: () async {
                           Navigator.pop(context);
-                          value.getStyleInfo(memberId: memberId);
+                          await value.getStyleInfo(
+                            memberId: memberId,
+                            refresh: true,
+                          );
                         },
                         scdOnPressed: () async {
                           await value.updateStyleInfo();
@@ -317,6 +325,7 @@ class SpecInputLine extends StatelessWidget {
   final String initialValue;
   final VoidCallback? onTap;
   final int Function(SettingProvider)? getValue;
+  final Function(String)? onChanged;
 
   const SpecInputLine({
     super.key,
@@ -324,6 +333,7 @@ class SpecInputLine extends StatelessWidget {
     required this.initialValue,
     this.onTap,
     this.getValue,
+    this.onChanged,
   });
 
   @override
@@ -357,6 +367,7 @@ class SpecInputLine extends StatelessWidget {
                     isDense: true,
                     initialValue: initialValue,
                     keyboardType: TextInputType.number,
+                    onChanged: onChanged!,
                   )
                 : SpecSizeBox(
                     onTap: onTap!,

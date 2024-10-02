@@ -86,6 +86,35 @@ class SettingProvider extends ChangeNotifier {
     }
   }
 
+  void updateHeight({required String selected}) {
+    _styleInfo = _styleInfo!.copyWith(
+      spec: SpecModel(
+        height: int.parse(selected),
+        weight: _styleInfo!.spec.weight,
+        topSize: _styleInfo!.spec.topSize,
+        bottomSize: _styleInfo!.spec.bottomSize,
+      ),
+    );
+    notifyListeners();
+  }
+
+  void updateWeight({required String selected}) {
+    _styleInfo = _styleInfo!.copyWith(
+      spec: SpecModel(
+        height: _styleInfo!.spec.height,
+        weight: int.parse(selected),
+        topSize: _styleInfo!.spec.topSize,
+        bottomSize: _styleInfo!.spec.bottomSize,
+      ),
+    );
+    notifyListeners();
+  }
+
+  void updateDetails ({required String text}) {
+    _styleInfo = _styleInfo!.copyWith(details: text);
+    notifyListeners();
+  }
+
   void updateTopSize({required int selected}) {
     _topSize = selected;
     notifyListeners();
