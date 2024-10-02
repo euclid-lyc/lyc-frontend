@@ -55,10 +55,11 @@ class _InfoModScreenState extends State<InfoModScreen> {
                 child: FutureBuilder(
                   future: initAlarmDb(),
                   builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting)
-                      return Center(
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(
                         child: CustomLoading(),
                       );
+                    }
                     return SingleChildScrollView(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
