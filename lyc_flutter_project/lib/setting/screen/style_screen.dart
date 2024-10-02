@@ -20,13 +20,13 @@ class StyleScreen extends StatefulWidget {
 }
 
 class _StyleScreenState extends State<StyleScreen> {
-  late int memberId;
+  late int? memberId;
 
   @override
   void initState() {
     super.initState();
-    memberId = context.read<LoginProvider>().memberId!;
-    context.read<SettingProvider>().getStyleInfo(memberId: memberId);
+    memberId = context.read<LoginProvider>().memberId;
+    context.read<SettingProvider>().getStyleInfo(memberId: memberId!);
   }
 
   @override
@@ -200,7 +200,7 @@ class _StyleScreenState extends State<StyleScreen> {
                         fstOnPressed: () async {
                           Navigator.pop(context);
                           await value.getStyleInfo(
-                            memberId: memberId,
+                            memberId: memberId!,
                             refresh: true,
                           );
                         },

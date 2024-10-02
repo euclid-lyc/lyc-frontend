@@ -3,7 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 enum PushAlarm {
   dm,
   feed,
-  calender,
+  calendar,
   like,
   event,
   ad,
@@ -13,7 +13,7 @@ Future<void> initializeAlarmDb () async {
   SharedPreferences prefs  = await SharedPreferences.getInstance();
   final String dmKey = PushAlarm.dm.toString();
   final String feedKey = PushAlarm.feed.toString();
-  final String calenderKey = PushAlarm.calender.toString();
+  final String calenderKey = PushAlarm.calendar.toString();
   final String likeKey = PushAlarm.like.toString();
   final String eventKey = PushAlarm.event.toString();
   final String adKey = PushAlarm.ad.toString();
@@ -28,7 +28,7 @@ Future<void> initializeAlarmDb () async {
 
 Future<bool> getAlarm (PushAlarm alarm) async {
   SharedPreferences prefs  = await SharedPreferences.getInstance();
-  return prefs.get(alarm.toString()) as bool;
+  return prefs.getBool(alarm.toString())!;
 }
 
 Future<void> setAlarm (PushAlarm alarm, bool selected) async {
