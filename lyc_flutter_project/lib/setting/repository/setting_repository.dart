@@ -76,4 +76,10 @@ abstract class SettingRepository {
   Future<ApiResponse<StyleModel>> getStyleInfo({
     @Path() required int memberId,
   });
+
+  @PATCH("/socials/styles")
+  @Headers({"accessToken": "true"})
+  Future<ApiResponse<StyleModel>> updateStyleInfo({
+    @Body() required PatchStyleModel styleModel,
+  });
 }

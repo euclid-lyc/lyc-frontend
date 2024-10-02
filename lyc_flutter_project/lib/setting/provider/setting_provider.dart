@@ -57,6 +57,35 @@ class SettingProvider extends ChangeNotifier {
 
   StyleModel get style => _styleInfo!;
 
+  Future<void> updateStyleInfo() async {
+    try {
+      final styleModel = PatchStyleModel(
+        isPublic: true,
+        height: _styleInfo!.spec.height,
+        weight: _styleInfo!.spec.weight,
+        topSize: "SIZE_$_topSize",
+        bottomSize: "SIZE_$_bottomSize",
+        preferredStyleList: _styleInfo!.preferredStyle.styles,
+        nonPreferredStyleList: _styleInfo!.nonPreferredStyle.styles,
+        preferredMaterialList: _styleInfo!.preferredMaterials.materials,
+        nonPreferredMaterialList: _styleInfo!.nonPreferredMaterials.materials,
+        preferredFitList: _styleInfo!.preferredFits.fits,
+        nonPreferredFitList: _styleInfo!.nonPreferredFits.fits,
+        goodBodyTypeList: _styleInfo!.goodBodyTypes.bodyTypes,
+        badBodyTypeList: _styleInfo!.badBodyTypes.bodyTypes,
+        details: _styleInfo!.details,
+      );
+      await repositoryProvider.repository
+          .updateStyleInfo(styleModel: styleModel);
+    } catch (e) {
+      if (e is ApiResponse) {
+        Exception(e.message);
+      } else {
+        Exception(e);
+      }
+    }
+  }
+
   void updateTopSize({required int selected}) {
     _topSize = selected;
     notifyListeners();
@@ -331,8 +360,11 @@ class SettingProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> getStyleInfo({required int memberId}) async {
-    if (_loadingStyeInfo || _styleInfo != null) return;
+  Future<void> getStyleInfo({
+    required int memberId,
+    bool refresh = false,
+  }) async {
+    if (_loadingStyeInfo || (!refresh && _styleInfo != null)) return;
     try {
       _loadingStyeInfo = true;
       notifyListeners();

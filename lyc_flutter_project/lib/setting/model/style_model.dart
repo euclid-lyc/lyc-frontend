@@ -136,3 +136,40 @@ class BodyTypeModel {
 
   Map<String, dynamic> toJson() => _$BodyTypeModelToJson(this);
 }
+
+@JsonSerializable()
+class PatchStyleModel {
+  final bool isPublic;
+  final int height;
+  final int weight;
+  final String topSize;
+  final String bottomSize;
+  final List<String> preferredStyleList;
+  final List<String> nonPreferredStyleList;
+  final List<String> preferredMaterialList;
+  final List<String> nonPreferredMaterialList;
+  final List<String> preferredFitList;
+  final List<String> nonPreferredFitList;
+  final List<String> goodBodyTypeList;
+  final List<String> badBodyTypeList;
+  final String details;
+
+  const PatchStyleModel({
+    required this.isPublic,
+    required this.height,
+    required this.weight,
+    required this.topSize,
+    required this.bottomSize,
+    required this.preferredStyleList,
+    required this.nonPreferredStyleList,
+    required this.preferredMaterialList,
+    required this.nonPreferredMaterialList,
+    required this.preferredFitList,
+    required this.nonPreferredFitList,
+    required this.goodBodyTypeList,
+    required this.badBodyTypeList,
+    required this.details,
+  });
+
+  Map<String, dynamic> toJson() => _$PatchStyleModelToJson(this);
+}

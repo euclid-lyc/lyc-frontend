@@ -95,3 +95,56 @@ Map<String, dynamic> _$BodyTypeModelToJson(BodyTypeModel instance) =>
     <String, dynamic>{
       'bodyTypes': instance.bodyTypes,
     };
+
+PatchStyleModel _$PatchStyleModelFromJson(Map<String, dynamic> json) =>
+    PatchStyleModel(
+      isPublic: json['isPublic'] as bool,
+      height: (json['height'] as num).toInt(),
+      weight: (json['weight'] as num).toInt(),
+      topSize: json['topSize'] as String,
+      bottomSize: json['bottomSize'] as String,
+      preferredStyleList: (json['preferredStyleList'] as List<dynamic>)
+          .map((e) => e as String)
+          .toList(),
+      nonPreferredStyleList: (json['nonPreferredStyleList'] as List<dynamic>)
+          .map((e) => e as String)
+          .toList(),
+      preferredMaterialList: (json['preferredMaterialList'] as List<dynamic>)
+          .map((e) => e as String)
+          .toList(),
+      nonPreferredMaterialList:
+          (json['nonPreferredMaterialList'] as List<dynamic>)
+              .map((e) => e as String)
+              .toList(),
+      preferredFitList: (json['preferredFitList'] as List<dynamic>)
+          .map((e) => e as String)
+          .toList(),
+      nonPreferredFitList: (json['nonPreferredFitList'] as List<dynamic>)
+          .map((e) => e as String)
+          .toList(),
+      goodBodyTypeList: (json['goodBodyTypeList'] as List<dynamic>)
+          .map((e) => e as String)
+          .toList(),
+      badBodyTypeList: (json['badBodyTypeList'] as List<dynamic>)
+          .map((e) => e as String)
+          .toList(),
+      details: json['details'] as String,
+    );
+
+Map<String, dynamic> _$PatchStyleModelToJson(PatchStyleModel instance) =>
+    <String, dynamic>{
+      'isPublic': instance.isPublic,
+      'height': instance.height,
+      'weight': instance.weight,
+      'topSize': instance.topSize,
+      'bottomSize': instance.bottomSize,
+      'preferredStyleList': instance.preferredStyleList,
+      'nonPreferredStyleList': instance.nonPreferredStyleList,
+      'preferredMaterialList': instance.preferredMaterialList,
+      'nonPreferredMaterialList': instance.nonPreferredMaterialList,
+      'preferredFitList': instance.preferredFitList,
+      'nonPreferredFitList': instance.nonPreferredFitList,
+      'goodBodyTypeList': instance.goodBodyTypeList,
+      'badBodyTypeList': instance.badBodyTypeList,
+      'details': instance.details,
+    };

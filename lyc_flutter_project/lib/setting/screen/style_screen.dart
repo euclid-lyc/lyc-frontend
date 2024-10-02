@@ -20,10 +20,12 @@ class StyleScreen extends StatefulWidget {
 }
 
 class _StyleScreenState extends State<StyleScreen> {
+  late int memberId;
+
   @override
   void initState() {
     super.initState();
-    final memberId = context.read<LoginProvider>().memberId;
+    memberId = context.read<LoginProvider>().memberId!;
     context.read<SettingProvider>().getStyleInfo(memberId: memberId!);
   }
 
@@ -190,8 +192,14 @@ class _StyleScreenState extends State<StyleScreen> {
                         height: 20.0,
                       ),
                       TwoButtons(
-                        fstOnPressed: () => Navigator.pop(context),
-                        scdOnPressed: () {},
+                        fstOnPressed: () {
+                          Navigator.pop(context);
+                          value.getStyleInfo(memberId: memberId);
+                        },
+                        scdOnPressed: () async {
+                          await value.updateStyleInfo();
+                          Navigator.pop(context);
+                        },
                         fstLabel: "이전",
                         scdLabel: "완료",
                       ),
