@@ -30,9 +30,15 @@ abstract class FeedRepository {
 
   @GET("/by-weather")
   @Headers({"accessToken": "true"})
-  Future<ApiResponse<WeatherPreviewResult>> getWeatherPostings();
+  Future<ApiResponse<WeatherPreviewResult>> getWeatherPostings({
+    @Query("city") required String city,
+  });
 
   @GET("/for-member")
   @Headers({"accessToken": "true"})
-  Future<ApiResponse<ForMemberPreviewResult>> getForMemberPostings();
+  Future<ApiResponse<ForMemberPreviewResult>> getForMemberPostings({
+    @Query("pageSize") required int pageSize,
+    @Query("cursorScore") int? cursorScore,
+    @Query("cursorId") int? cursorId,
+  });
 }
