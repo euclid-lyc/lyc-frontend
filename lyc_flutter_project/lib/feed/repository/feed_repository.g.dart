@@ -59,9 +59,10 @@ class _FeedRepository implements FeedRepository {
   }
 
   @override
-  Future<ApiResponse<WeatherPreviewResult>> getWeatherPostings() async {
+  Future<ApiResponse<WeatherPreviewResult>> getWeatherPostings(
+      {required String city}) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'city': city};
     final _headers = <String, dynamic>{r'accessToken': 'true'};
     _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
@@ -96,9 +97,18 @@ class _FeedRepository implements FeedRepository {
   }
 
   @override
-  Future<ApiResponse<ForMemberPreviewResult>> getForMemberPostings() async {
+  Future<ApiResponse<ForMemberPreviewResult>> getForMemberPostings({
+    required int pageSize,
+    int? cursorScore,
+    int? cursorId,
+  }) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'pageSize': pageSize,
+      r'cursorScore': cursorScore,
+      r'cursorId': cursorId,
+    };
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{r'accessToken': 'true'};
     _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
