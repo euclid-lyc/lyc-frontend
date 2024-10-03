@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lyc_flutter_project/common/model/api_response.dart';
+import 'package:lyc_flutter_project/setting/database/alarm_db.dart';
 import 'package:lyc_flutter_project/setting/model/block_member.dart';
 import 'package:lyc_flutter_project/setting/model/member_model.dart';
 import 'package:lyc_flutter_project/setting/model/style_model.dart';
@@ -138,11 +139,93 @@ class SettingProvider extends ChangeNotifier {
 
   /// 푸시 알림 설정
   PushAlarmModel? _pushAlarmModel;
-  bool _loadingPushAlarm = true;
+  bool _loadingPushAlarm = false;
 
-  get alarm => _pushAlarmModel;
+  PushAlarmModel get alarm => _pushAlarmModel!;
 
   get loadingPushAlarm => _loadingPushAlarm;
+
+  void initAlarmScreen() {
+    initDb();
+    initModel();
+  }
+
+  Future<void> initDb() async {
+    if (_pushAlarmModel != null) return;
+
+    _loadingPushAlarm = true;
+    notifyListeners();
+
+    await initializeAlarmDb();
+
+    _loadingPushAlarm = false;
+    notifyListeners();
+  }
+
+  Future<void> initModel({bool refresh = false}) async {
+    if (_pushAlarmModel != null && !refresh) return;
+
+    _loadingPushAlarm = true;
+    notifyListeners();
+
+    final bool dm = await getAlarm(PushAlarm.dm);
+    final bool feed = await getAlarm(PushAlarm.feed);
+    final bool schedule = await getAlarm(PushAlarm.calendar);
+    final bool likeMark = await getAlarm(PushAlarm.like);
+    final bool event = await getAlarm(PushAlarm.event);
+    final bool ad = await getAlarm(PushAlarm.ad);
+
+    _pushAlarmModel = PushAlarmModel(
+      dm: dm,
+      feed: feed,
+      schedule: schedule,
+      likeMark: likeMark,
+      event: event,
+      ad: ad,
+    );
+
+    _loadingPushAlarm = false;
+    notifyListeners();
+  }
+
+  void updateDm(bool selected) {
+    _pushAlarmModel = _pushAlarmModel!.copyWith(dm: selected);
+    notifyListeners();
+  }
+
+  void updateFeed(bool selected) {
+    _pushAlarmModel = _pushAlarmModel!.copyWith(feed: selected);
+    notifyListeners();
+  }
+
+  void updateSchedule(bool selected) {
+    _pushAlarmModel = _pushAlarmModel!.copyWith(schedule: selected);
+    notifyListeners();
+  }
+
+  void updateLikeMark(bool selected) {
+    _pushAlarmModel = _pushAlarmModel!.copyWith(likeMark: selected);
+    notifyListeners();
+  }
+
+  void updateEvent(bool selected) {
+    _pushAlarmModel = _pushAlarmModel!.copyWith(event: selected);
+    notifyListeners();
+  }
+
+  void updateAd(bool selected) {
+    _pushAlarmModel = _pushAlarmModel!.copyWith(ad: selected);
+    notifyListeners();
+  }
+
+  Future<void> saveAlarm() async {
+    await setAlarm(PushAlarm.dm, _pushAlarmModel!.dm);
+    await setAlarm(PushAlarm.feed, _pushAlarmModel!.feed);
+    await setAlarm(PushAlarm.calendar, _pushAlarmModel!.schedule);
+    await setAlarm(PushAlarm.like, _pushAlarmModel!.likeMark);
+    await setAlarm(PushAlarm.event, _pushAlarmModel!.event);
+    await setAlarm(PushAlarm.ad, _pushAlarmModel!.ad);
+  }
 
   /// 푸시 알림 설정
 
