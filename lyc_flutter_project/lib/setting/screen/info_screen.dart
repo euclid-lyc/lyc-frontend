@@ -90,6 +90,7 @@ class _InfoScreenState extends State<InfoScreen> {
                           ),
                           const SizedBox(height: 20.0),
                           CustomTextFormField(
+                            labelText: "닉네임",
                             initialValue: member!.nickname,
                             onChanged: (text) => value.updateNickname(text),
                             validator: (value) {
@@ -106,6 +107,7 @@ class _InfoScreenState extends State<InfoScreen> {
                             },
                           ),
                           CustomTextFormField(
+                            labelText: "아이디",
                             initialValue: member!.loginId,
                             onChanged: (text) => value.updateLoginId(text),
                             validator: (value) {
@@ -122,6 +124,7 @@ class _InfoScreenState extends State<InfoScreen> {
                             },
                           ),
                           CustomTextFormField(
+                            labelText: "자기소개",
                             initialValue: member!.introduction,
                             maxLines: 5,
                             onChanged: (text) => value.updateIntroduction(text),

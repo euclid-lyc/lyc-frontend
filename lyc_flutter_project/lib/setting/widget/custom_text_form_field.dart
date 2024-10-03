@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 
@@ -22,6 +21,7 @@ class CustomTextFormField extends StatefulWidget {
   final bool isDense;
   final double containerMargin;
   final TextInputType? keyboardType;
+  final String? labelText;
 
   const CustomTextFormField({
     super.key,
@@ -44,6 +44,7 @@ class CustomTextFormField extends StatefulWidget {
     this.isDense = false,
     this.containerMargin = 8.0,
     this.keyboardType = TextInputType.text,
+    this.labelText,
   });
 
   @override
@@ -52,16 +53,29 @@ class CustomTextFormField extends StatefulWidget {
 
 class _CustomTextFormFieldState extends State<CustomTextFormField> {
   late TextEditingController _controller;
+  late FocusNode _focusNode;
+  bool _isFocused = false;
 
   @override
   void initState() {
     super.initState();
     _controller = TextEditingController(text: widget.initialValue);
+    _focusNode = FocusNode();
+    _focusNode.addListener(listener);
+  }
+
+  void listener() {
+    setState(() {
+      _isFocused = _focusNode.hasFocus;
+    });
   }
 
   @override
   void dispose() {
     _controller.dispose();
+
+    _focusNode.removeListener(listener);
+    _focusNode.dispose();
     super.dispose();
   }
 
@@ -75,6 +89,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
     return Container(
       margin: EdgeInsets.symmetric(vertical: widget.containerMargin),
       child: TextFormField(
+        focusNode: _focusNode,
         keyboardType: widget.keyboardType,
         controller: _controller,
         validator: widget.validator,
@@ -90,8 +105,14 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           overflow: TextOverflow.ellipsis,
         ),
         onSaved: widget.onSaved,
-        cursorColor: Colors.grey,
+        cursorColor: widget.focusedBorderColor,
         decoration: InputDecoration(
+          labelText: _isFocused ? widget.labelText : null,
+          labelStyle: TextStyle(
+            color: widget.focusedBorderColor,
+            fontWeight: FontWeight.w600,
+            fontSize: 20.0,
+          ),
           isDense: widget.isDense,
           contentPadding: EdgeInsets.symmetric(
             horizontal: widget.contentPaddingHorizontal,
