@@ -77,7 +77,7 @@ class FollowProvider extends ChangeNotifier {
     String? cursorNickname,
     int? forceCategory,
   }) async {
-    if (getLoading() || !getHasMore()) return;
+    if (getLoading() || (!refresh && !getHasMore())) return;
 
     // 0=팔로워, 1=팔로잉
     int category = _isFollower ? 0 : 1;

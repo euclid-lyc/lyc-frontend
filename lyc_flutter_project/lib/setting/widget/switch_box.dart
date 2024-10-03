@@ -21,21 +21,25 @@ class SwitchBox extends StatelessWidget {
     return Container(
       alignment: AlignmentDirectional.centerStart,
       margin: const EdgeInsets.symmetric(vertical: 16.0),
-      padding: const EdgeInsets.only(left: 16.0, right: 10.0),
-      height: 70.0,
+      padding: const EdgeInsets.only(
+        left: 16.0,
+        right: 12.0,
+        top: 16.0,
+        bottom: 16.0,
+      ),
       width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20.0),
         color: Colors.white,
       ),
-      child: Expanded(
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
                   label,
@@ -51,18 +55,18 @@ class SwitchBox extends StatelessWidget {
                       color: AppColor.deepGrey,
                       fontWeight: FontWeight.w400,
                       fontSize: 12.0,
-                      overflow: TextOverflow.ellipsis
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
               ],
             ),
-            CupertinoSwitch(
-              value: isChecked,
-              onChanged: onChanged,
-              activeColor: const Color(0xff03A600),
-            )
-          ],
-        ),
+          ),
+          CupertinoSwitch(
+            value: isChecked,
+            onChanged: onChanged,
+            activeColor: const Color(0xff03A600),
+          )
+        ],
       ),
     );
   }

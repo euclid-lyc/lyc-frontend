@@ -18,7 +18,7 @@ import 'package:lyc_flutter_project/setting/provider/setting_provider.dart';
 import 'package:lyc_flutter_project/setting/repository/setting_repository.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+Future<void> main() async {
   Provider.debugCheckInvalidValueType = null;
   runApp(
     MultiProvider(
@@ -127,7 +127,6 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

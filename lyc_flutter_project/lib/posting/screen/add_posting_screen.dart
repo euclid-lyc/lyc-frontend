@@ -114,8 +114,8 @@ class _AddPostingScreenState extends State<AddPostingScreen> {
                 }
               },
               scdLabel: "등록",
-              scdOnPressed: () {
-                widget.coordiProvider.upload();
+              scdOnPressed: () async {
+                await widget.coordiProvider.upload();
                 Navigator.of(context).pop();
               },
             ),

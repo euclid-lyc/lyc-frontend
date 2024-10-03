@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/posting/provider/coordi_provider.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:provider/provider.dart';
-
+// Todo: CustomNumberPicker로 대체
 class TempBox extends StatelessWidget {
   final String label;
   final Function(int) onChanged;

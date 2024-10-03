@@ -35,7 +35,7 @@ class _SettingRepository implements SettingRepository {
     )
         .compose(
           _dio.options,
-          '/delivery',
+          '/members/delivery',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -74,7 +74,7 @@ class _SettingRepository implements SettingRepository {
     )
         .compose(
           _dio.options,
-          '/delivery',
+          '/members/delivery',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -108,7 +108,7 @@ class _SettingRepository implements SettingRepository {
     )
         .compose(
           _dio.options,
-          '/info',
+          '/members/info',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -147,7 +147,7 @@ class _SettingRepository implements SettingRepository {
     )
         .compose(
           _dio.options,
-          '/info',
+          '/members/info',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -183,7 +183,7 @@ class _SettingRepository implements SettingRepository {
     )
         .compose(
           _dio.options,
-          '/pw-info',
+          '/members/pw-info',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -198,6 +198,200 @@ class _SettingRepository implements SettingRepository {
       _value = ApiResponse<MemberModel>.fromJson(
         _result.data!,
         (json) => MemberModel.fromJson(json as Map<String, dynamic>),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<ApiResponse<BlockMemberList>> getBlockMembers({
+    required int pageSize,
+    int? blockMemberId,
+  }) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'pageSize': pageSize,
+      r'blockMemberId': blockMemberId,
+    };
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{r'accessToken': 'true'};
+    _headers.removeWhere((k, v) => v == null);
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<ApiResponse<BlockMemberList>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          '/socials/block-members',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late ApiResponse<BlockMemberList> _value;
+    try {
+      _value = ApiResponse<BlockMemberList>.fromJson(
+        _result.data!,
+        (json) => BlockMemberList.fromJson(json as Map<String, dynamic>),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<ApiResponse<Profile>> blockMember({required int memberId}) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'accessToken': 'true'};
+    _headers.removeWhere((k, v) => v == null);
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<ApiResponse<Profile>>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          '/socials/block-members/${memberId}',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late ApiResponse<Profile> _value;
+    try {
+      _value = ApiResponse<Profile>.fromJson(
+        _result.data!,
+        (json) => Profile.fromJson(json as Map<String, dynamic>),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<ApiResponse<Profile>> unblockMember({required int memberId}) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'accessToken': 'true'};
+    _headers.removeWhere((k, v) => v == null);
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<ApiResponse<Profile>>(Options(
+      method: 'DELETE',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          '/socials/block-members/${memberId}',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late ApiResponse<Profile> _value;
+    try {
+      _value = ApiResponse<Profile>.fromJson(
+        _result.data!,
+        (json) => Profile.fromJson(json as Map<String, dynamic>),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<ApiResponse<StyleModel>> getStyleInfo({required int memberId}) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'accessToken': 'true'};
+    _headers.removeWhere((k, v) => v == null);
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<ApiResponse<StyleModel>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          '/socials/members/${memberId}/styles',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late ApiResponse<StyleModel> _value;
+    try {
+      _value = ApiResponse<StyleModel>.fromJson(
+        _result.data!,
+        (json) => StyleModel.fromJson(json as Map<String, dynamic>),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<ApiResponse<StyleModel>> updateStyleInfo(
+      {required PatchStyleModel styleModel}) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'accessToken': 'true'};
+    _headers.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    _data.addAll(styleModel.toJson());
+    final _options = _setStreamType<ApiResponse<StyleModel>>(Options(
+      method: 'PATCH',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          '/socials/styles',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late ApiResponse<StyleModel> _value;
+    try {
+      _value = ApiResponse<StyleModel>.fromJson(
+        _result.data!,
+        (json) => StyleModel.fromJson(json as Map<String, dynamic>),
       );
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);

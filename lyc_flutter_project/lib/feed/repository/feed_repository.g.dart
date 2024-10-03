@@ -22,40 +22,34 @@ class _FeedRepository implements FeedRepository {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<ApiResponse<List<CoordiPostingPreview>>> getFeedPreview() async {
+  Future<ApiResponse<dynamic>> getFeedPreview() async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'accessToken': 'true'};
     _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
-    final _options =
-        _setStreamType<ApiResponse<List<CoordiPostingPreview>>>(Options(
+    final _options = _setStreamType<ApiResponse<dynamic>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
-            .compose(
-              _dio.options,
-              '/preview',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(
-                baseUrl: _combineBaseUrls(
-              _dio.options.baseUrl,
-              baseUrl,
-            )));
+        .compose(
+          _dio.options,
+          '/preview',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late ApiResponse<List<CoordiPostingPreview>> _value;
+    late ApiResponse<dynamic> _value;
     try {
-      _value = ApiResponse<List<CoordiPostingPreview>>.fromJson(
+      _value = ApiResponse<dynamic>.fromJson(
         _result.data!,
-        (json) => json is List<dynamic>
-            ? json
-                .map<CoordiPostingPreview>((i) =>
-                    CoordiPostingPreview.fromJson(i as Map<String, dynamic>))
-                .toList()
-            : List.empty(),
+        (json) => json as dynamic,
       );
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);

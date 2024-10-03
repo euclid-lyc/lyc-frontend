@@ -30,7 +30,7 @@ class DirectorProvider extends ChangeNotifier {
     int pageSize = 10,
     int? followerCount,
   }) async {
-    if (_loading || !_hasMore) return;
+    if (_loading || (!refresh && !_hasMore)) return;
 
     if (!refresh && _directors.isNotEmpty) {
       followerCount = _directors.last.followerCount;
