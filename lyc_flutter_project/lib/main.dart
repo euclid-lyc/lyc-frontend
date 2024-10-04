@@ -55,14 +55,15 @@ Future<void> main() async {
           ),
         ),
         ChangeNotifierProvider(
-          create: (context) => FeedProvider(
-            weatherRepositoryProvider:
-                context.read<WeatherRepositoryProvider>(),
+          create: (context) => FeedRepositoryProvider(
+            dio: context.read<DioProvider>().dio,
           ),
         ),
         ChangeNotifierProvider(
-          create: (context) => FeedRepositoryProvider(
-            dio: context.read<DioProvider>().dio,
+          create: (context) => FeedProvider(
+            weatherRepositoryProvider:
+                context.read<WeatherRepositoryProvider>(),
+            feedRepositoryProvider: context.read<FeedRepositoryProvider>(),
           ),
         ),
         ChangeNotifierProvider(

@@ -279,7 +279,7 @@ class _HomeScreenState extends State<HomeScreen> {
     if (list.isEmpty) return const Text("불러올 게시글이 없습니다");
     return ListView.builder(
       scrollDirection: Axis.horizontal,
-      itemCount: list!.length,
+      itemCount: list.length,
       itemBuilder: (context, index) {
         final posting = list[index];
         return Container(
