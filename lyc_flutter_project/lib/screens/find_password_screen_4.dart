@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/Join/Screens/login_screen.dart';
-import 'package:lyc_flutter_project/widget/normal_appbar.dart';
+import 'package:lyc_flutter_project/common/widget/normal_appbar.dart';
 import '../styles/app_text_style.dart';
 
 class FindPasswordScreen4 extends StatelessWidget {

@@ -8,7 +8,7 @@ import 'package:lyc_flutter_project/mypage/layout/mypage_layout.dart';
 import 'package:lyc_flutter_project/mypage/provider/mypage_provider.dart';
 import 'package:lyc_flutter_project/mypage/widget/icons_in_profile_box.dart';
 import 'package:lyc_flutter_project/mypage/widget/profile_box.dart';
-import 'package:lyc_flutter_project/widget/bottom_buttons.dart';
+import 'package:lyc_flutter_project/mypage/widget/bottom_buttons.dart';
 import 'package:provider/provider.dart';
 
 class MypageScreen extends StatefulWidget {

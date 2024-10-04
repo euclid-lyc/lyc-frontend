@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:lyc_flutter_project/common/style/custom_grid_delegate.dart';
 import 'package:lyc_flutter_project/common/widget/custom_loading.dart';
 import 'package:lyc_flutter_project/common/widget/home_appbar.dart';
 import 'package:lyc_flutter_project/common/widget/preview_posting_card.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/director/widget/custom_search_bar.dart';
-import 'package:lyc_flutter_project/feed/model/for_member_preview.dart';
 import 'package:lyc_flutter_project/feed/model/weather_preview.dart';
 import 'package:lyc_flutter_project/feed/provider/feed_provider.dart';
 import 'package:lyc_flutter_project/feed/widget/height_box.dart';
 import 'package:lyc_flutter_project/feed/widget/title_box.dart';
 import 'package:lyc_flutter_project/feed/widget/today_temp.dart';
-import 'package:lyc_flutter_project/styles/default_padding.dart';
+import 'package:lyc_flutter_project/common/widget/default_padding.dart';
 import 'package:provider/provider.dart';
 
 class FeedScreen extends StatefulWidget {

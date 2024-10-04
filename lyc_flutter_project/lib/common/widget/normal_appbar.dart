@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
-import 'package:lyc_flutter_project/widget/custom_back_button.dart';
 
 /// 좀 더 일반화되게 + 간단하게 사용할 수 있게 수정합니다
 /// backButton은 default가 true입니다 -> false인 경우에만 명시하면 됩니다
@@ -42,7 +41,10 @@ class NormalAppbar extends StatelessWidget implements PreferredSizeWidget {
                       ? Container(
                           alignment: AlignmentDirectional.bottomStart,
                           child: GestureDetector(
-                            child: const CustomBackButton(),
+                            child: Icon(
+                              Icons.arrow_back_ios_new_rounded,
+                              color: Colors.white,
+                            ),
                             onTap: () => Navigator.pop(context),
                           ),
                         )

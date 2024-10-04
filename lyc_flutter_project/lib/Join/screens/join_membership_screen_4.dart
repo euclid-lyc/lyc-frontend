@@ -3,7 +3,7 @@ import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:provider/provider.dart';
 import '../../styles/app_text_style.dart';
 import '../../widget/controller.dart';
-import '../../widget/normal_appbar.dart';
+import '../../common/widget/normal_appbar.dart';
 import 'join_membership_screen_5.dart';
 import '../../data/style_list.dart';
 

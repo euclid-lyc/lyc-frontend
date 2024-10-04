@@ -3,7 +3,7 @@ import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/Join/Screens/join_membership_screen_2.dart';
 import 'package:lyc_flutter_project/styles/app_text_style.dart';
 import 'package:lyc_flutter_project/widget/controller.dart';
-import '../../widget/normal_appbar.dart';
+import '../../common/widget/normal_appbar.dart';
 
 class JoinMembershipScreen1 extends StatefulWidget {
   JoinMembershipScreen1({super.key});

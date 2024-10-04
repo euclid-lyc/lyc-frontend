@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/screens/find_password_screen_2.dart';
 import 'package:lyc_flutter_project/styles/app_text_style.dart';
-import '../widget/normal_appbar.dart';
+import '../common/widget/normal_appbar.dart';
 
 class FindPasswordScreen1 extends StatelessWidget {
   const FindPasswordScreen1({super.key});

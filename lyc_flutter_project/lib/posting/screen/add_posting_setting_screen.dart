@@ -7,10 +7,10 @@ import 'package:lyc_flutter_project/posting/widget/link_box.dart';
 import 'package:lyc_flutter_project/posting/widget/mini_link_box.dart';
 import 'package:lyc_flutter_project/posting/widget/temp_box.dart';
 import 'package:lyc_flutter_project/posting/widget/weather_icon.dart';
-import 'package:lyc_flutter_project/styles/default_padding.dart';
-import 'package:lyc_flutter_project/styles/posting_text_style.dart';
-import 'package:lyc_flutter_project/widget/normal_appbar.dart';
-import 'package:lyc_flutter_project/widget/select_buttons_in_posting.dart';
+import 'package:lyc_flutter_project/common/widget/default_padding.dart';
+import 'package:lyc_flutter_project/posting/style/posting_text_style.dart';
+import 'package:lyc_flutter_project/common/widget/normal_appbar.dart';
+import 'package:lyc_flutter_project/mypage/widget/select_buttons_in_posting.dart';
 import 'package:provider/provider.dart';
 
 class AddPostingSettingScreen extends StatefulWidget {

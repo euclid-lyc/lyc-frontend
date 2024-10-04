@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lyc_flutter_project/data/temp_member_data.dart';
 import 'package:lyc_flutter_project/mypage/screen/attendance_screen.dart';
 import 'package:lyc_flutter_project/mypage/screen/review_home_screen.dart';
 import 'package:lyc_flutter_project/mypage/screen/stamp_screen.dart';

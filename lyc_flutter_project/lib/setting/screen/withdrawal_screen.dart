@@ -3,8 +3,8 @@ import 'package:lyc_flutter_project/common/widget/two_buttons.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/setting/style/text_style.dart';
 import 'package:lyc_flutter_project/setting/widget/custom_text_form_field.dart';
-import 'package:lyc_flutter_project/styles/default_padding.dart';
-import 'package:lyc_flutter_project/widget/normal_appbar.dart';
+import 'package:lyc_flutter_project/common/widget/default_padding.dart';
+import 'package:lyc_flutter_project/common/widget/normal_appbar.dart';
 
 import '../widget/wtihdrawal_content.dart';
 

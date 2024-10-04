@@ -8,7 +8,7 @@ import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/director/model/director_ranking.dart';
 import 'package:lyc_flutter_project/director/provider/director_provider.dart';
 import 'package:lyc_flutter_project/director/widget/custom_search_bar.dart';
-import 'package:lyc_flutter_project/styles/default_padding.dart';
+import 'package:lyc_flutter_project/common/widget/default_padding.dart';
 import 'package:provider/provider.dart';
 
 class DirectorSearchScreen extends StatefulWidget {

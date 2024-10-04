@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lyc_flutter_project/styles/app_text_style.dart';
-import 'package:lyc_flutter_project/widget/normal_appbar.dart';
+import 'package:lyc_flutter_project/common/widget/normal_appbar.dart';
 import 'package:lyc_flutter_project/Join/Screens/join_membership_screen_2.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 

@@ -14,9 +14,9 @@ import 'package:lyc_flutter_project/setting/widget/address_dialog.dart';
 import 'package:lyc_flutter_project/setting/widget/common_button.dart';
 import 'package:lyc_flutter_project/setting/widget/custom_text_form_field.dart';
 import 'package:lyc_flutter_project/setting/widget/password_change_dialog.dart';
-import 'package:lyc_flutter_project/styles/default_padding.dart';
-import 'package:lyc_flutter_project/widget/image_picker_widget.dart';
-import 'package:lyc_flutter_project/widget/normal_appbar.dart';
+import 'package:lyc_flutter_project/common/widget/default_padding.dart';
+import 'package:lyc_flutter_project/common/widget/image_picker_widget.dart';
+import 'package:lyc_flutter_project/common/widget/normal_appbar.dart';
 import 'package:provider/provider.dart';
 
 class InfoScreen extends StatefulWidget {

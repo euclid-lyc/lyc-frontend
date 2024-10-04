@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/Join/Provider/login_provider.dart';
 import 'package:lyc_flutter_project/Join/Screens/login_screen.dart';
-import 'package:lyc_flutter_project/common/screen/splash_screen.dart';
 import 'package:lyc_flutter_project/common/widget/custom_alert_dialog.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/setting/screen/block_mod_screen.dart';
@@ -11,8 +10,8 @@ import 'package:lyc_flutter_project/setting/screen/style_screen.dart';
 import 'package:lyc_flutter_project/setting/screen/withdrawal_screen.dart';
 import 'package:lyc_flutter_project/setting/widget/title_button.dart';
 import 'package:lyc_flutter_project/setting/widget/title_text.dart';
-import 'package:lyc_flutter_project/styles/default_padding.dart';
-import 'package:lyc_flutter_project/widget/normal_appbar.dart';
+import 'package:lyc_flutter_project/common/widget/default_padding.dart';
+import 'package:lyc_flutter_project/common/widget/normal_appbar.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 import 'package:provider/provider.dart';
 
