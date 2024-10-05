@@ -36,7 +36,6 @@ class _ReviewHomeScreenState extends State<ReviewHomeScreen> {
       body: DefaultPadding(
         child: Consumer<ReviewProvider>(
           builder: (context, provider, child) {
-
             return provider.loading
                 ? const Center(child: CustomLoading())
                 : MyCoordiGridView(

@@ -119,7 +119,7 @@ class _MyCoordiGridViewState extends State<MyCoordiGridView> {
                 pushWithoutNavBar(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => ReviewListScreen(),
+                    builder: (context) => const ReviewListScreen(),
                   ),
                 );
               }

@@ -689,6 +689,52 @@ class _MypageRepository implements MypageRepository {
     return _value;
   }
 
+  @override
+  Future<ApiResponse<PossibleReviewList>> getPossibleReviewList({
+    required int pageSize,
+    String? cursorDateTime,
+    int? cursorId,
+  }) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'pageSize': pageSize,
+      r'cursorDateTime': cursorDateTime,
+      r'cursorId': cursorId,
+    };
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{r'accessToken': 'true'};
+    _headers.removeWhere((k, v) => v == null);
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<ApiResponse<PossibleReviewList>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          '/reviews/directors',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late ApiResponse<PossibleReviewList> _value;
+    try {
+      _value = ApiResponse<PossibleReviewList>.fromJson(
+        _result.data!,
+        (json) => PossibleReviewList.fromJson(json as Map<String, dynamic>),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&
         !(requestOptions.responseType == ResponseType.bytes ||
