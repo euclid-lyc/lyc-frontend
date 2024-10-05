@@ -3,15 +3,18 @@ import 'package:lyc_flutter_project/Join/Provider/login_provider.dart';
 import 'package:lyc_flutter_project/common/model/api_response.dart';
 import 'package:lyc_flutter_project/common/model/paginate_query.dart';
 import 'package:lyc_flutter_project/mypage/model/mypage_posting_preview.dart';
+import 'package:lyc_flutter_project/mypage/repository/mypage_repository.dart';
 import 'package:lyc_flutter_project/posting/repository/coordi_repository.dart';
 
 class ReviewProvider extends ChangeNotifier {
-  final CoordiRepositoryProvider repositoryProvider;
+  final CoordiRepositoryProvider coordiRepositoryProvider;
   final LoginProvider loginProvider;
+  final MypageRepositoryProvider mypageRepositoryProvider;
 
   ReviewProvider({
-    required this.repositoryProvider,
+    required this.coordiRepositoryProvider,
     required this.loginProvider,
+    required this.mypageRepositoryProvider,
   });
 
   int? _myId;
@@ -53,7 +56,7 @@ class ReviewProvider extends ChangeNotifier {
 
     try {
       _loading = true;
-      final resp = await repositoryProvider.repository.getReviewList(
+      final resp = await mypageRepositoryProvider.mypageRepository.getReviewList(
         memberId: _myId!,
         paginateQuery: paginateQuery,
       );

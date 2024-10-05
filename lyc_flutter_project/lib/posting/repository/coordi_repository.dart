@@ -52,11 +52,4 @@ abstract class CoordiRepository {
     @Path() required postingId,
   });
 
-  @GET("/members/{memberId}/reviews")
-  @Headers({"accessToken": "true"})
-  Future<ApiResponse<CoordieResult>> getReviewList({
-    @Path() required int memberId,
-    @Queries() required PaginateQuery paginateQuery,
-  });
-
 }

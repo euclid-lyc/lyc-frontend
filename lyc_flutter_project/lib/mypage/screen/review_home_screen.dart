@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lyc_flutter_project/common/widget/custom_loading.dart';
 import 'package:lyc_flutter_project/common/widget/default_padding.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/common/widget/normal_appbar.dart';
@@ -20,6 +21,11 @@ class _ReviewHomeScreenState extends State<ReviewHomeScreen> {
   void initState() {
     super.initState();
     reviewProvider = context.read<ReviewProvider>();
+    getList();
+  }
+
+  Future<void> getList() async {
+    await reviewProvider.getReviews();
   }
 
   @override
@@ -30,11 +36,14 @@ class _ReviewHomeScreenState extends State<ReviewHomeScreen> {
       body: DefaultPadding(
         child: Consumer<ReviewProvider>(
           builder: (context, provider, child) {
-            return MyCoordiGridView(
-              postings: [],
-              category: 3,
-              reviewProvider: reviewProvider,
-            );
+
+            return provider.loading
+                ? const Center(child: CustomLoading())
+                : MyCoordiGridView(
+                    postings: provider.reviews,
+                    category: 3,
+                    reviewProvider: reviewProvider,
+                  );
           },
         ),
       ),

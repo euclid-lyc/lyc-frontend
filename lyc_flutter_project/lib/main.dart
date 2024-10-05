@@ -122,8 +122,9 @@ Future<void> main() async {
         ),
         ChangeNotifierProvider(
           create: (context) => ReviewProvider(
-            repositoryProvider: context.read<CoordiRepositoryProvider>(),
+            coordiRepositoryProvider: context.read<CoordiRepositoryProvider>(),
             loginProvider: context.read<LoginProvider>(),
+            mypageRepositoryProvider: context.read<MypageRepositoryProvider>(),
           ),
         ),
       ],

@@ -150,4 +150,12 @@ abstract class MypageRepository {
   Future<ApiResponse<FollowActingResult>> unfollowUser({
     @Path() required int memberId,
   });
+
+  @GET("/members/{memberId}/reviews")
+  @Headers({"accessToken": "true"})
+  Future<ApiResponse<CoordieResult>> getReviewList({
+    @Path() required int memberId,
+    @Queries() required PaginateQuery paginateQuery,
+  });
+
 }
