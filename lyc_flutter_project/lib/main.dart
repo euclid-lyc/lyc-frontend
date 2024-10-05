@@ -9,6 +9,7 @@ import 'package:lyc_flutter_project/feed/repository/feed_repository.dart';
 import 'package:lyc_flutter_project/feed/repository/weather_repository.dart';
 import 'package:lyc_flutter_project/home/provider/home_provider.dart';
 import 'package:lyc_flutter_project/mypage/provider/mypage_provider.dart';
+import 'package:lyc_flutter_project/mypage/provider/review_provider.dart';
 import 'package:lyc_flutter_project/mypage/repository/mypage_repository.dart';
 import 'package:lyc_flutter_project/posting/provider/posting_detail_provider.dart';
 import 'package:lyc_flutter_project/posting/repository/clothes_repository.dart';
@@ -117,6 +118,12 @@ Future<void> main() async {
         ChangeNotifierProvider(
           create: (context) => DirectorProvider(
             repositoryProvider: context.read<DirectorRepositoryProvider>(),
+          ),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => ReviewProvider(
+            repositoryProvider: context.read<CoordiRepositoryProvider>(),
+            loginProvider: context.read<LoginProvider>(),
           ),
         ),
       ],

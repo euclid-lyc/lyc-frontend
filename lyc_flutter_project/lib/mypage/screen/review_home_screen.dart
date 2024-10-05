@@ -1,18 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:lyc_flutter_project/common/widget/default_padding.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/common/widget/normal_appbar.dart';
+import 'package:lyc_flutter_project/mypage/provider/review_provider.dart';
+import 'package:lyc_flutter_project/mypage/widget/my_coordi_grid_view.dart';
+import 'package:provider/provider.dart';
 
-class ReviewHomeScreen extends StatelessWidget {
+class ReviewHomeScreen extends StatefulWidget {
   const ReviewHomeScreen({super.key});
+
+  @override
+  State<ReviewHomeScreen> createState() => _ReviewHomeScreenState();
+}
+
+class _ReviewHomeScreenState extends State<ReviewHomeScreen> {
+  late ReviewProvider reviewProvider;
+
+  @override
+  void initState() {
+    super.initState();
+    reviewProvider = context.read<ReviewProvider>();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.lightGrey,
-      appBar: NormalAppbar(title: '나의 리뷰'),
-      body: Container(
-        margin: EdgeInsets.only(left: 30, right: 30, top: 25, bottom: 5),
-        // child: GridWidgetWithButton(postings: TempPostingData().postings, category: 3),
+      appBar: const NormalAppbar(title: '나의 리뷰'),
+      body: DefaultPadding(
+        child: Consumer<ReviewProvider>(
+          builder: (context, provider, child) {
+            return MyCoordiGridView(
+              postings: [],
+              category: 3,
+              reviewProvider: reviewProvider,
+            );
+          },
+        ),
       ),
     );
   }
