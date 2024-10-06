@@ -110,7 +110,6 @@ class ClothesProvider extends ChangeNotifier {
   void uploadImage() async {
     if (await canUploadImage()) {
       final clothesByImageDTO = jsonEncode({
-        'memberId': _postingImage.memberId!,
         'title': _postingImage.title!,
         'text': _postingImage.text!,
       });

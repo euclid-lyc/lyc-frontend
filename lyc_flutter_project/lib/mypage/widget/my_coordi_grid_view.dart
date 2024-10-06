@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lyc_flutter_project/Join/Provider/login_provider.dart';
 import 'package:lyc_flutter_project/common/style/custom_grid_delegate.dart';
 import 'package:lyc_flutter_project/common/widget/custom_loading.dart';
 import 'package:lyc_flutter_project/common/widget/image_networking.dart';
@@ -102,6 +103,7 @@ class _MyCoordiGridViewState extends State<MyCoordiGridView> {
               if (widget.category == 0) {
                 final coordiProvider = CoordiProvider(
                   repositoryProvider: context.read<CoordiRepositoryProvider>(),
+                  loginProvider: context.read<LoginProvider>(),
                 );
                 // 나의코디->코디 추가
                 pushWithoutNavBar(

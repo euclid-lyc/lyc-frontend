@@ -2,21 +2,30 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:lyc_flutter_project/data/temp_member_data.dart';
+import 'package:lyc_flutter_project/Join/Provider/login_provider.dart';
 import 'package:lyc_flutter_project/posting/model/coordi_posting.dart';
 import 'package:lyc_flutter_project/posting/repository/coordi_repository.dart';
 
 class CoordiProvider extends ChangeNotifier {
   final CoordiRepositoryProvider repositoryProvider;
+  final LoginProvider loginProvider;
+  late int myId;
+
+  CoordiProvider({
+    required this.repositoryProvider,
+    required this.loginProvider,
+  }) {
+    getMyId();
+  }
+
+  void getMyId() {
+    myId = loginProvider.memberId!;
+  }
+
   CoordiPosting _posting = CoordiPosting(
-    writerId: cur_member,
-    toMemberId: cur_member,
-    fromMemberId: cur_member,
     minTemp: 0,
     maxTemp: 0,
   );
-
-  CoordiProvider({required this.repositoryProvider});
 
   List<Map<String, dynamic>> points = [];
 
@@ -30,53 +39,47 @@ class CoordiProvider extends ChangeNotifier {
 
   void resetSetting() {
     _posting = CoordiPosting(
-        writerId: _posting.writerId,
-        image: _posting.image,
-        content: _posting.content,
-        toMemberId: _posting.toMemberId,
-        fromMemberId: _posting.fromMemberId,
-        maxTemp: 0,
-        minTemp: 0);
+      writerId: _posting.writerId,
+      image: _posting.image,
+      content: _posting.content,
+      toMemberId: _posting.toMemberId,
+      fromMemberId: _posting.fromMemberId,
+      maxTemp: 0,
+      minTemp: 0,
+    );
   }
 
   void updateMinTemp(int temp) {
-    _posting = _posting.copyWith(minTemp: temp);
+    _posting = _posting.copyWith(minTemp: temp.toDouble());
     notifyListeners();
-    // print("update mintemp: ${_posting.minTemp}");
   }
 
   void updateMaxTemp(int temp) {
-    _posting = _posting.copyWith(maxTemp: temp);
+    _posting = _posting.copyWith(maxTemp: temp.toDouble());
     notifyListeners();
-    // print("update maxtemp: ${_posting.maxTemp}");
   }
 
   void updateStyle(String style) {
     _posting = _posting.copyWith(style: style);
-    // print("update style: ${_posting.style}");
   }
 
   void updateContent(String content) {
     _posting = _posting.copyWith(content: content);
-    // print("update content: ${_posting.content}");
   }
 
   void updateToMemberId(int id) {
     _posting = _posting.copyWith(toMemberId: id);
-    // print("update toMemberId: ${_posting.toMemberId}");
   }
 
   void updateImage(String image) {
     _posting = _posting.copyWith(image: image);
     notifyListeners();
-    // print("update image: ${_posting.image}");
   }
 
   void updateLinkList(String link) {
     if (!_posting.linkList.contains(link)) {
       _posting.linkList.add(link);
     }
-    // print("update linkList: ${_posting.linkList}");
   }
 
   bool canUpload() {
@@ -110,10 +113,9 @@ class CoordiProvider extends ChangeNotifier {
         "maxTemp": _posting.maxTemp,
         "style": _posting.style,
         "content": _posting.content,
-        "fromMemberId": _posting.fromMemberId,
-        "toMemberId": _posting.toMemberId,
-        "writerId": _posting.writerId,
-      });
+        "fromMemberId": myId,
+        "toMemberId": myId,
+        });
       final resp = await repositoryProvider.repository
           .uploadCoordi(postingSaveDTO: postingSaveDTO);
       if (!resp.isSuccess) {

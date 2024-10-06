@@ -171,6 +171,7 @@ class _AddClothesPostingScreenState extends State<AddClothesPostingScreen> {
 
   ListView addPhoto() {
     return ListView(
+      keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
       children: [
         ImagePickerWidget(
           onImageSelected: _onImageSelected,
@@ -193,6 +194,7 @@ class _AddClothesPostingScreenState extends State<AddClothesPostingScreen> {
 
   ListView addText() {
     return ListView(
+      keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
       children: [
         const Text(
           'Step 1. 옷의 이름은 무엇인가요?',
