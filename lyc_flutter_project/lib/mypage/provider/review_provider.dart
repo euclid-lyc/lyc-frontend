@@ -1,5 +1,5 @@
-import 'package:flutter/cupertino.dart';
-import 'package:lyc_flutter_project/Join/Provider/login_provider.dart';
+import 'package:flutter/material.dart';
+import 'package:lyc_flutter_project/auth/join/Provider/login_provider.dart';
 import 'package:lyc_flutter_project/common/model/api_response.dart';
 import 'package:lyc_flutter_project/common/model/paginate_query.dart';
 import 'package:lyc_flutter_project/mypage/model/mypage_posting_preview.dart';

@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:lyc_flutter_project/data/app_color.dart';
-import 'package:lyc_flutter_project/Join/Screens/login_screen.dart';
 import 'package:lyc_flutter_project/common/widget/normal_appbar.dart';
-import '../styles/app_text_style.dart';
+import 'package:lyc_flutter_project/data/app_color.dart';
 
-class FindPasswordScreen4 extends StatelessWidget {
-  const FindPasswordScreen4({super.key});
+import '../../../styles/app_text_style.dart';
+import 'login_screen.dart';
+
+class JoinMembershipScreen5 extends StatelessWidget {
+  const JoinMembershipScreen5({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.lightGrey,
-      appBar: const NormalAppbar(title: "비밀번호 찾기"),
+      appBar: const NormalAppbar(title: "회원가입"),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Expanded(
-            flex: 1,
-            child: Container(),
+            flex: 1, // 상단 여백을 비율로 설정
+            child: Container(), // 빈 컨테이너로 여백을 제공
           ),
           Center(
             child: Container(
@@ -37,7 +38,7 @@ class FindPasswordScreen4 extends StatelessWidget {
                     margin: EdgeInsets.fromLTRB(7, 0, 7, 43.5),
                     alignment: Alignment.topLeft,
                     child: Text(
-                      'Step 3. 비밀번호 재설정',
+                      'Step 3. 회원정보 입력',
                       style: app_text_style.littleTitle,
                     ),
                   ),
@@ -60,20 +61,20 @@ class FindPasswordScreen4 extends StatelessWidget {
                   Container(
                     margin: EdgeInsets.fromLTRB(4, 0, 0, 18.5),
                     child: Text(
-                      '비밀번호가 성공적으로 변경되었습니다.',
+                      '회원가입이 성공적으로 완료되었습니다.',
                       textAlign: TextAlign.center,
                       style: app_text_style.otherLoginTextStyle
                           .copyWith(color: Colors.black),
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(top: 30.5), // 위 여백 설정
+                    padding: EdgeInsets.only(top: 30.5),
                     child: TextButton(
                       onPressed: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) =>LoginScreen(),
+                            builder: (context) =>  LoginScreen(),
                           ),
                         );
                       },
@@ -101,8 +102,8 @@ class FindPasswordScreen4 extends StatelessWidget {
             ),
           ),
           Expanded(
-            flex: 1, // 하단 여백을 비율로 설정
-            child: Container(), // 빈 컨테이너로 여백을 제공
+            flex: 1,
+            child: Container(),
           ),
         ],
       ),

@@ -1,17 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:lyc_flutter_project/auth/find_pw/model/Info.dart';
+import 'package:lyc_flutter_project/auth/find_pw/provider/FindPwProvider.dart';
+import 'package:lyc_flutter_project/common/widget/normal_appbar.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/styles/app_text_style.dart';
-import '../common/widget/normal_appbar.dart';
-import 'find_id_screen_2.dart';
+import 'package:provider/provider.dart';
+import '../../../widget/Controller.dart';
+import 'find_password_screen_2.dart';
+class FindPasswordScreen1 extends StatelessWidget {
+  FindPasswordScreen1({super.key});
 
-class FindIdScreen1 extends StatelessWidget {
-  const FindIdScreen1({super.key});
+  final Controller _nameController = Controller();
+  final Controller _emailController = Controller();
+  final Controller _loginIdController = Controller();
 
   @override
   Widget build(BuildContext context) {
+
+    final findPwProvider = Provider.of<FindPwProvider>(context);
+
     return Scaffold(
       backgroundColor: AppColor.lightGrey,
-      appBar: const NormalAppbar(title: "아이디 찾기"),
+      appBar: const NormalAppbar(title: "비밀번호 찾기"),
       body: Center(
         child: SingleChildScrollView(
           child: Column(
@@ -42,32 +52,49 @@ class FindIdScreen1 extends StatelessWidget {
                         '이름을 입력해주세요',
                         app_text_style.labelTextStyle,
                         app_text_style.hint,
-                        false),
+                        _nameController.controller),
+                    buildInputField(
+                        '아이디',
+                        '아이디를 입력해주세요',
+                        app_text_style.labelTextStyle,
+                        app_text_style.hint,
+                        _loginIdController.controller),
                     buildInputField(
                         '가입한 이메일로 찾기',
                         '이메일을 입력해주세요',
                         app_text_style.labelTextStyle,
                         app_text_style.hint,
-                        true),
-                    buildInputField(
-                        '가입한 전화번호로 찾기',
-                        '전화번호를 입력해주세요',
-                        app_text_style.labelTextStyle,
-                        app_text_style.hint,
-                        true),
+                        _emailController.controller),
                     Padding(
                       padding: EdgeInsets.only(top: 30.5), // 위아래 여백 설정
                       child: TextButton(
-                        onPressed: () {
+                        onPressed: () async {
+                          final info = Info(
+                              name: _nameController.controller.text,
+                              loginId: _loginIdController.controller.text,
+                              email: _emailController.controller.text);
+                          try {
+                            await findPwProvider.getVerificationCode(
+                                info: info);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => FindPasswordScreen2(),
+                              ),
+                            );
+                          } catch (e) {
+                            // 에러 처리
+                            print('Error: $e');
+                          }
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const FindIdScreen2(),
+                              builder: (context) =>  FindPasswordScreen2(),
                             ),
                           );
                         },
                         style: TextButton.styleFrom(
-                          backgroundColor: AppColor.beige,
+                          backgroundColor: AppColor.brown,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
                           ),
@@ -146,54 +173,20 @@ class FindIdScreen1 extends StatelessWidget {
   }
 
   Widget buildInputField(String label, String hint, TextStyle labelTextStyle,
-      TextStyle hintTextStyle, bool showCheckbox) {
+      TextStyle hintTextStyle, TextEditingController controller) {
     return Container(
       margin: EdgeInsets.only(bottom: 8.5),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (showCheckbox)
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    // 버튼이 클릭되었을 때의 동작 구현
-                  },
-                  child: Container(
-                    margin: EdgeInsets.only(right: 7), // 오른쪽 여백 설정
-                    decoration: BoxDecoration(
-                      border: Border.all(color: AppColor.lightGrey),
-                      borderRadius: BorderRadius.circular(5),
-                      color: Colors.white,
-                    ),
-                    child: SizedBox(
-                      width: 17,
-                      height: 17,
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Container(
-                    margin: EdgeInsets.only(bottom: 4.5),
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      label,
-                      style: labelTextStyle,
-                    ),
-                  ),
-                ),
-              ],
+          Container(
+            margin: EdgeInsets.only(bottom: 4.5),
+            alignment: Alignment.topLeft,
+            child: Text(
+              label,
+              style: labelTextStyle,
             ),
-          if (!showCheckbox)
-            Container(
-              margin: EdgeInsets.only(bottom: 4.5),
-              alignment: Alignment.topLeft,
-              child: Text(
-                label,
-                style: labelTextStyle,
-              ),
-            ),
+          ),
           Container(
             width: double.infinity, // 너비를 입력 필드에 맞게 설정
             height: 40, // 높이 설정
@@ -204,15 +197,17 @@ class FindIdScreen1 extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.fromLTRB(18, 0, 18, 15), // 좌우 및 상하 여백 설정
               child: TextField(
-                textAlignVertical: TextAlignVertical.center, // 텍스트 수직 정렬
-                textAlign: TextAlign.start, // 텍스트 수평 정렬
-                decoration: InputDecoration(
-                  hintText: hint,
-                  hintStyle: hintTextStyle,
-                  border: InputBorder.none,
-                ),
-                keyboardType: TextInputType.text,
-              ),
+                  textAlignVertical: TextAlignVertical.center,
+                  // 텍스트 수직 정렬
+                  textAlign: TextAlign.start,
+                  // 텍스트 수평 정렬
+                  decoration: InputDecoration(
+                    hintText: hint,
+                    hintStyle: hintTextStyle,
+                    border: InputBorder.none,
+                  ),
+                  keyboardType: TextInputType.text,
+                  controller: controller),
             ),
           ),
         ],

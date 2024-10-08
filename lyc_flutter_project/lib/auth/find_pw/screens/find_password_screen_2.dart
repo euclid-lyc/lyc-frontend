@@ -1,34 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:lyc_flutter_project/styles/app_text_style.dart';
 import 'package:lyc_flutter_project/common/widget/normal_appbar.dart';
-import 'package:lyc_flutter_project/Join/Screens/join_membership_screen_2.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
+import 'package:lyc_flutter_project/widget/Controller.dart';
+import 'package:provider/provider.dart';
+import '../../../styles/app_text_style.dart';
+import '../provider/FindPwProvider.dart';
+import 'find_password_screen_1.dart';
+import 'find_password_screen_3.dart';
 
-import '../../widget/Controller.dart';
-import 'join_membership_screen_4.dart';
 
-class JoinMembershipScreen3 extends StatefulWidget {
-  const JoinMembershipScreen3({super.key});
+class FindPasswordScreen2 extends StatelessWidget {
+  FindPasswordScreen2({super.key});
 
-  @override
-  State<JoinMembershipScreen3> createState() {
-    return JoinMembershipScreenState3();
-  }
-}
-
-class JoinMembershipScreenState3 extends State<JoinMembershipScreen3> {
-  final Controller _controller1 = Controller();
-  final Controller _controller2 = Controller();
-
+  final Controller _vcController = Controller();
 
   @override
   Widget build(BuildContext context) {
+    final findPwProvider = Provider.of<FindPwProvider>(context);
+
     return Scaffold(
       backgroundColor: AppColor.lightGrey,
-      appBar: const NormalAppbar(
-        title: "회원가입",
-      ),
+      appBar: const NormalAppbar(title: "비밀번호 찾기"),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -38,14 +30,12 @@ class JoinMembershipScreenState3 extends State<JoinMembershipScreen3> {
           ),
           Center(
             child: Container(
-              constraints: BoxConstraints(maxWidth: 400),
-              // 최대 너비 설정
+              width: 296,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(20),
               ),
               padding: EdgeInsets.fromLTRB(22, 28.5, 22, 0),
-              height: 457,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -53,12 +43,13 @@ class JoinMembershipScreenState3 extends State<JoinMembershipScreen3> {
                     margin: EdgeInsets.fromLTRB(7, 0, 7, 43.5),
                     alignment: Alignment.topLeft,
                     child: Text(
-                      'Step 3. 회원정보 입력',
+                      'Step 2. 본인인증',
                       style: app_text_style.littleTitle,
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(bottom: 49),
+                    margin: EdgeInsets.only(bottom: 16.5),
+                    // 수정된 여백 설정
                     decoration: BoxDecoration(
                       color: Color(0xFFBBBBBB),
                       borderRadius: BorderRadius.circular(62),
@@ -66,58 +57,45 @@ class JoinMembershipScreenState3 extends State<JoinMembershipScreen3> {
                     width: 124,
                     height: 124,
                     child: Center(
-                      child: SvgPicture.network(
-                        'assets/icon_camera.svg',
-                        width: 33.3,
-                        height: 31.7,
+                      child: Icon(
+                        Icons.mail_outline_outlined, // 아이콘으로 변경
+                        size: 60, // 아이콘 크기 설정
+                        color: Colors.white, // 아이콘 색상 설정
                       ),
                     ),
                   ),
-                  SizedBox(height: 1),
-                  // '닉네임' TextField
+                  Container(
+                    margin: EdgeInsets.fromLTRB(4, 0, 0, 18.5),
+                    child: Text(
+                      '선택하신 인증수단으로 \n 인증번호가 전송되었습니다.',
+                      textAlign: TextAlign.center,
+                      style: app_text_style.otherLoginTextStyle
+                          .copyWith(color: Colors.black),
+                    ),
+                  ),
                   Container(
                     decoration: BoxDecoration(
                       color: AppColor.lightGrey,
                       borderRadius: BorderRadius.circular(20),
                     ),
                     width: 252,
-                    height: 37, // 너비를 252로 설정
+                    height: 37, // 높이 설정
                     child: TextField(
-                      controller: _controller1.controller,
                       decoration: InputDecoration(
-                        hintText: '닉네임',
+                        hintText: '인증번호를 입력해 주세요',
                         hintStyle: app_text_style.hint,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
                           borderSide: BorderSide.none,
                         ),
                         contentPadding:
-                            EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                        EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                       ),
+                      controller: _vcController.controller,
                     ),
                   ),
-                  SizedBox(height: 10),
-                  // '자유롭게 자신을 소개해주세요' TextField
-                  Container(
-                    decoration: BoxDecoration(
-                      color: AppColor.lightGrey,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    width: 252, // 너비를 252로 설정
-                    child: TextField(
-                      controller: _controller2.controller,
-                      maxLines: 3, // 여러 줄 입력 가능
-                      decoration: InputDecoration(
-                        hintText: '자유롭게 자신을 소개해 주세요',
-                        hintStyle: app_text_style.hint,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          borderSide: BorderSide.none,
-                        ),
-                        contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 15, vertical: 10), // 왼쪽 여백 조정
-                      ),
-                    ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 43),
                   ),
                 ],
               ),
@@ -140,7 +118,7 @@ class JoinMembershipScreenState3 extends State<JoinMembershipScreen3> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    const JoinMembershipScreen2()),
+                                    FindPasswordScreen1()),
                           );
                         },
                         style: TextButton.styleFrom(
@@ -160,12 +138,19 @@ class JoinMembershipScreenState3 extends State<JoinMembershipScreen3> {
                       ),
                       // '다음' 버튼
                       TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => JoinMembershipScreen4()),
-                          );
+                        onPressed: () async {
+                          try {
+                            await findPwProvider.sendVerification(
+                                verificationCode: _vcController.controller
+                                    .text);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => FindPasswordScreen3()),
+                            );
+                          } catch (e) {
+                            print('Error: $e');
+                          }
                         },
                         style: TextButton.styleFrom(
                           backgroundColor: AppColor.beige,
@@ -174,7 +159,7 @@ class JoinMembershipScreenState3 extends State<JoinMembershipScreen3> {
                             borderRadius: BorderRadius.circular(20),
                           ),
                         ),
-                        child: const Text(
+                        child: Text(
                           '다음',
                           style: app_text_style.button,
                           textAlign: TextAlign.center,
@@ -190,6 +175,4 @@ class JoinMembershipScreenState3 extends State<JoinMembershipScreen3> {
       ),
     );
   }
-
-
 }

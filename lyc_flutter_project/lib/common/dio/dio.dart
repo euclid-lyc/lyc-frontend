@@ -10,8 +10,8 @@ class DioProvider extends ChangeNotifier {
   DioProvider() {
     _dio.interceptors.add(CustomInterceptor(_storage, _dio));
     _dio.interceptors.add(LogInterceptor(responseBody: true));
-    _dio.options.connectTimeout = const Duration(seconds: 5);
-    _dio.options.receiveTimeout = const Duration(seconds: 3);
+    _dio.options.connectTimeout = const Duration(seconds: 10);
+    _dio.options.receiveTimeout = const Duration(seconds: 10);
   }
 
   Dio get dio => _dio;
@@ -26,26 +26,26 @@ class CustomInterceptor extends Interceptor {
   CustomInterceptor(this.storage, this.dio);
 
   @override
-  Future<void> onRequest(
-      RequestOptions options, RequestInterceptorHandler handler) async {
+  Future<void> onRequest(RequestOptions options,
+      RequestInterceptorHandler handler) async {
     super.onRequest(options, handler);
 
     print("[REQ] [${options.method}] ${options.uri}");
 
     if (options.headers['accessToken'] == 'true') {
       options.headers.remove('accessToken');
+      final accessToken = await storage.read(key: accessTokenKey);
+      options.headers.addAll({
+        "Authorization": "Bearer $accessToken",
+      });
     }
-
-    final accessToken = await storage.read(key: accessTokenKey);
-    options.headers.addAll({
-      "Authorization": "Bearer $accessToken",
-    });
   }
 
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
     print(
-        "[RES] [${response.requestOptions.method}] ${response.requestOptions.uri}");
+        "[RES] [${response.requestOptions.method}] ${response.requestOptions
+            .uri}");
 
     // // ApiResponse 객체 생성
     // final apiResponse = ApiResponse<Map<String, dynamic>>(
@@ -75,10 +75,8 @@ class CustomInterceptor extends Interceptor {
   }
 
   @override
-  Future<void> onError(
-      DioException err,
-      ErrorInterceptorHandler handler,
-      ) async {
+  Future<void> onError(DioException err,
+      ErrorInterceptorHandler handler,) async {
     print("[ERR] [${err.message}]");
 
     if (err.response?.statusCode == 401) {
@@ -98,32 +96,32 @@ class CustomInterceptor extends Interceptor {
             handler.next(e);
           }
         }
-      }
 
-      if (errorCode == 'AA4008') {
-        final newAccessToken = err.response?.headers.value('access-token');
-        final newRefreshToken = err.response?.headers.value('refresh-token');
+        if (errorCode == 'AA4008') {
+          final newAccessToken = err.response?.headers.value('access-token');
+          final newRefreshToken = err.response?.headers.value('refresh-token');
 
-        if (newAccessToken != null && newRefreshToken != null) {
-          await storage.write(key: accessTokenKey, value: newAccessToken);
-          await storage.write(key: refreshTokenKey, value: newRefreshToken);
+          if (newAccessToken != null && newRefreshToken != null) {
+            await storage.write(key: accessTokenKey, value: newAccessToken);
+            await storage.write(key: refreshTokenKey, value: newRefreshToken);
 
-          final options = err.requestOptions;
-          options.headers['Authorization'] = "Bearer $newAccessToken";
+            final options = err.requestOptions;
+            options.headers['Authorization'] = "Bearer $newAccessToken";
 
-          try {
-            final response = await dio.fetch(options);
-            handler.resolve(response);
-            return;
-          } on DioException catch (e) {
-            if (e.response?.statusCode == 401) {
-              // 로그아웃
+            try {
+              final response = await dio.fetch(options);
+              handler.resolve(response);
               return;
+            } on DioException catch (e) {
+              if (e.response?.statusCode == 401) {
+                // 로그아웃
+                return;
+              }
             }
           }
         }
       }
+      handler.next(err);
     }
-    handler.next(err);
   }
 }

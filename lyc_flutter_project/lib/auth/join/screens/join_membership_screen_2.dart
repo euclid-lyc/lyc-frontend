@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/common/widget/normal_appbar.dart';
-import 'package:lyc_flutter_project/Join/Screens/join_membership_screen_1.dart';
-import 'package:lyc_flutter_project/Join/Screens/join_membership_screen_3.dart';
-import '../../styles/app_text_style.dart';
-import '../../widget/Controller.dart';
+import 'package:lyc_flutter_project/data/app_color.dart';
+
+import '../../../styles/app_text_style.dart';
+import '../../../widget/Controller.dart';
+import 'join_membership_screen_1.dart';
+import 'join_membership_screen_3.dart';
+
 
 class JoinMembershipScreen2 extends StatefulWidget {
   const JoinMembershipScreen2({super.key});

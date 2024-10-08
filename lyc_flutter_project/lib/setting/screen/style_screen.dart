@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lyc_flutter_project/Join/Provider/login_provider.dart';
 import 'package:lyc_flutter_project/common/widget/custom_loading.dart';
 import 'package:lyc_flutter_project/common/widget/custom_number_picker.dart';
 import 'package:lyc_flutter_project/common/widget/two_buttons.dart';
@@ -11,6 +10,8 @@ import 'package:lyc_flutter_project/common/widget/default_padding.dart';
 import 'package:lyc_flutter_project/common/widget/normal_appbar.dart';
 import 'package:lyc_flutter_project/mypage/widget/select_buttons_in_posting.dart';
 import 'package:provider/provider.dart';
+
+import '../../auth/join/Provider/login_provider.dart';
 
 class StyleScreen extends StatefulWidget {
   const StyleScreen({super.key});

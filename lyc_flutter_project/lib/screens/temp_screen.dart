@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:lyc_flutter_project/Join/Screens/login_screen.dart';
 import 'package:lyc_flutter_project/common/widget/bottom_bar.dart';
+
+import '../auth/join/screens/login_screen.dart';
 
 class TempScreen extends StatelessWidget {
   const TempScreen({super.key});
