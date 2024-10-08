@@ -19,7 +19,7 @@ class FindIdProvider extends ChangeNotifier {
     dio = dioProvider.dio;
   }
 
-  bool get isLoading => _isLoading;
+  bool get isgiLoading => _isLoading;
   String? get errorMessage => _errorMessage;
 
   // 인증 코드 전송
