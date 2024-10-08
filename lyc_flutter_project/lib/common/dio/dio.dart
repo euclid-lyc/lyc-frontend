@@ -10,8 +10,8 @@ class DioProvider extends ChangeNotifier {
   DioProvider() {
     _dio.interceptors.add(CustomInterceptor(_storage, _dio));
     _dio.interceptors.add(LogInterceptor(responseBody: true));
-    _dio.options.connectTimeout = const Duration(seconds: 20);
-    _dio.options.receiveTimeout = const Duration(seconds: 20);
+    _dio.options.connectTimeout = const Duration(seconds: 10);
+    _dio.options.receiveTimeout = const Duration(seconds: 10);
   }
 
   Dio get dio => _dio;
