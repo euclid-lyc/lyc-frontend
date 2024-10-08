@@ -17,8 +17,7 @@ class TempBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<CoordiProvider>(
       builder: (context, provider, child) {
-        double rawValue = label == "최저기온" ? provider.minTemp : provider.maxTemp;
-        int value = rawValue.round();
+        int value = label == "최저기온" ? provider.minTemp : provider.maxTemp;
         return Expanded(
           child: GestureDetector(
             onTap: () => showDialog(

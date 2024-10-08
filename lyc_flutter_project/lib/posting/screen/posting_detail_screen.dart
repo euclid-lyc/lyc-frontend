@@ -140,7 +140,7 @@ class _PostingDetailScreenState extends State<PostingDetailScreen> {
                                   ),
                                   const Spacer(),
                                   Text(
-                                    '${value.posting.minTemp}°C ~ ${value.posting.maxTemp}°C',
+                                    '${value.posting.minTemp.round()}°C ~ ${value.posting.maxTemp.round()}°C',
                                     style: const TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.w600,
