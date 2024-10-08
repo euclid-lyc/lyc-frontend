@@ -125,9 +125,7 @@ class CoordiProvider extends ChangeNotifier {
       }
 
       final postingId = resp.result.postingId;
-      final linkDTO = jsonEncode({
-        "links": points.expand((map) => map.values).toList(),
-      });
+      final linkDTO = jsonEncode({"links": [["link"]]});
       final image = await MultipartFile.fromFile(_image!);
       final imageList = [image];
 
