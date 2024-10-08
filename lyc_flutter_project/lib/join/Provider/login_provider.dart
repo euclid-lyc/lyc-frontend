@@ -4,9 +4,9 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:lyc_flutter_project/Join/model/Credential.dart';
 import 'package:lyc_flutter_project/common/const/data.dart';
 import 'package:lyc_flutter_project/common/dio/dio.dart';
-import 'package:lyc_flutter_project/config/secret.dart';
 import 'package:lyc_flutter_project/mypage/model/profile.dart';
 import 'package:lyc_flutter_project/mypage/repository/mypage_repository.dart';
+import 'package:lyc_flutter_project/config/secret.dart';
 
 class LoginProvider extends ChangeNotifier {
   final DioProvider dioProvider;
@@ -21,6 +21,8 @@ class LoginProvider extends ChangeNotifier {
   Profile? _profile;
   bool _hasProfile = false;
 
+
+
   get profile => _profile;
 
   get hasProfile => _hasProfile;
@@ -31,10 +33,8 @@ class LoginProvider extends ChangeNotifier {
 
   int? get memberId => _memberId;
 
-  LoginProvider(
-    this.dioProvider,
-    this.mypageRepository,
-  ) {
+  LoginProvider(this.dioProvider,
+      this.mypageRepository,) {
     dio = dioProvider.dio;
     storage = dioProvider.storage;
     _loadMemberId();
@@ -78,7 +78,6 @@ class LoginProvider extends ChangeNotifier {
     _setLoading(true);
     try {
       final requestBody = Credential(loginId: id, loginPw: pw);
-
       final response = await dio.post(
         'http://$ip/lyc/auths/sign-in',
         data: requestBody,
@@ -172,7 +171,6 @@ class LoginProvider extends ChangeNotifier {
     final refreshToken = await storage.read(key: refreshTokenKey);
     final accessToken = await storage.read(key: accessTokenKey);
     final storedMemberId = await storage.read(key: memberIdKey);
-
     if (refreshToken != null && accessToken != null && storedMemberId != null) {
       _isLoggedIn = true;
       _memberId = int.parse(storedMemberId);
