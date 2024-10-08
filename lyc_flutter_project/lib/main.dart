@@ -14,7 +14,7 @@
 // import 'package:lyc_flutter_project/setting/repository/setting_repository.dart';
 // import 'package:provider/provider.dart';
 // import 'Join/screens/join_membership_screen_4.dart';
-// import 'findID/Provider/FindIdProvider.dart';
+// import 'findID/Provider/findIdProvider.dart';
 // import 'findID/Provider/SendEmailProvider.dart';
 //
 // void main() {
@@ -141,13 +141,12 @@ import 'package:lyc_flutter_project/posting/provider/posting_detail_provider.dar
 import 'package:lyc_flutter_project/posting/repository/clothes_repository.dart';
 import 'package:lyc_flutter_project/posting/repository/coordi_repository.dart';
 import 'package:lyc_flutter_project/routes/routes.dart';
-import 'package:lyc_flutter_project/setting/provider/setting_provider.dart';
 import 'package:lyc_flutter_project/setting/repository/setting_repository.dart';
 import 'package:provider/provider.dart';
 import 'Join/screens/join_membership_screen_4.dart';
-import 'findID/Provider/FindIdProvider.dart';
-import 'findID/Provider/SendEmailProvider.dart';
-import 'findID/Service/StorageService.dart';
+import 'find_id/Provider/findIdProvider.dart';
+import 'find_id/Provider/SendEmailProvider.dart';
+import 'find_id/Service/StorageService.dart';
 
 void main() {
   Provider.debugCheckInvalidValueType = null;
@@ -230,13 +229,6 @@ void main() {
               context,
               listen: false,
             ),
-            context.read<StorageService>(), // StorageService 전달
-          ),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => FindIdProvider(
-            context.read<DioProvider>(), // DioProvider 전달
-            context.read<SendEmailProvider>(), // SendEmailProvider 전달
             context.read<StorageService>(), // StorageService 전달
           ),
         ),

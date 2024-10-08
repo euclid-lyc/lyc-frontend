@@ -9,18 +9,18 @@ import 'SendEmailProvider.dart';
 class FindIdProvider extends ChangeNotifier {
   final DioProvider dioProvider;
   late final Dio dio;
-  final StorageService storageService; // StorageService를 주입받음
+  final StorageService storageService;
   final SendEmailProvider sendEmailProvider;
 
   bool _isLoading = false; // 로딩 상태
-  String? _errorMessage; // 오류 메시지
+  String? _errorMessage;
 
   FindIdProvider(this.dioProvider, this.sendEmailProvider, this.storageService) {
     dio = dioProvider.dio;
   }
 
-  bool get isLoading => _isLoading; // 로딩 상태 getter
-  String? get errorMessage => _errorMessage; // 오류 메시지 getter
+  bool get isLoading => _isLoading;
+  String? get errorMessage => _errorMessage;
 
   // 인증 코드 전송
   Future<void> sendVerification({
@@ -38,7 +38,7 @@ class FindIdProvider extends ChangeNotifier {
       final tempToken = await storageService.read('temp-token');
 
       if (tempToken == null) {
-        _errorMessage = '토큰이 없습니다.'; // 오류 메시지 설정
+        _errorMessage = '토큰이 없습니다.';
         print(_errorMessage);
         throw Exception(_errorMessage);
       }
@@ -65,9 +65,9 @@ class FindIdProvider extends ChangeNotifier {
       );
 
       if (response.statusCode == 200) {
-        // 인증 성공 처리
+
       final responseBody = response.data;
-      String loginId = responseBody["result"]["loginId"]; // 예시
+      String loginId = responseBody["result"]["loginId"];
       await storageService.write('loginId', loginId);
 
       } else {
@@ -86,7 +86,7 @@ class FindIdProvider extends ChangeNotifier {
       print(_errorMessage);
       throw Exception('API 요청 실패: ${e.toString()}');
     } finally {
-      _isLoading = false; // 로딩 종료
+      _isLoading = false;
       notifyListeners(); // UI 업데이트
     }
   }

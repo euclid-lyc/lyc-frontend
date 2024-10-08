@@ -4,7 +4,7 @@ import 'package:lyc_flutter_project/widget/normal_appbar.dart';
 import 'package:provider/provider.dart';
 import '../../styles/app_text_style.dart';
 import '../../widget/Controller.dart';
-import '../Provider/FindIdProvider.dart';
+import '../Provider/findIdProvider.dart';
 import '../Provider/SendEmailProvider.dart';
 import 'find_id_screen_1.dart';
 import 'find_id_screen_3.dart';

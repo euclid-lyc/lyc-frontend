@@ -8,6 +8,7 @@ import '../Provider/SendEmailProvider.dart';
 import 'find_id_screen_2.dart';
 import '../model/Info.dart';
 
+
 class FindIdScreen1 extends StatelessWidget {
   FindIdScreen1({super.key});
   final Controller _nameController = Controller();
