@@ -1,10 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import '../../common/const/data.dart';
-import '../../common/dio/dio.dart';
-import '../Service/StorageService.dart';
+import '../../../common/const/data.dart';
+import '../../../common/dio/dio.dart';
+import '../../service/StorageService.dart';
 import '../model/VerificationCode.dart';
 import 'SendEmailProvider.dart';
+import 'package:lyc_flutter_project/config/secret.dart';
 
 class FindIdProvider extends ChangeNotifier {
   final DioProvider dioProvider;
@@ -19,7 +20,7 @@ class FindIdProvider extends ChangeNotifier {
     dio = dioProvider.dio;
   }
 
-  bool get isgiLoading => _isLoading;
+  bool get isLoading => _isLoading;
   String? get errorMessage => _errorMessage;
 
   // 인증 코드 전송
@@ -35,7 +36,7 @@ class FindIdProvider extends ChangeNotifier {
 
     try {
 
-      final tempToken = await storageService.read('temp-token');
+      final tempToken = await storageService.read(tempTokenKey);
 
       if (tempToken == null) {
         _errorMessage = '토큰이 없습니다.';

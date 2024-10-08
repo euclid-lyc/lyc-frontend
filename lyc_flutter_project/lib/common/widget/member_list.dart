@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:lyc_flutter_project/Join/Provider/login_provider.dart';
 import 'package:lyc_flutter_project/common/widget/image_networking.dart';
 import 'package:lyc_flutter_project/mypage/screen/mypage_screen.dart';
 import 'package:provider/provider.dart';
+
+import '../../auth/join/Provider/login_provider.dart';
 
 class MemberList extends StatelessWidget {
   final int? memberId;

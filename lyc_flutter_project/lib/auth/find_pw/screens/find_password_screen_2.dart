@@ -1,15 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
+import 'package:lyc_flutter_project/widget/Controller.dart';
 import 'package:lyc_flutter_project/widget/normal_appbar.dart';
-import '../styles/app_text_style.dart';
+import 'package:provider/provider.dart';
+import '../../../styles/app_text_style.dart';
+import '../provider/FindPwProvider.dart';
 import 'find_password_screen_1.dart';
 import 'find_password_screen_3.dart';
 
+
 class FindPasswordScreen2 extends StatelessWidget {
-  const FindPasswordScreen2({super.key});
+  FindPasswordScreen2({super.key});
+
+  final Controller _vcController = Controller();
 
   @override
   Widget build(BuildContext context) {
+    final findPwProvider = Provider.of<FindPwProvider>(context);
+
     return Scaffold(
       backgroundColor: AppColor.lightGrey,
       appBar: const NormalAppbar(title: "비밀번호 찾기"),
@@ -81,8 +89,9 @@ class FindPasswordScreen2 extends StatelessWidget {
                           borderSide: BorderSide.none,
                         ),
                         contentPadding:
-                            EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                        EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                       ),
+                      controller: _vcController.controller,
                     ),
                   ),
                   Padding(
@@ -109,7 +118,7 @@ class FindPasswordScreen2 extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    const FindPasswordScreen1()),
+                                    FindPasswordScreen1()),
                           );
                         },
                         style: TextButton.styleFrom(
@@ -129,12 +138,19 @@ class FindPasswordScreen2 extends StatelessWidget {
                       ),
                       // '다음' 버튼
                       TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => FindPasswordScreen3()),
-                          );
+                        onPressed: () async {
+                          try {
+                            await findPwProvider.sendVerification(
+                                verificationCode: _vcController.controller
+                                    .text);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => FindPasswordScreen3()),
+                            );
+                          } catch (e) {
+                            print('Error: $e');
+                          }
                         },
                         style: TextButton.styleFrom(
                           backgroundColor: AppColor.beige,

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lyc_flutter_project/Join/Provider/login_provider.dart';
-import 'package:lyc_flutter_project/Join/Screens/login_screen.dart';
 import 'package:lyc_flutter_project/common/widget/custom_alert_dialog.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/setting/screen/block_mod_screen.dart';
@@ -14,6 +12,9 @@ import 'package:lyc_flutter_project/styles/default_padding.dart';
 import 'package:lyc_flutter_project/widget/normal_appbar.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 import 'package:provider/provider.dart';
+
+import '../../auth/join/Provider/login_provider.dart';
+import '../../auth/join/screens/login_screen.dart';
 
 class SettingScreen extends StatelessWidget {
   const SettingScreen({super.key});

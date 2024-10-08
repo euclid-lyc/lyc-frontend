@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lyc_flutter_project/Join/Provider/login_provider.dart';
 import 'package:lyc_flutter_project/common/widget/custom_loading.dart';
 import 'package:lyc_flutter_project/common/widget/custom_refresh_indicator.dart';
 import 'package:lyc_flutter_project/common/widget/switch_category_button.dart';
@@ -10,6 +9,8 @@ import 'package:lyc_flutter_project/mypage/widget/icons_in_profile_box.dart';
 import 'package:lyc_flutter_project/mypage/widget/profile_box.dart';
 import 'package:lyc_flutter_project/widget/bottom_buttons.dart';
 import 'package:provider/provider.dart';
+
+import '../../auth/join/Provider/login_provider.dart';
 
 class MypageScreen extends StatefulWidget {
   final int? memberId;

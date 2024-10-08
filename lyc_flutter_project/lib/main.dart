@@ -130,7 +130,7 @@
 //   }
 // }
 import 'package:flutter/material.dart';
-import 'package:lyc_flutter_project/Join/Provider/login_provider.dart';
+import 'package:lyc_flutter_project/auth/find_pw/provider/FindPwProvider.dart';
 import 'package:lyc_flutter_project/common/dio/dio.dart';
 import 'package:lyc_flutter_project/feed/provider/feed_provider.dart';
 import 'package:lyc_flutter_project/feed/repository/feed_repository.dart';
@@ -143,10 +143,13 @@ import 'package:lyc_flutter_project/posting/repository/coordi_repository.dart';
 import 'package:lyc_flutter_project/routes/routes.dart';
 import 'package:lyc_flutter_project/setting/repository/setting_repository.dart';
 import 'package:provider/provider.dart';
-import 'Join/screens/join_membership_screen_4.dart';
-import 'find_id/Provider/findIdProvider.dart';
-import 'find_id/Provider/SendEmailProvider.dart';
-import 'find_id/Service/StorageService.dart';
+
+import 'auth/find_id/Provider/SendEmailProvider.dart';
+import 'auth/find_id/Provider/findIdProvider.dart';
+import 'auth/join/Provider/login_provider.dart';
+import 'auth/join/screens/join_membership_screen_4.dart';
+import 'auth/service/StorageService.dart';
+
 
 Future<void> main() async {
   Provider.debugCheckInvalidValueType = null;
@@ -239,6 +242,16 @@ Future<void> main() async {
             context.read<StorageService>(), // StorageService 전달
           ),
         ),
+        ChangeNotifierProvider(
+          create: (context) => FindPwProvider(
+            Provider.of<DioProvider>(
+              context,
+              listen: false,
+            ),
+            context.read<StorageService>(), // StorageService 전달
+          ),
+        ),
+
       ],
       child: const MyApp(),
     ),
