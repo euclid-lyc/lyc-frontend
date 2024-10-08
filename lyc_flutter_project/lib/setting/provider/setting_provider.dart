@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -68,13 +71,20 @@ class SettingProvider extends ChangeNotifier {
   }
 
   bool canSaveMemberInfo() {
-    return true;
+    return _memberModel != null;
   }
 
   Future<void> saveMemberInfo() async {
     if (canSaveMemberInfo()) {
-      await repositoryProvider.repository.updateMemberInfo(
-        memberModel: _memberModel!,
+      final infoDTO = jsonEncode({
+        "nickname": _memberModel!.nickname,
+        "introduction": _memberModel!.introduction,
+        "loginId": _memberModel!.loginId,
+      });
+      final image = File(_memberModel!.profileImage);
+      repositoryProvider.repository.updateMemberInfo(
+        infoDTO: infoDTO,
+        image: image,
       );
     }
   }

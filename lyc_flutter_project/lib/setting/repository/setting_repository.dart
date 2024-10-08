@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart' hide Headers;
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/common/const/data.dart';
@@ -42,8 +44,10 @@ abstract class SettingRepository {
 
   @PATCH("/members/info")
   @Headers({"accessToken": "true"})
+  @MultiPart()
   Future<MemberModel> updateMemberInfo({
-    @Body() required MemberModel memberModel,
+    @Part() required infoDTO,
+    @Part() required File image,
   });
 
   @PATCH("/members/pw-info")
