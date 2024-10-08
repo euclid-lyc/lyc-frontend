@@ -1,26 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:lyc_flutter_project/auth/find_pw/model/Info.dart';
+import 'package:lyc_flutter_project/auth/find_pw/provider/FindPwProvider.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/styles/app_text_style.dart';
 import 'package:provider/provider.dart';
-import '../../widget/Controller.dart';
-import '../../widget/normal_appbar.dart';
-import '../Provider/SendEmailProvider.dart';
-import 'find_id_screen_2.dart';
-import '../model/Info.dart';
+import '../../../widget/Controller.dart';
+import '../../../widget/normal_appbar.dart';
+import 'find_password_screen_2.dart';
+class FindPasswordScreen1 extends StatelessWidget {
+  FindPasswordScreen1({super.key});
 
-
-class FindIdScreen1 extends StatelessWidget {
-  FindIdScreen1({super.key});
   final Controller _nameController = Controller();
   final Controller _emailController = Controller();
-
+  final Controller _loginIdController = Controller();
 
   @override
   Widget build(BuildContext context) {
-    final sendEmailProvider = Provider.of<SendEmailProvider>(context);
+
+    final findPwProvider = Provider.of<FindPwProvider>(context);
+
     return Scaffold(
       backgroundColor: AppColor.lightGrey,
-      appBar: const NormalAppbar(title: "아이디 찾기"),
+      appBar: const NormalAppbar(title: "비밀번호 찾기"),
       body: Center(
         child: SingleChildScrollView(
           child: Column(
@@ -51,36 +52,49 @@ class FindIdScreen1 extends StatelessWidget {
                         '이름을 입력해주세요',
                         app_text_style.labelTextStyle,
                         app_text_style.hint,
-                       _nameController.controller),
+                        _nameController.controller),
+                    buildInputField(
+                        '아이디',
+                        '아이디를 입력해주세요',
+                        app_text_style.labelTextStyle,
+                        app_text_style.hint,
+                        _loginIdController.controller),
                     buildInputField(
                         '가입한 이메일로 찾기',
                         '이메일을 입력해주세요',
                         app_text_style.labelTextStyle,
                         app_text_style.hint,
-                       _emailController.controller),
+                        _emailController.controller),
                     Padding(
                       padding: EdgeInsets.only(top: 30.5), // 위아래 여백 설정
                       child: TextButton(
-                        onPressed: ()async {
+                        onPressed: () async {
                           final info = Info(
-                            name: _nameController.controller.text,
-                            email: _emailController.controller.text,
-                          );
+                              name: _nameController.controller.text,
+                              loginId: _loginIdController.controller.text,
+                              email: _emailController.controller.text);
                           try {
-                            await sendEmailProvider.getVerificationCode(info: info);
+                            await findPwProvider.getVerificationCode(
+                                info: info);
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) =>  FindIdScreen2(),
+                                builder: (context) => FindPasswordScreen2(),
                               ),
                             );
                           } catch (e) {
                             // 에러 처리
                             print('Error: $e');
                           }
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>  FindPasswordScreen2(),
+                            ),
+                          );
                         },
                         style: TextButton.styleFrom(
-                          backgroundColor: AppColor.beige,
+                          backgroundColor: AppColor.brown,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
                           ),
@@ -164,16 +178,15 @@ class FindIdScreen1 extends StatelessWidget {
       margin: EdgeInsets.only(bottom: 8.5),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-            Container(
-              margin: EdgeInsets.only(bottom: 4.5),
-              alignment: Alignment.topLeft,
-              child: Text(
-                label,
-                style: labelTextStyle,
-              ),
+          Container(
+            margin: EdgeInsets.only(bottom: 4.5),
+            alignment: Alignment.topLeft,
+            child: Text(
+              label,
+              style: labelTextStyle,
             ),
+          ),
           Container(
             width: double.infinity, // 너비를 입력 필드에 맞게 설정
             height: 40, // 높이 설정
@@ -182,18 +195,19 @@ class FindIdScreen1 extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
             ),
             child: Padding(
-               padding: EdgeInsets.fromLTRB(18, 12, 18, 12), // 좌우 및 상하 여백 설정
+              padding: EdgeInsets.fromLTRB(18, 0, 18, 15), // 좌우 및 상하 여백 설정
               child: TextField(
-                controller: controller,
-                textAlignVertical: TextAlignVertical.center, // 텍스트 수직 정렬
-                textAlign: TextAlign.start, // 텍스트 수평 정렬
-                decoration: InputDecoration(
-                  hintText: hint,
-                  hintStyle: hintTextStyle,
-                  border: InputBorder.none,
-                ),
-                keyboardType: TextInputType.text,
-              ),
+                  textAlignVertical: TextAlignVertical.center,
+                  // 텍스트 수직 정렬
+                  textAlign: TextAlign.start,
+                  // 텍스트 수평 정렬
+                  decoration: InputDecoration(
+                    hintText: hint,
+                    hintStyle: hintTextStyle,
+                    border: InputBorder.none,
+                  ),
+                  keyboardType: TextInputType.text,
+                  controller: controller),
             ),
           ),
         ],

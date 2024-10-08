@@ -1,17 +1,19 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:lyc_flutter_project/common/dio/dio.dart';
-import '../../common/const/data.dart';
-import '../Service/StorageService.dart';
+import '../../../common/const/data.dart';
+import '../../service/StorageService.dart';
 import '../model/Info.dart';
 import 'package:lyc_flutter_project/config/secret.dart';
+
 class SendEmailProvider extends ChangeNotifier {
   final DioProvider dioProvider;
   late final Dio dio;
- final StorageService storageService;
+  final StorageService storageService;
+  final storage = DioProvider().storage;
   Info? _info;
 
-  SendEmailProvider(this.dioProvider,this.storageService) {
+  SendEmailProvider(this.dioProvider, this.storageService) {
     dio = dioProvider.dio;
   }
 
@@ -24,19 +26,21 @@ class SendEmailProvider extends ChangeNotifier {
     _info = info;
 
     try {
+
       final requestBody = info.toJson();
 
       final response = await dio.post(url, data: requestBody);
 
       if (response.statusCode == 200) {
         final headers = response.headers;
-        tempTokenKey = headers.value("temp-token") ?? '';
-
-        await storageService.write('temp-token', tempTokenKey); // StorageService 사용
+        final tempToken = headers.value(tempTokenKey) ?? '';
+        await storageService.write(
+            tempTokenKey, tempToken);
 
 
       } else {
-        throw Exception('Verification code request failed: ${response.statusCode}');
+        throw Exception(
+            'Verification code request failed: ${response.statusCode}');
       }
     } on DioException catch (e) {
       print('DioException: ${e.message}');

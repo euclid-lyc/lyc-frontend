@@ -1,15 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
-import 'package:lyc_flutter_project/screens/find_password_screen_2.dart';
 import 'package:lyc_flutter_project/styles/app_text_style.dart';
-import '../widget/normal_appbar.dart';
+import 'package:provider/provider.dart';
+import '../../../common/dio/dio.dart';
+import '../../../widget/Controller.dart';
+import '../../../widget/normal_appbar.dart';
+import '../provider/FindPwProvider.dart';
+import 'find_password_screen_2.dart';
 import 'find_password_screen_4.dart';
 
 class FindPasswordScreen3 extends StatelessWidget {
-  const FindPasswordScreen3({super.key});
+  FindPasswordScreen3({super.key});
+
+  final Controller _pwController = Controller();
+  final Controller _pwCheckController = Controller();
 
   @override
   Widget build(BuildContext context) {
+    final findPwProvider = Provider.of<FindPwProvider>(context);
+
     return Scaffold(
       backgroundColor: AppColor.lightGrey,
       appBar: const NormalAppbar(title: "비밀번호 찾기"),
@@ -50,13 +59,14 @@ class FindPasswordScreen3 extends StatelessWidget {
                       '비밀번호를 입력해 주세요',
                       app_text_style.labelTextStyle,
                       app_text_style.hint,
+                      _pwController.controller,
                     ),
                     buildInputField(
-                      '비밀번호 확인',
-                      '비밀번호를 다시 입력해주세요',
-                      app_text_style.labelTextStyle,
-                      app_text_style.hint,
-                    ),
+                        '비밀번호 확인',
+                        '비밀번호를 다시 입력해주세요',
+                        app_text_style.labelTextStyle,
+                        app_text_style.hint,
+                        _pwCheckController.controller),
                   ],
                 ),
               ),
@@ -73,7 +83,7 @@ class FindPasswordScreen3 extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const FindPasswordScreen2(),
+                              builder: (context) => FindPasswordScreen2(),
                             ),
                           );
                         },
@@ -94,7 +104,18 @@ class FindPasswordScreen3 extends StatelessWidget {
                       ),
                       // '다음' 버튼
                       TextButton(
-                        onPressed: () {
+                        onPressed: () async {
+                          String? loginId =
+                              await DioProvider().storage.read(key: 'loginId');
+                          String? verificationCode = await DioProvider()
+                              .storage
+                              .read(key: 'verificationCode');
+                          await findPwProvider.updatePw(
+                              loginId: loginId ?? '',
+                              password: _pwController.controller.text,
+                              passwordConfirmation:
+                                  _pwCheckController.controller.text,
+                              verificationCode: verificationCode ?? '');
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -127,7 +148,7 @@ class FindPasswordScreen3 extends StatelessWidget {
   }
 
   Widget buildInputField(String label, String hint, TextStyle labelTextStyle,
-      TextStyle hintTextStyle) {
+      TextStyle hintTextStyle, TextEditingController controller) {
     return Container(
       margin: const EdgeInsets.only(bottom: 8.5),
       child: Column(
@@ -162,7 +183,8 @@ class FindPasswordScreen3 extends StatelessWidget {
                   border: InputBorder.none,
                 ),
                 keyboardType: TextInputType.text,
-                obscureText: true, // 비밀번호 입력 시 사용
+                obscureText: true,
+                controller: controller, // 비밀번호 입력 시 사용
               ),
             ),
           ),

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
-import 'package:lyc_flutter_project/screens/find_password_screen_1.dart';
-import 'package:lyc_flutter_project/Join/Screens/login_screen.dart';
 import 'package:lyc_flutter_project/widget/normal_appbar.dart';
-import '../../styles/app_text_style.dart';
+
+import '../../../styles/app_text_style.dart';
+import '../../find_pw/screens/find_password_screen_1.dart';
+import '../../join/screens/login_screen.dart';
+
 
 class FindIdScreen3 extends StatelessWidget {
   final String loginId;
