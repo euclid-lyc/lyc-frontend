@@ -32,7 +32,7 @@ class CoordiProvider extends ChangeNotifier {
 
   get maxTemp => _maxTemp;
 
-  get style => _style;
+  List<String> get style => _style;
 
   get image => _image;
 
@@ -60,6 +60,7 @@ class CoordiProvider extends ChangeNotifier {
       _style.clear();
       _style.add(style);
     }
+    notifyListeners();
   }
 
   void updateContent(String content) {
