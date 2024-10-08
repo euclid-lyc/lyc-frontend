@@ -4,6 +4,7 @@ import 'package:lyc_flutter_project/common/const/data.dart';
 import 'package:lyc_flutter_project/common/model/api_response.dart';
 import 'package:lyc_flutter_project/common/model/paginate_query.dart';
 import 'package:lyc_flutter_project/mypage/model/follow_model.dart';
+import 'package:lyc_flutter_project/mypage/model/possible_reviews.dart';
 import 'package:lyc_flutter_project/mypage/model/profile.dart';
 import 'package:lyc_flutter_project/mypage/model/result.dart';
 import 'package:lyc_flutter_project/posting/model/coordi_posting.dart';
@@ -149,5 +150,20 @@ abstract class MypageRepository {
   @Headers({"accessToken": "true"})
   Future<ApiResponse<FollowActingResult>> unfollowUser({
     @Path() required int memberId,
+  });
+
+  @GET("/members/{memberId}/reviews")
+  @Headers({"accessToken": "true"})
+  Future<ApiResponse<CoordieResult>> getReviewList({
+    @Path() required int memberId,
+    @Queries() required PaginateQuery paginateQuery,
+  });
+
+  @GET("/reviews/directors")
+  @Headers({"accessToken": "true"})
+  Future<ApiResponse<PossibleReviewList>> getPossibleReviewList({
+    @Query("pageSize") required int pageSize,
+    @Query("cursorDateTime") String? cursorDateTime,
+    @Query("cursorId") int? cursorId,
   });
 }

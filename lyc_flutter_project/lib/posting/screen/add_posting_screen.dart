@@ -4,10 +4,10 @@ import 'package:lyc_flutter_project/common/widget/two_buttons.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/posting/provider/coordi_provider.dart';
 import 'package:lyc_flutter_project/posting/screen/add_posting_setting_screen.dart';
-import 'package:lyc_flutter_project/styles/default_padding.dart';
-import 'package:lyc_flutter_project/widget/image_picker_widget.dart';
-import 'package:lyc_flutter_project/widget/normal_appbar.dart';
-import 'package:lyc_flutter_project/widget/posting_content_text_field.dart';
+import 'package:lyc_flutter_project/common/widget/default_padding.dart';
+import 'package:lyc_flutter_project/common/widget/image_picker_widget.dart';
+import 'package:lyc_flutter_project/common/widget/normal_appbar.dart';
+import 'package:lyc_flutter_project/posting/widget/posting_content_text_field.dart';
 import 'package:provider/provider.dart';
 
 /// 다목적 스크린
@@ -115,8 +115,17 @@ class _AddPostingScreenState extends State<AddPostingScreen> {
               },
               scdLabel: "등록",
               scdOnPressed: () async {
-                await widget.coordiProvider.upload();
-                Navigator.of(context).pop();
+                final msg = widget.coordiProvider.checkPosting();
+                if (msg == null) {
+                  await widget.coordiProvider.upload();
+                  Navigator.of(context).pop();
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(msg),
+                    ),
+                  );
+                }
               },
             ),
           ],

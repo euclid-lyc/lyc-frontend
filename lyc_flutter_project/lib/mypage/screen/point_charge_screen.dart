@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/mypage/widget/point_input_field.dart';
 import 'package:lyc_flutter_project/mypage/widget/point_pay.dart';
-import 'package:lyc_flutter_project/widget/normal_appbar.dart';
+import 'package:lyc_flutter_project/common/widget/normal_appbar.dart';
 import 'package:lyc_flutter_project/mypage/widget/point_custom_container.dart';
 import 'package:lyc_flutter_project/mypage/widget/point_sub_title.dart';
 

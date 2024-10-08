@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/auth/find_pw/model/Info.dart';
 import 'package:lyc_flutter_project/auth/find_pw/provider/FindPwProvider.dart';
+import 'package:lyc_flutter_project/common/widget/normal_appbar.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/styles/app_text_style.dart';
 import 'package:provider/provider.dart';
 import '../../../widget/Controller.dart';
-import '../../../widget/normal_appbar.dart';
 import 'find_password_screen_2.dart';
 class FindPasswordScreen1 extends StatelessWidget {
   FindPasswordScreen1({super.key});

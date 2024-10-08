@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/common/const/data.dart';
 import 'package:lyc_flutter_project/common/model/api_response.dart';
 import 'package:lyc_flutter_project/posting/model/coordi_posting.dart';
-import 'package:retrofit/http.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'coordi_repository.g.dart';
@@ -50,4 +49,5 @@ abstract class CoordiRepository {
   Future<ApiResponse<bool>> getSaveStatus({
     @Path() required postingId,
   });
+
 }

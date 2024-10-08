@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:lyc_flutter_project/common/widget/normal_appbar.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/styles/app_text_style.dart';
 import 'package:provider/provider.dart';
 import '../../../common/dio/dio.dart';
 import '../../../widget/Controller.dart';
-import '../../../widget/normal_appbar.dart';
 import '../provider/FindPwProvider.dart';
 import 'find_password_screen_2.dart';
 import 'find_password_screen_4.dart';

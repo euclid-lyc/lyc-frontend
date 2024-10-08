@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:lyc_flutter_project/common/widget/normal_appbar.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:provider/provider.dart';
 import '../../../data/style_list.dart';
 import '../../../styles/app_text_style.dart';
 import '../../../widget/Controller.dart';
-import '../../../widget/normal_appbar.dart';
 import 'join_membership_screen_5.dart';
 
 

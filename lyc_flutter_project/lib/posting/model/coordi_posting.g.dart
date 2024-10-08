@@ -8,8 +8,8 @@ part of 'coordi_posting.dart';
 
 CoordiPosting _$CoordiPostingFromJson(Map<String, dynamic> json) =>
     CoordiPosting(
-      minTemp: (json['minTemp'] as num?)?.toInt(),
-      maxTemp: (json['maxTemp'] as num?)?.toInt(),
+      minTemp: (json['minTemp'] as num?)?.toDouble(),
+      maxTemp: (json['maxTemp'] as num?)?.toDouble(),
       style: json['style'] as String?,
       content: json['content'] as String?,
       fromMemberId: (json['fromMemberId'] as num?)?.toInt(),
@@ -40,8 +40,8 @@ CoordiPostingResult _$CoordiPostingResultFromJson(Map<String, dynamic> json) =>
       nickname: json['nickname'] as String,
       loginId: json['loginId'] as String,
       postingId: (json['postingId'] as num).toInt(),
-      minTemp: (json['minTemp'] as num).toInt(),
-      maxTemp: (json['maxTemp'] as num).toInt(),
+      minTemp: (json['minTemp'] as num).toDouble(),
+      maxTemp: (json['maxTemp'] as num).toDouble(),
       content: json['content'] as String,
       imageInfo: (json['imageInfo'] as List<dynamic>)
           .map((e) => ImageInfo.fromJson(e as Map<String, dynamic>))

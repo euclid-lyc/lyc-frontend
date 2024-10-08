@@ -6,9 +6,9 @@ import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/data/style_list.dart';
 import 'package:lyc_flutter_project/setting/provider/setting_provider.dart';
 import 'package:lyc_flutter_project/setting/widget/custom_text_form_field.dart';
-import 'package:lyc_flutter_project/styles/default_padding.dart';
-import 'package:lyc_flutter_project/widget/normal_appbar.dart';
-import 'package:lyc_flutter_project/widget/select_buttons_in_posting.dart';
+import 'package:lyc_flutter_project/common/widget/default_padding.dart';
+import 'package:lyc_flutter_project/common/widget/normal_appbar.dart';
+import 'package:lyc_flutter_project/mypage/widget/select_buttons_in_posting.dart';
 import 'package:provider/provider.dart';
 
 import '../../auth/join/Provider/login_provider.dart';

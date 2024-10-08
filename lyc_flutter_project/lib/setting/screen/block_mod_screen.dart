@@ -6,8 +6,8 @@ import 'package:lyc_flutter_project/common/widget/right_button_in_list.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/setting/model/block_member.dart';
 import 'package:lyc_flutter_project/setting/provider/setting_provider.dart';
-import 'package:lyc_flutter_project/styles/default_padding.dart';
-import 'package:lyc_flutter_project/widget/normal_appbar.dart';
+import 'package:lyc_flutter_project/common/widget/default_padding.dart';
+import 'package:lyc_flutter_project/common/widget/normal_appbar.dart';
 import 'package:provider/provider.dart';
 
 class BlockModScreen extends StatefulWidget {

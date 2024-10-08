@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:lyc_flutter_project/auth/join/Provider/login_provider.dart';
 import 'package:lyc_flutter_project/common/style/custom_grid_delegate.dart';
 import 'package:lyc_flutter_project/common/widget/custom_loading.dart';
 import 'package:lyc_flutter_project/common/widget/image_networking.dart';
 import 'package:lyc_flutter_project/mypage/model/mypage_posting_preview.dart';
 import 'package:lyc_flutter_project/mypage/provider/mypage_provider.dart';
+import 'package:lyc_flutter_project/mypage/provider/review_provider.dart';
 import 'package:lyc_flutter_project/mypage/screen/review_list_screen.dart';
 import 'package:lyc_flutter_project/posting/provider/coordi_provider.dart';
 import 'package:lyc_flutter_project/posting/repository/coordi_repository.dart';
@@ -20,13 +22,15 @@ import 'package:provider/provider.dart';
 class MyCoordiGridView extends StatefulWidget {
   final List<CoordiPostingPreview> postings;
   final int category;
-  final MypageProvider provider;
+  final MypageProvider? provider;
+  final ReviewProvider? reviewProvider;
 
   const MyCoordiGridView({
     super.key,
     required this.postings,
     required this.category,
-    required this.provider,
+    this.provider,
+    this.reviewProvider,
   });
 
   @override
@@ -42,10 +46,39 @@ class _MyCoordiGridViewState extends State<MyCoordiGridView> {
     controller.addListener(listener);
   }
 
+  bool getLoading() {
+    if (widget.category == 0 || widget.category == 1) {
+      return widget.provider!.getLoading();
+    } else if (widget.category == 3) {
+      return widget.reviewProvider!.loading;
+    } else {
+      Exception("잘못된 카테고리");
+      return false;
+    }
+  }
+
+  void refresh() {
+    if (widget.category == 0 || widget.category == 1) {
+      widget.provider!.refresh();
+    } else if (widget.category == 3) {
+      widget.reviewProvider!.refreshReviews();
+    } else {
+      Exception("잘못된 카테고리");
+      return;
+    }
+  }
+
   void listener() {
     if (controller.offset > controller.position.maxScrollExtent - 300) {
-      if (!widget.provider.getLoading() && widget.provider.getHasMore()) {
-        widget.provider.getList();
+      if (widget.category == 0 || widget.category == 1) {
+        if (!widget.provider!.getLoading() && widget.provider!.getHasMore()) {
+          widget.provider!.getList();
+        }
+      } else if (widget.category == 3) {
+        widget.reviewProvider!.getReviews();
+      } else {
+        Exception("잘못된 카테고리");
+        return;
       }
     }
   }
@@ -70,6 +103,7 @@ class _MyCoordiGridViewState extends State<MyCoordiGridView> {
               if (widget.category == 0) {
                 final coordiProvider = CoordiProvider(
                   repositoryProvider: context.read<CoordiRepositoryProvider>(),
+                  loginProvider: context.read<LoginProvider>(),
                 );
                 // 나의코디->코디 추가
                 pushWithoutNavBar(
@@ -87,7 +121,7 @@ class _MyCoordiGridViewState extends State<MyCoordiGridView> {
                 pushWithoutNavBar(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => ReviewListScreen(),
+                    builder: (context) => const ReviewListScreen(),
                   ),
                 );
               }
@@ -109,7 +143,7 @@ class _MyCoordiGridViewState extends State<MyCoordiGridView> {
             ),
           );
         } else if (index == widget.postings.length + 1) {
-          return widget.provider.getLoading()
+          return getLoading()
               ? const Center(
                   child: CustomLoading(),
                 )
@@ -128,7 +162,7 @@ class _MyCoordiGridViewState extends State<MyCoordiGridView> {
                 ),
               );
               if (delete == true) {
-                widget.provider.refresh();
+                refresh();
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
                     content: Text(

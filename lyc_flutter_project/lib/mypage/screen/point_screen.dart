@@ -5,9 +5,9 @@ import 'package:lyc_flutter_project/mypage/screen/point_withdrawal_screen.dart';
 import 'package:lyc_flutter_project/mypage/widget/point_custom_button.dart';
 import 'package:lyc_flutter_project/mypage/widget/point_custom_container.dart';
 import 'package:lyc_flutter_project/mypage/widget/point_log.dart';
-import 'package:lyc_flutter_project/widget/normal_appbar.dart';
+import 'package:lyc_flutter_project/common/widget/normal_appbar.dart';
 import 'package:lyc_flutter_project/mypage/widget/point_sub_title.dart';
-import 'package:lyc_flutter_project/widget/point_title.dart';
+import 'package:lyc_flutter_project/mypage/widget/point_title.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 
 class PointScreen extends StatelessWidget {

@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:lyc_flutter_project/common/style/custom_grid_delegate.dart';
+import 'package:lyc_flutter_project/common/widget/custom_loading.dart';
 import 'package:lyc_flutter_project/common/widget/home_appbar.dart';
-import 'package:lyc_flutter_project/common/widget/horizontal_posting_list.dart';
+import 'package:lyc_flutter_project/common/widget/preview_posting_card.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/director/widget/custom_search_bar.dart';
+import 'package:lyc_flutter_project/feed/model/weather_preview.dart';
 import 'package:lyc_flutter_project/feed/provider/feed_provider.dart';
 import 'package:lyc_flutter_project/feed/widget/height_box.dart';
 import 'package:lyc_flutter_project/feed/widget/title_box.dart';
 import 'package:lyc_flutter_project/feed/widget/today_temp.dart';
-import 'package:lyc_flutter_project/styles/default_padding.dart';
+import 'package:lyc_flutter_project/common/widget/default_padding.dart';
 import 'package:provider/provider.dart';
 
 class FeedScreen extends StatefulWidget {
@@ -19,6 +20,12 @@ class FeedScreen extends StatefulWidget {
 }
 
 class _FeedScreenState extends State<FeedScreen> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<FeedProvider>().initFeedScreen();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,60 +39,71 @@ class _FeedScreenState extends State<FeedScreen> {
               slivers: [
                 SliverToBoxAdapter(
                   child: CustomSearchBar(
-                    onChanged: (value) => setState(() {}),
+                    onChanged: (value) => {},
                   ),
                 ),
                 const HeightBox(height: 24.0),
-                // SliverToBoxAdapter(
-                //   child: ElevatedButton(
-                //     onPressed: () => value.getLocation,
-                //     child: const Text("위치정보 테스트"),
-                //   ),
-                // ),
                 TitleBox(
                   title: "날씨 기반 추천",
                   detail: "오늘의 날씨에 맞는 코디를 추천드려요.",
-                  right: value.needTemp
-                      ? FutureBuilder(
-                          future: value.getTemp(),
-                          builder: (context, snapshot) {
-                            return const SizedBox();
-                          })
+                  right: !value.initializeTemp
+                      ? const SizedBox.shrink()
                       : TodayTemp(
                           minTemp: value.minTemp!,
                           maxTemp: value.maxTemp!,
                         ),
                 ),
                 const HeightBox(),
-                const SliverToBoxAdapter(child: HorizontalPostingList()),
+                SliverToBoxAdapter(
+                  child: SizedBox(
+                    height: 150.0,
+                    child: !value.initializeWeatherPreview
+                        ? const Center(
+                            child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              CustomLoading(),
+                              Text("날씨 기반 추천 게시글을 불러오고 있어요"),
+                            ],
+                          ))
+                        : value.weatherPreviewList.isEmpty
+                            ? const Center(child: Text("불러올 게시글이 없습니다"))
+                            : ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: value.weatherPreviewList.length,
+                                itemBuilder: (context, index) {
+                                  WeatherPreview preview =
+                                      value.weatherPreviewList[index];
+                                  return PreviewPostingCard(
+                                    postingId: preview.postingId,
+                                    image: preview.image,
+                                  );
+                                },
+                              ),
+                  ),
+                ),
                 const HeightBox(height: 24.0),
                 const TitleBox(
                   title: "피드 맞춤 추천",
                   detail: "사용자 취향에 맞는 코디를 추천해드려요.",
                 ),
                 const HeightBox(),
-                renderPostings(),
+                // SliverGrid.builder(
+                //   gridDelegate: customGridDelegate(),
+                //   itemCount: value.forMemberPreviewList.length,
+                //   itemBuilder: (context, index) {
+                //     ForMemberPreview preview =
+                //         value.forMemberPreviewList[index];
+                //     return PreviewPostingCard(
+                //       postingId: preview.postingId,
+                //       image: preview.image,
+                //     );
+                //   },
+                // )
               ],
             ),
           );
         },
-      ),
-    );
-  }
-
-  SliverGrid renderPostings() {
-    return SliverGrid(
-      gridDelegate: customGridDelegate(),
-      delegate: SliverChildBuilderDelegate(
-        (context, index) {
-          return Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(20.0),
-            ),
-          );
-        },
-        childCount: 10, // Adjust as needed
       ),
     );
   }

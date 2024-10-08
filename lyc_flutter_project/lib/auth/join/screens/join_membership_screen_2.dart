@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:lyc_flutter_project/common/widget/normal_appbar.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
-import 'package:lyc_flutter_project/widget/normal_appbar.dart';
 
 import '../../../styles/app_text_style.dart';
 import '../../../widget/Controller.dart';

@@ -4,8 +4,8 @@ part 'coordi_posting.g.dart';
 
 @JsonSerializable()
 class CoordiPosting {
-  final int? minTemp;
-  final int? maxTemp;
+  final double? minTemp;
+  final double? maxTemp;
   final String? style;
   final String? content;
   final int? fromMemberId;
@@ -26,8 +26,8 @@ class CoordiPosting {
   });
 
   CoordiPosting copyWith({
-    int? minTemp,
-    int? maxTemp,
+    double? minTemp,
+    double? maxTemp,
     String? style,
     String? content,
     int? toMemberId,
@@ -56,8 +56,8 @@ class CoordiPostingResult {
   final String nickname;
   final String loginId;
   final int postingId;
-  final int minTemp;
-  final int maxTemp;
+  final double minTemp;
+  final double maxTemp;
   final String content;
   final List<ImageInfo> imageInfo;
   final int likes;

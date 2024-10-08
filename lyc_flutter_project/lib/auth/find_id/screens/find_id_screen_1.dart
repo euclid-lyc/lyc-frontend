@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:lyc_flutter_project/common/widget/normal_appbar.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/styles/app_text_style.dart';
 import 'package:provider/provider.dart';
 import '../../../widget/Controller.dart';
-import '../../../widget/normal_appbar.dart';
 import '../Provider/SendEmailProvider.dart';
 import 'find_id_screen_2.dart';
 import '../model/Info.dart';

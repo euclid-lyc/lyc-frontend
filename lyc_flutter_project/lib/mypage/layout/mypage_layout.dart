@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
-import 'package:lyc_flutter_project/styles/default_padding.dart';
+import 'package:lyc_flutter_project/common/widget/default_padding.dart';
 
 class MypageLayout extends StatelessWidget {
   final Widget top;

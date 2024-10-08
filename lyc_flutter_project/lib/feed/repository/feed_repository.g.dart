@@ -58,6 +58,91 @@ class _FeedRepository implements FeedRepository {
     return _value;
   }
 
+  @override
+  Future<ApiResponse<WeatherPreviewResult>> getWeatherPostings(
+      {required String city}) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'city': city};
+    final _headers = <String, dynamic>{r'accessToken': 'true'};
+    _headers.removeWhere((k, v) => v == null);
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<ApiResponse<WeatherPreviewResult>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          '/by-weather',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late ApiResponse<WeatherPreviewResult> _value;
+    try {
+      _value = ApiResponse<WeatherPreviewResult>.fromJson(
+        _result.data!,
+        (json) => WeatherPreviewResult.fromJson(json as Map<String, dynamic>),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<ApiResponse<ForMemberPreviewResult>> getForMemberPostings({
+    required int pageSize,
+    int? cursorScore,
+    int? cursorId,
+  }) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'pageSize': pageSize,
+      r'cursorScore': cursorScore,
+      r'cursorId': cursorId,
+    };
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{r'accessToken': 'true'};
+    _headers.removeWhere((k, v) => v == null);
+    const Map<String, dynamic>? _data = null;
+    final _options =
+        _setStreamType<ApiResponse<ForMemberPreviewResult>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/for-member',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late ApiResponse<ForMemberPreviewResult> _value;
+    try {
+      _value = ApiResponse<ForMemberPreviewResult>.fromJson(
+        _result.data!,
+        (json) => ForMemberPreviewResult.fromJson(json as Map<String, dynamic>),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&
         !(requestOptions.responseType == ResponseType.bytes ||

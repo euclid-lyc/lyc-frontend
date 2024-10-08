@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lyc_flutter_project/common/widget/custom_loading.dart';
 import 'package:lyc_flutter_project/common/widget/home_appbar.dart';
-import 'package:lyc_flutter_project/common/widget/image_networking.dart';
+import 'package:lyc_flutter_project/common/widget/preview_posting_card.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/common/widget/round_image.dart';
 import 'package:lyc_flutter_project/home/provider/home_provider.dart';
 import 'package:lyc_flutter_project/mypage/model/mypage_posting_preview.dart';
-import 'package:lyc_flutter_project/posting/screen/posting_detail_screen.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -279,32 +278,12 @@ class _HomeScreenState extends State<HomeScreen> {
     if (list.isEmpty) return const Text("불러올 게시글이 없습니다");
     return ListView.builder(
       scrollDirection: Axis.horizontal,
-      itemCount: list!.length,
+      itemCount: list.length,
       itemBuilder: (context, index) {
         final posting = list[index];
-        return Container(
-          height: 150,
-          width: 112,
-          margin: const EdgeInsets.symmetric(
-            horizontal: 8.0,
-          ),
-          decoration: buildWhiteRoundBox(),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20.0),
-            child: GestureDetector(
-              onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return PostingDetailScreen(
-                      postingId: posting.postingId,
-                    );
-                  },
-                ),
-              ),
-              child: ImageNetworking(posting.image),
-            ),
-          ),
+        return PreviewPostingCard(
+          postingId: posting.postingId,
+          image: posting.image,
         );
       },
     );

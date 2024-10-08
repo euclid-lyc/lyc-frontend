@@ -2,102 +2,105 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:lyc_flutter_project/data/temp_member_data.dart';
-import 'package:lyc_flutter_project/posting/model/coordi_posting.dart';
+import 'package:lyc_flutter_project/auth/join/Provider/login_provider.dart';
 import 'package:lyc_flutter_project/posting/repository/coordi_repository.dart';
 
 class CoordiProvider extends ChangeNotifier {
   final CoordiRepositoryProvider repositoryProvider;
-  CoordiPosting _posting = CoordiPosting(
-    writerId: cur_member,
-    toMemberId: cur_member,
-    fromMemberId: cur_member,
-    minTemp: 0,
-    maxTemp: 0,
-  );
+  final LoginProvider loginProvider;
+  late int myId;
 
-  CoordiProvider({required this.repositoryProvider});
+  CoordiProvider({
+    required this.repositoryProvider,
+    required this.loginProvider,
+  }) {
+    getMyId();
+  }
 
+  void getMyId() {
+    myId = loginProvider.memberId!;
+  }
+
+  String? _image;
+  String? _content;
+  int _minTemp = 0;
+  int _maxTemp = 0;
+  List<String> _style = [];
   List<Map<String, dynamic>> points = [];
 
-  get minTemp => _posting.minTemp;
+  get minTemp => _minTemp;
 
-  get maxTemp => _posting.maxTemp;
+  get maxTemp => _maxTemp;
 
-  get image => _posting.image;
+  List<String> get style => _style;
 
-  get selectedStyle => _posting.style;
+  get image => _image;
 
   void resetSetting() {
-    _posting = CoordiPosting(
-        writerId: _posting.writerId,
-        image: _posting.image,
-        content: _posting.content,
-        toMemberId: _posting.toMemberId,
-        fromMemberId: _posting.fromMemberId,
-        maxTemp: 0,
-        minTemp: 0);
+    _maxTemp = 0;
+    _maxTemp = 0;
+    _style = [];
+    points = [];
   }
 
   void updateMinTemp(int temp) {
-    _posting = _posting.copyWith(minTemp: temp);
+    _minTemp = temp;
     notifyListeners();
-    // print("update mintemp: ${_posting.minTemp}");
   }
 
   void updateMaxTemp(int temp) {
-    _posting = _posting.copyWith(maxTemp: temp);
+    _maxTemp = temp;
     notifyListeners();
-    // print("update maxtemp: ${_posting.maxTemp}");
   }
 
   void updateStyle(String style) {
-    _posting = _posting.copyWith(style: style);
-    // print("update style: ${_posting.style}");
+    if (_style.contains(style)) {
+      _style.clear();
+    } else {
+      _style.clear();
+      _style.add(style);
+    }
+    notifyListeners();
   }
 
   void updateContent(String content) {
-    _posting = _posting.copyWith(content: content);
-    // print("update content: ${_posting.content}");
-  }
-
-  void updateToMemberId(int id) {
-    _posting = _posting.copyWith(toMemberId: id);
-    // print("update toMemberId: ${_posting.toMemberId}");
+    _content = content;
   }
 
   void updateImage(String image) {
-    _posting = _posting.copyWith(image: image);
+    _image = image;
     notifyListeners();
-    // print("update image: ${_posting.image}");
   }
 
-  void updateLinkList(String link) {
-    if (!_posting.linkList.contains(link)) {
-      _posting.linkList.add(link);
+  String? checkPostingSetting() {
+    if (_style.isEmpty) {
+      return "스타일을 선택해주세요";
     }
-    // print("update linkList: ${_posting.linkList}");
+    return null;
+  }
+
+  String? checkPosting() {
+    if (_image == null) {
+      return "사진을 선택해주세요";
+    }
+    if (_content == null) {
+      return "내용을 입력해주세요";
+    }
+    if (checkPostingSetting() != null) {
+      return "세부설정을 입력해주세요";
+    } else {
+      return null;
+    }
   }
 
   bool canUpload() {
-    if (_posting.image == null) {
-      print("image is null");
+    if (_image == null) {
       return false;
     }
-    if (_posting.content == null) {
-      print("content is null");
+    if (_content == null) {
       return false;
     }
-    if (_posting.minTemp == null) {
-      print("minTemp is null");
-      return false;
-    }
-    if (_posting.maxTemp == null) {
-      print("maxTemp is null");
-      return false;
-    }
-    if (_posting.style == null) {
-      print("style is null");
+    if (_style.isEmpty) {
       return false;
     }
     return true;
@@ -106,14 +109,14 @@ class CoordiProvider extends ChangeNotifier {
   Future<void> upload() async {
     if (canUpload()) {
       final postingSaveDTO = jsonEncode({
-        "minTemp": _posting.minTemp,
-        "maxTemp": _posting.maxTemp,
-        "style": _posting.style,
-        "content": _posting.content,
-        "fromMemberId": _posting.fromMemberId,
-        "toMemberId": _posting.toMemberId,
-        "writerId": _posting.writerId,
+        "minTemp": _minTemp,
+        "maxTemp": _maxTemp,
+        "style": _style[0],
+        "content": _content,
+        "fromMemberId": myId,
+        "toMemberId": myId,
       });
+
       final resp = await repositoryProvider.repository
           .uploadCoordi(postingSaveDTO: postingSaveDTO);
       if (!resp.isSuccess) {
@@ -122,10 +125,8 @@ class CoordiProvider extends ChangeNotifier {
       }
 
       final postingId = resp.result.postingId;
-      final linkDTO = jsonEncode({
-        "links": [_posting.linkList],
-      });
-      final image = await MultipartFile.fromFile(_posting.image!);
+      final linkDTO = jsonEncode({"links": [["link"]]});
+      final image = await MultipartFile.fromFile(_image!);
       final imageList = [image];
 
       await repositoryProvider.repository.uploadImage(
