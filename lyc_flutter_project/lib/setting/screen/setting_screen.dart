@@ -52,7 +52,7 @@ class SettingScreen extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) {
-                      return const InfoScreen();
+                      return InfoScreen();
                     },
                   ),
                 ),

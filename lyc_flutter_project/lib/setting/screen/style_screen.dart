@@ -27,7 +27,6 @@ class _StyleScreenState extends State<StyleScreen> {
   void initState() {
     super.initState();
     memberId = context.read<LoginProvider>().memberId;
-    context.read<SettingProvider>().getStyleInfo(memberId: memberId!);
   }
 
   @override
@@ -41,179 +40,182 @@ class _StyleScreenState extends State<StyleScreen> {
         bottom: 20.0,
         child: Consumer<SettingProvider>(
           builder: (context, value, child) {
-            return value.loadingStyleInfo
-                ? const Center(child: CustomLoading())
-                : ListView(
-                    keyboardDismissBehavior:
-                        ScrollViewKeyboardDismissBehavior.onDrag,
-                    children: [
-                      ContentBox(
-                        title: "1. 본인의 체형을 알려주세요.",
-                        child: Column(
-                          children: [
-                            SpecInputLine(
-                              label: "키",
-                              initialValue: value.style.spec.height.toString(),
-                              onChanged: (p0) =>
-                                  value.updateHeight(selected: p0),
-                            ),
-                            SpecInputLine(
-                              label: "몸무게",
-                              initialValue: value.style.spec.weight.toString(),
-                              onChanged: (p0) =>
-                                  value.updateWeight(selected: p0),
-                            ),
-                            SpecInputLine(
-                              label: "상의 사이즈",
-                              initialValue: "",
-                              getValue: (p0) => p0.topSize,
-                              onTap: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (context) =>
-                                      CustomNumberPicker<SettingProvider>(
-                                    title: "상의 사이즈를 선택해주세요.",
-                                    minValue: 80,
-                                    maxValue: 120,
-                                    step: 5,
-                                    getValue: (p0) => p0.topSize,
-                                    updateValue: (p0, p1) => p0.updateTopSize(
-                                      selected: p1,
-                                    ),
-                                    fstOnPressed: () {
-                                      value.rollbackTopSize();
-                                      Navigator.pop(context);
-                                    },
-                                    scdOnPressed: () => Navigator.pop(context),
+            return FutureBuilder(
+              future: value.getStyleInfo(memberId: memberId!),
+              builder: (context, snapshot) {
+                if (value.loadingStyleInfo) {
+                  return const Center(child: CustomLoading());
+                }
+                return ListView(
+                  keyboardDismissBehavior:
+                      ScrollViewKeyboardDismissBehavior.onDrag,
+                  children: [
+                    ContentBox(
+                      title: "1. 본인의 체형을 알려주세요.",
+                      child: Column(
+                        children: [
+                          SpecInputLine(
+                            label: "키",
+                            initialValue: value.style.spec.height.toString(),
+                            onChanged: (p0) => value.updateHeight(selected: p0),
+                          ),
+                          SpecInputLine(
+                            label: "몸무게",
+                            initialValue: value.style.spec.weight.toString(),
+                            onChanged: (p0) => value.updateWeight(selected: p0),
+                          ),
+                          SpecInputLine(
+                            label: "상의 사이즈",
+                            initialValue: "",
+                            getValue: (p0) => p0.topSize,
+                            onTap: () {
+                              showDialog(
+                                context: context,
+                                builder: (context) =>
+                                    CustomNumberPicker<SettingProvider>(
+                                  title: "상의 사이즈를 선택해주세요.",
+                                  minValue: 80,
+                                  maxValue: 120,
+                                  step: 5,
+                                  getValue: (p0) => p0.topSize,
+                                  updateValue: (p0, p1) => p0.updateTopSize(
+                                    selected: p1,
                                   ),
-                                );
-                              },
-                            ),
-                            SpecInputLine(
-                              label: "하의 사이즈",
-                              initialValue: "",
-                              getValue: (p0) => p0.bottomSize,
-                              onTap: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (context) =>
-                                      CustomNumberPicker<SettingProvider>(
-                                    title: "하의 사이즈를 선택해주세요.",
-                                    minValue: 24,
-                                    maxValue: 42,
-                                    getValue: (p0) => p0.bottomSize,
-                                    updateValue: (p0, p1) =>
-                                        p0.updateBottomSize(
-                                      selected: p1,
-                                    ),
-                                    fstOnPressed: () {
-                                      value.rollbackBottomSize();
-                                      Navigator.pop(context);
-                                    },
-                                    scdOnPressed: () => Navigator.pop(context),
+                                  fstOnPressed: () {
+                                    value.rollbackTopSize();
+                                    Navigator.pop(context);
+                                  },
+                                  scdOnPressed: () => Navigator.pop(context),
+                                ),
+                              );
+                            },
+                          ),
+                          SpecInputLine(
+                            label: "하의 사이즈",
+                            initialValue: "",
+                            getValue: (p0) => p0.bottomSize,
+                            onTap: () {
+                              showDialog(
+                                context: context,
+                                builder: (context) =>
+                                    CustomNumberPicker<SettingProvider>(
+                                  title: "하의 사이즈를 선택해주세요.",
+                                  minValue: 24,
+                                  maxValue: 42,
+                                  getValue: (p0) => p0.bottomSize,
+                                  updateValue: (p0, p1) => p0.updateBottomSize(
+                                    selected: p1,
                                   ),
-                                );
-                              },
-                            ),
-                          ],
-                        ),
+                                  fstOnPressed: () {
+                                    value.rollbackBottomSize();
+                                    Navigator.pop(context);
+                                  },
+                                  scdOnPressed: () => Navigator.pop(context),
+                                ),
+                              );
+                            },
+                          ),
+                        ],
                       ),
-                      ContentBox(
-                        title: "2. 평소 즐겨입는 스타일은 무엇인가요?",
-                        child: ButtonList(
-                          name: styleList.styleOptions,
-                          selected: value.style.preferredStyle.styles,
-                          onSelected: (v) =>
-                              value.updatePreferredStyle(selected: v),
-                        ),
+                    ),
+                    ContentBox(
+                      title: "2. 평소 즐겨입는 스타일은 무엇인가요?",
+                      child: ButtonList(
+                        name: styleList.styleOptions,
+                        selected: value.style.preferredStyle.styles,
+                        onSelected: (v) =>
+                            value.updatePreferredStyle(selected: v),
                       ),
-                      ContentBox(
-                        title: "3. 평소 즐겨입지 않는 스타일은 무엇인가요?",
-                        child: ButtonList(
-                          name: styleList.styleOptions,
-                          selected: value.style.nonPreferredStyle.styles,
-                          onSelected: (v) =>
-                              value.updateNonPreferredStyle(selected: v),
-                        ),
+                    ),
+                    ContentBox(
+                      title: "3. 평소 즐겨입지 않는 스타일은 무엇인가요?",
+                      child: ButtonList(
+                        name: styleList.styleOptions,
+                        selected: value.style.nonPreferredStyle.styles,
+                        onSelected: (v) =>
+                            value.updateNonPreferredStyle(selected: v),
                       ),
-                      ContentBox(
-                        title: "4. 선호하는 소재를 선택해주세요.",
-                        child: ButtonList(
-                          name: styleList.materialOptions,
-                          selected: value.style.preferredMaterials.materials,
-                          onSelected: (v) =>
-                              value.updatePreferredMaterials(selected: v),
-                        ),
+                    ),
+                    ContentBox(
+                      title: "4. 선호하는 소재를 선택해주세요.",
+                      child: ButtonList(
+                        name: styleList.materialOptions,
+                        selected: value.style.preferredMaterials.materials,
+                        onSelected: (v) =>
+                            value.updatePreferredMaterials(selected: v),
                       ),
-                      ContentBox(
-                        title: "5. 선호하지 않는 소재를 선택해주세요.",
-                        child: ButtonList(
-                          name: styleList.materialOptions,
-                          selected: value.style.nonPreferredMaterials.materials,
-                          onSelected: (v) =>
-                              value.updateNonPreferredMaterials(selected: v),
-                        ),
+                    ),
+                    ContentBox(
+                      title: "5. 선호하지 않는 소재를 선택해주세요.",
+                      child: ButtonList(
+                        name: styleList.materialOptions,
+                        selected: value.style.nonPreferredMaterials.materials,
+                        onSelected: (v) =>
+                            value.updateNonPreferredMaterials(selected: v),
                       ),
-                      ContentBox(
-                        title: "6. 선호하는 핏을 선택해주세요.",
-                        child: ButtonList(
-                          name: styleList.fitOptions,
-                          selected: value.style.preferredFits.fits,
-                          onSelected: (v) =>
-                              value.updatePreferredFits(selected: v),
-                        ),
+                    ),
+                    ContentBox(
+                      title: "6. 선호하는 핏을 선택해주세요.",
+                      child: ButtonList(
+                        name: styleList.fitOptions,
+                        selected: value.style.preferredFits.fits,
+                        onSelected: (v) =>
+                            value.updatePreferredFits(selected: v),
                       ),
-                      ContentBox(
-                        title: "7. 선호하지 않는 핏을 선택해주세요.",
-                        child: ButtonList(
-                          name: styleList.fitOptions,
-                          selected: value.style.nonPreferredFits.fits,
-                          onSelected: (v) =>
-                              value.updateNonPreferredFits(selected: v),
-                        ),
+                    ),
+                    ContentBox(
+                      title: "7. 선호하지 않는 핏을 선택해주세요.",
+                      child: ButtonList(
+                        name: styleList.fitOptions,
+                        selected: value.style.nonPreferredFits.fits,
+                        onSelected: (v) =>
+                            value.updateNonPreferredFits(selected: v),
                       ),
-                      ContentBox(
-                        title: "8. 보완하고 싶은 신체 부위가 있나요?",
-                        child: ButtonList(
-                          name: styleList.BodyParts,
-                          selected: value.style.badBodyTypes.bodyTypes,
-                          onSelected: (v) =>
-                              value.updateBadBodyTypes(selected: v),
-                        ),
+                    ),
+                    ContentBox(
+                      title: "8. 보완하고 싶은 신체 부위가 있나요?",
+                      child: ButtonList(
+                        name: styleList.BodyParts,
+                        selected: value.style.badBodyTypes.bodyTypes,
+                        onSelected: (v) =>
+                            value.updateBadBodyTypes(selected: v),
                       ),
-                      ContentBox(
-                        title: "9. 추가로 작성하고 싶은 내용이 있나요?",
-                        child: CustomTextFormField(
-                          hint: "ex. 종아리가 너무 두꺼운 게 고민이에요.",
-                          maxLines: 5,
-                          containerMargin: 0.0,
-                          focusedBorderColor: Colors.transparent,
-                          focusedBorderWidth: 0.0,
-                          contentPaddingHorizontal: 8.0,
-                          initialValue: value.style.details,
-                          onChanged: (text) => value.updateDetails(text: text),
-                        ),
+                    ),
+                    ContentBox(
+                      title: "9. 추가로 작성하고 싶은 내용이 있나요?",
+                      child: CustomTextFormField(
+                        hint: "ex. 종아리가 너무 두꺼운 게 고민이에요.",
+                        maxLines: 5,
+                        containerMargin: 0.0,
+                        focusedBorderColor: Colors.transparent,
+                        focusedBorderWidth: 0.0,
+                        contentPaddingHorizontal: 8.0,
+                        initialValue: value.style.details,
+                        onChanged: (text) => value.updateDetails(text: text),
                       ),
-                      const SizedBox(
-                        height: 20.0,
-                      ),
-                      TwoButtons(
-                        fstOnPressed: () async {
-                          Navigator.pop(context);
-                          await value.getStyleInfo(
-                            memberId: memberId!,
-                            refresh: true,
-                          );
-                        },
-                        scdOnPressed: () async {
-                          await value.updateStyleInfo();
-                          Navigator.pop(context);
-                        },
-                        fstLabel: "이전",
-                        scdLabel: "완료",
-                      ),
-                    ],
-                  );
+                    ),
+                    const SizedBox(
+                      height: 20.0,
+                    ),
+                    TwoButtons(
+                      fstOnPressed: () async {
+                        Navigator.pop(context);
+                        await value.getStyleInfo(
+                          memberId: memberId!,
+                          refresh: true,
+                        );
+                      },
+                      scdOnPressed: () async {
+                        await value.updateStyleInfo();
+                        Navigator.pop(context);
+                      },
+                      fstLabel: "이전",
+                      scdLabel: "완료",
+                    ),
+                  ],
+                );
+              },
+            );
           },
         ),
       ),

@@ -19,24 +19,16 @@ import 'package:lyc_flutter_project/common/widget/image_picker_widget.dart';
 import 'package:lyc_flutter_project/common/widget/normal_appbar.dart';
 import 'package:provider/provider.dart';
 
-class InfoScreen extends StatefulWidget {
-  const InfoScreen({super.key});
+class InfoScreen extends StatelessWidget {
+  InfoScreen({super.key});
 
-  @override
-  State<InfoScreen> createState() => _InfoScreenState();
-}
-
-class _InfoScreenState extends State<InfoScreen> {
   final ImagePicker picker = ImagePicker();
-  bool picked = false;
-  String? newProfile;
-  final TextEditingController nicknameController = TextEditingController();
 
-  @override
-  void initState() {
-    super.initState();
-    context.read<SettingProvider>().getProfile();
-  }
+  bool picked = false;
+
+  String? newProfile;
+
+  final TextEditingController nicknameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -46,159 +38,168 @@ class _InfoScreenState extends State<InfoScreen> {
         return Scaffold(
           backgroundColor: AppColor.lightGrey,
           appBar: const NormalAppbar(title: "회원정보 변경"),
-          body: value.loadingMember
-              ? const Center(
-                  child: CustomLoading(),
-                )
-              : DefaultPadding(
-                  bottom: 40,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: SingleChildScrollView(
-                          keyboardDismissBehavior:
-                              ScrollViewKeyboardDismissBehavior.onDrag,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height / 20),
-                              Stack(
-                                alignment: Alignment.bottomRight,
+          body: DefaultPadding(
+            bottom: 40,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: SingleChildScrollView(
+                    keyboardDismissBehavior:
+                        ScrollViewKeyboardDismissBehavior.onDrag,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        FutureBuilder(
+                            future: value.getProfile(),
+                            builder: (context, snapshot) {
+                              if (value.loadingMember) {
+                                return const Center(
+                                  child: CustomLoading(),
+                                );
+                              }
+                              return Column(
                                 children: [
                                   SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width / 3,
-                                    child: picked
-                                        ? RoundImage(
-                                            image: Image.file(
-                                              File(newProfile!),
-                                              fit: BoxFit.cover,
-                                            ),
-                                          )
-                                        : ProfileImageNetworking(
-                                            member!.profileImage,
-                                          ),
+                                      height:
+                                          MediaQuery.of(context).size.height /
+                                              20),
+                                  Stack(
+                                    alignment: Alignment.bottomRight,
+                                    children: [
+                                      SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                3,
+                                        child: picked
+                                            ? RoundImage(
+                                                image: Image.file(
+                                                  File(newProfile!),
+                                                  fit: BoxFit.cover,
+                                                ),
+                                              )
+                                            : ProfileImageNetworking(
+                                                member!.profileImage,
+                                              ),
+                                      ),
+                                      ImagePickerWidget(
+                                        onImageSelected: (p0) {
+                                          value.updateProfileImage(p0);
+                                          newProfile = p0.path;
+                                          picked = true;
+                                        },
+                                        picker: picker,
+                                        icon: SvgPicture.asset(
+                                          "assets/icon_mod.svg",
+                                          width: 50,
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                  ImagePickerWidget(
-                                    onImageSelected: (p0) {
-                                      value.updateProfileImage(p0);
-                                      newProfile = p0.path;
-                                      picked = true;
+                                  const SizedBox(height: 20.0),
+                                  CustomTextFormField(
+                                    labelText: "닉네임",
+                                    initialValue: member!.nickname,
+                                    onChanged: (text) =>
+                                        value.updateNickname(text),
+                                    validator: (value) {
+                                      if (value == null ||
+                                          value.isEmpty ||
+                                          value.length < 2) {
+                                        return ("닉네임을 2자 이상 입력해주세요");
+                                      }
+                                      if (value.length > 10) {
+                                        return ("10자 이내로 입력해주세요");
+                                      } else {
+                                        return null;
+                                      }
                                     },
-                                    picker: picker,
-                                    icon: SvgPicture.asset(
-                                      "assets/icon_mod.svg",
-                                      width: 50,
-                                    ),
+                                  ),
+                                  const SizedBox(height: 8.0),
+                                  CustomTextFormField(
+                                    labelText: "아이디",
+                                    initialValue: member.loginId,
+                                    onChanged: (text) =>
+                                        value.updateLoginId(text),
+                                    validator: (value) {
+                                      if (value == null ||
+                                          value.isEmpty ||
+                                          value.length < 6) {
+                                        return ("아이디를 6자 이상 입력해주세요");
+                                      }
+                                      if (value.length > 30) {
+                                        return ("30자 이내로 입력해주세요");
+                                      } else {
+                                        return null;
+                                      }
+                                    },
+                                  ),
+                                  const SizedBox(height: 8.0),
+                                  CustomTextFormField(
+                                    labelText: "자기소개",
+                                    initialValue: member.introduction,
+                                    maxLines: 5,
+                                    onChanged: (text) =>
+                                        value.updateIntroduction(text),
                                   ),
                                 ],
-                              ),
-                              const SizedBox(height: 20.0),
-                              CustomTextFormField(
-                                labelText: "닉네임",
-                                initialValue: member!.nickname,
-                                onChanged: (text) => value.updateNickname(text),
-                                validator: (value) {
-                                  if (value == null ||
-                                      value.isEmpty ||
-                                      value.length < 2) {
-                                    return ("닉네임을 2자 이상 입력해주세요");
-                                  }
-                                  if (value.length > 10) {
-                                    return ("10자 이내로 입력해주세요");
-                                  } else {
-                                    return null;
-                                  }
-                                },
-                              ),
-                              const SizedBox(height: 8.0),
-                              CustomTextFormField(
-                                labelText: "아이디",
-                                initialValue: member.loginId,
-                                onChanged: (text) => value.updateLoginId(text),
-                                validator: (value) {
-                                  if (value == null ||
-                                      value.isEmpty ||
-                                      value.length < 6) {
-                                    return ("아이디를 6자 이상 입력해주세요");
-                                  }
-                                  if (value.length > 30) {
-                                    return ("30자 이내로 입력해주세요");
-                                  } else {
-                                    return null;
-                                  }
-                                },
-                              ),
-                              const SizedBox(height: 8.0),
-                              CustomTextFormField(
-                                labelText: "자기소개",
-                                initialValue: member.introduction,
-                                maxLines: 5,
-                                onChanged: (text) =>
-                                    value.updateIntroduction(text),
-                              ),
-                              const SizedBox(height: 8.0),
-                              CommonButton(
-                                label: "배송지 변경",
-                                onPressed: () => showDialog(
-                                  context: context,
-                                  builder: (context) => const AddressDialog(),
-                                ),
-                              ),
-                              const SizedBox(height: 8.0),
-                              CommonButton(
-                                label: "비밀번호 변경",
-                                onPressed: () async {
-                                  final changePw = await showDialog<bool>(
-                                    context: context,
-                                    builder: (context) =>
-                                        const PasswordChangeDialog(),
-                                  );
-                                  if (changePw == true) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                        content: Text("비밀번호가 변경되었습니다"),
-                                      ),
-                                    );
-                                  }
-                                },
-                              ),
-                              const SizedBox(height: 8.0),
-                            ],
+                              );
+                            }),
+                        const SizedBox(height: 8.0),
+                        CommonButton(
+                          label: "배송지 변경",
+                          onPressed: () => showDialog(
+                            context: context,
+                            builder: (context) => const AddressDialog(),
                           ),
                         ),
-                      ),
-                      TwoButtons(
-                        fstOnPressed: () {
-                          refresh();
-                          Navigator.pop(context);
-                        },
-                        scdOnPressed: () async {
-                          if (value.canSaveMemberInfo()) {
-                            await value.saveMemberInfo();
-                            refresh();
-                            Navigator.pop(context);
-                          } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text("입력값을 확인해주세요"),
-                              ),
+                        const SizedBox(height: 8.0),
+                        CommonButton(
+                          label: "비밀번호 변경",
+                          onPressed: () async {
+                            final changePw = await showDialog<bool>(
+                              context: context,
+                              builder: (context) =>
+                                  const PasswordChangeDialog(),
                             );
-                          }
-                        },
-                      ),
-                    ],
+                            if (changePw == true) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text("비밀번호가 변경되었습니다"),
+                                ),
+                              );
+                            }
+                          },
+                        ),
+                        const SizedBox(height: 8.0),
+                      ],
+                    ),
                   ),
                 ),
+                TwoButtons(
+                  fstOnPressed: () {
+                    value.getProfile(refresh: true);
+                    Navigator.pop(context);
+                  },
+                  scdOnPressed: () async {
+                    if (value.canSaveMemberInfo()) {
+                      await value.saveMemberInfo();
+                      value.getProfile(refresh: true);
+                      Navigator.pop(context);
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text("입력값을 확인해주세요"),
+                        ),
+                      );
+                    }
+                  },
+                ),
+              ],
+            ),
+          ),
         );
       },
     );
-  }
-
-  Future<void> refresh() async {
-    await context.read<SettingProvider>().getProfile(refresh: true);
   }
 }
