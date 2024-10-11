@@ -71,26 +71,33 @@ class SettingProvider extends ChangeNotifier {
   }
 
   bool canSaveMemberInfo() {
-    return (_memberModel != null &&
+    return _memberModel != null &&
         !(_memberModel!.nickname.length < 2) &&
-        !(_memberModel!.nickname.length < 10) &&
-        !(_memberModel!.loginId.length > 6) &&
-        !(_memberModel!.loginId.length < 30));
+        !(_memberModel!.nickname.length > 10) &&
+        !(_memberModel!.loginId.length < 6) &&
+        !(_memberModel!.loginId.length > 30);
   }
 
-  Future<void> saveMemberInfo() async {
+  Future<bool> saveMemberInfo() async {
     if (canSaveMemberInfo()) {
       final infoDTO = jsonEncode({
         "nickname": _memberModel!.nickname,
         "introduction": _memberModel!.introduction,
         "loginId": _memberModel!.loginId,
       });
-      final image = File(_memberModel!.profileImage);
-      repositoryProvider.repository.updateMemberInfo(
-        infoDTO: infoDTO,
-        image: image,
-      );
+      try {
+        final image = File(_memberModel!.profileImage);
+        repositoryProvider.repository.updateMemberInfo(
+          infoDTO: infoDTO,
+          image: image,
+        );
+        return true;
+      } catch (e) {
+        Exception(e);
+        return false;
+      }
     }
+    return false;
   }
 
   void setOldPassword(String pw) {

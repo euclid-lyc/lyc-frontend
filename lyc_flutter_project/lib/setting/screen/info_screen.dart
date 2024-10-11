@@ -62,12 +62,15 @@ class _InfoScreenState extends State<InfoScreen> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              SizedBox(height: MediaQuery.of(context).size.height / 20),
+                              SizedBox(
+                                  height:
+                                      MediaQuery.of(context).size.height / 20),
                               Stack(
                                 alignment: Alignment.bottomRight,
                                 children: [
                                   SizedBox(
-                                    width: MediaQuery.of(context).size.width / 3,
+                                    width:
+                                        MediaQuery.of(context).size.width / 3,
                                     child: picked
                                         ? RoundImage(
                                             image: Image.file(
@@ -173,10 +176,18 @@ class _InfoScreenState extends State<InfoScreen> {
                           refresh();
                           Navigator.pop(context);
                         },
-                        scdOnPressed: () {
-                          save();
-                          refresh();
-                          Navigator.pop(context);
+                        scdOnPressed: () async {
+                          if (value.canSaveMemberInfo()) {
+                            await value.saveMemberInfo();
+                            refresh();
+                            Navigator.pop(context);
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text("입력값을 확인해주세요"),
+                              ),
+                            );
+                          }
                         },
                       ),
                     ],
@@ -189,9 +200,5 @@ class _InfoScreenState extends State<InfoScreen> {
 
   Future<void> refresh() async {
     await context.read<SettingProvider>().getProfile(refresh: true);
-  }
-
-  Future<void> save() async {
-    await context.read<SettingProvider>().saveMemberInfo();
   }
 }
