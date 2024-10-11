@@ -147,8 +147,8 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
               width: 2.5,
             ),
           ),
-          errorStyle: const TextStyle(
-            fontSize: 14.0,
+          errorStyle: TextStyle(
+            fontSize: _isFocused ? 14.0 : 0.0,
             fontWeight: FontWeight.w400,
           ),
         ),

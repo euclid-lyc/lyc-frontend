@@ -47,30 +47,6 @@ class CustomInterceptor extends Interceptor {
         "[RES] [${response.requestOptions.method}] ${response.requestOptions
             .uri}");
 
-    // // ApiResponse 객체 생성
-    // final apiResponse = ApiResponse<Map<String, dynamic>>(
-    //   code: response.data['code'],
-    //   message: response.data['message'],
-    //   result: response.data['result'],
-    //   isSuccess: response.data['isSuccess'],
-    //   headers: response.headers.map, // 응답 헤더를 ApiResponse에 포함
-    // );
-    //
-    // // ApiResponse에서 필요한 데이터를 추출하여 새로운 Response 객체 생성
-    // final newResponseData = {
-    //   'code': apiResponse.code,
-    //   'message': apiResponse.message,
-    //   'result': apiResponse.result,
-    //   'isSuccess': apiResponse.isSuccess,
-    // };
-    //
-    // final newResponse = Response<Map<String, dynamic>>(
-    //   requestOptions: response.requestOptions,
-    //   data: newResponseData,
-    //   headers: response.headers,
-    //   statusCode: response.statusCode,
-    // );
-    //
     handler.next(response);
   }
 

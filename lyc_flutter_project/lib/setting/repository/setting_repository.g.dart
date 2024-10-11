@@ -132,18 +132,31 @@ class _SettingRepository implements SettingRepository {
   }
 
   @override
-  Future<MemberModel> updateMemberInfo(
-      {required MemberModel memberModel}) async {
+  Future<MemberModel> updateMemberInfo({
+    required dynamic infoDTO,
+    required File image,
+  }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'accessToken': 'true'};
     _headers.removeWhere((k, v) => v == null);
-    final _data = <String, dynamic>{};
-    _data.addAll(memberModel.toJson());
+    final _data = FormData();
+    _data.fields.add(MapEntry(
+      'infoDTO',
+      infoDTO,
+    ));
+    _data.files.add(MapEntry(
+      'image',
+      MultipartFile.fromFileSync(
+        image.path,
+        filename: image.path.split(Platform.pathSeparator).last,
+      ),
+    ));
     final _options = _setStreamType<MemberModel>(Options(
       method: 'PATCH',
       headers: _headers,
       extra: _extra,
+      contentType: 'multipart/form-data',
     )
         .compose(
           _dio.options,

@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -68,15 +71,33 @@ class SettingProvider extends ChangeNotifier {
   }
 
   bool canSaveMemberInfo() {
-    return true;
+    return _memberModel != null &&
+        !(_memberModel!.nickname.length < 2) &&
+        !(_memberModel!.nickname.length > 10) &&
+        !(_memberModel!.loginId.length < 6) &&
+        !(_memberModel!.loginId.length > 30);
   }
 
-  Future<void> saveMemberInfo() async {
+  Future<bool> saveMemberInfo() async {
     if (canSaveMemberInfo()) {
-      await repositoryProvider.repository.updateMemberInfo(
-        memberModel: _memberModel!,
-      );
+      final infoDTO = jsonEncode({
+        "nickname": _memberModel!.nickname,
+        "introduction": _memberModel!.introduction,
+        "loginId": _memberModel!.loginId,
+      });
+      try {
+        final image = File(_memberModel!.profileImage);
+        repositoryProvider.repository.updateMemberInfo(
+          infoDTO: infoDTO,
+          image: image,
+        );
+        return true;
+      } catch (e) {
+        Exception(e);
+        return false;
+      }
     }
+    return false;
   }
 
   void setOldPassword(String pw) {
