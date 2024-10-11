@@ -71,7 +71,11 @@ class SettingProvider extends ChangeNotifier {
   }
 
   bool canSaveMemberInfo() {
-    return _memberModel != null;
+    return (_memberModel != null &&
+        !(_memberModel!.nickname.length < 2) &&
+        !(_memberModel!.nickname.length < 10) &&
+        !(_memberModel!.loginId.length > 6) &&
+        !(_memberModel!.loginId.length < 30));
   }
 
   Future<void> saveMemberInfo() async {
