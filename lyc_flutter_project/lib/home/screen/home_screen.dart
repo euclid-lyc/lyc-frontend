@@ -6,29 +6,10 @@ import 'package:lyc_flutter_project/common/widget/preview_posting_card.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/common/widget/round_image.dart';
 import 'package:lyc_flutter_project/home/provider/home_provider.dart';
-import 'package:lyc_flutter_project/mypage/model/mypage_posting_preview.dart';
 import 'package:provider/provider.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
-
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-void _onTap() {}
-
-class _HomeScreenState extends State<HomeScreen> {
-  @override
-  void initState() {
-    super.initState();
-
-    getFeedPreviewList();
-  }
-
-  Future<void> getFeedPreviewList() async {
-    await context.read<HomeProvider>().getPostingPreview();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,9 +39,23 @@ class _HomeScreenState extends State<HomeScreen> {
                     const Line(),
                     SizedBox(
                       height: 150.0,
-                      child: renderFeedPreview(
-                        isLoading: value.loadingFeedPreview,
-                        list: value.feedPreviewList,
+                      child: FutureBuilder(
+                        future: value.getPostingPreview(),
+                        builder: (context, snapshot) {
+                          if (value.loadingFeedPreview) return const Center(child: CustomLoading());
+                          if (value.feedPreviewList.isEmpty) return const Text("불러올 게시글이 없습니다");
+                          return ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: value.feedPreviewList.length,
+                            itemBuilder: (context, index) {
+                              final posting = value.feedPreviewList[index];
+                              return PreviewPostingCard(
+                                postingId: posting.postingId,
+                                image: posting.image,
+                              );
+                            },
+                          );
+                        }
                       ),
                     ),
                     // 오늘의 디렉터
@@ -269,26 +264,9 @@ class _HomeScreenState extends State<HomeScreen> {
       borderRadius: BorderRadius.circular(20),
     );
   }
-
-  Widget renderFeedPreview({
-    required bool isLoading,
-    required List<CoordiPostingPreview> list,
-  }) {
-    if (isLoading) return const Center(child: CustomLoading());
-    if (list.isEmpty) return const Text("불러올 게시글이 없습니다");
-    return ListView.builder(
-      scrollDirection: Axis.horizontal,
-      itemCount: list.length,
-      itemBuilder: (context, index) {
-        final posting = list[index];
-        return PreviewPostingCard(
-          postingId: posting.postingId,
-          image: posting.image,
-        );
-      },
-    );
-  }
 }
+
+void _onTap() {}
 
 class MiniBox extends StatelessWidget {
   const MiniBox({

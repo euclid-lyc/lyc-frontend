@@ -17,7 +17,7 @@ class HomeProvider extends ChangeNotifier {
 
   get loadingFeedPreview => _loadingFeedPreview;
 
-  get feedPreviewList => _feedPreviewList;
+  List<CoordiPostingPreview> get feedPreviewList => _feedPreviewList;
 
   Future<void> getPostingPreview() async {
     if (_feedPreviewList.isNotEmpty) return;
