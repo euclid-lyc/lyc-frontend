@@ -18,7 +18,7 @@ class MypageScreen extends StatefulWidget {
 
   const MypageScreen({
     super.key,
-    this.memberId,
+    required this.memberId,
     required this.isLoginUser,
   });
 
@@ -34,9 +34,7 @@ class _MypageScreenState extends State<MypageScreen> {
   void initState() {
     super.initState();
     if (widget.memberId == null && widget.isLoginUser) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
         memberId = Provider.of<LoginProvider>(context, listen: false).memberId!;
-      });
     } else {
       memberId = widget.memberId!;
     }
