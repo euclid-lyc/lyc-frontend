@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import '../../../common/const/data.dart';
 import '../../../common/dio/dio.dart';
 import '../../service/StorageService.dart';
 import '../model/VerificationCode.dart';

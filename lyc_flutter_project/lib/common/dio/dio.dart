@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:lyc_flutter_project/common/const/data.dart';
+import 'package:lyc_flutter_project/config/secret.dart';
 
 class DioProvider extends ChangeNotifier {
   final Dio _dio = Dio();

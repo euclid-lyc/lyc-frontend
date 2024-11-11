@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:lyc_flutter_project/common/dio/dio.dart';
-import '../../../common/const/data.dart';
 import '../../service/StorageService.dart';
 import '../model/Info.dart';
 import 'package:lyc_flutter_project/config/secret.dart';

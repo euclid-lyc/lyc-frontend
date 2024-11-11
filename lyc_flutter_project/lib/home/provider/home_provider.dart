@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:lyc_flutter_project/common/const/data.dart';
+import 'package:lyc_flutter_project/config/secret.dart';
 import 'package:lyc_flutter_project/feed/repository/feed_repository.dart';
 import 'package:lyc_flutter_project/mypage/model/mypage_posting_preview.dart';
 
