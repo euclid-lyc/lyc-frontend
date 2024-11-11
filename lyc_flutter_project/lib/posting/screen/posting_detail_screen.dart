@@ -36,7 +36,9 @@ class _PostingDetailScreenState extends State<PostingDetailScreen> {
     super.initState();
     provider = Provider.of<PostingDetailProviderFactory>(context, listen: false)
         .getProvider(widget.postingId);
-    provider.initialize(widget.isMyPosting);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      provider.initialize(widget.isMyPosting);
+    });
   }
 
   @override

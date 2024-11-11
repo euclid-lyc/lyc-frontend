@@ -22,13 +22,15 @@ class HomeProvider extends ChangeNotifier {
   Future<void> getPostingPreview() async {
     if (_feedPreviewList.isNotEmpty) return;
 
+    _loadingFeedPreview = true;
+    notifyListeners();
+
     try {
-      _loadingFeedPreview = true;
-      notifyListeners();
       final resp = await feedRepositoryProvider.dio.get(
         "http://$ip/lyc/feeds/preview",
         options: Options(headers: {"accessToken": "true"}),
       );
+
       if (resp.data is Map<String, dynamic> &&
           resp.data['result'] is Map<String, dynamic> &&
           resp.data['result']['posting'] is List) {
@@ -39,13 +41,12 @@ class HomeProvider extends ChangeNotifier {
       } else {
         _feedPreviewList = [];
       }
-      _loadingFeedPreview = false;
-      notifyListeners();
     } catch (e) {
       print("에러: $e");
+      _feedPreviewList = [];
+    } finally {
       _loadingFeedPreview = false;
       notifyListeners();
-      rethrow;
     }
   }
 }

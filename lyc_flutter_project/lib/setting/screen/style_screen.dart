@@ -26,7 +26,9 @@ class _StyleScreenState extends State<StyleScreen> {
   @override
   void initState() {
     super.initState();
-    memberId = context.read<LoginProvider>().memberId;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      memberId = context.read<LoginProvider>().memberId;
+    });
   }
 
   @override

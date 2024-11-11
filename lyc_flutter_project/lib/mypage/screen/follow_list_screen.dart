@@ -65,7 +65,6 @@ class _FollowListContentState extends State<_FollowListContent> {
     }
   }
 
-
   @override
   void dispose() {
     super.dispose();

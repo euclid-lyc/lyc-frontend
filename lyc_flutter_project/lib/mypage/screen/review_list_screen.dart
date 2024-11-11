@@ -20,11 +20,9 @@ class _ReviewListScreenState extends State<ReviewListScreen> {
   @override
   void initState() {
     super.initState();
-    getPossibleReviews();
-  }
-
-  Future<void> getPossibleReviews() async {
-    await context.read<ReviewProvider>().getPossibleReviews();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<ReviewProvider>().getPossibleReviews();
+    });
   }
 
   @override
@@ -61,7 +59,8 @@ class _ReviewListScreenState extends State<ReviewListScreen> {
                         child: ListView.builder(
                           itemCount: provider.possibleReviews.length,
                           itemBuilder: (context, index) {
-                            final PossibleReview review = provider.possibleReviews[index];
+                            final PossibleReview review =
+                                provider.possibleReviews[index];
                             return MemberList(
                               profile: review.profileImage,
                               nickname: review.nickname,

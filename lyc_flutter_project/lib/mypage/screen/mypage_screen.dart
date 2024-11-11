@@ -34,14 +34,16 @@ class _MypageScreenState extends State<MypageScreen> {
   void initState() {
     super.initState();
     if (widget.memberId == null && widget.isLoginUser) {
-      memberId = Provider.of<LoginProvider>(context, listen: false).memberId!;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        memberId = Provider.of<LoginProvider>(context, listen: false).memberId!;
+      });
     } else {
       memberId = widget.memberId!;
     }
-    provider =
-        Provider.of<MypageProviderFactory>(context, listen: false).getProvider(
+    provider = Provider.of<MypageProviderFactory>(context, listen: false)
+        .getProvider(
       memberId,
-          widget.isLoginUser,
+      widget.isLoginUser,
     );
   }
 
