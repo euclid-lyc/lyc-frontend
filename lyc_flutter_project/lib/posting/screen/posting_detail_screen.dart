@@ -30,21 +30,31 @@ class PostingDetailScreen extends StatefulWidget {
 
 class _PostingDetailScreenState extends State<PostingDetailScreen> {
   late PostingDetailProvider provider;
+  late PostingDetailProviderFactory providerFactory;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    providerFactory = Provider.of<PostingDetailProviderFactory>(context, listen: false);
+  }
 
   @override
   void initState() {
     super.initState();
     provider = Provider.of<PostingDetailProviderFactory>(context, listen: false)
         .getProvider(widget.postingId);
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      provider.initialize(widget.isMyPosting);
+    Future.microtask(() {
+      if (mounted) {
+        provider.initialize(widget.isMyPosting);
+      }
     });
   }
 
   @override
   void dispose() {
-    Provider.of<PostingDetailProviderFactory>(context, listen: false)
-        .disposeProvider(widget.postingId);
+    if (mounted) {
+      providerFactory.disposeProvider(widget.postingId);
+    }
     super.dispose();
   }
 
