@@ -9,7 +9,14 @@ class DioProvider extends ChangeNotifier {
 
   DioProvider() {
     _dio.interceptors.add(CustomInterceptor(_storage, _dio));
-    _dio.interceptors.add(LogInterceptor(responseBody: true));
+    _dio.interceptors.add(LogInterceptor(
+      responseBody: true,
+      requestHeader: false,
+      request: false,
+      requestBody: false,
+      error: false,
+      responseHeader: false,
+    ));
     _dio.options.connectTimeout = const Duration(seconds: 10);
     _dio.options.receiveTimeout = const Duration(seconds: 10);
   }
@@ -26,11 +33,9 @@ class CustomInterceptor extends Interceptor {
   CustomInterceptor(this.storage, this.dio);
 
   @override
-  Future<void> onRequest(RequestOptions options,
-      RequestInterceptorHandler handler) async {
+  Future<void> onRequest(
+      RequestOptions options, RequestInterceptorHandler handler) async {
     super.onRequest(options, handler);
-
-    print("[REQ] [${options.method}] ${options.uri}");
 
     if (options.headers['accessToken'] == 'true') {
       options.headers.remove('accessToken');
@@ -42,19 +47,10 @@ class CustomInterceptor extends Interceptor {
   }
 
   @override
-  void onResponse(Response response, ResponseInterceptorHandler handler) {
-    print(
-        "[RES] [${response.requestOptions.method}] ${response.requestOptions
-            .uri}");
-
-    handler.next(response);
-  }
-
-  @override
-  Future<void> onError(DioException err,
-      ErrorInterceptorHandler handler,) async {
-    print("[ERR] [${err.message}]");
-
+  Future<void> onError(
+    DioException err,
+    ErrorInterceptorHandler handler,
+  ) async {
     if (err.response?.statusCode == 401) {
       final errorCode = err.response?.data['code'];
 
