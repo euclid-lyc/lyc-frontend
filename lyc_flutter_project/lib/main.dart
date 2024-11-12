@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lyc_flutter_project/auth/join/Provider/login_provider.dart';
-import 'package:lyc_flutter_project/auth/join/screens/join_membership_screen_4.dart';
+import 'package:lyc_flutter_project/auth/join/repository/join_repository.dart';
 import 'package:lyc_flutter_project/common/dio/dio.dart';
 import 'package:lyc_flutter_project/director/provider/director_provider.dart';
 import 'package:lyc_flutter_project/director/repository/director_repository.dart';
@@ -18,9 +17,12 @@ import 'package:lyc_flutter_project/routes/routes.dart';
 import 'package:lyc_flutter_project/setting/provider/setting_provider.dart';
 import 'package:lyc_flutter_project/setting/repository/setting_repository.dart';
 import 'package:provider/provider.dart';
-import 'package:lyc_flutter_project/auth/find_pw/provider/FindPwProvider.dart';
 import 'package:lyc_flutter_project/auth/find_id/Provider/SendEmailProvider.dart';
 import 'package:lyc_flutter_project/auth/find_id/Provider/findIdProvider.dart';
+import 'package:lyc_flutter_project/auth/join/Provider/join_provider.dart';
+import 'package:lyc_flutter_project/auth/join/Provider/login_provider.dart';
+import 'package:lyc_flutter_project/auth/join/screens/join_screen_6.dart';
+import 'package:lyc_flutter_project/auth/find_pw/provider/FindPwProvider.dart';
 import 'package:lyc_flutter_project/auth/service/StorageService.dart';
 
 Future<void> main() async {
@@ -134,6 +136,16 @@ Future<void> main() async {
             context.read<StorageService>(),
           ),
         ),
+        ChangeNotifierProvider(
+          create: (context) => JoinProvider(
+            joinRepository: JoinRepository(
+              dio: Provider.of<DioProvider>(context, listen: false).dio,
+              storageService: Provider.of<StorageService>(context, listen: false),
+            ),
+          ),
+        )
+
+
       ],
       child: const MyApp(),
     ),

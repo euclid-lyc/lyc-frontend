@@ -1,39 +1,56 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lyc_flutter_project/common/widget/normal_appbar.dart';
+import 'package:lyc_flutter_project/auth/join/Provider/join_provider.dart';
 import 'package:lyc_flutter_project/styles/app_text_style.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
+import 'package:provider/provider.dart';
 import '../../../widget/Controller.dart';
-import 'join_membership_screen_2.dart';
-import 'join_membership_screen_4.dart';
+import 'join_screen_3.dart';
+import 'join_screen_5.dart';
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
 
-class JoinMembershipScreen3 extends StatefulWidget {
-  const JoinMembershipScreen3({super.key});
+class JoinScreen4 extends StatefulWidget {
+  const JoinScreen4({super.key});
 
   @override
-  State<JoinMembershipScreen3> createState() {
-    return JoinMembershipScreenState3();
-  }
+  State<JoinScreen4> createState() => _JoinScreen4State();
 }
 
-class JoinMembershipScreenState3 extends State<JoinMembershipScreen3> {
-  final Controller _controller1 = Controller();
-  final Controller _controller2 = Controller();
+class _JoinScreen4State extends State<JoinScreen4> {
+  XFile? _image;
+  String _imagePath = '';
+  final ImagePicker picker = ImagePicker();
+  final Controller _nickController = Controller();
+  final Controller _introController = Controller();
 
+  Future<void> getImage(ImageSource imageSource) async {
+    final XFile? pickedFile = await picker.pickImage(source: imageSource);
+    if (pickedFile != null) {
+      setState(() {
+        _image = pickedFile;
+        _imagePath = pickedFile.path;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    final joinProvider = Provider.of<JoinProvider>(context, listen: false);
+
     return Scaffold(
       backgroundColor: AppColor.lightGrey,
       appBar: const NormalAppbar(
         title: "회원가입",
       ),
+      resizeToAvoidBottomInset: true,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Expanded(
-            flex: 1, // 상단 여백을 비율로 설정
-            child: Container(), // 빈 컨테이너로 여백을 제공
+            flex: 1,
+            child: Container(),
           ),
           Center(
             child: Container(
@@ -44,7 +61,7 @@ class JoinMembershipScreenState3 extends State<JoinMembershipScreen3> {
                 borderRadius: BorderRadius.circular(20),
               ),
               padding: EdgeInsets.fromLTRB(22, 28.5, 22, 0),
-              height: 457,
+              height: 440,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -52,7 +69,7 @@ class JoinMembershipScreenState3 extends State<JoinMembershipScreen3> {
                     margin: EdgeInsets.fromLTRB(7, 0, 7, 43.5),
                     alignment: Alignment.topLeft,
                     child: Text(
-                      'Step 3. 회원정보 입력',
+                      'Step 4. 회원정보 입력',
                       style: app_text_style.littleTitle,
                     ),
                   ),
@@ -64,12 +81,32 @@ class JoinMembershipScreenState3 extends State<JoinMembershipScreen3> {
                     ),
                     width: 124,
                     height: 124,
-                    child: Center(
-                      child: SvgPicture.network(
-                        'assets/icon_camera.svg',
-                        width: 33.3,
-                        height: 31.7,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        getImage(ImageSource.gallery);
+                      },
+                      style: ElevatedButton.styleFrom(
+                        elevation: 0,
+                        padding: EdgeInsets.zero,
+                        backgroundColor: Color(0xFFBBBBBB),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(62),
+                        ),
                       ),
+                      child: _image == null
+                          ? SvgPicture.asset(
+                              'assets/icon_camera.svg',
+                              width: 33.3,
+                              height: 31.7,
+                            )
+                          : ClipOval(
+                              child: Image.file(
+                                File(_image!.path),
+                                width: 124,
+                                height: 124,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
                     ),
                   ),
                   SizedBox(height: 1),
@@ -82,7 +119,7 @@ class JoinMembershipScreenState3 extends State<JoinMembershipScreen3> {
                     width: 252,
                     height: 37, // 너비를 252로 설정
                     child: TextField(
-                      controller: _controller1.controller,
+                      controller: _nickController.controller,
                       decoration: InputDecoration(
                         hintText: '닉네임',
                         hintStyle: app_text_style.hint,
@@ -96,16 +133,15 @@ class JoinMembershipScreenState3 extends State<JoinMembershipScreen3> {
                     ),
                   ),
                   SizedBox(height: 10),
-                  // '자유롭게 자신을 소개해주세요' TextField
                   Container(
                     decoration: BoxDecoration(
                       color: AppColor.lightGrey,
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    width: 252, // 너비를 252로 설정
+                    width: 252,
                     child: TextField(
-                      controller: _controller2.controller,
-                      maxLines: 3, // 여러 줄 입력 가능
+                      controller: _introController.controller,
+                      maxLines: 3,
                       decoration: InputDecoration(
                         hintText: '자유롭게 자신을 소개해 주세요',
                         hintStyle: app_text_style.hint,
@@ -114,7 +150,7 @@ class JoinMembershipScreenState3 extends State<JoinMembershipScreen3> {
                           borderSide: BorderSide.none,
                         ),
                         contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 15, vertical: 10), // 왼쪽 여백 조정
+                            horizontal: 15, vertical: 10),
                       ),
                     ),
                   ),
@@ -123,7 +159,7 @@ class JoinMembershipScreenState3 extends State<JoinMembershipScreen3> {
             ),
           ),
           Expanded(
-            flex: 1, // 하단 여백을 비율로 설정
+            flex: 1,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -138,13 +174,12 @@ class JoinMembershipScreenState3 extends State<JoinMembershipScreen3> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>
-                                    const JoinMembershipScreen2()),
+                                builder: (context) => const JoinScreen3()),
                           );
                         },
                         style: TextButton.styleFrom(
                           backgroundColor: AppColor.grey,
-                          minimumSize: Size(120, 40), // 버튼 크기 설정
+                          minimumSize: Size(120, 40),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
                           ),
@@ -157,18 +192,30 @@ class JoinMembershipScreenState3 extends State<JoinMembershipScreen3> {
                           ),
                         ),
                       ),
-                      // '다음' 버튼
+
                       TextButton(
-                        onPressed: () {
+                        onPressed: () async {
+                          //이미지 업로드 안 할 경우 api를 null로 보낼 순 없어서 우선 쓰레기값
+                          if ( _imagePath == '') {
+                            // final directory = await getApplicationDocumentsDirectory();
+                            // _imagePath = '${directory.path}/images/abc.png';
+                            _imagePath = '/sdcard/0621.png';
+                          }
+                          joinProvider.imagePath = _imagePath;
+                          joinProvider.member = joinProvider.member.copyWith(
+                            nickname: _nickController.controller.text,
+                            introduction: _introController.controller.text,
+                          );
+
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => JoinMembershipScreen4()),
+                                builder: (context) => JoinScreen5()),
                           );
                         },
                         style: TextButton.styleFrom(
                           backgroundColor: AppColor.beige,
-                          minimumSize: Size(120, 40), // 버튼 크기 설정
+                          minimumSize: Size(120, 40),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
                           ),
@@ -189,6 +236,4 @@ class JoinMembershipScreenState3 extends State<JoinMembershipScreen3> {
       ),
     );
   }
-
-
 }
