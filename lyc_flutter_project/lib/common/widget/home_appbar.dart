@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lyc_flutter_project/common/widget/round_image.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
+import 'package:lyc_flutter_project/dm/screen/dm_screen.dart';
 
 class HomeAppbar extends StatelessWidget implements PreferredSizeWidget {
   const HomeAppbar({
@@ -53,31 +54,40 @@ class HomeAppbar extends StatelessWidget implements PreferredSizeWidget {
                         flex: 3,
                         child: GestureDetector(
                           onTap: () {},
-                          child: SvgPicture.asset('assets/icon_collage.svg',
-                              color: Colors.white),
-                        ),
-                      ),
-                      const Expanded(child: SizedBox()),
-                      Expanded(
-                        flex: 3,
-                        child: GestureDetector(
-                          onTap: () {},
-                          child: SvgPicture.asset('assets/icon_dm.svg',
-                              color: Colors.white),
-                        ),
-                      ),
-                      const Expanded(child: SizedBox()),
-                      Expanded(
-                        flex: 3,
-                        child: GestureDetector(
-                          onTap: () {},
-                          child: SizedBox(
-                            child: RoundImage(
-                              image: Image.asset('assets/ex_profile.png'),
-                            ),
+                          child: SvgPicture.asset(
+                            'assets/icon_collage.svg',
+                            color: Colors.white,
                           ),
                         ),
                       ),
+                      const Expanded(child: SizedBox()),
+                      Expanded(
+                        flex: 3,
+                        child: GestureDetector(
+                          onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const DmScreen(),
+                            ),
+                          ),
+                          child: SvgPicture.asset(
+                            'assets/icon_dm.svg',
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      // const Expanded(child: SizedBox()),
+                      // Expanded(
+                      //   flex: 3,
+                      //   child: GestureDetector(
+                      //     onTap: () {},
+                      //     child: SizedBox(
+                      //       child: RoundImage(
+                      //         image: Image.asset('assets/ex_profile.png'),
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),
