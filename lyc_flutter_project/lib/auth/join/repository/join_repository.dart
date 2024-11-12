@@ -7,6 +7,7 @@ import '../model/register_member_dto.dart';
 import '../model/user_verification.dart';
 import 'package:path/path.dart' as path;
 import 'package:http_parser/http_parser.dart';
+import 'package:lyc_flutter_project/common/model/api_response.dart';
 
 class JoinRepository {
   final Dio dio;
@@ -108,9 +109,9 @@ class JoinRepository {
         options: options,
       );
 
-      if (response.statusCode != 200) {
+      if (!response.data.isSuccess) {
         throw Exception(
-            '회원 가입 실패: ${response.statusCode}\nResponse: ${response.data}');
+            '회원 가입 실패: ${response.data["message"]}');
       }
     } catch (e) {
       print('오류 발생: $e');
