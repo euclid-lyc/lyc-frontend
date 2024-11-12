@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:lyc_flutter_project/common/const/data.dart';
+import 'package:lyc_flutter_project/config/secret.dart';
 import 'package:lyc_flutter_project/feed/repository/feed_repository.dart';
 import 'package:lyc_flutter_project/mypage/model/mypage_posting_preview.dart';
 
@@ -17,18 +17,20 @@ class HomeProvider extends ChangeNotifier {
 
   get loadingFeedPreview => _loadingFeedPreview;
 
-  get feedPreviewList => _feedPreviewList;
+  List<CoordiPostingPreview> get feedPreviewList => _feedPreviewList;
 
   Future<void> getPostingPreview() async {
     if (_feedPreviewList.isNotEmpty) return;
 
+    _loadingFeedPreview = true;
+    notifyListeners();
+
     try {
-      _loadingFeedPreview = true;
-      notifyListeners();
       final resp = await feedRepositoryProvider.dio.get(
         "http://$ip/lyc/feeds/preview",
         options: Options(headers: {"accessToken": "true"}),
       );
+
       if (resp.data is Map<String, dynamic> &&
           resp.data['result'] is Map<String, dynamic> &&
           resp.data['result']['posting'] is List) {
@@ -39,13 +41,12 @@ class HomeProvider extends ChangeNotifier {
       } else {
         _feedPreviewList = [];
       }
-      _loadingFeedPreview = false;
-      notifyListeners();
     } catch (e) {
       print("에러: $e");
+      _feedPreviewList = [];
+    } finally {
       _loadingFeedPreview = false;
       notifyListeners();
-      rethrow;
     }
   }
 }

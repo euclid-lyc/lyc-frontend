@@ -20,12 +20,9 @@ class _ReviewHomeScreenState extends State<ReviewHomeScreen> {
   @override
   void initState() {
     super.initState();
-    reviewProvider = context.read<ReviewProvider>();
-    getList();
-  }
-
-  Future<void> getList() async {
-    await reviewProvider.getReviews();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<ReviewProvider>().getReviews();
+    });
   }
 
   @override

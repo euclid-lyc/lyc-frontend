@@ -23,7 +23,9 @@ class _FeedScreenState extends State<FeedScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<FeedProvider>().initFeedScreen();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<FeedProvider>().initFeedScreen();
+    });
   }
 
   @override

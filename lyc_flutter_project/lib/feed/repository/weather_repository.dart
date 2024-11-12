@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart' hide Headers;
 import 'package:flutter/material.dart';
-import 'package:lyc_flutter_project/common/const/data.dart';
+import 'package:lyc_flutter_project/config/secret.dart';
 import 'package:lyc_flutter_project/common/model/api_response.dart';
 import 'package:lyc_flutter_project/feed/model/weather_model.dart';
 import 'package:retrofit/retrofit.dart';

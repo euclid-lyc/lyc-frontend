@@ -50,6 +50,12 @@ class PostingDetailProvider extends ChangeNotifier {
     required this.postingId,
   });
 
+  @override
+  void dispose() {
+    _posting = null;
+    super.dispose();
+  }
+
   bool isLiked = false;
   bool isSaved = false;
   bool isMyPosting = false;

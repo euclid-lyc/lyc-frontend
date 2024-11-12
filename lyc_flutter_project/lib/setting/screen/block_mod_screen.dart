@@ -23,7 +23,6 @@ class _BlockModScreenState extends State<BlockModScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<SettingProvider>().getBlockMembers();
     controller.addListener(listener);
   }
 
@@ -46,38 +45,43 @@ class _BlockModScreenState extends State<BlockModScreen> {
       backgroundColor: AppColor.lightGrey,
       appBar: const NormalAppbar(title: "차단 계정 관리"),
       body: Consumer<SettingProvider>(
-        //Todo: refresh
         builder: (context, value, child) {
           return CustomRefreshIndicator(
             onRefresh: value.refreshBlockMembers,
             child: DefaultPadding(
               bottom: 0,
-              child: value.loadingBlockMembers
-                  ? const Center(
+              child: FutureBuilder(
+                future: value.getBlockMembers(),
+                builder: (context, snapshot) {
+                  if (value.loadingBlockMembers) {
+                    return const Center(
                       child: CustomLoading(),
-                    )
-                  : (value.blockMembers.isEmpty
-                      ? const SizedBox.shrink()
-                      : ListView.builder(
-                          itemCount: value.blockMembers.length,
-                          itemBuilder: (context, index) {
-                            final BlockMember member =
-                                value.blockMembers[index];
-                            return MemberList(
-                              memberId: member.memberId,
-                              profile: member.profileImage,
-                              nickname: member.nickname,
-                              button: RightButtonInList(
-                                  backgroundColor: AppColor.brown,
-                                  foregroundColor: Colors.white,
-                                  label: "해제",
-                                  onPressed: () => value.unblockMember(
-                                        memberId: member.memberId,
-                                      )),
-                              content: member.introduction,
-                            );
-                          },
-                        )),
+                    );
+                  } else if (value.blockMembers.isEmpty) {
+                    return const SizedBox.shrink();
+                  }
+                  return ListView.builder(
+                    itemCount: value.blockMembers.length,
+                    itemBuilder: (context, index) {
+                      final BlockMember member = value.blockMembers[index];
+                      return MemberList(
+                        memberId: member.memberId,
+                        profile: member.profileImage,
+                        nickname: member.nickname,
+                        button: RightButtonInList(
+                          backgroundColor: AppColor.brown,
+                          foregroundColor: Colors.white,
+                          label: "해제",
+                          onPressed: () => value.unblockMember(
+                            memberId: member.memberId,
+                          ),
+                        ),
+                        content: member.introduction,
+                      );
+                    },
+                  );
+                },
+              ),
             ),
           );
         },

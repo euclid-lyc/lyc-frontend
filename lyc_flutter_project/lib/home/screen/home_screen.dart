@@ -22,12 +22,9 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-
-    getFeedPreviewList();
-  }
-
-  Future<void> getFeedPreviewList() async {
-    await context.read<HomeProvider>().getPostingPreview();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<HomeProvider>().getPostingPreview();
+    });
   }
 
   @override

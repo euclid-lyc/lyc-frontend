@@ -18,7 +18,7 @@ class MypageScreen extends StatefulWidget {
 
   const MypageScreen({
     super.key,
-    this.memberId,
+    required this.memberId,
     required this.isLoginUser,
   });
 
@@ -34,14 +34,14 @@ class _MypageScreenState extends State<MypageScreen> {
   void initState() {
     super.initState();
     if (widget.memberId == null && widget.isLoginUser) {
-      memberId = Provider.of<LoginProvider>(context, listen: false).memberId!;
+        memberId = Provider.of<LoginProvider>(context, listen: false).memberId!;
     } else {
       memberId = widget.memberId!;
     }
-    provider =
-        Provider.of<MypageProviderFactory>(context, listen: false).getProvider(
+    provider = Provider.of<MypageProviderFactory>(context, listen: false)
+        .getProvider(
       memberId,
-          widget.isLoginUser,
+      widget.isLoginUser,
     );
   }
 
