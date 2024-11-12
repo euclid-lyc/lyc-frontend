@@ -7,7 +7,7 @@ import '../../../widget/Controller.dart';
 import '../../find_id/Screens/find_id_screen_1.dart';
 import '../../find_pw/screens/find_password_screen_1.dart';
 import '../Provider/login_provider.dart';
-import 'join_membership_screen_1.dart';
+import 'join_screen_1.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
@@ -59,7 +59,7 @@ class LoginScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           buildMoveButton(
-                              context, '회원가입', JoinMembershipScreen1()),
+                              context, '회원가입', JoinScreen1()),
                           buildMoveButton(context, '아이디 찾기', FindIdScreen1()),
                           buildMoveButton(
                               context, '비밀번호 찾기', FindPasswordScreen1()),

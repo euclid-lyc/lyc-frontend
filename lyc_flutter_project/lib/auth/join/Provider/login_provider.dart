@@ -7,7 +7,7 @@ import 'package:lyc_flutter_project/mypage/model/profile.dart';
 import 'package:lyc_flutter_project/mypage/repository/mypage_repository.dart';
 import 'package:lyc_flutter_project/config/secret.dart';
 
-import '../model/Credential.dart';
+import '../model/credential.dart';
 
 class LoginProvider extends ChangeNotifier {
   final DioProvider dioProvider;

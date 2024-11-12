@@ -1,40 +1,68 @@
 import 'package:flutter/material.dart';
+import 'package:lyc_flutter_project/auth/join/model/join_info.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:provider/provider.dart';
+import '../../../common/dio/dio.dart';
 import '../../../data/style_list.dart';
 import '../../../styles/app_text_style.dart';
 import '../../../widget/Controller.dart';
 import '../../../widget/normal_appbar.dart';
-import 'join_membership_screen_5.dart';
+import '../Provider/join_provider.dart';
+import 'join_screen_7.dart';
 
-
-class JoinMembershipScreen4 extends StatefulWidget {
-  const JoinMembershipScreen4({super.key});
+class JoinScreen6 extends StatefulWidget {
+  const JoinScreen6({super.key});
 
   @override
-  State<JoinMembershipScreen4> createState() {
-    return JoinMembershipScreenState4();
+  State<JoinScreen6> createState() {
+    return JoinScreenState6();
   }
 }
 
-class JoinMembershipScreenState4 extends State<JoinMembershipScreen4> {
-  final Controller _Controller1_1 = Controller();
-  final Controller _Controller1_2 = Controller();
-  final Controller _Controller1_3 = Controller();
-  final Controller _Controller1_4 = Controller();
-  final Controller _Controller2 = Controller();
-  final Controller _Controller3 = Controller();
-  final Controller _Controller4 = Controller();
-  final Controller _Controller5 = Controller();
-  final Controller _Controller6 = Controller();
-  final Controller _Controller7 = Controller();
-  final Controller _Controller8 = Controller();
-  final Controller _Controller9 = Controller();
-
+class JoinScreenState6 extends State<JoinScreen6> {
+  final Controller _controller1_1 = Controller();
+  final Controller _controller1_2 = Controller();
+  final Controller _controller1_3 = Controller();
+  final Controller _controller1_4 = Controller();
+  final Controller _controller2 = Controller();
+  final Controller _controller3 = Controller();
+  final Controller _controller4 = Controller();
+  final Controller _controller5 = Controller();
+  final Controller _controller6 = Controller();
+  final Controller _controller7 = Controller();
+  final Controller _controller8 = Controller();
+  final Controller _controller9 = Controller();
+  final Controller _controller10 = Controller();
 
 
   @override
   Widget build(BuildContext context) {
+    Future<void> registerMember() async {
+      final joinProvider = Provider.of<JoinProvider>(context, listen: false);
+      final verificationCode =
+          await DioProvider().storage.read(key: 'verificationCode');
+      joinProvider.joinInfo = joinProvider.joinInfo.copyWith(
+          height: int.tryParse(_controller1_1.controller.text) ?? 0,
+          weight: int.tryParse(_controller1_2.controller.text) ?? 0,
+          topSize: _controller1_3.controller.text,
+          bottomSize: _controller1_4.controller.text,
+          infoStyle: InfoStyle(
+              preferredStyleList: _controller2.controller.text.split(','),
+              nonPreferredStyleList: _controller3.controller.text.split(',')),
+          infoFit: InfoFit(
+              preferredFitList: _controller6.controller.text.split(','),
+              nonPreferredFitList: _controller7.controller.text.split(',')),
+          infoMaterial: InfoMaterial(
+              preferredMaterialList: _controller4.controller.text.split(','),
+              nonPreferredMaterialList:
+                  _controller5.controller.text.split(',')),
+          infoBodyType: InfoBodyType(
+              goodBodyTypeList: _controller8.controller.text.split(','),
+              badBodyTypeList: _controller9.controller.text.split(',')),
+          text: _controller10.controller.text);
+      joinProvider.register(verificationCode: verificationCode);
+    }
+
     return ChangeNotifierProvider(
       create: (_) => MembershipState(),
       child: Scaffold(
@@ -60,100 +88,100 @@ class JoinMembershipScreenState4 extends State<JoinMembershipScreen4> {
                   padding: EdgeInsets.only(bottom: 20),
                   child: buildStyleSection(
                     title: '3-2. 평소 즐겨입는 스타일은 무엇인가요?',
-                    notifier: context
-                        .read<MembershipState>()
-                        ._selected2,
+                    notifier: context.read<MembershipState>()._selected2,
                     styles: styleList.styleOptions,
                     text: '기타 스타일 입력',
-                    controller: _Controller2,
+                    controller: _controller2,
                   ),
                 ),
                 Padding(
                   padding: EdgeInsets.only(bottom: 20),
                   child: buildStyleSection(
                     title: '3-3. 평소 즐겨입지 않는 스타일은 무엇인가요?',
-                    notifier: context
-                        .read<MembershipState>()
-                        ._selected3,
-                    styles:  styleList.styleOptions,
+                    notifier: context.read<MembershipState>()._selected3,
+                    styles: styleList.styleOptions,
                     text: '기타 스타일 입력',
-                    controller: _Controller3,
+                    controller: _controller3,
                   ),
                 ),
                 Padding(
                   padding: EdgeInsets.only(bottom: 20),
                   child: buildStyleSection(
                     title: '3-4. 선호하는 소재를 선택해 주세요.',
-                    notifier: context
-                        .read<MembershipState>()
-                        ._selected4,
-                    styles:  styleList.materialOptions,
+                    notifier: context.read<MembershipState>()._selected4,
+                    styles: styleList.materialOptions,
                     text: '기타 소재 입력',
-                    controller: _Controller4,
+                    controller: _controller4,
                   ),
                 ),
                 Padding(
                   padding: EdgeInsets.only(bottom: 20),
                   child: buildStyleSection(
                     title: '3-5. 선호하지 않는 소재를 선택해 주세요.',
-                    notifier: context
-                        .read<MembershipState>()
-                        ._selected5,
-                    styles:  styleList.materialOptions,
+                    notifier: context.read<MembershipState>()._selected5,
+                    styles: styleList.materialOptions,
                     text: '기타 소재 입력',
-                    controller: _Controller5,
+                    controller: _controller5,
                   ),
                 ),
                 Padding(
                   padding: EdgeInsets.only(bottom: 20),
                   child: buildStyleSection(
                     title: '3-6. 선호하는 핏을 선택해 주세요.',
-                    notifier: context
-                        .read<MembershipState>()
-                        ._selected6,
-                    styles:  styleList.fitOptions,
+                    notifier: context.read<MembershipState>()._selected6,
+                    styles: styleList.fitOptions,
                     text: '기타 핏 입력',
-                    controller: _Controller6,
+                    controller: _controller6,
                   ),
                 ),
                 Padding(
                   padding: EdgeInsets.only(bottom: 20),
                   child: buildStyleSection(
                     title: '3-7. 선호하지 않는 핏을 선택해 주세요.',
-                    notifier: context
-                        .read<MembershipState>()
-                        ._selected7,
-                    styles:  styleList.fitOptions,
+                    notifier: context.read<MembershipState>()._selected7,
+                    styles: styleList.fitOptions,
                     text: '기타 핏 입력',
-                    controller: _Controller7,
+                    controller: _controller7,
                   ),
                 ),
                 Padding(
                   padding: EdgeInsets.only(bottom: 20),
                   child: buildStyleSection(
-                    title: '3-8. 보완하고 싶은 신체 부위가 있나요?',
-                    notifier: context
-                        .read<MembershipState>()
-                        ._selected8,
-                    styles:  styleList.BodyParts,
+                    title: '3-8. 강조하고 싶은 신체 부위가 있나요?',
+                    notifier: context.read<MembershipState>()._selected8,
+                    styles: styleList.BodyParts,
                     text: '기타 핏 입력',
-                    controller: _Controller8,
+                    controller: _controller8,
                   ),
                 ),
                 Padding(
                   padding: EdgeInsets.only(bottom: 20),
-                  child: buildAdditionalInfo('3-9.추가로 작성하고 싶은 내용이 있나요?'),
+                  child: buildStyleSection(
+                    title: '3-9. 보완하고 싶은 신체 부위가 있나요?',
+                    notifier: context.read<MembershipState>()._selected9,
+                    styles: styleList.BodyParts,
+                    text: '기타 핏 입력',
+                    controller: _controller9,
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(bottom: 20),
+                  child: buildAdditionalInfo('3-10.추가로 작성하고 싶은 내용이 있나요?'),
                 ),
                 Padding(
                     padding: EdgeInsets.only(bottom: 20),
                     child: TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (
-                                  context) => const JoinMembershipScreen5()),
-                        );
+                      onPressed: () async{
+                        try {
+                          await registerMember();
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => JoinScreen7()),
+                          );
+                        }catch(e){
+                          print("회원 가입에 실패했습니다: $e");
+                        }
                       },
                       style: TextButton.styleFrom(
                         backgroundColor: AppColor.brown, // 색상 변경
@@ -195,20 +223,20 @@ class JoinMembershipScreenState4 extends State<JoinMembershipScreen4> {
             SizedBox(height: 10),
             Expanded(
                 child: TextField(
-                  controller: _Controller9.controller,
-                  maxLines: null,
-                  decoration: InputDecoration(
-                    contentPadding:
+              controller: _controller10.controller,
+              maxLines: null,
+              decoration: InputDecoration(
+                contentPadding:
                     EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-                    filled: false,
-                    hintText: 'ex.종아리가 너무 두꺼운 게 고민이에요.',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20),
-                      borderSide: BorderSide.none,
-                    ),
-                  ),
-                  style: app_text_style.hint.copyWith(color: Colors.black),
-                ))
+                filled: false,
+                hintText: 'ex.종아리가 너무 두꺼운 게 고민이에요.',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20),
+                  borderSide: BorderSide.none,
+                ),
+              ),
+              style: app_text_style.hint.copyWith(color: Colors.black),
+            ))
           ],
         ));
   }
@@ -272,10 +300,10 @@ class JoinMembershipScreenState4 extends State<JoinMembershipScreen4> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                buildInputField('키', _Controller1_1),
-                buildInputField('몸무게', _Controller1_2),
-                buildInputField('상의 사이즈', _Controller1_3),
-                buildInputField('하의 사이즈', _Controller1_4),
+                buildInputField('키', _controller1_1),
+                buildInputField('몸무게', _controller1_2),
+                buildInputField('상의 사이즈', _controller1_3),
+                buildInputField('하의 사이즈', _controller1_4),
               ],
             ),
           ),
@@ -308,7 +336,7 @@ class JoinMembershipScreenState4 extends State<JoinMembershipScreen4> {
                 controller: controller.controller,
                 decoration: InputDecoration(
                   contentPadding:
-                  EdgeInsets.symmetric(vertical: 0, horizontal: 0),
+                      EdgeInsets.symmetric(vertical: 0, horizontal: 0),
                   fillColor: AppColor.grey,
                   filled: true,
                   border: OutlineInputBorder(
@@ -317,6 +345,7 @@ class JoinMembershipScreenState4 extends State<JoinMembershipScreen4> {
                   ),
                 ),
                 style: app_text_style.hint.copyWith(color: Colors.black),
+                keyboardType: TextInputType.number,
               ),
             ),
           ),
@@ -332,6 +361,9 @@ class JoinMembershipScreenState4 extends State<JoinMembershipScreen4> {
     required String text,
     required Controller controller,
   }) {
+    notifier.addListener(() {
+      controller.controller.text = notifier.value.join(',');
+    });
     return Container(
       width: 333,
       height: 200,
@@ -366,7 +398,7 @@ class JoinMembershipScreenState4 extends State<JoinMembershipScreen4> {
                   borderSide: BorderSide.none,
                 ),
                 contentPadding:
-                EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                    EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               ),
               style: app_text_style.hint.copyWith(color: Colors.black),
             ),
@@ -430,13 +462,13 @@ class JoinMembershipScreenState4 extends State<JoinMembershipScreen4> {
                   style,
                   style: isSelected
                       ? TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 14,
-                      color: AppColor.lightGrey)
+                          fontWeight: FontWeight.w500,
+                          fontSize: 14,
+                          color: AppColor.lightGrey)
                       : TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 14,
-                      color: Colors.black),
+                          fontWeight: FontWeight.w500,
+                          fontSize: 14,
+                          color: Colors.black),
                 ),
               ),
             ),
@@ -445,131 +477,23 @@ class JoinMembershipScreenState4 extends State<JoinMembershipScreen4> {
       },
     );
   }
-
-
-//   Widget buildBodyParts({
-//     required String title,
-//     required ValueNotifier<List<String>> notifier,
-//   }) {
-//     return Container(
-//       width: 333,
-//       height: 207,
-//       decoration: BoxDecoration(
-//         color: Colors.white,
-//         borderRadius: BorderRadius.circular(20),
-//       ),
-//       padding: EdgeInsets.fromLTRB(15, 20, 14, 17.5),
-//       child: Column(
-//         crossAxisAlignment: CrossAxisAlignment.start,
-//         children: [
-//           Padding(
-//               padding: EdgeInsets.only(bottom: 16),
-//               child: Text(
-//                 title,
-//                 style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-//               )),
-//           Padding(padding: EdgeInsets.only(bottom: 20), child: MyButtonStack()),
-//         ],
-//       ),
-//     );
-//   }
-// }
-
-// class MyButtonStack extends StatelessWidget {
-//   final List<ButtonPosition> buttonPositions = [
-//     ButtonPosition(text: '어깨', x: -115, y: 0),
-//     ButtonPosition(text: '가슴', x: 0, y: 42),
-//     ButtonPosition(text: '전완', x: 0, y: 0),
-//     ButtonPosition(text: '엉덩이', x: 37, y: 36.6),
-//     ButtonPosition(text: '종아리', x: -137, y: 19.6),
-//     ButtonPosition(text: '허벅지', x: -152, y: 69.6),
-//     ButtonPosition(text: '복부', x: -152, y: 81),
-//     ButtonPosition(text: '상완', x: -137, y: 13),
-//   ];
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     final membershipState = Provider.of<MembershipState>(context);
-//
-//     return Stack(
-//       children: buttonPositions.map((position) {
-//         return Positioned(
-//           left: position.x +
-//               MediaQuery.of(context).size.width / 2,
-//           top: position.y +
-//               MediaQuery.of(context).size.height / 2,
-//           child: buildStyleButton(position.text, membershipState),
-//         );
-//       }).toList(),
-//     );
-//   }
-//
-//   Widget buildStyleButton(String text, MembershipState membershipState) {
-//     return ValueListenableBuilder<List<String>>(
-//       valueListenable: membershipState.selectedStyles,
-//       builder: (context, selectedStyles, child) {
-//         final isSelected = selectedStyles.contains(text);
-//         return GestureDetector(
-//           onTap: () => membershipState.toggleInfo(text),
-//           child: Container(
-//             margin: EdgeInsets.all(5),
-//             decoration: BoxDecoration(
-//               color: isSelected ? AppColor.brown : AppColor.lightGrey,
-//               borderRadius: BorderRadius.circular(20),
-//             ),
-//             padding: EdgeInsets.symmetric(vertical: 7, horizontal: 15),
-//             child: Center(
-//               child: Text(
-//                 text,
-//                 style: isSelected
-//                     ? TextStyle(
-//                         fontWeight: FontWeight.w500,
-//                         fontSize: 14,
-//                         color: AppColor.lightGrey)
-//                     : TextStyle(
-//                         fontWeight: FontWeight.w500,
-//                         fontSize: 14,
-//                         color: Colors.black),
-//               ),
-//             ),
-//           ),
-//         );
-//       },
-//     );
-//   }
-// }
-//
-// class ButtonPosition {
-//   final String text;
-//   final double x;
-//   final double y;
-//
-//   ButtonPosition({required this.text, required this.x, required this.y});
-// }
 }
 
 class MembershipState extends ChangeNotifier {
   final ValueNotifier<List<String>> _selected2 =
-  ValueNotifier<List<String>>([]);
+      ValueNotifier<List<String>>([]);
   final ValueNotifier<List<String>> _selected3 =
-  ValueNotifier<List<String>>([]);
+      ValueNotifier<List<String>>([]);
   final ValueNotifier<List<String>> _selected4 =
-  ValueNotifier<List<String>>([]);
+      ValueNotifier<List<String>>([]);
   final ValueNotifier<List<String>> _selected5 =
-  ValueNotifier<List<String>>([]);
+      ValueNotifier<List<String>>([]);
   final ValueNotifier<List<String>> _selected6 =
-  ValueNotifier<List<String>>([]);
+      ValueNotifier<List<String>>([]);
   final ValueNotifier<List<String>> _selected7 =
-  ValueNotifier<List<String>>([]);
+      ValueNotifier<List<String>>([]);
   final ValueNotifier<List<String>> _selected8 =
-  ValueNotifier<List<String>>([]);
-
-//void toggleInfo(String style, ValueNotifier<List<String>> notifier) {
-// if (notifier.value.contains(style)) {
-//   notifier.value = List.from(notifier.value)..remove(style);
-// } else {
-//   notifier.value = List.from(notifier.value)..add(style);
-//  }
-//  notifyListeners();
-//}
+      ValueNotifier<List<String>>([]);
+  final ValueNotifier<List<String>> _selected9 =
+      ValueNotifier<List<String>>([]);
 }
