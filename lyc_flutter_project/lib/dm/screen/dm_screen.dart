@@ -7,7 +7,9 @@ import 'package:lyc_flutter_project/common/widget/normal_appbar.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/director/widget/custom_search_bar.dart';
 import 'package:lyc_flutter_project/dm/model/chat_model.dart';
-import 'package:lyc_flutter_project/dm/provider/chat_provider.dart';
+import 'package:lyc_flutter_project/dm/provider/dm_provider.dart';
+import 'package:lyc_flutter_project/dm/screen/chat_screen.dart';
+import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 import 'package:provider/provider.dart';
 
 class DmScreen extends StatefulWidget {
@@ -25,14 +27,14 @@ class _DmScreenState extends State<DmScreen> {
     super.initState();
     _scrollController.addListener(_listener);
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<ChatProvider>().getChatList();
+      context.read<DMProvider>().getChatList();
     });
   }
 
   void _listener() {
     if (_scrollController.position.pixels >=
         _scrollController.position.maxScrollExtent - 200) {
-      if (mounted) context.read<ChatProvider>().getChatList();
+      if (mounted) context.read<DMProvider>().getChatList();
     }
   }
 
@@ -50,12 +52,11 @@ class _DmScreenState extends State<DmScreen> {
       appBar: const NormalAppbar(
         title: "DM",
       ),
-      body: Consumer<ChatProvider>(
+      body: Consumer<DMProvider>(
         builder: (context, value, child) {
           if (value.isLoading) {
             return const Center(child: CustomLoading());
           }
-
           return DefaultPadding(
             child: CustomScrollView(
               slivers: [
@@ -90,12 +91,21 @@ class _DmScreenState extends State<DmScreen> {
                       return Padding(
                         padding: const EdgeInsets.only(bottom: 8),
                         child: GestureDetector(
-                          // onTap: () => Naviga,
+                          onTap: () => pushWithoutNavBar(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ChatScreen(
+                                chatId: chat.chatId,
+                                nickname: chat.nickname,
+                                profileImage: chat.profileImage,
+                              ),
+                            ),
+                          ),
                           child: MemberList(
                             navigateMypage: false,
                             profile: chat.profileImage,
                             nickname: chat.nickname,
-                            content: chat.content,
+                            content: chat.isText ? chat.content : "",
                           ),
                         ),
                       );

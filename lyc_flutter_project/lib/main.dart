@@ -4,7 +4,7 @@ import 'package:lyc_flutter_project/auth/join/screens/join_membership_screen_4.d
 import 'package:lyc_flutter_project/common/dio/dio.dart';
 import 'package:lyc_flutter_project/director/provider/director_provider.dart';
 import 'package:lyc_flutter_project/director/repository/director_repository.dart';
-import 'package:lyc_flutter_project/dm/provider/chat_provider.dart';
+import 'package:lyc_flutter_project/dm/provider/dm_provider.dart';
 import 'package:lyc_flutter_project/dm/repository/chat_repository.dart';
 import 'package:lyc_flutter_project/feed/provider/feed_provider.dart';
 import 'package:lyc_flutter_project/feed/repository/feed_repository.dart';
@@ -156,7 +156,7 @@ Future<void> main() async {
           ),
         ),
         ChangeNotifierProvider(
-          create: (context) => ChatProvider(
+          create: (context) => DMProvider(
             repositoryProvider: context.read<ChatRepositoryProvider>(),
           ),
         ),
