@@ -6,8 +6,8 @@ import 'package:lyc_flutter_project/data/app_color.dart';
 import '../../../styles/app_text_style.dart';
 import 'login_screen.dart';
 
-class JoinMembershipScreen5 extends StatelessWidget {
-  const JoinMembershipScreen5({super.key});
+class JoinScreen7 extends StatelessWidget {
+  const JoinScreen7({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,8 +18,8 @@ class JoinMembershipScreen5 extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Expanded(
-            flex: 1, // 상단 여백을 비율로 설정
-            child: Container(), // 빈 컨테이너로 여백을 제공
+            flex: 1,
+            child: Container(),
           ),
           Center(
             child: Container(

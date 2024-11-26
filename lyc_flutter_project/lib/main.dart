@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/auth/join/Provider/login_provider.dart';
-import 'package:lyc_flutter_project/auth/join/screens/join_membership_screen_4.dart';
+import 'package:lyc_flutter_project/auth/join/repository/join_repository.dart';
 import 'package:lyc_flutter_project/common/dio/dio.dart';
 import 'package:lyc_flutter_project/director/provider/director_provider.dart';
 import 'package:lyc_flutter_project/director/repository/director_repository.dart';
@@ -23,6 +23,8 @@ import 'package:provider/provider.dart';
 import 'package:lyc_flutter_project/auth/find_pw/provider/FindPwProvider.dart';
 import 'package:lyc_flutter_project/auth/find_id/Provider/SendEmailProvider.dart';
 import 'package:lyc_flutter_project/auth/find_id/Provider/findIdProvider.dart';
+import 'package:lyc_flutter_project/auth/join/Provider/join_provider.dart';
+import 'package:lyc_flutter_project/auth/join/screens/join_screen_6.dart';
 import 'package:lyc_flutter_project/auth/service/StorageService.dart';
 
 Future<void> main() async {
@@ -46,12 +48,10 @@ Future<void> main() async {
         ),
         ChangeNotifierProvider(create: (context) => MembershipState()),
         ChangeNotifierProvider(
-          create: (context) =>
-              ClothesRepositoryProvider(dio: context.read<DioProvider>().dio),
+          create: (context) => ClothesRepositoryProvider(dio: context.read<DioProvider>().dio),
         ),
         ChangeNotifierProvider(
-          create: (context) =>
-              CoordiRepositoryProvider(dio: context.read<DioProvider>().dio),
+          create: (context) => CoordiRepositoryProvider(dio: context.read<DioProvider>().dio),
         ),
         ChangeNotifierProvider(
           create: (context) => WeatherRepositoryProvider(
@@ -65,8 +65,7 @@ Future<void> main() async {
         ),
         ChangeNotifierProvider(
           create: (context) => FeedProvider(
-            weatherRepositoryProvider:
-                context.read<WeatherRepositoryProvider>(),
+            weatherRepositoryProvider: context.read<WeatherRepositoryProvider>(),
             feedRepositoryProvider: context.read<FeedRepositoryProvider>(),
           ),
         ),
@@ -75,46 +74,35 @@ Future<void> main() async {
             feedRepositoryProvider: context.read<FeedRepositoryProvider>(),
           ),
         ),
-        ChangeNotifierProxyProvider<MypageRepositoryProvider,
-            MypageProviderFactory>(
+        ChangeNotifierProxyProvider<MypageRepositoryProvider, MypageProviderFactory>(
           create: (context) => MypageProviderFactory(
             mypageRepositoryProvider: context.read<MypageRepositoryProvider>(),
           ),
-          update: (context, value, previous) =>
-              previous ??
-              MypageProviderFactory(
-                mypageRepositoryProvider: value,
-              ),
-        ),
-        ChangeNotifierProxyProvider2<MypageRepositoryProvider,
-            CoordiRepositoryProvider, PostingDetailProviderFactory>(
-          create: (context) => PostingDetailProviderFactory(
-            mypageRepositoryProvider:
-                Provider.of<MypageRepositoryProvider>(context, listen: false),
-            coordiRepositoryProvider:
-                Provider.of<CoordiRepositoryProvider>(context, listen: false),
+          update: (context, value, previous) => previous ?? MypageProviderFactory(
+            mypageRepositoryProvider: value,
           ),
-          update: (context, mypageRepositoryProvider, postingRepositoryProvider,
-                  previous) =>
-              previous ??
-              PostingDetailProviderFactory(
-                mypageRepositoryProvider: mypageRepositoryProvider,
-                coordiRepositoryProvider: postingRepositoryProvider,
-              ),
+        ),
+        ChangeNotifierProxyProvider2<MypageRepositoryProvider, CoordiRepositoryProvider, PostingDetailProviderFactory>(
+          create: (context) => PostingDetailProviderFactory(
+            mypageRepositoryProvider: Provider.of<MypageRepositoryProvider>(context, listen: false),
+            coordiRepositoryProvider: Provider.of<CoordiRepositoryProvider>(context, listen: false),
+          ),
+          update: (context, mypageRepositoryProvider, postingRepositoryProvider, previous) =>
+          previous ?? PostingDetailProviderFactory(
+            mypageRepositoryProvider: mypageRepositoryProvider,
+            coordiRepositoryProvider: postingRepositoryProvider,
+          ),
         ),
         ChangeNotifierProvider(
-          create: (context) =>
-              SettingRepositoryProvider(dio: context.read<DioProvider>().dio),
+          create: (context) => SettingRepositoryProvider(dio: context.read<DioProvider>().dio),
         ),
         ChangeNotifierProvider(
           create: (context) => SettingProvider(
-            repositoryProvider:
-                Provider.of<SettingRepositoryProvider>(context, listen: false),
+            repositoryProvider: Provider.of<SettingRepositoryProvider>(context, listen: false),
           ),
         ),
         ChangeNotifierProvider(
-          create: (context) =>
-              DirectorRepositoryProvider(dio: context.read<DioProvider>().dio),
+          create: (context) => DirectorRepositoryProvider(dio: context.read<DioProvider>().dio),
         ),
         ChangeNotifierProvider(
           create: (context) => DirectorProvider(
@@ -160,6 +148,16 @@ Future<void> main() async {
             repositoryProvider: context.read<ChatRepositoryProvider>(),
           ),
         ),
+        ChangeNotifierProvider(
+          create: (context) => JoinProvider(
+            joinRepository: JoinRepository(
+              dio: Provider.of<DioProvider>(context, listen: false).dio,
+              storageService: Provider.of<StorageService>(context, listen: false),
+            ),
+          ),
+        )
+
+
       ],
       child: const MyApp(),
     ),
