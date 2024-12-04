@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:lyc_flutter_project/auth/join/Provider/login_provider.dart';
 import 'package:lyc_flutter_project/auth/join/repository/join_repository.dart';
 import 'package:lyc_flutter_project/common/dio/dio.dart';
 import 'package:lyc_flutter_project/director/provider/director_provider.dart';
 import 'package:lyc_flutter_project/director/repository/director_repository.dart';
+import 'package:lyc_flutter_project/dm/provider/dm_provider.dart';
+import 'package:lyc_flutter_project/dm/repository/chat_repository.dart';
 import 'package:lyc_flutter_project/feed/provider/feed_provider.dart';
 import 'package:lyc_flutter_project/feed/repository/feed_repository.dart';
 import 'package:lyc_flutter_project/feed/repository/weather_repository.dart';
@@ -17,12 +20,11 @@ import 'package:lyc_flutter_project/routes/routes.dart';
 import 'package:lyc_flutter_project/setting/provider/setting_provider.dart';
 import 'package:lyc_flutter_project/setting/repository/setting_repository.dart';
 import 'package:provider/provider.dart';
+import 'package:lyc_flutter_project/auth/find_pw/provider/FindPwProvider.dart';
 import 'package:lyc_flutter_project/auth/find_id/Provider/SendEmailProvider.dart';
 import 'package:lyc_flutter_project/auth/find_id/Provider/findIdProvider.dart';
 import 'package:lyc_flutter_project/auth/join/Provider/join_provider.dart';
-import 'package:lyc_flutter_project/auth/join/Provider/login_provider.dart';
 import 'package:lyc_flutter_project/auth/join/screens/join_screen_6.dart';
-import 'package:lyc_flutter_project/auth/find_pw/provider/FindPwProvider.dart';
 import 'package:lyc_flutter_project/auth/service/StorageService.dart';
 
 Future<void> main() async {
@@ -134,6 +136,16 @@ Future<void> main() async {
           create: (context) => FindPwProvider(
             Provider.of<DioProvider>(context, listen: false),
             context.read<StorageService>(),
+          ),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => ChatRepositoryProvider(
+            dio: context.read<DioProvider>().dio,
+          ),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => DMProvider(
+            repositoryProvider: context.read<ChatRepositoryProvider>(),
           ),
         ),
         ChangeNotifierProvider(

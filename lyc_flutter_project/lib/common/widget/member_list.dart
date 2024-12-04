@@ -12,6 +12,7 @@ class MemberList extends StatelessWidget {
   final String? id;
   final String? content;
   final Widget? button;
+  final bool navigateMypage;
 
   const MemberList({
     super.key,
@@ -21,6 +22,7 @@ class MemberList extends StatelessWidget {
     this.id,
     this.button,
     this.content,
+    this.navigateMypage = true,
   });
 
   @override
@@ -39,15 +41,17 @@ class MemberList extends StatelessWidget {
           Row(
             children: [
               GestureDetector(
-                onTap: () => Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => MypageScreen(
-                      isLoginUser:
-                          memberId == context.read<LoginProvider>().memberId,
-                      memberId: memberId,
-                    ),
-                  ),
-                ),
+                onTap: !navigateMypage
+                    ? null
+                    : () => Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => MypageScreen(
+                              isLoginUser: memberId ==
+                                  context.read<LoginProvider>().memberId,
+                              memberId: memberId,
+                            ),
+                          ),
+                        ),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   child: ProfileImageNetworking(profile),

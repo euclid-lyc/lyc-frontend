@@ -33,6 +33,8 @@ dependencies:
   flutter_secure_storage: ^9.2.2
   location: ^7.0.1
   shared_preferences: ^2.3.2
+  flutter_chat_bubble: ^2.0.2
+  stomp_dart_client: ^2.0.0
 
 dev_dependencies:
   flutter_test:
