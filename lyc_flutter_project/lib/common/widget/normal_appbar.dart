@@ -80,6 +80,7 @@ class NormalAppbar extends StatelessWidget implements PreferredSizeWidget {
           ),
         ],
       ),
+      actions: const [SizedBox.shrink()],
     );
   }
 
