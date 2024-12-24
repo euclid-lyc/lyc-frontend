@@ -1,6 +1,7 @@
 class Assets {
   // icons
   static const String menu = 'assets/icon/menu.svg';
+  static const String out = 'assets/icon/out.svg';
 
   // buttons
   static const String cameraButton = 'assets/button/camera.svg';
