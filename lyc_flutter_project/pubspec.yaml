@@ -50,4 +50,5 @@ flutter:
   assets:
     - assets/
     - assets/icon/
+    - assets/button/
   uses-material-design: true

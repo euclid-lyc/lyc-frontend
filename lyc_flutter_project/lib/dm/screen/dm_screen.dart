@@ -76,7 +76,7 @@ class _DmScreenState extends State<DmScreen> {
                           width: 30,
                           height: 30,
                           child: SvgPicture.asset(
-                            "assets/icon/commission.svg",
+                            "assets/icon/commission.svg.svg",
                             fit: BoxFit.contain,
                           ),
                         ),
@@ -98,6 +98,7 @@ class _DmScreenState extends State<DmScreen> {
                                 chatId: chat.chatId,
                                 nickname: chat.nickname,
                                 profileImage: chat.profileImage,
+                                createdAt: chat.createdAt,
                               ),
                             ),
                           ),

@@ -1,0 +1,151 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:lyc_flutter_project/common/const/assets.dart';
+import 'package:lyc_flutter_project/common/widget/image_networking.dart';
+
+class ChatDrawer extends StatelessWidget {
+  final String myNickname;
+  final String myProfile;
+  final String othersNickname;
+  final String othersProfile;
+  final VoidCallback closeDrawer;
+
+  const ChatDrawer({
+    super.key,
+    required this.myNickname,
+    required this.myProfile,
+    required this.othersNickname,
+    required this.othersProfile,
+    required this.closeDrawer,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      backgroundColor: Colors.white,
+      child: Stack(
+        children: [
+          SingleChildScrollView(
+            child: Column(
+              children: [
+                const SizedBox(height: 40.0),
+                ChatDrawerContent(
+                  title: '사진 및 동영상',
+                  content: Container(
+                    height: 80.0,
+                    width: 80.0,
+                    color: Colors.yellow,
+                  ),
+                ),
+                ChatDrawerContent(
+                  title: '일정',
+                  content: Container(
+                    height: 80.0,
+                    width: 80.0,
+                    color: Colors.yellow,
+                  ),
+                ),
+                ChatDrawerContent(
+                  showPlusIcon: false,
+                  title: '대화상대',
+                  content: Column(
+                    children: [
+                      const SizedBox(height: 16.0),
+                      ListTile(
+                        title: Text(myNickname),
+                        // TODO: 내 프로필로 바꾸기
+                        leading: ProfileImageNetworking(othersProfile),
+                        titleTextStyle: const TextStyle(
+                          fontSize: 14.0,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.black,
+                        ),
+                      ),
+                      const SizedBox(height: 12.0),
+                      ListTile(
+                        title: Text(othersNickname),
+                        leading: ProfileImageNetworking(othersProfile),
+                        titleTextStyle: const TextStyle(
+                          fontSize: 14.0,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Positioned(
+            bottom: 16.0,
+            child: IconButton(
+              padding: const EdgeInsets.only(left: 20.0),
+              onPressed: closeDrawer,
+              icon: SvgPicture.asset(Assets.out),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class ChatDrawerContent extends StatelessWidget {
+  final String title;
+  final Widget content;
+  final bool showPlusIcon;
+
+  const ChatDrawerContent({
+    super.key,
+    required this.title,
+    required this.content,
+    this.showPlusIcon = true,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(top: 16.0, bottom: 16.0, left: 16.0),
+      padding: EdgeInsets.only(top: showPlusIcon ? 0.0 : 16.0, bottom: 12.0),
+      decoration: const BoxDecoration(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(12.0),
+          bottomLeft: Radius.circular(12.0),
+        ),
+        color: Color(0xfff4f4f4),
+      ),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                child: Text(
+                  title,
+                  style: const TextStyle(
+                    fontSize: 14.0,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+              if (showPlusIcon)
+                IconButton(
+                  icon: SvgPicture.asset(
+                    'assets/icon_plus.svg',
+                    colorFilter: const ColorFilter.mode(
+                      Colors.black,
+                      BlendMode.srcIn,
+                    ),
+                  ),
+                  onPressed: () {},
+                ),
+            ],
+          ),
+          content,
+        ],
+      ),
+    );
+  }
+}
