@@ -4,10 +4,12 @@ class MessageModel {
   final String content;
   final BubbleType type;
   final String? image;
+  final String createdAt;
 
   const MessageModel({
     required this.content,
     required this.type,
+    required this.createdAt,
     this.image,
   });
 }

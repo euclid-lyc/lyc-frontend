@@ -1,22 +1,33 @@
 import 'dart:convert';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_bubble/bubble_type.dart';
 import 'package:lyc_flutter_project/common/dio/dio.dart';
+import 'package:lyc_flutter_project/common/model/api_response.dart';
 import 'package:lyc_flutter_project/config/secret.dart';
+import 'package:lyc_flutter_project/dm/model/chat_message_model.dart';
 import 'package:lyc_flutter_project/dm/model/message_model.dart';
+import 'package:lyc_flutter_project/dm/repository/chat_repository.dart';
 import 'package:stomp_dart_client/stomp_dart_client.dart';
 
 class ChatProvider extends ChangeNotifier {
+  final ChatRepository repository;
   final int chatId;
   final String? profileImage;
   final String nickname;
+  final String createdAt;
 
   ChatProvider({
+    required this.repository,
     required this.chatId,
     required this.nickname,
+    required this.createdAt,
     this.profileImage,
   }) {
+    scrollController = ScrollController()..addListener(paginateMessages);
+    textEditingController = TextEditingController();
+    focusNode = FocusNode();
     initChat();
   }
 
@@ -29,27 +40,81 @@ class ChatProvider extends ChangeNotifier {
     }
   }
 
-  late final ScrollController scrollController = ScrollController();
-  late final TextEditingController textEditingController =
-      TextEditingController();
-  late final FocusNode focusNode = FocusNode();
+  late final ScrollController scrollController;
+  late final TextEditingController textEditingController;
+  late final FocusNode focusNode;
 
   bool get isTextFieldEnable => textEditingController.text.isNotEmpty;
 
   String? _accessToken;
   List<MessageModel> _messageList = [];
+  bool hasMore = true;
+  bool loadingMessages = false;
   StompClient? _client;
 
+  String initialCursor = '';
   bool loading = false;
+
+  final String now = DateTime.now().toString();
 
   List<MessageModel> get messageList => _messageList;
 
   Future<void> initChat() async {
     loading = true;
+    initialCursor = createdAt;
     await getToken();
     getClient();
+    getPreviousMessages();
     loading = false;
     notifyListeners();
+  }
+
+  void paginateMessages() {
+    const threshold = 100.0;
+    if (scrollController.position.pixels <= threshold) {
+      if (_messageList.isNotEmpty) {
+        final oldestMessage = _messageList.first;
+        final oldestTimestamp = DateTime.parse(oldestMessage.createdAt);
+        final initialTime = DateTime.parse(initialCursor);
+
+        if (oldestTimestamp.isAfter(initialTime)) {
+          getPreviousMessages();
+        }
+      }
+    }
+  }
+
+  Future<void> getPreviousMessages({
+    int pageSize = 15,
+    String cursorDateTime = '2099-11-20T00:58:45.541933',
+  }) async {
+    if (loadingMessages || !hasMore) return;
+    if (messageList.isNotEmpty) {
+      cursorDateTime = messageList.first.createdAt;
+    }
+    try {
+      loadingMessages = true;
+      final ApiResponse<ChatMessageListModel> result = await repository.getChatMessages(
+        chatId: chatId,
+        pageSize: pageSize,
+        cursorDateTime: cursorDateTime,
+      );
+      final messages = result.result.messages
+          .map(
+            (e) => MessageModel(
+              content: e.content,
+              type: e.sender == nickname ? BubbleType.receiverBubble : BubbleType.sendBubble,
+              image: e.profileImage,
+              createdAt: e.createdAt,
+            ),
+          )
+          .toList();
+      _messageList = [...messages, ..._messageList];
+    } on DioException {
+      debugPrint("[에러] [메시지 목록 불러오기]");
+    } finally {
+      loadingMessages = false;
+    }
   }
 
   Future<void> getToken() async {
@@ -100,22 +165,23 @@ class ChatProvider extends ChangeNotifier {
       isText: isText,
       token: _accessToken!,
     );
-    debugPrint("채팅 메시지 전송 시도");
+    // debugPrint("채팅 메시지 전송 시도");
     _client?.send(
       destination: "/pub/chats/$chatId",
       body: jsonEncode(msg.toJson()),
     );
-    debugPrint("채팅 메시지 전송 완료");
+    // debugPrint("채팅 메시지 전송 완료");
     _messageList = [
       MessageModel(
         content: content,
         type: BubbleType.sendBubble,
+        createdAt: now,
       ),
       ..._messageList,
     ];
     notifyListeners();
-    debugPrint("채팅 메시지 목록에 추가");
-    debugPrint("send: ${_messageList.map((e) => e.content).toList().toString()}");
+    // debugPrint("채팅 메시지 목록에 추가");
+    // debugPrint("send: ${_messageList.map((e) => e.content).toList().toString()}");
   }
 
   void subscribeMessage() {
@@ -136,12 +202,13 @@ class ChatProvider extends ChangeNotifier {
                 content: msg.content,
                 type: BubbleType.receiverBubble,
                 image: profileImage,
+                createdAt: now,
               ),
               ..._messageList,
             ];
           }
           notifyListeners();
-          debugPrint("receive: ${_messageList.map((e) => e.content).toList().toString()}");
+          // debugPrint("receive: ${_messageList.map((e) => e.content).toList().toString()}");
         }
       },
     );
@@ -175,6 +242,7 @@ class ChatProvider extends ChangeNotifier {
     _client?.deactivate();
     _client = null;
     _messageList.clear();
+    scrollController.removeListener(paginateMessages);
     scrollController.dispose();
     textEditingController.dispose();
     focusNode.dispose();

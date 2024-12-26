@@ -98,6 +98,7 @@ class _DmScreenState extends State<DmScreen> {
                                 chatId: chat.chatId,
                                 nickname: chat.nickname,
                                 profileImage: chat.profileImage,
+                                createdAt: chat.createdAt,
                               ),
                             ),
                           ),

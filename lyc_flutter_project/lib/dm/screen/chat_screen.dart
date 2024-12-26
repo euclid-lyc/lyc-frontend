@@ -4,6 +4,7 @@ import 'package:lyc_flutter_project/common/const/assets.dart';
 import 'package:lyc_flutter_project/common/widget/custom_loading.dart';
 import 'package:lyc_flutter_project/common/widget/normal_appbar.dart';
 import 'package:lyc_flutter_project/dm/provider/chat_provider.dart';
+import 'package:lyc_flutter_project/dm/repository/chat_repository.dart';
 import 'package:lyc_flutter_project/dm/widget/chat_drawer.dart';
 import 'package:lyc_flutter_project/dm/widget/chat_input_field.dart';
 import 'package:lyc_flutter_project/dm/widget/message_bubble.dart';
@@ -13,12 +14,14 @@ class ChatScreen extends StatelessWidget {
   final int chatId;
   final String nickname;
   final String profileImage;
+  final String createdAt;
 
   const ChatScreen({
     super.key,
     required this.chatId,
     required this.nickname,
     required this.profileImage,
+    required this.createdAt,
   });
 
   @override
@@ -27,9 +30,11 @@ class ChatScreen extends StatelessWidget {
 
     return ChangeNotifierProvider(
       create: (context) => ChatProvider(
+        repository: context.read<ChatRepositoryProvider>().repository,
         chatId: chatId,
         nickname: nickname,
         profileImage: profileImage,
+        createdAt: createdAt,
       ),
       child: Scaffold(
         key: key,

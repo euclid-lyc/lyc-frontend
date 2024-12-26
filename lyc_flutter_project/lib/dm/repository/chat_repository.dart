@@ -2,6 +2,7 @@ import 'package:dio/dio.dart' hide Headers;
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/common/model/api_response.dart';
 import 'package:lyc_flutter_project/config/secret.dart';
+import 'package:lyc_flutter_project/dm/model/chat_message_model.dart';
 import 'package:lyc_flutter_project/dm/model/chat_model.dart';
 import 'package:retrofit/retrofit.dart';
 
@@ -28,5 +29,13 @@ abstract class ChatRepository {
   Future<ApiResponse<ChatListModel>> getChatList({
     @Query("pageNum") required int pageNum,
     @Query("pageSize") required int pageSize,
+  });
+
+  @PATCH("/{chatId}")
+  @Headers({"accessToken": "true"})
+  Future<ApiResponse<ChatMessageListModel>> getChatMessages({
+    @Path("chatId") required int chatId,
+    @Query("pageSize") required int pageSize,
+    @Query("cursorDateTime") required String cursorDateTime,
   });
 }

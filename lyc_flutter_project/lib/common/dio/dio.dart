@@ -14,7 +14,7 @@ class DioProvider extends ChangeNotifier {
       requestHeader: false,
       request: false,
       requestBody: false,
-      error: false,
+      error: true,
       responseHeader: false,
     ));
     _dio.options.connectTimeout = const Duration(seconds: 10);
