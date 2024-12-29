@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lyc_flutter_project/common/widget/bottom_bar.dart';
 import 'package:lyc_flutter_project/common/widget/nav_bar.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
@@ -16,7 +17,6 @@ class LoginScreen extends StatelessWidget {
 
   final Controller _idController = Controller();
   final Controller _pwController = Controller();
-
 
   @override
   Widget build(BuildContext context) {
@@ -60,11 +60,9 @@ class LoginScreen extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          buildMoveButton(
-                              context, '회원가입', JoinScreen1()),
+                          buildMoveButton(context, '회원가입', JoinScreen1()),
                           buildMoveButton(context, '아이디 찾기', FindIdScreen1()),
-                          buildMoveButton(
-                              context, '비밀번호 찾기', FindPasswordScreen1()),
+                          buildMoveButton(context, '비밀번호 찾기', FindPasswordScreen1()),
                         ],
                       ),
                     ),
@@ -105,13 +103,8 @@ class LoginScreen extends StatelessWidget {
                         final pw = _pwController.controller.text;
 
                         await loginProvider.login(id, pw, context); // 로그인 요청
-                        if (loginProvider.isLoggedIn &&
-                            loginProvider.memberId != null) {
-                          Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(
-                                builder: (context) => const BottomBar()
-                            ),
-                          );
+                        if (loginProvider.isLoggedIn && loginProvider.memberId != null && context.mounted) {
+                          context.goNamed(Routes.home.name);
                         }
                       },
                       style: TextButton.styleFrom(
@@ -198,8 +191,7 @@ class LoginScreen extends StatelessWidget {
                       hintStyle: app_text_style.hint,
                     ),
                     obscureText: text == '비밀번호', // 비밀번호 입력 필드에서 텍스트를 숨깁니다.
-                    onChanged: (value) {
-                    },
+                    onChanged: (value) {},
                   ),
                 ),
               ),

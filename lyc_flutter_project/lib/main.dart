@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/auth/join/Provider/login_provider.dart';
 import 'package:lyc_flutter_project/auth/join/repository/join_repository.dart';
 import 'package:lyc_flutter_project/common/dio/dio.dart';
+import 'package:lyc_flutter_project/common/service/app_service.dart';
 import 'package:lyc_flutter_project/director/provider/director_provider.dart';
 import 'package:lyc_flutter_project/director/repository/director_repository.dart';
 import 'package:lyc_flutter_project/dm/provider/dm_provider.dart';
@@ -16,7 +17,7 @@ import 'package:lyc_flutter_project/mypage/repository/mypage_repository.dart';
 import 'package:lyc_flutter_project/posting/provider/posting_detail_provider.dart';
 import 'package:lyc_flutter_project/posting/repository/clothes_repository.dart';
 import 'package:lyc_flutter_project/posting/repository/coordi_repository.dart';
-import 'package:lyc_flutter_project/routes/routes.dart';
+import 'package:lyc_flutter_project/routes/router.dart';
 import 'package:lyc_flutter_project/setting/provider/setting_provider.dart';
 import 'package:lyc_flutter_project/setting/repository/setting_repository.dart';
 import 'package:provider/provider.dart';
@@ -38,6 +39,12 @@ Future<void> main() async {
         ChangeNotifierProvider(
           create: (context) => MypageRepositoryProvider(
             dio: context.read<DioProvider>().dio,
+          ),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => AppService(
+            storage: context.read<DioProvider>().storage,
+            repository: context.read<MypageRepository>(),
           ),
         ),
         ChangeNotifierProvider(
@@ -78,9 +85,11 @@ Future<void> main() async {
           create: (context) => MypageProviderFactory(
             mypageRepositoryProvider: context.read<MypageRepositoryProvider>(),
           ),
-          update: (context, value, previous) => previous ?? MypageProviderFactory(
-            mypageRepositoryProvider: value,
-          ),
+          update: (context, value, previous) =>
+              previous ??
+              MypageProviderFactory(
+                mypageRepositoryProvider: value,
+              ),
         ),
         ChangeNotifierProxyProvider2<MypageRepositoryProvider, CoordiRepositoryProvider, PostingDetailProviderFactory>(
           create: (context) => PostingDetailProviderFactory(
@@ -88,10 +97,11 @@ Future<void> main() async {
             coordiRepositoryProvider: Provider.of<CoordiRepositoryProvider>(context, listen: false),
           ),
           update: (context, mypageRepositoryProvider, postingRepositoryProvider, previous) =>
-          previous ?? PostingDetailProviderFactory(
-            mypageRepositoryProvider: mypageRepositoryProvider,
-            coordiRepositoryProvider: postingRepositoryProvider,
-          ),
+              previous ??
+              PostingDetailProviderFactory(
+                mypageRepositoryProvider: mypageRepositoryProvider,
+                coordiRepositoryProvider: postingRepositoryProvider,
+              ),
         ),
         ChangeNotifierProvider(
           create: (context) => SettingRepositoryProvider(dio: context.read<DioProvider>().dio),
@@ -156,8 +166,6 @@ Future<void> main() async {
             ),
           ),
         )
-
-
       ],
       child: const MyApp(),
     ),
@@ -169,8 +177,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      routes: routes,
+    return MaterialApp.router(
+      routerConfig: router,
       title: 'Lead Your Closet',
       debugShowCheckedModeBanner: false,
     );
