@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:lyc_flutter_project/common/dio/dio.dart';
 import 'package:lyc_flutter_project/mypage/model/profile.dart';
+import 'package:lyc_flutter_project/mypage/model/profile.dart';
+import 'package:lyc_flutter_project/mypage/model/profile.dart';
 import 'package:lyc_flutter_project/mypage/repository/mypage_repository.dart';
 import 'package:lyc_flutter_project/config/secret.dart';
 import '../model/credential.dart';
@@ -17,10 +19,10 @@ class LoginProvider extends ChangeNotifier {
   bool _isLoggedIn = false;
   int? _memberId;
 
-  Profile? _profile;
+  String? _profile;
   bool _hasProfile = false;
 
-  get profile => _profile;
+  String? get profile => _profile;
 
   get hasProfile => _hasProfile;
 
@@ -58,7 +60,7 @@ class LoginProvider extends ChangeNotifier {
       final resp = await mypageRepository.getProfile(memberId: _memberId!);
 
       if (resp.isSuccess) {
-        _profile = resp.result;
+        _profile = resp.result.profileImage;
         _hasProfile = true;
         notifyListeners();
         return true;

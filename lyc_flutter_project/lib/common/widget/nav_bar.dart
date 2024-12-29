@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:lyc_flutter_project/auth/join/Provider/login_provider.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/routes/routes.dart';
+import 'package:provider/provider.dart';
 
 class NavBar extends StatelessWidget {
   final String currentRouteName;
@@ -127,10 +129,14 @@ class NavBar extends StatelessWidget {
                       width: 8.0,
                     ),
                   ),
-                  child: ClipOval(
-                    child: Image.asset(
-                      'assets/ex_profile.png',
-                      fit: BoxFit.cover,
+                  child: Consumer<LoginProvider>(
+                    builder: (context, provider, child) => ClipOval(
+                      child: provider.profile != null
+                          ? Image.network(
+                              provider.profile!,
+                              fit: BoxFit.cover,
+                            )
+                          : Container(color: Colors.white),
                     ),
                   ),
                 ),
