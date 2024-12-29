@@ -24,23 +24,17 @@ class RightButtonInList extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: onPressed,
-      style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all(backgroundColor),
-        foregroundColor: MaterialStateProperty.all(foregroundColor),
-        textStyle: MaterialStateProperty.all(
-          TextStyle(
-            fontWeight: fontWeight,
-            fontSize: fontSize,
-          ),
+      style: TextButton.styleFrom(
+        backgroundColor: backgroundColor,
+        foregroundColor: foregroundColor,
+        textStyle: TextStyle(
+          fontWeight: fontWeight,
+          fontSize: fontSize,
         ),
-        shape: MaterialStateProperty.all(
-          RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20.0),
-          ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.0),
         ),
-        padding: MaterialStateProperty.all(
-          EdgeInsets.all(padding),
-        ),
+        padding: EdgeInsets.all(padding),
       ),
       child: Text(label),
     );

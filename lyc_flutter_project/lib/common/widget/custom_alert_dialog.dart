@@ -99,22 +99,16 @@ class _CustomTextButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: onPressed,
-      style: ButtonStyle(
-        padding: MaterialStateProperty.all(
-          const EdgeInsets.symmetric(horizontal: 10.0),
+      style: TextButton.styleFrom(
+        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+        backgroundColor: backgroundColor,
+        foregroundColor: foregroundColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.0),
         ),
-        backgroundColor: MaterialStateProperty.all(backgroundColor),
-        foregroundColor: MaterialStateProperty.all(foregroundColor),
-        shape: MaterialStateProperty.all(
-          RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20.0),
-          ),
-        ),
-        textStyle: MaterialStateProperty.all(
-          const TextStyle(
-            fontWeight: FontWeight.w500,
-            fontSize: 14.0,
-          ),
+        textStyle: const TextStyle(
+          fontWeight: FontWeight.w500,
+          fontSize: 14.0,
         ),
       ),
       child: Text(label),

@@ -42,7 +42,7 @@ class HomeProvider extends ChangeNotifier {
         _feedPreviewList = [];
       }
     } catch (e) {
-      print("에러: $e");
+      debugPrint("에러: $e");
       _feedPreviewList = [];
     } finally {
       _loadingFeedPreview = false;

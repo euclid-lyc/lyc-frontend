@@ -141,7 +141,6 @@ class _PaddingText extends StatelessWidget {
   final double fontSize;
 
   const _PaddingText({
-    super.key,
     required this.label,
     required this.fontWeight,
     required this.fontSize,

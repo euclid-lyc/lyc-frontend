@@ -47,28 +47,28 @@ class JoinScreenState3 extends State<JoinScreen3> {
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(20),
                 ),
-                padding: EdgeInsets.fromLTRB(22, 28.5, 22, 0),
+                padding: const EdgeInsets.fromLTRB(22, 28.5, 22, 0),
                 height: 306,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Padding(
+                    const Padding(
                       padding: EdgeInsets.fromLTRB(7, 0, 7, 8),
                       child: Text(
                         'Step 3. 배송지 입력',
-                        style: app_text_style.littleTitle,
+                        style: AppTextStyle.littleTitle,
                       ),
                     ),
-                    Padding(
+                    const Padding(
                       padding: EdgeInsets.fromLTRB(13.7, 0, 13.7, 25),
                       child: Text(
                         '배송지 정보는 다른 사용자에게 노출되지 않습니다.',
-                        style: app_text_style.hint,
+                        style: AppTextStyle.hint,
                       ),
                     ),
                     // 우편번호 입력 필드 및 버튼
                     Padding(
-                      padding: EdgeInsets.fromLTRB(13.7, 0, 13.7, 15),
+                      padding: const EdgeInsets.fromLTRB(13.7, 0, 13.7, 15),
                       child: Row(
                         children: [
                           Expanded(
@@ -80,12 +80,11 @@ class JoinScreenState3 extends State<JoinScreen3> {
                               ),
                               child: TextField(
                                 controller: _psCodeController.controller,
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                   border: InputBorder.none,
                                   hintText: '우편번호',
-                                  hintStyle: app_text_style.hint,
-                                  contentPadding: EdgeInsets.symmetric(
-                                      horizontal: 12, vertical: 12), // 중앙 정렬
+                                  hintStyle: AppTextStyle.hint,
+                                  contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 12), // 중앙 정렬
                                 ),
                                 keyboardType: TextInputType.number,
                                 textAlignVertical: TextAlignVertical.center,
@@ -93,13 +92,12 @@ class JoinScreenState3 extends State<JoinScreen3> {
                                 textAlign: TextAlign.left,
                                 // 텍스트 왼쪽 정렬
                                 onChanged: (value) {
-                                  _postalCode = int.tryParse(value) ??
-                                      0; // int로 변환, 실패 시 0
+                                  _postalCode = int.tryParse(value) ?? 0; // int로 변환, 실패 시 0
                                 },
                               ),
                             ),
                           ),
-                          SizedBox(width: 8),
+                          const SizedBox(width: 8),
                           SizedBox(
                             height: 40, // 버튼의 높이 설정
                             child: TextButton(
@@ -111,10 +109,9 @@ class JoinScreenState3 extends State<JoinScreen3> {
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10),
                                 ),
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 11.1, vertical: 4.7),
+                                padding: const EdgeInsets.symmetric(horizontal: 11.1, vertical: 4.7),
                               ),
-                              child: Center(
+                              child: const Center(
                                 child: Text(
                                   '우편번호 찾기',
                                   style: TextStyle(
@@ -131,7 +128,7 @@ class JoinScreenState3 extends State<JoinScreen3> {
                     ),
                     // 주소 입력 필드
                     Padding(
-                      padding: EdgeInsets.fromLTRB(13.7, 0, 13.7, 14),
+                      padding: const EdgeInsets.fromLTRB(13.7, 0, 13.7, 14),
                       child: Container(
                         height: 40,
                         decoration: BoxDecoration(
@@ -140,12 +137,11 @@ class JoinScreenState3 extends State<JoinScreen3> {
                         ),
                         child: TextField(
                           controller: _adController.controller,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             border: InputBorder.none,
                             hintText: '주소',
-                            hintStyle: app_text_style.hint,
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 12, vertical: 12), // 중앙 정렬
+                            hintStyle: AppTextStyle.hint,
+                            contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 12), // 중앙 정렬
                           ),
                           textAlignVertical: TextAlignVertical.center,
                           // 텍스트 수직 중앙 정렬
@@ -155,7 +151,7 @@ class JoinScreenState3 extends State<JoinScreen3> {
                     ),
                     // 상세 주소 입력 필드
                     Padding(
-                      padding: EdgeInsets.fromLTRB(13.7, 0, 13.7, 0),
+                      padding: const EdgeInsets.fromLTRB(13.7, 0, 13.7, 0),
                       child: Container(
                         height: 40,
                         decoration: BoxDecoration(
@@ -164,12 +160,11 @@ class JoinScreenState3 extends State<JoinScreen3> {
                         ),
                         child: TextField(
                           controller: _detailAdController.controller,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             border: InputBorder.none,
                             hintText: '상세주소',
-                            hintStyle: app_text_style.hint,
-                            contentPadding: EdgeInsets.symmetric(
-                                horizontal: 12, vertical: 12), // 중앙 정렬
+                            hintStyle: AppTextStyle.hint,
+                            contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 12), // 중앙 정렬
                           ),
                           textAlignVertical: TextAlignVertical.center,
                           // 텍스트 수직 중앙 정렬
@@ -197,8 +192,7 @@ class JoinScreenState3 extends State<JoinScreen3> {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(
-                                builder: (context) => JoinScreen2()),
+                            MaterialPageRoute(builder: (context) => JoinScreen2()),
                           );
                         },
                         style: TextButton.styleFrom(
@@ -210,7 +204,7 @@ class JoinScreenState3 extends State<JoinScreen3> {
                         ),
                         child: Text(
                           '이전',
-                          style: app_text_style.hint.copyWith(
+                          style: AppTextStyle.hint.copyWith(
                             color: Colors.black,
                             fontSize: 14,
                           ),
@@ -228,33 +222,26 @@ class JoinScreenState3 extends State<JoinScreen3> {
                             address: _adController.controller.text,
                             detailAddress: _detailAdController.controller.text,
                             text: '',
-                            infoStyle: InfoStyle(
-                                preferredStyleList: [],
-                                nonPreferredStyleList: []),
-                            infoFit: InfoFit(
-                                preferredFitList: [], nonPreferredFitList: []),
-                            infoMaterial: InfoMaterial(
-                                preferredMaterialList: [],
-                                nonPreferredMaterialList: []),
-                            infoBodyType: InfoBodyType(
-                                goodBodyTypeList: [], badBodyTypeList: []),
+                            infoStyle: InfoStyle(preferredStyleList: [], nonPreferredStyleList: []),
+                            infoFit: InfoFit(preferredFitList: [], nonPreferredFitList: []),
+                            infoMaterial: InfoMaterial(preferredMaterialList: [], nonPreferredMaterialList: []),
+                            infoBodyType: InfoBodyType(goodBodyTypeList: [], badBodyTypeList: []),
                           );
                           Navigator.push(
                             context,
-                            MaterialPageRoute(
-                                builder: (context) => const JoinScreen4()),
+                            MaterialPageRoute(builder: (context) => const JoinScreen4()),
                           );
                         },
                         style: TextButton.styleFrom(
                           backgroundColor: AppColor.beige, // 색상 변경
-                          minimumSize: Size(120, 40), // 버튼 크기 설정
+                          minimumSize: const Size(120, 40), // 버튼 크기 설정
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
                           ),
                         ),
-                        child: Text(
+                        child: const Text(
                           '다음',
-                          style: app_text_style.button,
+                          style: AppTextStyle.button,
                           textAlign: TextAlign.center,
                         ),
                       ),

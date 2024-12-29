@@ -42,9 +42,9 @@ class JoinScreen2 extends StatelessWidget {
                   Container(
                     margin: const EdgeInsets.fromLTRB(7, 0, 7, 43.5),
                     alignment: Alignment.topLeft,
-                    child: Text(
+                    child: const Text(
                       'Step 2. 본인인증',
-                      style: app_text_style.littleTitle,
+                      style: AppTextStyle.littleTitle,
                     ),
                   ),
                   Container(
@@ -68,7 +68,7 @@ class JoinScreen2 extends StatelessWidget {
                     child: Text(
                       '입력하신 이메일로 \n 인증번호가 전송되었습니다.',
                       textAlign: TextAlign.center,
-                      style: app_text_style.otherLoginTextStyle.copyWith(
+                      style: AppTextStyle.otherLoginTextStyle.copyWith(
                         color: Colors.black,
                       ),
                     ),
@@ -84,7 +84,7 @@ class JoinScreen2 extends StatelessWidget {
                       controller: _codeController.controller,
                       decoration: InputDecoration(
                         hintText: '인증번호를 입력해 주세요',
-                        hintStyle: app_text_style.hint,
+                        hintStyle: AppTextStyle.hint,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
                           borderSide: BorderSide.none,
@@ -118,7 +118,7 @@ class JoinScreen2 extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => JoinScreen1(),
+                              builder: (context) => const JoinScreen1(),
                             ),
                           );
                         },
@@ -131,7 +131,7 @@ class JoinScreen2 extends StatelessWidget {
                         ),
                         child: Text(
                           '이전',
-                          style: app_text_style.hint.copyWith(
+                          style: AppTextStyle.hint.copyWith(
                             color: Colors.black,
                             fontSize: 14,
                           ),
@@ -141,16 +141,15 @@ class JoinScreen2 extends StatelessWidget {
                       TextButton(
                         onPressed: () async {
                           try {
-                            await joinProvider.verifyCode(
-                                verificationCode:
-                                    _codeController.controller.text);
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => JoinScreen3()),
-                            );
+                            await joinProvider.verifyCode(verificationCode: _codeController.controller.text);
+                            if (context.mounted) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => const JoinScreen3()),
+                              );
+                            }
                           } catch (e) {
-                            print('Error: $e');
+                            debugPrint('Error: $e');
                           }
                         },
                         style: TextButton.styleFrom(
@@ -160,9 +159,9 @@ class JoinScreen2 extends StatelessWidget {
                             borderRadius: BorderRadius.circular(20),
                           ),
                         ),
-                        child: Text(
+                        child: const Text(
                           '다음',
-                          style: app_text_style.button,
+                          style: AppTextStyle.button,
                           textAlign: TextAlign.center,
                         ),
                       ),

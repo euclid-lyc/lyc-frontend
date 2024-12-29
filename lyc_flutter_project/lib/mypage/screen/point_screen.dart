@@ -62,7 +62,7 @@ class PointScreen extends StatelessWidget {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) {
-                                      return PointChargeScreen();
+                                      return const PointChargeScreen();
                                     },
                                   ),
                                 );

@@ -9,7 +9,7 @@ import '../Provider/join_provider.dart';
 import 'join_screen_2.dart';
 
 class JoinScreen1 extends StatefulWidget {
-  JoinScreen1({super.key});
+  const JoinScreen1({super.key});
 
   @override
   State<JoinScreen1> createState() {
@@ -29,7 +29,6 @@ class JoinScreenState1 extends State<JoinScreen1> {
   void _tryValidation() {
     final isValid = _formKey.currentState!.validate();
     if (isValid) {
-
       final joinProvider = Provider.of<JoinProvider>(context, listen: false);
 
       joinProvider.member = Member(
@@ -50,13 +49,14 @@ class JoinScreenState1 extends State<JoinScreen1> {
         loginPwCheck: _pwCheckController.controller.text,
       )
           .then((_) {
-
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => JoinScreen2()),
-        );
+        if (mounted) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => JoinScreen2()),
+          );
+        }
       }).catchError((error) {
-        print('인증 코드 요청 실패: $error');
+        debugPrint('인증 코드 요청 실패: $error');
       });
     }
   }
@@ -65,7 +65,7 @@ class JoinScreenState1 extends State<JoinScreen1> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.lightGrey,
-      appBar: NormalAppbar(
+      appBar: const NormalAppbar(
         title: "회원가입",
       ),
       body: Center(
@@ -75,7 +75,7 @@ class JoinScreenState1 extends State<JoinScreen1> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                padding: EdgeInsets.fromLTRB(29, 28.5, 29, 33),
+                padding: const EdgeInsets.fromLTRB(29, 28.5, 29, 33),
                 width: 296,
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -88,11 +88,11 @@ class JoinScreenState1 extends State<JoinScreen1> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Container(
-                        margin: EdgeInsets.only(bottom: 25),
+                        margin: const EdgeInsets.only(bottom: 25),
                         alignment: Alignment.topLeft,
-                        child: Text(
+                        child: const Text(
                           'Step 1. 아이디 비밀번호 설정',
-                          style: app_text_style.littleTitle,
+                          style: AppTextStyle.littleTitle,
                         ),
                       ),
                       buildNameField(),
@@ -102,7 +102,7 @@ class JoinScreenState1 extends State<JoinScreen1> {
                       buildPwField(),
                       buildPwCheckField(),
                       Padding(
-                        padding: EdgeInsets.only(top: 30.5),
+                        padding: const EdgeInsets.only(top: 30.5),
                         child: TextButton(
                           onPressed: _tryValidation,
                           style: TextButton.styleFrom(
@@ -111,11 +111,11 @@ class JoinScreenState1 extends State<JoinScreen1> {
                               borderRadius: BorderRadius.circular(20),
                             ),
                           ),
-                          child: SizedBox(
+                          child: const SizedBox(
                             width: 230,
                             child: Text(
                               '다음',
-                              style: app_text_style.button,
+                              style: AppTextStyle.button,
                               textAlign: TextAlign.center,
                             ),
                           ),
@@ -126,19 +126,19 @@ class JoinScreenState1 extends State<JoinScreen1> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.symmetric(vertical: 20),
+                padding: const EdgeInsets.symmetric(vertical: 20),
                 child: TextButton(
                   onPressed: () {
                     // 다른 계정으로 회원가입 버튼 눌렀을 때 동작 구현
                   },
-                  child: Text(
+                  child: const Text(
                     '다른 계정으로 회원가입',
-                    style: app_text_style.otherLoginTextStyle,
+                    style: AppTextStyle.otherLoginTextStyle,
                   ),
                 ),
               ),
               Padding(
-                padding: EdgeInsets.symmetric(vertical: 0),
+                padding: const EdgeInsets.symmetric(vertical: 0),
                 child: SizedBox(
                   width: 166,
                   child: Row(
@@ -187,17 +187,17 @@ class JoinScreenState1 extends State<JoinScreen1> {
 
   Widget buildNameField() {
     return Container(
-      margin: EdgeInsets.only(bottom: 8.5),
+      margin: const EdgeInsets.only(bottom: 8.5),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            margin: EdgeInsets.only(bottom: 4.5),
+            margin: const EdgeInsets.only(bottom: 4.5),
             alignment: Alignment.topLeft,
-            child: Text(
+            child: const Text(
               '이름',
-              style: app_text_style.labelTextStyle,
+              style: AppTextStyle.labelTextStyle,
             ),
           ),
           Container(
@@ -208,11 +208,11 @@ class JoinScreenState1 extends State<JoinScreen1> {
               borderRadius: BorderRadius.circular(10),
             ),
             child: Padding(
-              padding: EdgeInsets.fromLTRB(18, 12, 18, 12),
+              padding: const EdgeInsets.fromLTRB(18, 12, 18, 12),
               child: TextFormField(
                 textAlignVertical: TextAlignVertical.center,
                 textAlign: TextAlign.start,
-                key: ValueKey(2),
+                key: const ValueKey(2),
                 validator: (value) {
                   if (value == null || value.isEmpty || value.length < 2) {
                     return '이름은 두 글자 이상이어야 합니다.';
@@ -220,7 +220,7 @@ class JoinScreenState1 extends State<JoinScreen1> {
                   return null;
                 },
                 controller: _nameController.controller,
-                decoration: getDecoration('이름을 입력해 주세요', app_text_style.hint),
+                decoration: getDecoration('이름을 입력해 주세요', AppTextStyle.hint),
                 keyboardType: TextInputType.text,
               ),
             ),
@@ -232,17 +232,17 @@ class JoinScreenState1 extends State<JoinScreen1> {
 
   Widget buildIdField() {
     return Container(
-      margin: EdgeInsets.only(bottom: 8.5),
+      margin: const EdgeInsets.only(bottom: 8.5),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            margin: EdgeInsets.only(bottom: 4.5),
+            margin: const EdgeInsets.only(bottom: 4.5),
             alignment: Alignment.topLeft,
-            child: Text(
+            child: const Text(
               '아이디',
-              style: app_text_style.labelTextStyle,
+              style: AppTextStyle.labelTextStyle,
             ),
           ),
           Container(
@@ -253,25 +253,23 @@ class JoinScreenState1 extends State<JoinScreen1> {
               borderRadius: BorderRadius.circular(10),
             ),
             child: Padding(
-              padding: EdgeInsets.fromLTRB(18, 12, 18, 12),
+              padding: const EdgeInsets.fromLTRB(18, 12, 18, 12),
               child: TextFormField(
                 textAlignVertical: TextAlignVertical.center,
                 textAlign: TextAlign.start,
-                key: ValueKey(1),
+                key: const ValueKey(1),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return '아이디를 입력해 주세요.';
                   } else if (value.length < 6) {
                     return '아이디는 6글자 이상이어야 합니다.';
-                  } else if (!RegExp(
-                          r'^(?=.*[a-zA-Z])(?=.*[!@#$%^&*(),.?":{}|<>]).+$')
-                      .hasMatch(value)) {
+                  } else if (!RegExp(r'^(?=.*[a-zA-Z])(?=.*[!@#$%^&*(),.?":{}|<>]).+$').hasMatch(value)) {
                     return '아이디에는 영어와 특수문자가 포함되어야 합니다.';
                   }
                   return null;
                 },
                 controller: _idController.controller,
-                decoration: getDecoration('아이디를 입력해 주세요', app_text_style.hint),
+                decoration: getDecoration('아이디를 입력해 주세요', AppTextStyle.hint),
                 keyboardType: TextInputType.text,
               ),
             ),
@@ -283,17 +281,17 @@ class JoinScreenState1 extends State<JoinScreen1> {
 
   Widget buildPhoneField() {
     return Container(
-      margin: EdgeInsets.only(bottom: 8.5),
+      margin: const EdgeInsets.only(bottom: 8.5),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            margin: EdgeInsets.only(bottom: 4.5),
+            margin: const EdgeInsets.only(bottom: 4.5),
             alignment: Alignment.topLeft,
-            child: Text(
+            child: const Text(
               '전화번호',
-              style: app_text_style.labelTextStyle,
+              style: AppTextStyle.labelTextStyle,
             ),
           ),
           Container(
@@ -304,11 +302,11 @@ class JoinScreenState1 extends State<JoinScreen1> {
               borderRadius: BorderRadius.circular(10),
             ),
             child: Padding(
-              padding: EdgeInsets.fromLTRB(18, 12, 18, 12),
+              padding: const EdgeInsets.fromLTRB(18, 12, 18, 12),
               child: TextFormField(
                 textAlignVertical: TextAlignVertical.center,
                 textAlign: TextAlign.start,
-                key: ValueKey(3),
+                key: const ValueKey(3),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return '전화번호를 입력해주세요.';
@@ -316,7 +314,7 @@ class JoinScreenState1 extends State<JoinScreen1> {
                   return null;
                 },
                 controller: _phoneController.controller,
-                decoration: getDecoration('전화번호를 입력해주세요', app_text_style.hint),
+                decoration: getDecoration('전화번호를 입력해주세요', AppTextStyle.hint),
                 keyboardType: TextInputType.phone,
               ),
             ),
@@ -328,17 +326,17 @@ class JoinScreenState1 extends State<JoinScreen1> {
 
   Widget buildEmailField() {
     return Container(
-      margin: EdgeInsets.only(bottom: 8.5),
+      margin: const EdgeInsets.only(bottom: 8.5),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            margin: EdgeInsets.only(bottom: 4.5),
+            margin: const EdgeInsets.only(bottom: 4.5),
             alignment: Alignment.topLeft,
-            child: Text(
+            child: const Text(
               '이메일',
-              style: app_text_style.labelTextStyle,
+              style: AppTextStyle.labelTextStyle,
             ),
           ),
           Container(
@@ -349,11 +347,11 @@ class JoinScreenState1 extends State<JoinScreen1> {
               borderRadius: BorderRadius.circular(10),
             ),
             child: Padding(
-              padding: EdgeInsets.fromLTRB(18, 12, 18, 12),
+              padding: const EdgeInsets.fromLTRB(18, 12, 18, 12),
               child: TextFormField(
                 textAlignVertical: TextAlignVertical.center,
                 textAlign: TextAlign.start,
-                key: ValueKey(3),
+                key: const ValueKey(3),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return '이메일을 입력해주세요.';
@@ -363,7 +361,7 @@ class JoinScreenState1 extends State<JoinScreen1> {
                   return null;
                 },
                 controller: _emailController.controller,
-                decoration: getDecoration('이메일을 입력해 주세요', app_text_style.hint),
+                decoration: getDecoration('이메일을 입력해 주세요', AppTextStyle.hint),
                 keyboardType: TextInputType.emailAddress,
               ),
             ),
@@ -375,17 +373,17 @@ class JoinScreenState1 extends State<JoinScreen1> {
 
   Widget buildPwField() {
     return Container(
-      margin: EdgeInsets.only(bottom: 8.5),
+      margin: const EdgeInsets.only(bottom: 8.5),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            margin: EdgeInsets.only(bottom: 4.5),
+            margin: const EdgeInsets.only(bottom: 4.5),
             alignment: Alignment.topLeft,
-            child: Text(
+            child: const Text(
               '비밀번호',
-              style: app_text_style.labelTextStyle,
+              style: AppTextStyle.labelTextStyle,
             ),
           ),
           Container(
@@ -396,25 +394,24 @@ class JoinScreenState1 extends State<JoinScreen1> {
               borderRadius: BorderRadius.circular(10),
             ),
             child: Padding(
-              padding: EdgeInsets.fromLTRB(18, 12, 18, 12),
+              padding: const EdgeInsets.fromLTRB(18, 12, 18, 12),
               child: TextFormField(
                 textAlignVertical: TextAlignVertical.center,
                 textAlign: TextAlign.start,
-                key: ValueKey(4),
+                key: const ValueKey(4),
                 obscureText: true,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return '비밀번호를 입력해 주세요.';
                   } else if (value.length < 8) {
                     return '비밀번호는 8자 이상이어야 합니다.';
-                  } else if (!RegExp(r'^(?=.*[!@#$%^&*(),.?":{}|<>]).+$')
-                      .hasMatch(value)) {
+                  } else if (!RegExp(r'^(?=.*[!@#$%^&*(),.?":{}|<>]).+$').hasMatch(value)) {
                     return '비밀번호에는 특수 문자가 포함되어야 합니다.';
                   }
                   return null;
                 },
                 controller: _pwController.controller,
-                decoration: getDecoration('비밀번호를 입력해 주세요', app_text_style.hint),
+                decoration: getDecoration('비밀번호를 입력해 주세요', AppTextStyle.hint),
                 keyboardType: TextInputType.visiblePassword,
               ),
             ),
@@ -426,17 +423,17 @@ class JoinScreenState1 extends State<JoinScreen1> {
 
   Widget buildPwCheckField() {
     return Container(
-      margin: EdgeInsets.only(bottom: 8.5),
+      margin: const EdgeInsets.only(bottom: 8.5),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            margin: EdgeInsets.only(bottom: 4.5),
+            margin: const EdgeInsets.only(bottom: 4.5),
             alignment: Alignment.topLeft,
-            child: Text(
+            child: const Text(
               '비밀번호 확인',
-              style: app_text_style.labelTextStyle,
+              style: AppTextStyle.labelTextStyle,
             ),
           ),
           Container(
@@ -447,11 +444,11 @@ class JoinScreenState1 extends State<JoinScreen1> {
               borderRadius: BorderRadius.circular(10),
             ),
             child: Padding(
-              padding: EdgeInsets.fromLTRB(18, 12, 18, 12),
+              padding: const EdgeInsets.fromLTRB(18, 12, 18, 12),
               child: TextFormField(
                 textAlignVertical: TextAlignVertical.center,
                 textAlign: TextAlign.start,
-                key: ValueKey(5),
+                key: const ValueKey(5),
                 obscureText: true,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -462,8 +459,7 @@ class JoinScreenState1 extends State<JoinScreen1> {
                   return null;
                 },
                 controller: _pwCheckController.controller,
-                decoration:
-                    getDecoration('비밀번호를 다시 입력해 주세요', app_text_style.hint),
+                decoration: getDecoration('비밀번호를 다시 입력해 주세요', AppTextStyle.hint),
                 keyboardType: TextInputType.visiblePassword,
               ),
             ),

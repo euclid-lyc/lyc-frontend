@@ -16,20 +16,16 @@ class PointCustomButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: onPressed,
-      style: ButtonStyle(
+      style: TextButton.styleFrom(
         alignment: Alignment.center,
-        backgroundColor: MaterialStateProperty.all(color),
-        foregroundColor: MaterialStateProperty.all(Colors.white),
-        textStyle: MaterialStateProperty.all<TextStyle>(
-          const TextStyle(
-            fontWeight: FontWeight.w500,
-            fontSize: 16.0,
-          ),
+        backgroundColor: color,
+        foregroundColor: Colors.white,
+        textStyle: const TextStyle(
+          fontWeight: FontWeight.w500,
+          fontSize: 16.0,
         ),
-        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-          RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20.0),
-          ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.0),
         ),
       ),
       child: Text(label),

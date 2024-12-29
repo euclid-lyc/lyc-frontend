@@ -161,7 +161,7 @@ class _MyCoordiGridViewState extends State<MyCoordiGridView> {
                   ),
                 ),
               );
-              if (delete == true) {
+              if (delete == true && context.mounted) {
                 refresh();
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(

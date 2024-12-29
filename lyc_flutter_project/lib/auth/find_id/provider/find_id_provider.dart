@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import '../../../common/dio/dio.dart';
-import '../../service/StorageService.dart';
-import '../model/VerificationCode.dart';
-import 'SendEmailProvider.dart';
+import '../../service/storage_service.dart';
+import '../model/verification_code.dart';
+import 'send_email_provider.dart';
 import 'package:lyc_flutter_project/config/secret.dart';
 
 class FindIdProvider extends ChangeNotifier {
@@ -28,7 +28,7 @@ class FindIdProvider extends ChangeNotifier {
     required String email,
     required String verificationCode,
   }) async {
-    final url = 'http://$ip/lyc/auths/find-id';
+    const url = 'http://$ip/lyc/auths/find-id';
 
     _isLoading = true; // 로딩 시작
     notifyListeners(); // UI 업데이트
@@ -39,7 +39,7 @@ class FindIdProvider extends ChangeNotifier {
 
       if (tempToken == null) {
         _errorMessage = '토큰이 없습니다.';
-        print(_errorMessage);
+        debugPrint(_errorMessage);
         throw Exception(_errorMessage);
       }
 
@@ -56,8 +56,8 @@ class FindIdProvider extends ChangeNotifier {
         verificationCode: verificationCode,
       );
 
-      print('Request Body: ${verificationCodeRequest.toJson()}');
-      print("요청 헤더: ${options.headers}");
+      debugPrint('Request Body: ${verificationCodeRequest.toJson()}');
+      debugPrint("요청 헤더: ${options.headers}");
       final response = await dio.post(
         url,
         data: verificationCodeRequest.toJson(),
@@ -76,14 +76,14 @@ class FindIdProvider extends ChangeNotifier {
       }
     } on DioException catch (e) {
       _errorMessage = 'DioException: ${e.message}';
-      print(_errorMessage);
+      debugPrint(_errorMessage);
       if (e.response != null) {
-        print('Response data: ${e.response?.data}');
+        debugPrint('Response data: ${e.response?.data}');
       }
       throw Exception('API 요청 실패: ${e.message}');
     } catch (e) {
       _errorMessage = 'Error: ${e.toString()}';
-      print(_errorMessage);
+      debugPrint(_errorMessage);
       throw Exception('API 요청 실패: ${e.toString()}');
     } finally {
       _isLoading = false;

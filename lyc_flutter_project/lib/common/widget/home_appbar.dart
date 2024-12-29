@@ -55,7 +55,10 @@ class HomeAppbar extends StatelessWidget implements PreferredSizeWidget {
                           onTap: () {},
                           child: SvgPicture.asset(
                             'assets/icon_collage.svg',
-                            color: Colors.white,
+                            colorFilter: const ColorFilter.mode(
+                              Colors.white,
+                              BlendMode.srcIn,
+                            ),
                           ),
                         ),
                       ),
@@ -71,7 +74,10 @@ class HomeAppbar extends StatelessWidget implements PreferredSizeWidget {
                           ),
                           child: SvgPicture.asset(
                             'assets/icon_dm.svg',
-                            color: Colors.white,
+                            colorFilter: const ColorFilter.mode(
+                              Colors.white,
+                              BlendMode.srcIn,
+                            ),
                           ),
                         ),
                       ),

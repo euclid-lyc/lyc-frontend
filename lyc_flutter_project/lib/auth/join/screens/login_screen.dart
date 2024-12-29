@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:lyc_flutter_project/common/widget/bottom_bar.dart';
-import 'package:lyc_flutter_project/common/widget/nav_bar.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/routes/routes.dart';
 import 'package:provider/provider.dart';
@@ -28,10 +26,10 @@ class LoginScreen extends StatelessWidget {
         automaticallyImplyLeading: false,
         backgroundColor: AppColor.beige,
         toolbarHeight: 100,
-        title: Center(
+        title: const Center(
           child: Text(
             'LEAD YOUR CLOSET',
-            style: app_text_style.title,
+            style: AppTextStyle.title,
             textAlign: TextAlign.center,
           ),
         ),
@@ -42,7 +40,7 @@ class LoginScreen extends StatelessWidget {
           children: [
             Container(
               width: 296,
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(20),
@@ -54,13 +52,13 @@ class LoginScreen extends StatelessWidget {
                   buildIncome('아이디', '아이디를 입력해 주세요', _idController),
                   buildIncome('비밀번호', '비밀번호를 입력해 주세요', _pwController),
                   Container(
-                    margin: EdgeInsets.only(top: 13),
+                    margin: const EdgeInsets.only(top: 13),
                     child: SizedBox(
                       width: 220,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          buildMoveButton(context, '회원가입', JoinScreen1()),
+                          buildMoveButton(context, '회원가입', const JoinScreen1()),
                           buildMoveButton(context, '아이디 찾기', FindIdScreen1()),
                           buildMoveButton(context, '비밀번호 찾기', FindPasswordScreen1()),
                         ],
@@ -68,22 +66,22 @@ class LoginScreen extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(top: 14.5),
+                    margin: const EdgeInsets.only(top: 14.5),
                     child: Row(
                       children: [
                         Container(
-                          margin: EdgeInsets.only(right: 7),
+                          margin: const EdgeInsets.only(right: 7),
                           decoration: BoxDecoration(
                             border: Border.all(color: AppColor.grey),
                             borderRadius: BorderRadius.circular(5),
                             color: Colors.white,
                           ),
-                          child: SizedBox(
+                          child: const SizedBox(
                             width: 17,
                             height: 17,
                           ),
                         ),
-                        Text(
+                        const Text(
                           '자동로그인',
                           style: TextStyle(
                             fontWeight: FontWeight.w500,
@@ -96,7 +94,7 @@ class LoginScreen extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(top: 15),
+                    padding: const EdgeInsets.only(top: 15),
                     child: TextButton(
                       onPressed: () async {
                         final id = _idController.controller.text;
@@ -112,13 +110,13 @@ class LoginScreen extends StatelessWidget {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
                         ),
-                        padding: EdgeInsets.symmetric(vertical: 15),
+                        padding: const EdgeInsets.symmetric(vertical: 15),
                       ),
-                      child: SizedBox(
+                      child: const SizedBox(
                         width: 230,
                         child: Text(
                           '로그인',
-                          style: app_text_style.button,
+                          style: AppTextStyle.button,
                           textAlign: TextAlign.center,
                         ),
                       ),
@@ -128,16 +126,16 @@ class LoginScreen extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(top: 25), // 로그인 버튼 밑에 여백 추가
+              padding: const EdgeInsets.only(top: 25), // 로그인 버튼 밑에 여백 추가
               child: Column(
                 children: [
                   TextButton(
                     onPressed: () {
                       // 다른 계정으로 로그인 버튼 눌렀을 때의 동작 구현
                     },
-                    child: Text(
+                    child: const Text(
                       '다른 계정으로 로그인',
-                      style: app_text_style.otherLoginTextStyle,
+                      style: AppTextStyle.otherLoginTextStyle,
                     ),
                   ),
                   SizedBox(
@@ -162,16 +160,16 @@ class LoginScreen extends StatelessWidget {
 
   Widget buildIncome(String text, String hint, Controller controller) {
     return Container(
-      margin: EdgeInsets.fromLTRB(0, 18.5, 0, 0),
+      margin: const EdgeInsets.fromLTRB(0, 18.5, 0, 0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             text,
-            style: app_text_style.labelTextStyle,
+            style: AppTextStyle.labelTextStyle,
           ),
           Padding(
-            padding: EdgeInsets.only(top: 4.5),
+            padding: const EdgeInsets.only(top: 4.5),
             child: Container(
               width: 230,
               height: 40,
@@ -182,13 +180,13 @@ class LoginScreen extends StatelessWidget {
               alignment: Alignment.center,
               child: Center(
                 child: Padding(
-                  padding: EdgeInsets.fromLTRB(16, 12, 16, 12),
+                  padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
                   child: TextField(
                     controller: controller.controller,
                     decoration: InputDecoration(
                       border: InputBorder.none,
                       hintText: hint,
-                      hintStyle: app_text_style.hint,
+                      hintStyle: AppTextStyle.hint,
                     ),
                     obscureText: text == '비밀번호', // 비밀번호 입력 필드에서 텍스트를 숨깁니다.
                     onChanged: (value) {},
@@ -212,7 +210,7 @@ class LoginScreen extends StatelessWidget {
       },
       child: Text(
         text,
-        style: app_text_style.linkTextStyle,
+        style: AppTextStyle.linkTextStyle,
       ),
     );
   }

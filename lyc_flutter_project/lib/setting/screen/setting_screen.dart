@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lyc_flutter_project/auth/join/Provider/login_provider.dart';
 import 'package:lyc_flutter_project/auth/join/screens/login_screen.dart';
 import 'package:lyc_flutter_project/common/widget/custom_alert_dialog.dart';
@@ -22,14 +23,12 @@ class SettingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Future<void> _logout() async {
+    Future<void> logout() async {
       await context.read<LoginProvider>().logout();
+
+      if (!context.mounted) return;
       if (!context.read<LoginProvider>().isLoggedIn) {
-        Navigator.pushNamedAndRemoveUntil(
-          context,
-          "/login",
-          (Route<dynamic> route) => false,
-        );
+        context.goNamed(Routes.login.name);
       }
     }
 
@@ -130,7 +129,7 @@ class SettingScreen extends StatelessWidget {
                             builder: (context) => LoginScreen(),
                           ),
                         );
-                        _logout();
+                        logout();
                       },
                     ),
                   );

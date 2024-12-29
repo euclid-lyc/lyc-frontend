@@ -60,6 +60,7 @@ class _PasswordChangeDialogState extends State<PasswordChangeDialog> {
                       },
                       validator: (pw) {
                         if (checkOldMsg != null) return (checkOldMsg);
+                        return null;
                       },
                     ),
                     const SizedBox(height: 10.0),
@@ -73,6 +74,7 @@ class _PasswordChangeDialogState extends State<PasswordChangeDialog> {
                       validator: (pw) {
                         if (pw == null || pw.isEmpty || pw.length < 6) return ("비밀번호를 6자 이상 입력해주세요");
                         if (pw.length > 255) return ("비밀번호를 255자 이내로 입력해주세요");
+                        return null;
                       },
                     ),
                     const SizedBox(height: 10.0),
@@ -87,6 +89,7 @@ class _PasswordChangeDialogState extends State<PasswordChangeDialog> {
                       validator: (pw) {
                         if (pw==null || pw.isEmpty) return ("새 비밀번호를 다시 입력해주세요");
                         if (pw != value.newPassword) return ("비밀번호가 다릅니다");
+                        return null;
                       },
                     ),
                     const SizedBox(height: 20.0),
@@ -98,7 +101,9 @@ class _PasswordChangeDialogState extends State<PasswordChangeDialog> {
                         fontSize: 16.0,
                         onPressed: () async {
                           bool result = await value.saveNewPassword();
-                          if (result) Navigator.of(context).pop(true);
+                          if (result && context.mounted) {
+                            Navigator.of(context).pop(true);
+                          }
                         },
                       ),
                     ),

@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class StorageService {
@@ -8,7 +9,7 @@ class StorageService {
       await _storage.write(key: key, value: value);
     } catch (e) {
       // 에러 처리
-      print('Error writing to storage: $e');
+      debugPrint('Error writing to storage: $e');
     }
   }
 
@@ -17,7 +18,7 @@ class StorageService {
       return await _storage.read(key: key);
     } catch (e) {
       // 에러 처리
-      print('Error reading from storage: $e');
+      debugPrint('Error reading from storage: $e');
       return null;
     }
   }
@@ -27,7 +28,7 @@ class StorageService {
       await _storage.delete(key: key);
     } catch (e) {
       // 에러 처리
-      print('Error deleting from storage: $e');
+      debugPrint('Error deleting from storage: $e');
     }
   }
 }

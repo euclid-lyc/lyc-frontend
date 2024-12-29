@@ -11,15 +11,15 @@ class ActiveState extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
-          margin: EdgeInsets.all(5.0),
-          decoration: BoxDecoration(
+          margin: const EdgeInsets.all(5.0),
+          decoration: const BoxDecoration(
             shape: BoxShape.circle,
             color: AppColor.active,
           ),
           height: 15.0,
           width: 15.0,
         ),
-        Text(
+        const Text(
           "활동중",
           style: TextStyle(
             fontWeight: FontWeight.w600,

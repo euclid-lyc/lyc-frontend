@@ -19,7 +19,7 @@ class Stamp extends StatelessWidget {
           color: isSelected ? const Color(0xffFFDD85) : AppColor.grey,
           boxShadow: [
             BoxShadow(
-                offset: Offset(2, 2),
+                offset: const Offset(2, 2),
                 color: Colors.black.withOpacity(0.3),
                 blurRadius: 3.0),
           ]),

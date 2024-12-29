@@ -54,29 +54,29 @@ class _JoinScreen4State extends State<JoinScreen4> {
           ),
           Center(
             child: Container(
-              constraints: BoxConstraints(maxWidth: 400),
+              constraints: const BoxConstraints(maxWidth: 400),
               // 최대 너비 설정
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(20),
               ),
-              padding: EdgeInsets.fromLTRB(22, 28.5, 22, 0),
+              padding: const EdgeInsets.fromLTRB(22, 28.5, 22, 0),
               height: 440,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
-                    margin: EdgeInsets.fromLTRB(7, 0, 7, 43.5),
+                    margin: const EdgeInsets.fromLTRB(7, 0, 7, 43.5),
                     alignment: Alignment.topLeft,
-                    child: Text(
+                    child: const Text(
                       'Step 4. 회원정보 입력',
-                      style: app_text_style.littleTitle,
+                      style: AppTextStyle.littleTitle,
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(bottom: 49),
+                    margin: const EdgeInsets.only(bottom: 49),
                     decoration: BoxDecoration(
-                      color: Color(0xFFBBBBBB),
+                      color: const Color(0xFFBBBBBB),
                       borderRadius: BorderRadius.circular(62),
                     ),
                     width: 124,
@@ -88,7 +88,7 @@ class _JoinScreen4State extends State<JoinScreen4> {
                       style: ElevatedButton.styleFrom(
                         elevation: 0,
                         padding: EdgeInsets.zero,
-                        backgroundColor: Color(0xFFBBBBBB),
+                        backgroundColor: const Color(0xFFBBBBBB),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(62),
                         ),
@@ -109,7 +109,7 @@ class _JoinScreen4State extends State<JoinScreen4> {
                             ),
                     ),
                   ),
-                  SizedBox(height: 1),
+                  const SizedBox(height: 1),
                   // '닉네임' TextField
                   Container(
                     decoration: BoxDecoration(
@@ -122,17 +122,16 @@ class _JoinScreen4State extends State<JoinScreen4> {
                       controller: _nickController.controller,
                       decoration: InputDecoration(
                         hintText: '닉네임',
-                        hintStyle: app_text_style.hint,
+                        hintStyle: AppTextStyle.hint,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
                           borderSide: BorderSide.none,
                         ),
-                        contentPadding:
-                            EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                       ),
                     ),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Container(
                     decoration: BoxDecoration(
                       color: AppColor.lightGrey,
@@ -144,13 +143,12 @@ class _JoinScreen4State extends State<JoinScreen4> {
                       maxLines: 3,
                       decoration: InputDecoration(
                         hintText: '자유롭게 자신을 소개해 주세요',
-                        hintStyle: app_text_style.hint,
+                        hintStyle: AppTextStyle.hint,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
                           borderSide: BorderSide.none,
                         ),
-                        contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 15, vertical: 10),
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                       ),
                     ),
                   ),
@@ -173,20 +171,19 @@ class _JoinScreen4State extends State<JoinScreen4> {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(
-                                builder: (context) => const JoinScreen3()),
+                            MaterialPageRoute(builder: (context) => const JoinScreen3()),
                           );
                         },
                         style: TextButton.styleFrom(
                           backgroundColor: AppColor.grey,
-                          minimumSize: Size(120, 40),
+                          minimumSize: const Size(120, 40),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
                           ),
                         ),
                         child: Text(
                           '이전',
-                          style: app_text_style.hint.copyWith(
+                          style: AppTextStyle.hint.copyWith(
                             color: Colors.black,
                             fontSize: 14,
                           ),
@@ -196,7 +193,7 @@ class _JoinScreen4State extends State<JoinScreen4> {
                       TextButton(
                         onPressed: () async {
                           //이미지 업로드 안 할 경우 api를 null로 보낼 순 없어서 우선 쓰레기값
-                          if ( _imagePath == '') {
+                          if (_imagePath == '') {
                             // final directory = await getApplicationDocumentsDirectory();
                             // _imagePath = '${directory.path}/images/abc.png';
                             _imagePath = '/sdcard/0621.png';
@@ -209,20 +206,19 @@ class _JoinScreen4State extends State<JoinScreen4> {
 
                           Navigator.push(
                             context,
-                            MaterialPageRoute(
-                                builder: (context) => JoinScreen5()),
+                            MaterialPageRoute(builder: (context) => const JoinScreen5()),
                           );
                         },
                         style: TextButton.styleFrom(
                           backgroundColor: AppColor.beige,
-                          minimumSize: Size(120, 40),
+                          minimumSize: const Size(120, 40),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
                           ),
                         ),
                         child: const Text(
                           '다음',
-                          style: app_text_style.button,
+                          style: AppTextStyle.button,
                           textAlign: TextAlign.center,
                         ),
                       ),

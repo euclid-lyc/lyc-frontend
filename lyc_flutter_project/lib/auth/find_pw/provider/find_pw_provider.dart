@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:lyc_flutter_project/auth/find_pw/model/VerificationInfo.dart';
+import 'package:lyc_flutter_project/auth/find_pw/model/verification_info.dart';
 import 'package:lyc_flutter_project/common/dio/dio.dart';
-import '../../service/StorageService.dart';
-import '../model/Info.dart';
+import '../../service/storage_service.dart';
+import '../model/info.dart';
 import 'package:lyc_flutter_project/config/secret.dart';
 
 class FindPwProvider extends ChangeNotifier {
@@ -31,7 +31,7 @@ class FindPwProvider extends ChangeNotifier {
   String get email => _info?.email ?? '';
 
   Future<void> getVerificationCode({required Info info}) async {
-    final url = 'http://$ip/lyc/auths/sign-in/find-pw/send-verification-code';
+    const url = 'http://$ip/lyc/auths/sign-in/find-pw/send-verification-code';
     _info = info;
 
     try {
@@ -45,17 +45,16 @@ class FindPwProvider extends ChangeNotifier {
         await storageService.write(tempTokenKey, tempToken);
         await storage.write(key: 'loginId', value: loginId);
       } else {
-        throw Exception(
-            'Verification code request failed: ${response.statusCode}');
+        throw Exception('Verification code request failed: ${response.statusCode}');
       }
     } on DioException catch (e) {
-      print('DioException: ${e.message}');
+      debugPrint('DioException: ${e.message}');
       if (e.response != null) {
-        print('Response data: ${e.response?.data}');
+        debugPrint('Response data: ${e.response?.data}');
       }
       throw Exception('API 요청 실패: ${e.message}');
     } catch (e) {
-      print('Error: ${e.toString()}');
+      debugPrint('Error: ${e.toString()}');
       throw Exception('API 요청 실패: ${e.toString()}');
     }
   }
@@ -64,14 +63,14 @@ class FindPwProvider extends ChangeNotifier {
   Future<void> sendVerification({
     required String verificationCode,
   }) async {
-    final url = 'http://$ip/lyc/auths/find-pw';
+    const url = 'http://$ip/lyc/auths/find-pw';
     _isLoading = true; // 로딩 시작
     notifyListeners(); // UI 업데이트
     try {
       final tempToken = await storageService.read(tempTokenKey);
       if (tempToken == null) {
         _errorMessage = '임시 토큰을 찾을 수 없습니다.';
-        print(_errorMessage);
+        debugPrint(_errorMessage);
         throw Exception(_errorMessage);
       }
 
@@ -80,26 +79,24 @@ class FindPwProvider extends ChangeNotifier {
         'Authorization': "Bearer $tempToken",
       });
 
-      final response = await dio.post(url,
-          options: options, queryParameters: {'code': verificationCode});
+      final response = await dio.post(url, options: options, queryParameters: {'code': verificationCode});
 
       if (response.statusCode == 200) {
         storage.write(key: 'verificationCode', value: verificationCode);
       } else {
-        _errorMessage =
-            'Verification failed with status: ${response.statusCode}';
+        _errorMessage = 'Verification failed with status: ${response.statusCode}';
         throw Exception(_errorMessage);
       }
     } on DioException catch (e) {
       _errorMessage = 'DioException: ${e.message}';
-      print(_errorMessage);
+      debugPrint(_errorMessage);
       if (e.response != null) {
-        print('Response data: ${e.response?.data}');
+        debugPrint('Response data: ${e.response?.data}');
       }
       throw Exception('API 요청 실패: ${e.message}');
     } catch (e) {
       _errorMessage = 'Error: ${e.toString()}';
-      print(_errorMessage);
+      debugPrint(_errorMessage);
       throw Exception('API 요청 실패: ${e.toString()}');
     } finally {
       _isLoading = false;
@@ -113,21 +110,19 @@ class FindPwProvider extends ChangeNotifier {
     required String passwordConfirmation,
     required String verificationCode,
   }) async {
-    final url = 'http://$ip/lyc/auths/find-pw/update';
+    const url = 'http://$ip/lyc/auths/find-pw/update';
 
     _isLoading = true; // 로딩 시작
     notifyListeners(); // UI 업데이트
 
     try {
-
       final tempToken = await storageService.read(tempTokenKey);
 
       if (tempToken == null) {
         _errorMessage = '토큰이 없습니다.';
-        print(_errorMessage);
+        debugPrint(_errorMessage);
         throw Exception(_errorMessage);
       }
-
 
       final options = Options(headers: {
         'accept': '*/*',
@@ -149,28 +144,24 @@ class FindPwProvider extends ChangeNotifier {
       );
 
       if (response.statusCode == 200) {
-
       } else {
         _errorMessage = 'Verification failed with status: ${response.statusCode}';
         throw Exception(_errorMessage);
       }
     } on DioException catch (e) {
       _errorMessage = 'DioException: ${e.message}';
-      print(_errorMessage);
+      debugPrint(_errorMessage);
       if (e.response != null) {
-        print('Response data: ${e.response?.data}');
+        debugPrint('Response data: ${e.response?.data}');
       }
       throw Exception('API 요청 실패: ${e.message}');
     } catch (e) {
       _errorMessage = 'Error: ${e.toString()}';
-      print(_errorMessage);
+      debugPrint(_errorMessage);
       throw Exception('API 요청 실패: ${e.toString()}');
     } finally {
       _isLoading = false;
       notifyListeners(); // UI 업데이트
     }
   }
-
-
-
 }

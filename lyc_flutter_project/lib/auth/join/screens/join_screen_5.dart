@@ -7,7 +7,6 @@ import '../Provider/join_provider.dart';
 import '../model/pushset.dart';
 import 'join_screen_6.dart';
 
-
 class JoinScreen5 extends StatefulWidget {
   const JoinScreen5({super.key});
 
@@ -46,9 +45,9 @@ class JoinScreenState5 extends State<JoinScreen5> {
               children: [
                 Container(
                   margin: const EdgeInsets.only(bottom: 25),
-                  child: Text(
+                  child: const Text(
                     'Step 6. 사용자 동의',
-                    style: app_text_style.littleTitle,
+                    style: AppTextStyle.littleTitle,
                   ),
                 ),
                 const SizedBox(height: 10),
@@ -89,13 +88,7 @@ class JoinScreenState5 extends State<JoinScreen5> {
                 Center(
                   child: TextButton(
                     onPressed: () {
-                      joinProvider.pushSet = PushSet(
-                          dm: dm,
-                          feed: feed,
-                          schedule: schedule,
-                          likeMark: likeMark,
-                          event: event,
-                          ad: ad);
+                      joinProvider.pushSet = PushSet(dm: dm, feed: feed, schedule: schedule, likeMark: likeMark, event: event, ad: ad);
                       Navigator.push(context, MaterialPageRoute(builder: (context) => const JoinScreen6()));
                     },
                     style: TextButton.styleFrom(
@@ -104,11 +97,11 @@ class JoinScreenState5 extends State<JoinScreen5> {
                         borderRadius: BorderRadius.circular(20),
                       ),
                     ),
-                    child: SizedBox(
+                    child: const SizedBox(
                       width: 230,
                       child: Text(
                         '다음',
-                        style: app_text_style.button,
+                        style: AppTextStyle.button,
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -122,8 +115,7 @@ class JoinScreenState5 extends State<JoinScreen5> {
     );
   }
 
-  Widget buildCheckField(
-      bool _isAgreed, String text, Function(bool?) onChanged) {
+  Widget buildCheckField(bool _isAgreed, String text, Function(bool?) onChanged) {
     return Container(
       alignment: Alignment.topLeft,
       margin: const EdgeInsets.only(bottom: 20),
@@ -137,7 +129,7 @@ class JoinScreenState5 extends State<JoinScreen5> {
           Expanded(
             child: Text(
               text,
-              style: app_text_style.labelTextStyle.copyWith(fontSize: 14),
+              style: AppTextStyle.labelTextStyle.copyWith(fontSize: 14),
             ),
           ),
         ],

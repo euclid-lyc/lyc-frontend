@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/auth/join/Provider/login_provider.dart';
 import 'package:lyc_flutter_project/auth/join/repository/join_repository.dart';
 import 'package:lyc_flutter_project/common/dio/dio.dart';
-import 'package:lyc_flutter_project/common/service/app_service.dart';
 import 'package:lyc_flutter_project/director/provider/director_provider.dart';
 import 'package:lyc_flutter_project/director/repository/director_repository.dart';
 import 'package:lyc_flutter_project/dm/provider/dm_provider.dart';
@@ -21,12 +20,12 @@ import 'package:lyc_flutter_project/routes/router.dart';
 import 'package:lyc_flutter_project/setting/provider/setting_provider.dart';
 import 'package:lyc_flutter_project/setting/repository/setting_repository.dart';
 import 'package:provider/provider.dart';
-import 'package:lyc_flutter_project/auth/find_pw/provider/FindPwProvider.dart';
-import 'package:lyc_flutter_project/auth/find_id/Provider/SendEmailProvider.dart';
-import 'package:lyc_flutter_project/auth/find_id/Provider/findIdProvider.dart';
+import 'package:lyc_flutter_project/auth/find_pw/provider/find_pw_provider.dart';
+import 'package:lyc_flutter_project/auth/find_id/Provider/send_email_provider.dart';
+import 'package:lyc_flutter_project/auth/find_id/Provider/find_id_provider.dart';
 import 'package:lyc_flutter_project/auth/join/Provider/join_provider.dart';
 import 'package:lyc_flutter_project/auth/join/screens/join_screen_6.dart';
-import 'package:lyc_flutter_project/auth/service/StorageService.dart';
+import 'package:lyc_flutter_project/auth/service/storage_service.dart';
 
 Future<void> main() async {
   Provider.debugCheckInvalidValueType = null;
@@ -39,12 +38,6 @@ Future<void> main() async {
         ChangeNotifierProvider(
           create: (context) => MypageRepositoryProvider(
             dio: context.read<DioProvider>().dio,
-          ),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => AppService(
-            storage: context.read<DioProvider>().storage,
-            repository: context.read<MypageRepository>(),
           ),
         ),
         ChangeNotifierProvider(

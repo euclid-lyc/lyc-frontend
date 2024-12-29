@@ -63,17 +63,16 @@ class FeedProvider extends ChangeNotifier {
     } catch (e) {
       if (e is ApiResponse) {
         Exception(e.message);
-      }else {Exception(e);}
+      } else {
+        Exception(e);
+      }
     } finally {
       notifyListeners();
     }
   }
 
   bool getLoadingStatus() {
-    return (_minTemp != null &&
-        _maxTemp != null &&
-        _weatherPreviewList != null &&
-        !_loadingForMember);
+    return (_minTemp != null && _maxTemp != null && _weatherPreviewList != null && !_loadingForMember);
   }
 
   Future<void> getLocation() async {
@@ -121,7 +120,7 @@ class FeedProvider extends ChangeNotifier {
       final resp = await dio.get(
         "https://dapi.kakao.com/v2/local/geo/coord2regioncode.json",
         options: Options(
-          headers: {"Authorization": "KakaoAK ${KAKAO_API_KEY}"},
+          headers: {"Authorization": "KakaoAK $KAKAO_API_KEY"},
         ),
         queryParameters: {
           "x": x,
@@ -149,9 +148,7 @@ class FeedProvider extends ChangeNotifier {
     }
     final WeatherQuery query = WeatherQuery(city: _city!);
     try {
-      final ApiResponse<WeatherResult> resp = await weatherRepositoryProvider
-          .repository
-          .getWeather(weatherQuery: query);
+      final ApiResponse<WeatherResult> resp = await weatherRepositoryProvider.repository.getWeather(weatherQuery: query);
       _minTemp = resp.result.tempMin;
       _maxTemp = resp.result.tempMax;
       _initializeTemp = true;
@@ -174,8 +171,7 @@ class FeedProvider extends ChangeNotifier {
       }
     }
     try {
-      final resp = await feedRepositoryProvider.repository
-          .getWeatherPostings(city: _city!);
+      final resp = await feedRepositoryProvider.repository.getWeatherPostings(city: _city!);
       _weatherPreviewList = resp.result.posting;
       _initializeWeahterPreview = true;
       notifyListeners();

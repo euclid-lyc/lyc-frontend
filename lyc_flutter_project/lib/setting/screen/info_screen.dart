@@ -162,7 +162,7 @@ class InfoScreen extends StatelessWidget {
                               builder: (context) =>
                                   const PasswordChangeDialog(),
                             );
-                            if (changePw == true) {
+                            if (changePw == true && context.mounted) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
                                   content: Text("비밀번호가 변경되었습니다"),
@@ -185,7 +185,9 @@ class InfoScreen extends StatelessWidget {
                     if (value.canSaveMemberInfo()) {
                       await value.saveMemberInfo();
                       value.getProfile(refresh: true);
-                      Navigator.pop(context);
+                      if (context.mounted) {
+                        Navigator.pop(context);
+                      }
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(

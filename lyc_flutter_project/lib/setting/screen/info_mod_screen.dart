@@ -41,59 +41,57 @@ class _InfoModScreenState extends State<InfoModScreen> {
                           child: CustomLoading(),
                         )
                       : SingleChildScrollView(
-                        child: Column(
+                          child: Column(
                             children: [
                               SwitchBox(
                                 label: "DM 알림",
                                 isChecked: value.alarm.dm,
-                                onChanged: (newValue) =>
-                                    value.updateDm(newValue),
+                                onChanged: (newValue) => value.updateDm(newValue),
                               ),
                               SwitchBox(
                                 label: "피드 알림",
                                 isChecked: value.alarm.feed,
-                                onChanged: (newValue) =>
-                                    value.updateFeed(newValue),
+                                onChanged: (newValue) => value.updateFeed(newValue),
                                 note: "팔로워의 피드가 업데이트 되었을 때 알림을 전송합니다",
                               ),
                               SwitchBox(
                                 label: "일정 알림",
                                 isChecked: value.alarm.schedule,
-                                onChanged: (newValue) =>
-                                    value.updateSchedule(newValue),
+                                onChanged: (newValue) => value.updateSchedule(newValue),
                                 note: "등록된 일정의 종료가 임박했을 때 알림을 전송합니다",
                               ),
                               SwitchBox(
                                 label: "좋아요 알림",
                                 isChecked: value.alarm.likeMark,
-                                onChanged: (newValue) =>
-                                    value.updateLikeMark(newValue),
+                                onChanged: (newValue) => value.updateLikeMark(newValue),
                               ),
                               SwitchBox(
                                 label: "이벤트 알림",
                                 isChecked: value.alarm.event,
-                                onChanged: (newValue) =>
-                                    value.updateEvent(newValue),
+                                onChanged: (newValue) => value.updateEvent(newValue),
                                 note: "진행중인 이벤트 및 결과 발표에 대한 알림을 전송합니다.",
                               ),
                               SwitchBox(
                                 label: "광고 알림",
                                 isChecked: value.alarm.ad,
-                                onChanged: (newValue) =>
-                                    value.updateAd(newValue),
+                                onChanged: (newValue) => value.updateAd(newValue),
                               ),
                             ],
                           ),
-                      ),
+                        ),
                 ),
                 TwoButtons(
                   fstOnPressed: () async {
                     await value.initModel(refresh: true);
-                    Navigator.pop(context);
+                    if (context.mounted) {
+                      Navigator.pop(context);
+                    }
                   },
                   scdOnPressed: () async {
                     await value.saveAlarm();
-                    Navigator.pop(context);
+                    if (context.mounted) {
+                      Navigator.pop(context);
+                    }
                   },
                 ),
               ],

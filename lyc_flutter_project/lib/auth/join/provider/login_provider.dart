@@ -2,9 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:lyc_flutter_project/common/dio/dio.dart';
-import 'package:lyc_flutter_project/mypage/model/profile.dart';
-import 'package:lyc_flutter_project/mypage/model/profile.dart';
-import 'package:lyc_flutter_project/mypage/model/profile.dart';
 import 'package:lyc_flutter_project/mypage/repository/mypage_repository.dart';
 import 'package:lyc_flutter_project/config/secret.dart';
 import '../model/credential.dart';
@@ -32,8 +29,10 @@ class LoginProvider extends ChangeNotifier {
 
   int? get memberId => _memberId;
 
-  LoginProvider(this.dioProvider,
-      this.mypageRepository,) {
+  LoginProvider(
+    this.dioProvider,
+    this.mypageRepository,
+  ) {
     dio = dioProvider.dio;
     storage = dioProvider.storage;
     _loadMemberId();
@@ -68,7 +67,7 @@ class LoginProvider extends ChangeNotifier {
         return false;
       }
     } catch (e) {
-      print("getProfile 에러 발생: $e");
+      debugPrint("getProfile 에러 발생: $e");
       return false;
     }
   }
@@ -101,11 +100,12 @@ class LoginProvider extends ChangeNotifier {
 
         _isLoggedIn = true;
         notifyListeners();
-      } else {
+      } else if (context.mounted) {
         _showErrorDialog(context, '로그인 실패', 'API 요청이 실패했습니다.');
       }
     } catch (e) {
-      print('Error: $e');
+      debugPrint('Error: $e');
+      if (!context.mounted) return;
       if (e is DioException) {
         if (e.response?.statusCode == 401) {
           _showErrorDialog(context, '로그인 실패', '로그인 정보가 잘못되었습니다.');
@@ -137,7 +137,7 @@ class LoginProvider extends ChangeNotifier {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('확인'),
+              child: const Text('확인'),
             ),
           ],
         );
@@ -162,7 +162,7 @@ class LoginProvider extends ChangeNotifier {
         notifyListeners();
       }
     } catch (e) {
-      print("Error in logout: $e");
+      debugPrint("Error in logout: $e");
     }
   }
 
