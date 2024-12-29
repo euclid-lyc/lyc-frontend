@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:lyc_flutter_project/common/widget/nav_bar.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/common/widget/default_padding.dart';
+import 'package:lyc_flutter_project/routes/routes.dart';
 
 class MypageLayout extends StatelessWidget {
   final Widget top;
@@ -15,6 +17,8 @@ class MypageLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: NavBar(currentRouteName: Routes.mypage.name),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       backgroundColor: AppColor.lightGrey,
       appBar: AppBar(
         automaticallyImplyLeading: false,

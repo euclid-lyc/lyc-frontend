@@ -50,8 +50,7 @@ class _BottomBarState extends State<BottomBar> {
           screen: Consumer<MypageProviderFactory>(
             builder: (context, value, child) {
               return const MypageScreen(
-                memberId: null,
-                isLoginUser: true,
+                extra: {null: true },
               );
             },
           ),

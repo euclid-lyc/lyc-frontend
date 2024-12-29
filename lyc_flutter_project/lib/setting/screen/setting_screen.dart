@@ -3,8 +3,10 @@ import 'package:lyc_flutter_project/auth/join/Provider/login_provider.dart';
 import 'package:lyc_flutter_project/auth/join/screens/login_screen.dart';
 import 'package:lyc_flutter_project/common/widget/custom_alert_dialog.dart';
 import 'package:lyc_flutter_project/common/widget/default_padding.dart';
+import 'package:lyc_flutter_project/common/widget/nav_bar.dart';
 import 'package:lyc_flutter_project/common/widget/normal_appbar.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
+import 'package:lyc_flutter_project/routes/routes.dart';
 import 'package:lyc_flutter_project/setting/screen/block_mod_screen.dart';
 import 'package:lyc_flutter_project/setting/screen/info_mod_screen.dart';
 import 'package:lyc_flutter_project/setting/screen/info_screen.dart';
@@ -32,6 +34,8 @@ class SettingScreen extends StatelessWidget {
     }
 
     return Scaffold(
+      floatingActionButton: NavBar(currentRouteName: Routes.setting.name),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       backgroundColor: AppColor.lightGrey,
       appBar: const NormalAppbar(
         backButton: false,
@@ -145,6 +149,7 @@ class SettingScreen extends StatelessWidget {
                 backgroundColor: AppColor.deepGrey,
                 foregroundColor: Colors.white,
               ),
+              const SizedBox(height: 110.0),
             ],
           ),
         ),

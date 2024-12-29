@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/common/widget/custom_loading.dart';
 import 'package:lyc_flutter_project/common/widget/home_appbar.dart';
+import 'package:lyc_flutter_project/common/widget/nav_bar.dart';
 import 'package:lyc_flutter_project/common/widget/preview_posting_card.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/director/widget/custom_search_bar.dart';
@@ -10,6 +11,7 @@ import 'package:lyc_flutter_project/feed/widget/height_box.dart';
 import 'package:lyc_flutter_project/feed/widget/title_box.dart';
 import 'package:lyc_flutter_project/feed/widget/today_temp.dart';
 import 'package:lyc_flutter_project/common/widget/default_padding.dart';
+import 'package:lyc_flutter_project/routes/routes.dart';
 import 'package:provider/provider.dart';
 
 class FeedScreen extends StatefulWidget {
@@ -31,6 +33,8 @@ class _FeedScreenState extends State<FeedScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: NavBar(currentRouteName: Routes.feed.name),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       appBar: const HomeAppbar(),
       backgroundColor: AppColor.lightGrey,
       body: Consumer<FeedProvider>(

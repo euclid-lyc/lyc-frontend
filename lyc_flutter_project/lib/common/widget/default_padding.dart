@@ -9,7 +9,7 @@ class DefaultPadding extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.fromLTRB(20, 20, 20, bottom),
+      padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
       child: child,
     );
   }

@@ -13,13 +13,11 @@ import 'package:provider/provider.dart';
 import '../../auth/join/Provider/login_provider.dart';
 
 class MypageScreen extends StatefulWidget {
-  final int? memberId;
-  final bool isLoginUser;
+  final Map<int?, bool> extra;
 
   const MypageScreen({
     super.key,
-    required this.memberId,
-    required this.isLoginUser,
+    required this.extra,
   });
 
   @override
@@ -33,22 +31,22 @@ class _MypageScreenState extends State<MypageScreen> {
   @override
   void initState() {
     super.initState();
-    if (widget.memberId == null && widget.isLoginUser) {
+    if (widget.extra.keys.first == null && widget.extra.values.first) {
         memberId = Provider.of<LoginProvider>(context, listen: false).memberId!;
     } else {
-      memberId = widget.memberId!;
+      memberId = widget.extra.keys.first!;
     }
     provider = Provider.of<MypageProviderFactory>(context, listen: false)
         .getProvider(
       memberId,
-      widget.isLoginUser,
+      widget.extra.values.first,
     );
   }
 
   @override
   void dispose() {
     super.dispose();
-    if (!widget.isLoginUser) {
+    if (!widget.extra.values.first) {
       Provider.of<MypageProviderFactory>(context, listen: false)
           .disposeProvider(
         memberId,
@@ -95,7 +93,7 @@ class _MypageScreenState extends State<MypageScreen> {
                     Expanded(
                       child: BottomButtons(
                         memberId: memberId,
-                        isLoginUser: widget.isLoginUser,
+                        isLoginUser: widget.extra.values.first,
                       ),
                     ),
                     const SizedBox(height: 20),
