@@ -4,8 +4,8 @@ import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:provider/provider.dart';
 import '../../../styles/app_text_style.dart';
 import '../../../widget/Controller.dart';
-import '../Provider/findIdProvider.dart';
-import '../Provider/SendEmailProvider.dart';
+import '../Provider/find_id_provider.dart';
+import '../Provider/send_email_provider.dart';
 import 'find_id_screen_1.dart';
 import 'find_id_screen_3.dart';
 
@@ -16,13 +16,8 @@ class FindIdScreen2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    final sendEmailProvider =
-    Provider.of<SendEmailProvider>(context,
-        listen: false);
-    final findIdProvider = Provider.of<FindIdProvider>(
-        context,
-        listen: false);
+    final sendEmailProvider = Provider.of<SendEmailProvider>(context, listen: false);
+    final findIdProvider = Provider.of<FindIdProvider>(context, listen: false);
 
     return Scaffold(
       backgroundColor: AppColor.lightGrey,
@@ -49,9 +44,9 @@ class FindIdScreen2 extends StatelessWidget {
                   Container(
                     margin: const EdgeInsets.fromLTRB(7, 0, 7, 43.5),
                     alignment: Alignment.topLeft,
-                    child: Text(
+                    child: const Text(
                       'Step 2. 본인인증',
-                      style: app_text_style.littleTitle,
+                      style: AppTextStyle.littleTitle,
                     ),
                   ),
                   Container(
@@ -75,7 +70,7 @@ class FindIdScreen2 extends StatelessWidget {
                     child: Text(
                       '입력하신 이메일로 \n 인증번호가 전송되었습니다.',
                       textAlign: TextAlign.center,
-                      style: app_text_style.otherLoginTextStyle.copyWith(
+                      style: AppTextStyle.otherLoginTextStyle.copyWith(
                         color: Colors.black,
                       ),
                     ),
@@ -91,7 +86,7 @@ class FindIdScreen2 extends StatelessWidget {
                       controller: _codeController.controller,
                       decoration: InputDecoration(
                         hintText: '인증번호를 입력해 주세요',
-                        hintStyle: app_text_style.hint,
+                        hintStyle: AppTextStyle.hint,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
                           borderSide: BorderSide.none,
@@ -137,7 +132,7 @@ class FindIdScreen2 extends StatelessWidget {
                         ),
                         child: Text(
                           '이전',
-                          style: app_text_style.hint.copyWith(
+                          style: AppTextStyle.hint.copyWith(
                             color: Colors.black,
                             fontSize: 14,
                           ),
@@ -147,23 +142,18 @@ class FindIdScreen2 extends StatelessWidget {
                       TextButton(
                         onPressed: () async {
                           try {
-                            await findIdProvider.sendVerification(
-                              name: sendEmailProvider.name,
-                              email: sendEmailProvider.email,
-                              verificationCode:  _codeController.controller.text
-                            );
-                            final String loginId = await findIdProvider
-                                    .storageService
-                                    .read('loginId') ?? '';
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    FindIdScreen3(loginId: loginId),
-                              ),
-                            );
+                            await findIdProvider.sendVerification(name: sendEmailProvider.name, email: sendEmailProvider.email, verificationCode: _codeController.controller.text);
+                            final String loginId = await findIdProvider.storageService.read('loginId') ?? '';
+                            if (context.mounted) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => FindIdScreen3(loginId: loginId),
+                                ),
+                              );
+                            }
                           } catch (e) {
-                            print('Error: $e');
+                            debugPrint('Error: $e');
                           }
                         },
                         style: TextButton.styleFrom(
@@ -173,9 +163,9 @@ class FindIdScreen2 extends StatelessWidget {
                             borderRadius: BorderRadius.circular(20),
                           ),
                         ),
-                        child: Text(
+                        child: const Text(
                           '다음',
-                          style: app_text_style.button,
+                          style: AppTextStyle.button,
                           textAlign: TextAlign.center,
                         ),
                       ),

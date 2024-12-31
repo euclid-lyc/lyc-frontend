@@ -41,7 +41,7 @@ class NormalAppbar extends StatelessWidget implements PreferredSizeWidget {
                       ? Container(
                           alignment: AlignmentDirectional.bottomStart,
                           child: GestureDetector(
-                            child: Icon(
+                            child: const Icon(
                               Icons.arrow_back_ios_new_rounded,
                               color: Colors.white,
                             ),

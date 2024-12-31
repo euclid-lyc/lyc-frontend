@@ -26,7 +26,7 @@ class CustomButtonInProfileBox extends StatelessWidget {
           ),
           child: Text(
             text,
-            style: TextStyle(
+            style: const TextStyle(
               fontWeight: FontWeight.w500,
               color: Color(0xff8D8371),
             ),

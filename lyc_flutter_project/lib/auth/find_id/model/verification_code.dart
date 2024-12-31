@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'VerificationCode.g.dart';
+part 'verification_code.g.dart';
 
 @JsonSerializable()
 class VerificationCode {

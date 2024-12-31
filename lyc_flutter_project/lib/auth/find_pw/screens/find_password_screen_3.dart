@@ -5,7 +5,7 @@ import 'package:lyc_flutter_project/styles/app_text_style.dart';
 import 'package:provider/provider.dart';
 import '../../../common/dio/dio.dart';
 import '../../../widget/Controller.dart';
-import '../provider/FindPwProvider.dart';
+import '../provider/find_pw_provider.dart';
 import 'find_password_screen_2.dart';
 import 'find_password_screen_4.dart';
 
@@ -42,31 +42,26 @@ class FindPasswordScreen3 extends StatelessWidget {
                     Container(
                       margin: const EdgeInsets.only(bottom: 25),
                       alignment: Alignment.topLeft,
-                      child: Text(
+                      child: const Text(
                         'Step 3. 비밀번호 재설정',
-                        style: app_text_style.littleTitle,
+                        style: AppTextStyle.littleTitle,
                       ),
                     ),
                     Container(
                       margin: const EdgeInsets.fromLTRB(0, 0, 0, 18.5),
-                      child: Text(
+                      child: const Text(
                         '영문, 숫자, 특수문자를 조합하여 8자 이상 20자 이하로 설정해 주세요.',
-                        style: app_text_style.hint,
+                        style: AppTextStyle.hint,
                       ),
                     ),
                     buildInputField(
                       '새로운 비밀번호',
                       '비밀번호를 입력해 주세요',
-                      app_text_style.labelTextStyle,
-                      app_text_style.hint,
+                      AppTextStyle.labelTextStyle,
+                      AppTextStyle.hint,
                       _pwController.controller,
                     ),
-                    buildInputField(
-                        '비밀번호 확인',
-                        '비밀번호를 다시 입력해주세요',
-                        app_text_style.labelTextStyle,
-                        app_text_style.hint,
-                        _pwCheckController.controller),
+                    buildInputField('비밀번호 확인', '비밀번호를 다시 입력해주세요', AppTextStyle.labelTextStyle, AppTextStyle.hint, _pwCheckController.controller),
                   ],
                 ),
               ),
@@ -96,7 +91,7 @@ class FindPasswordScreen3 extends StatelessWidget {
                         ),
                         child: Text(
                           '이전',
-                          style: app_text_style.hint.copyWith(
+                          style: AppTextStyle.hint.copyWith(
                             color: Colors.black,
                             fontSize: 14,
                           ),
@@ -105,23 +100,21 @@ class FindPasswordScreen3 extends StatelessWidget {
                       // '다음' 버튼
                       TextButton(
                         onPressed: () async {
-                          String? loginId =
-                              await DioProvider().storage.read(key: 'loginId');
-                          String? verificationCode = await DioProvider()
-                              .storage
-                              .read(key: 'verificationCode');
+                          String? loginId = await DioProvider().storage.read(key: 'loginId');
+                          String? verificationCode = await DioProvider().storage.read(key: 'verificationCode');
                           await findPwProvider.updatePw(
                               loginId: loginId ?? '',
                               password: _pwController.controller.text,
-                              passwordConfirmation:
-                                  _pwCheckController.controller.text,
+                              passwordConfirmation: _pwCheckController.controller.text,
                               verificationCode: verificationCode ?? '');
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const FindPasswordScreen4(),
-                            ),
-                          );
+                          if (context.mounted) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const FindPasswordScreen4(),
+                              ),
+                            );
+                          }
                         },
                         style: TextButton.styleFrom(
                           backgroundColor: AppColor.beige,
@@ -130,9 +123,9 @@ class FindPasswordScreen3 extends StatelessWidget {
                             borderRadius: BorderRadius.circular(20),
                           ),
                         ),
-                        child: Text(
+                        child: const Text(
                           '다음',
-                          style: app_text_style.button,
+                          style: AppTextStyle.button,
                           textAlign: TextAlign.center,
                         ),
                       ),
@@ -147,8 +140,7 @@ class FindPasswordScreen3 extends StatelessWidget {
     );
   }
 
-  Widget buildInputField(String label, String hint, TextStyle labelTextStyle,
-      TextStyle hintTextStyle, TextEditingController controller) {
+  Widget buildInputField(String label, String hint, TextStyle labelTextStyle, TextStyle hintTextStyle, TextEditingController controller) {
     return Container(
       margin: const EdgeInsets.only(bottom: 8.5),
       child: Column(

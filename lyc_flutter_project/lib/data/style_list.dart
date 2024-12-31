@@ -1,4 +1,4 @@
-class styleList{
+class StyleList{
   static const List<String> styleOptions = [
     '클래식',
     '캐주얼',
@@ -32,7 +32,7 @@ class styleList{
     '스키니'
   ];
 
-  static const List<String> BodyParts = [
+  static const List<String> bodyParts = [
     '어깨',
     '가슴',
     '전완',

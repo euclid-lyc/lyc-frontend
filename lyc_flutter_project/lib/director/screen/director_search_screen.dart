@@ -3,12 +3,14 @@ import 'package:lyc_flutter_project/common/widget/custom_loading.dart';
 import 'package:lyc_flutter_project/common/widget/custom_refresh_indicator.dart';
 import 'package:lyc_flutter_project/common/widget/home_appbar.dart';
 import 'package:lyc_flutter_project/common/widget/member_list.dart';
+import 'package:lyc_flutter_project/common/widget/nav_bar.dart';
 import 'package:lyc_flutter_project/common/widget/switch_category_button.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/director/model/director_ranking.dart';
 import 'package:lyc_flutter_project/director/provider/director_provider.dart';
 import 'package:lyc_flutter_project/director/widget/custom_search_bar.dart';
 import 'package:lyc_flutter_project/common/widget/default_padding.dart';
+import 'package:lyc_flutter_project/routes/routes.dart';
 import 'package:provider/provider.dart';
 
 class DirectorSearchScreen extends StatefulWidget {
@@ -44,6 +46,8 @@ class _DirectorSearchScreenState extends State<DirectorSearchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: NavBar(currentRouteName: Routes.director.name),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       resizeToAvoidBottomInset: true,
       backgroundColor: AppColor.lightGrey,
       appBar: const HomeAppbar(),
@@ -137,7 +141,6 @@ class _PaddingText extends StatelessWidget {
   final double fontSize;
 
   const _PaddingText({
-    super.key,
     required this.label,
     required this.fontWeight,
     required this.fontSize,

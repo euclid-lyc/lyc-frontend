@@ -53,9 +53,9 @@ class DirectorProvider extends ChangeNotifier {
       _hasMore = list.length >= pageSize;
     } catch (e) {
       if (e is ApiResponse) {
-        print("error in getRanking: ${e.message}");
+        debugPrint("error in getRanking: ${e.message}");
       } else {
-        print("error in getRanking");
+        debugPrint("error in getRanking");
       }
     } finally {
       _loading = false;

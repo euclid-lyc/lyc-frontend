@@ -118,7 +118,9 @@ class _AddPostingScreenState extends State<AddPostingScreen> {
                 final msg = widget.coordiProvider.checkPosting();
                 if (msg == null) {
                   await widget.coordiProvider.upload();
-                  Navigator.of(context).pop();
+                  if (context.mounted) {
+                    Navigator.of(context).pop();
+                  }
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(

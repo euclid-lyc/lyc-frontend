@@ -6,7 +6,11 @@ class LinkBox extends StatelessWidget {
   final String index;
   final String link;
 
-  const LinkBox({super.key, required this.index, required this.link,});
+  const LinkBox({
+    super.key,
+    required this.index,
+    required this.link,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -35,10 +39,7 @@ class LinkBox extends StatelessWidget {
                   ),
                   child: Text(
                     '링크$index',
-                    style: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 14.0),
+                    style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w500, fontSize: 14.0),
                   ),
                 ),
                 const SizedBox(width: 10),
@@ -58,7 +59,10 @@ class LinkBox extends StatelessWidget {
             child: SizedBox(
               child: SvgPicture.asset(
                 'assets/icon_eraser.svg',
-                color: AppColor.deepGrey,
+                colorFilter: const ColorFilter.mode(
+                  AppColor.deepGrey,
+                  BlendMode.srcIn,
+                ),
               ),
             ),
           ),

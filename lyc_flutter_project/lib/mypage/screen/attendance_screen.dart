@@ -112,10 +112,9 @@ class CheckDialog extends StatelessWidget {
             ),
             const Spacer(),
             TextButton(
-              style: ButtonStyle(
-                backgroundColor:
-                    MaterialStateProperty.all<Color>(const Color(0xffC4BAA2)),
-                foregroundColor: MaterialStateProperty.all<Color>(Colors.black),
+              style: TextButton.styleFrom(
+                backgroundColor: const Color(0xffC4BAA2),
+                foregroundColor: Colors.black,
               ),
               onPressed: () {
                 Navigator.pop(context);
@@ -167,7 +166,7 @@ class Profile extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(width: 16.0),
+          const SizedBox(width: 16.0),
           RoundImage(
             image: Image.asset(
               'assets/ex_profile.png',
@@ -235,20 +234,7 @@ class Calendar extends StatelessWidget {
             final year = date.year;
 
             // 월 이름을 배열로 정의
-            final monthNames = [
-              'JAN',
-              'FEB',
-              'MAR',
-              'APR',
-              'MAY',
-              'JUN',
-              'JUL',
-              'AUG',
-              'SEP',
-              'OCT',
-              'NOV',
-              'DEC'
-            ];
+            final monthNames = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
 
             // 월과 연도를 원하는 형식으로 변환
             return '${monthNames[month - 1]} $year';
@@ -275,13 +261,11 @@ class Button extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox.expand(
       child: TextButton(
-        style: ButtonStyle(
-          foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-          backgroundColor: MaterialStateProperty.all<Color>(color),
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20.0), // radius 20 설정
-            ),
+        style: TextButton.styleFrom(
+          foregroundColor: Colors.white,
+          backgroundColor: color,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.0),
           ),
         ),
         onPressed: onPressed,

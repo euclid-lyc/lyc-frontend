@@ -10,6 +10,7 @@ class ImagePickerWidget extends StatefulWidget {
   final SvgPicture? icon;
 
   const ImagePickerWidget({
+    super.key,
     required this.onImageSelected,
     required this.picker,
     this.icon,
@@ -42,10 +43,7 @@ class _ImagePickerWidgetState extends State<ImagePickerWidget> {
             return AlertDialog(
               title: const Text(
                 '사진 불러오기',
-                style: TextStyle(
-                    color: AppColor.brown,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w500),
+                style: TextStyle(color: AppColor.brown, fontSize: 18, fontWeight: FontWeight.w500),
               ),
               content: Row(
                 children: [

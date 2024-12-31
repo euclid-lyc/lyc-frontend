@@ -91,7 +91,10 @@ class TitleRow extends StatelessWidget {
           onTap: onTap,
           child: SvgPicture.asset(
             'assets/icon_plus.svg',
-            color: const Color(0xffA6A6A6),
+            colorFilter: const ColorFilter.mode(
+              Color(0xffA6A6A6),
+              BlendMode.srcIn,
+            ),
           ),
         ),
       ],

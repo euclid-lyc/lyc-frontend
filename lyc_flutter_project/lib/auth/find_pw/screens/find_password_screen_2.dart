@@ -4,10 +4,9 @@ import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/widget/Controller.dart';
 import 'package:provider/provider.dart';
 import '../../../styles/app_text_style.dart';
-import '../provider/FindPwProvider.dart';
+import '../provider/find_pw_provider.dart';
 import 'find_password_screen_1.dart';
 import 'find_password_screen_3.dart';
-
 
 class FindPasswordScreen2 extends StatelessWidget {
   FindPasswordScreen2({super.key});
@@ -35,28 +34,28 @@ class FindPasswordScreen2 extends StatelessWidget {
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(20),
               ),
-              padding: EdgeInsets.fromLTRB(22, 28.5, 22, 0),
+              padding: const EdgeInsets.fromLTRB(22, 28.5, 22, 0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
-                    margin: EdgeInsets.fromLTRB(7, 0, 7, 43.5),
+                    margin: const EdgeInsets.fromLTRB(7, 0, 7, 43.5),
                     alignment: Alignment.topLeft,
-                    child: Text(
+                    child: const Text(
                       'Step 2. 본인인증',
-                      style: app_text_style.littleTitle,
+                      style: AppTextStyle.littleTitle,
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(bottom: 16.5),
+                    margin: const EdgeInsets.only(bottom: 16.5),
                     // 수정된 여백 설정
                     decoration: BoxDecoration(
-                      color: Color(0xFFBBBBBB),
+                      color: const Color(0xFFBBBBBB),
                       borderRadius: BorderRadius.circular(62),
                     ),
                     width: 124,
                     height: 124,
-                    child: Center(
+                    child: const Center(
                       child: Icon(
                         Icons.mail_outline_outlined, // 아이콘으로 변경
                         size: 60, // 아이콘 크기 설정
@@ -65,12 +64,11 @@ class FindPasswordScreen2 extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.fromLTRB(4, 0, 0, 18.5),
+                    margin: const EdgeInsets.fromLTRB(4, 0, 0, 18.5),
                     child: Text(
                       '선택하신 인증수단으로 \n 인증번호가 전송되었습니다.',
                       textAlign: TextAlign.center,
-                      style: app_text_style.otherLoginTextStyle
-                          .copyWith(color: Colors.black),
+                      style: AppTextStyle.otherLoginTextStyle.copyWith(color: Colors.black),
                     ),
                   ),
                   Container(
@@ -83,19 +81,18 @@ class FindPasswordScreen2 extends StatelessWidget {
                     child: TextField(
                       decoration: InputDecoration(
                         hintText: '인증번호를 입력해 주세요',
-                        hintStyle: app_text_style.hint,
+                        hintStyle: AppTextStyle.hint,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
                           borderSide: BorderSide.none,
                         ),
-                        contentPadding:
-                        EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                       ),
                       controller: _vcController.controller,
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 43),
+                  const Padding(
+                    padding: EdgeInsets.only(top: 43),
                   ),
                 ],
               ),
@@ -116,21 +113,19 @@ class FindPasswordScreen2 extends StatelessWidget {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    FindPasswordScreen1()),
+                            MaterialPageRoute(builder: (context) => FindPasswordScreen1()),
                           );
                         },
                         style: TextButton.styleFrom(
                           backgroundColor: AppColor.grey,
-                          minimumSize: Size(120, 40), // 버튼 크기 설정
+                          minimumSize: const Size(120, 40), // 버튼 크기 설정
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
                           ),
                         ),
                         child: Text(
                           '이전',
-                          style: app_text_style.hint.copyWith(
+                          style: AppTextStyle.hint.copyWith(
                             color: Colors.black,
                             fontSize: 14,
                           ),
@@ -140,28 +135,27 @@ class FindPasswordScreen2 extends StatelessWidget {
                       TextButton(
                         onPressed: () async {
                           try {
-                            await findPwProvider.sendVerification(
-                                verificationCode: _vcController.controller
-                                    .text);
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => FindPasswordScreen3()),
-                            );
+                            await findPwProvider.sendVerification(verificationCode: _vcController.controller.text);
+                            if (context.mounted) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => FindPasswordScreen3()),
+                              );
+                            }
                           } catch (e) {
-                            print('Error: $e');
+                            debugPrint('Error: $e');
                           }
                         },
                         style: TextButton.styleFrom(
                           backgroundColor: AppColor.beige,
-                          minimumSize: Size(120, 40), // 버튼 크기 설정
+                          minimumSize: const Size(120, 40), // 버튼 크기 설정
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
                           ),
                         ),
-                        child: Text(
+                        child: const Text(
                           '다음',
-                          style: app_text_style.button,
+                          style: AppTextStyle.button,
                           textAlign: TextAlign.center,
                         ),
                       ),

@@ -41,8 +41,7 @@ class _PostingDetailScreenState extends State<PostingDetailScreen> {
   @override
   void initState() {
     super.initState();
-    provider = Provider.of<PostingDetailProviderFactory>(context, listen: false)
-        .getProvider(widget.postingId);
+    provider = Provider.of<PostingDetailProviderFactory>(context, listen: false).getProvider(widget.postingId);
     Future.microtask(() {
       if (mounted) {
         provider.initialize(widget.isMyPosting);
@@ -77,10 +76,8 @@ class _PostingDetailScreenState extends State<PostingDetailScreen> {
                             title: "정말 삭제하시겠습니까?",
                             leftButtonLabel: "취소",
                             rightButtonLabel: "삭제",
-                            leftButtonPressed: () =>
-                                Navigator.pop(context, false),
-                            rightButtonPressed: () =>
-                                Navigator.pop(context, true),
+                            leftButtonPressed: () => Navigator.pop(context, false),
+                            rightButtonPressed: () => Navigator.pop(context, true),
                             rightBackgroundColor: AppColor.brown,
                           );
                         },
@@ -88,15 +85,19 @@ class _PostingDetailScreenState extends State<PostingDetailScreen> {
                       if (delete == true) {
                         try {
                           await value.delete();
-                          Navigator.pop(context, true);
+                          if (context.mounted) {
+                            Navigator.pop(context, true);
+                          }
                         } catch (e) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(
-                                "오류가 발생했습니다: ${e.toString()}",
+                          if (context.mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  "오류가 발생했습니다: ${e.toString()}",
+                                ),
                               ),
-                            ),
-                          );
+                            );
+                          }
                         }
                       }
                     },
@@ -131,8 +132,7 @@ class _PostingDetailScreenState extends State<PostingDetailScreen> {
                                   ),
                                   const SizedBox(width: 20),
                                   Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
@@ -204,15 +204,12 @@ class _PostingDetailScreenState extends State<PostingDetailScreen> {
                           // 하트, 공유, 저장 버튼
                           !widget.isCloset
                               ? Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     IconButton(
                                       onPressed: () => value.pressLike(),
                                       icon: Icon(
-                                        value.isLiked
-                                            ? Icons.favorite
-                                            : Icons.favorite_outline,
+                                        value.isLiked ? Icons.favorite : Icons.favorite_outline,
                                         size: 30,
                                       ),
                                     ),
@@ -227,12 +224,9 @@ class _PostingDetailScreenState extends State<PostingDetailScreen> {
                                         ),
                                         !widget.isMyPosting
                                             ? IconButton(
-                                                onPressed: () =>
-                                                    value.pressSave(),
+                                                onPressed: () => value.pressSave(),
                                                 icon: SvgPicture.asset(
-                                                  value.isSaved
-                                                      ? "assets/icon_saved.svg"
-                                                      : "assets/icon_save.svg",
+                                                  value.isSaved ? "assets/icon_saved.svg" : "assets/icon_save.svg",
                                                   width: 30,
                                                   height: 30,
                                                 ),

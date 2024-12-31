@@ -77,10 +77,10 @@ class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
                 for (var i = 0; i < 4; i++)
                   Expanded(
                     child: SelectButtonsInPosting(
-                      styleList.styleOptions,
+                      StyleList.styleOptions,
                       widget.coordiProvider.style,
                       i,
-                      () => widget.coordiProvider.updateStyle(styleList.styleOptions[i]),
+                      () => widget.coordiProvider.updateStyle(StyleList.styleOptions[i]),
                       AppColor.deepGrey,
                       Colors.white,
                     ),
@@ -92,10 +92,10 @@ class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
                 for (var i = 4; i < 8; i++)
                   Expanded(
                     child: SelectButtonsInPosting(
-                      styleList.styleOptions,
+                      StyleList.styleOptions,
                       widget.coordiProvider.style,
                       i,
-                      () => widget.coordiProvider.updateStyle(styleList.styleOptions[i]),
+                      () => widget.coordiProvider.updateStyle(StyleList.styleOptions[i]),
                       AppColor.deepGrey,
                       Colors.white,
                     ),

@@ -56,6 +56,7 @@ class FollowFirstPaginateQuery extends FollowPaginateQuery {
     required super.pageSize,
   });
 
+  @override
   Map<String, dynamic> toJson() => _$FollowFirstPaginateQueryToJson(this);
 }
 
@@ -68,6 +69,7 @@ class FollowMorePaginateQuery extends FollowPaginateQuery {
     required this.cursorNickname,
   });
 
+  @override
   Map<String, dynamic> toJson() => _$FollowMorePaginateQueryToJson(this);
 }
 

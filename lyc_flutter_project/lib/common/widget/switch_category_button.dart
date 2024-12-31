@@ -9,6 +9,7 @@ class SwitchCategoryButton extends StatelessWidget {
   final double size;
 
   const SwitchCategoryButton({
+    super.key,
     required this.text,
     required this.isSelected,
     required this.onPressed,
@@ -19,14 +20,13 @@ class SwitchCategoryButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Container(
+      child: SizedBox(
         height: double.infinity,
         child: TextButton(
           onPressed: onPressed,
           style: TextButton.styleFrom(
             backgroundColor: isSelected ? color : Colors.white,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
           ),
           child: Text(
             text,

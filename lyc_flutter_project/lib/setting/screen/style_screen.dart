@@ -49,8 +49,7 @@ class _StyleScreenState extends State<StyleScreen> {
                   return const Center(child: CustomLoading());
                 }
                 return ListView(
-                  keyboardDismissBehavior:
-                      ScrollViewKeyboardDismissBehavior.onDrag,
+                  keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
                   children: [
                     ContentBox(
                       title: "1. 본인의 체형을 알려주세요.",
@@ -73,8 +72,7 @@ class _StyleScreenState extends State<StyleScreen> {
                             onTap: () {
                               showDialog(
                                 context: context,
-                                builder: (context) =>
-                                    CustomNumberPicker<SettingProvider>(
+                                builder: (context) => CustomNumberPicker<SettingProvider>(
                                   title: "상의 사이즈를 선택해주세요.",
                                   minValue: 80,
                                   maxValue: 120,
@@ -99,8 +97,7 @@ class _StyleScreenState extends State<StyleScreen> {
                             onTap: () {
                               showDialog(
                                 context: context,
-                                builder: (context) =>
-                                    CustomNumberPicker<SettingProvider>(
+                                builder: (context) => CustomNumberPicker<SettingProvider>(
                                   title: "하의 사이즈를 선택해주세요.",
                                   minValue: 24,
                                   maxValue: 42,
@@ -123,64 +120,57 @@ class _StyleScreenState extends State<StyleScreen> {
                     ContentBox(
                       title: "2. 평소 즐겨입는 스타일은 무엇인가요?",
                       child: ButtonList(
-                        name: styleList.styleOptions,
+                        name: StyleList.styleOptions,
                         selected: value.style.preferredStyle.styles,
-                        onSelected: (v) =>
-                            value.updatePreferredStyle(selected: v),
+                        onSelected: (v) => value.updatePreferredStyle(selected: v),
                       ),
                     ),
                     ContentBox(
                       title: "3. 평소 즐겨입지 않는 스타일은 무엇인가요?",
                       child: ButtonList(
-                        name: styleList.styleOptions,
+                        name: StyleList.styleOptions,
                         selected: value.style.nonPreferredStyle.styles,
-                        onSelected: (v) =>
-                            value.updateNonPreferredStyle(selected: v),
+                        onSelected: (v) => value.updateNonPreferredStyle(selected: v),
                       ),
                     ),
                     ContentBox(
                       title: "4. 선호하는 소재를 선택해주세요.",
                       child: ButtonList(
-                        name: styleList.materialOptions,
+                        name: StyleList.materialOptions,
                         selected: value.style.preferredMaterials.materials,
-                        onSelected: (v) =>
-                            value.updatePreferredMaterials(selected: v),
+                        onSelected: (v) => value.updatePreferredMaterials(selected: v),
                       ),
                     ),
                     ContentBox(
                       title: "5. 선호하지 않는 소재를 선택해주세요.",
                       child: ButtonList(
-                        name: styleList.materialOptions,
+                        name: StyleList.materialOptions,
                         selected: value.style.nonPreferredMaterials.materials,
-                        onSelected: (v) =>
-                            value.updateNonPreferredMaterials(selected: v),
+                        onSelected: (v) => value.updateNonPreferredMaterials(selected: v),
                       ),
                     ),
                     ContentBox(
                       title: "6. 선호하는 핏을 선택해주세요.",
                       child: ButtonList(
-                        name: styleList.fitOptions,
+                        name: StyleList.fitOptions,
                         selected: value.style.preferredFits.fits,
-                        onSelected: (v) =>
-                            value.updatePreferredFits(selected: v),
+                        onSelected: (v) => value.updatePreferredFits(selected: v),
                       ),
                     ),
                     ContentBox(
                       title: "7. 선호하지 않는 핏을 선택해주세요.",
                       child: ButtonList(
-                        name: styleList.fitOptions,
+                        name: StyleList.fitOptions,
                         selected: value.style.nonPreferredFits.fits,
-                        onSelected: (v) =>
-                            value.updateNonPreferredFits(selected: v),
+                        onSelected: (v) => value.updateNonPreferredFits(selected: v),
                       ),
                     ),
                     ContentBox(
                       title: "8. 보완하고 싶은 신체 부위가 있나요?",
                       child: ButtonList(
-                        name: styleList.BodyParts,
+                        name: StyleList.bodyParts,
                         selected: value.style.badBodyTypes.bodyTypes,
-                        onSelected: (v) =>
-                            value.updateBadBodyTypes(selected: v),
+                        onSelected: (v) => value.updateBadBodyTypes(selected: v),
                       ),
                     ),
                     ContentBox(
@@ -209,7 +199,9 @@ class _StyleScreenState extends State<StyleScreen> {
                       },
                       scdOnPressed: () async {
                         await value.updateStyleInfo();
-                        Navigator.pop(context);
+                        if (context.mounted) {
+                          Navigator.pop(context);
+                        }
                       },
                       fstLabel: "이전",
                       scdLabel: "완료",

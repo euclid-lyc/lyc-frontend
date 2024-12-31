@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lyc_flutter_project/common/widget/round_image.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
-import 'package:lyc_flutter_project/mypage/provider/mypage_provider.dart';
-import 'package:provider/provider.dart';
 
 class HomeAppbar extends StatelessWidget implements PreferredSizeWidget {
   const HomeAppbar({
@@ -15,8 +13,6 @@ class HomeAppbar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String profile = context.read<MypageProvider>().profile.profileImage;
-
     return AppBar(
       backgroundColor: AppColor.beige,
       automaticallyImplyLeading: false,
@@ -54,12 +50,18 @@ class HomeAppbar extends StatelessWidget implements PreferredSizeWidget {
                     children: [
                       const Expanded(flex: 6, child: SizedBox()),
                       Expanded(
-                          flex: 3,
-                          child: GestureDetector(
-                            onTap: () {},
-                            child: SvgPicture.asset('assets/icon_collage.svg',
-                                color: Colors.white),
-                          )),
+                        flex: 3,
+                        child: GestureDetector(
+                          onTap: () {},
+                          child: SvgPicture.asset(
+                            'assets/icon_collage.svg',
+                            colorFilter: const ColorFilter.mode(
+                              Colors.white,
+                              BlendMode.srcIn,
+                            ),
+                          ),
+                        ),
+                      ),
                       const Expanded(child: SizedBox()),
                       Expanded(
                           flex: 3,
@@ -67,7 +69,10 @@ class HomeAppbar extends StatelessWidget implements PreferredSizeWidget {
                             onTap: () {},
                             child: SvgPicture.asset(
                               'assets/icon_dm.svg',
-                              color: Colors.white,
+                              colorFilter: const ColorFilter.mode(
+                                Colors.white,
+                                BlendMode.srcIn,
+                              ),
                             ),
                           )),
                       const Expanded(child: SizedBox()),

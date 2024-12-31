@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:lyc_flutter_project/common/dio/dio.dart';
-import '../../service/StorageService.dart';
-import '../model/Info.dart';
+import '../../service/storage_service.dart';
+import '../model/info.dart';
 import 'package:lyc_flutter_project/config/secret.dart';
 
 class SendEmailProvider extends ChangeNotifier {
@@ -21,7 +21,7 @@ class SendEmailProvider extends ChangeNotifier {
   String get email => _info?.email ?? '';
 
   Future<void> getVerificationCode({required Info info}) async {
-    final url = 'http://$ip/lyc/auths/sign-in/find-id/send-verification-code';
+    const url = 'http://$ip/lyc/auths/sign-in/find-id/send-verification-code';
     _info = info;
 
     try {
@@ -42,13 +42,13 @@ class SendEmailProvider extends ChangeNotifier {
             'Verification code request failed: ${response.statusCode}');
       }
     } on DioException catch (e) {
-      print('DioException: ${e.message}');
+      debugPrint('DioException: ${e.message}');
       if (e.response != null) {
-        print('Response data: ${e.response?.data}');
+        debugPrint('Response data: ${e.response?.data}');
       }
       throw Exception('API 요청 실패: ${e.message}');
     } catch (e) {
-      print('Error: ${e.toString()}');
+      debugPrint('Error: ${e.toString()}');
       throw Exception('API 요청 실패: ${e.toString()}');
     }
   }

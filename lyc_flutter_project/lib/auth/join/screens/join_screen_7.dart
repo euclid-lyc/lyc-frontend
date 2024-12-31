@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lyc_flutter_project/common/widget/normal_appbar.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
+import 'package:lyc_flutter_project/styles/app_text_style.dart';
 
-import '../../../styles/app_text_style.dart';
 import 'login_screen.dart';
 
 class JoinScreen7 extends StatelessWidget {
@@ -23,29 +23,29 @@ class JoinScreen7 extends StatelessWidget {
           ),
           Center(
             child: Container(
-              constraints: BoxConstraints(maxWidth: 400),
+              constraints: const BoxConstraints(maxWidth: 400),
               // 최대 너비 설정
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(20),
               ),
-              padding: EdgeInsets.fromLTRB(22, 28.5, 22, 0),
+              padding: const EdgeInsets.fromLTRB(22, 28.5, 22, 0),
               width: 296,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
-                    margin: EdgeInsets.fromLTRB(7, 0, 7, 43.5),
+                    margin: const EdgeInsets.fromLTRB(7, 0, 7, 43.5),
                     alignment: Alignment.topLeft,
-                    child: Text(
+                    child: const Text(
                       'Step 3. 회원정보 입력',
-                      style: app_text_style.littleTitle,
+                      style: AppTextStyle.littleTitle,
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(bottom: 49),
+                    margin: const EdgeInsets.only(bottom: 49),
                     decoration: BoxDecoration(
-                      color: Color(0xFFBBBBBB),
+                      color: const Color(0xFFBBBBBB),
                       borderRadius: BorderRadius.circular(62),
                     ),
                     width: 124,
@@ -59,22 +59,21 @@ class JoinScreen7 extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.fromLTRB(4, 0, 0, 18.5),
+                    margin: const EdgeInsets.fromLTRB(4, 0, 0, 18.5),
                     child: Text(
                       '회원가입이 성공적으로 완료되었습니다.',
                       textAlign: TextAlign.center,
-                      style: app_text_style.otherLoginTextStyle
-                          .copyWith(color: Colors.black),
+                      style: AppTextStyle.otherLoginTextStyle.copyWith(color: Colors.black),
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(top: 30.5),
+                    padding: const EdgeInsets.only(top: 30.5),
                     child: TextButton(
                       onPressed: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) =>  LoginScreen(),
+                            builder: (context) => LoginScreen(),
                           ),
                         );
                       },
@@ -84,18 +83,18 @@ class JoinScreen7 extends StatelessWidget {
                           borderRadius: BorderRadius.circular(20),
                         ),
                       ),
-                      child: SizedBox(
+                      child: const SizedBox(
                         width: 230,
                         child: Text(
                           '로그인 화면으로 돌아가기',
-                          style: app_text_style.button,
+                          style: AppTextStyle.button,
                           textAlign: TextAlign.center,
                         ),
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 43),
+                  const Padding(
+                    padding: EdgeInsets.only(top: 43),
                   ),
                 ],
               ),

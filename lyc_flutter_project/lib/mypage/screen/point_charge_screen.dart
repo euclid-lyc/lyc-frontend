@@ -131,24 +131,24 @@ class _PointChargeScreenState extends State<PointChargeScreen> {
       payload: payload,
       showCloseButton: false,
       onCancel: (String data) {
-        print('------- onCancel: $data');
+        debugPrint('------- onCancel: $data');
       },
       onError: (String data) {
-        print('------- onError: $data');
+        debugPrint('------- onError: $data');
       },
       onClose: () {
-        print('------- onClose');
+        debugPrint('------- onClose');
         Bootpay().dismiss(context);
         Navigator.pop(context);
       },
       onCloseHardware: () {
-        print('------- onCloseHardware');
+        debugPrint('------- onCloseHardware');
       },
       onConfirm: (String data) {
         return true;
       },
       onDone: (String data) {
-        print('------- onDone: $data');
+        debugPrint('------- onDone: $data');
       },
     );
   }

@@ -68,18 +68,18 @@ class BootpayService {
       showCloseButton: false,
       // closeButton: Icon(Icons.close, size: 35.0, color: Colors.black54),
       onCancel: (String data) {
-        print('------- onCancel: $data');
+        debugPrint('------- onCancel: $data');
       },
       onError: (String data) {
-        print('------- onCancel: $data');
+        debugPrint('------- onCancel: $data');
       },
       onClose: () {
-        print('------- onClose');
+        debugPrint('------- onClose');
         Bootpay().dismiss(context);
         Navigator.pop(context);
       },
       onCloseHardware: () {
-        print('------- onCloseHardware');
+        debugPrint('------- onCloseHardware');
       },
       // onIssued: (String data) {
       //   print('------- onIssued: $data');
@@ -88,7 +88,7 @@ class BootpayService {
         return true;
       },
       onDone: (String data) {
-        print('------- onDone: $data');
+        debugPrint('------- onDone: $data');
       },
     );
   }
@@ -150,18 +150,18 @@ class BootpayService {
       showCloseButton: false,
       // closeButton: Icon(Icons.close, size: 35.0, color: Colors.black54),
       onCancel: (String data) {
-        print('------- onCancel: $data');
+        debugPrint('------- onCancel: $data');
       },
       onError: (String data) {
-        print('------- onCancel: $data');
+        debugPrint('------- onCancel: $data');
       },
       onClose: () {
-        print('------- onClose');
+        debugPrint('------- onClose');
         Bootpay().dismiss(context);
         Navigator.pop(context);
       },
       onCloseHardware: () {
-        print('------- onCloseHardware');
+        debugPrint('------- onCloseHardware');
       },
       // onIssued: (String data) {
       //   print('------- onIssued: $data');
@@ -170,7 +170,7 @@ class BootpayService {
         return true;
       },
       onDone: (String data) {
-        print('------- onDone: $data');
+        debugPrint('------- onDone: $data');
       },
     );
   }

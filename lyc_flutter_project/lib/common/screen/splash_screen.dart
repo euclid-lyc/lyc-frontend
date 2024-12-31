@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:lyc_flutter_project/common/widget/bottom_bar.dart';
+import 'package:go_router/go_router.dart';
+import 'package:lyc_flutter_project/routes/routes.dart';
 import 'package:provider/provider.dart';
-
-import '../../auth/join/Provider/login_provider.dart';
-import '../../auth/join/screens/login_screen.dart';
+import 'package:lyc_flutter_project/auth/join/Provider/login_provider.dart' show LoginProvider;
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -13,57 +12,38 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  bool _initialized = false;
-
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (!_initialized) {
-      _initialized = true;
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       checkTokenAndNavigate();
-    }
+    });
   }
 
-  void checkTokenAndNavigate() async {
-    final loginProvider = Provider.of<LoginProvider>(context);
+  checkTokenAndNavigate() async {
+    final loginProvider = Provider.of<LoginProvider>(context, listen: false);
+
     await loginProvider.checkLoginStatus();
+    if (!mounted) return;
+
     if (!loginProvider.isLoggedIn) {
-      navigateToLogin();
+      context.goNamed(Routes.login.name);
       return;
     }
 
     try {
       final success = await loginProvider.getProfile();
-      if (success) {
-        navigateToHome();
+      if (!mounted) return;
+
+      if (success || loginProvider.hasProfile) {
+        context.goNamed(Routes.home.name);
       } else {
-        if (loginProvider.hasProfile) {
-          navigateToHome();
-        } else {
-          navigateToLogin();
-        }
+        context.goNamed(Routes.login.name);
       }
     } catch (e) {
-      navigateToLogin();
+      if (!mounted) return;
+      context.goNamed(Routes.login.name);
     }
-  }
-
-  void navigateToHome() {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const BottomBar(),
-      ),
-    );
-  }
-
-  void navigateToLogin() {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => LoginScreen(),
-      ),
-    );
   }
 
   @override

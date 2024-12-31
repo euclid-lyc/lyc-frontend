@@ -4,9 +4,9 @@ import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/styles/app_text_style.dart';
 import 'package:provider/provider.dart';
 import '../../../widget/Controller.dart';
-import '../Provider/SendEmailProvider.dart';
+import '../Provider/send_email_provider.dart';
 import 'find_id_screen_2.dart';
-import '../model/Info.dart';
+import '../model/info.dart';
 
 
 class FindIdScreen1 extends StatelessWidget {
@@ -28,7 +28,7 @@ class FindIdScreen1 extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                padding: EdgeInsets.fromLTRB(29, 28.5, 29, 33),
+                padding: const EdgeInsets.fromLTRB(29, 28.5, 29, 33),
                 width: 296,
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -39,27 +39,27 @@ class FindIdScreen1 extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Container(
-                      margin: EdgeInsets.only(bottom: 25),
+                      margin: const EdgeInsets.only(bottom: 25),
                       alignment: Alignment.topLeft,
-                      child: Text(
+                      child: const Text(
                         'Step 1. 인증수단 선택',
-                        style: app_text_style.littleTitle,
+                        style: AppTextStyle.littleTitle,
                       ),
                     ),
                     buildInputField(
                         '이름',
                         '이름을 입력해주세요',
-                        app_text_style.labelTextStyle,
-                        app_text_style.hint,
+                        AppTextStyle.labelTextStyle,
+                        AppTextStyle.hint,
                        _nameController.controller),
                     buildInputField(
                         '가입한 이메일로 찾기',
                         '이메일을 입력해주세요',
-                        app_text_style.labelTextStyle,
-                        app_text_style.hint,
+                        AppTextStyle.labelTextStyle,
+                        AppTextStyle.hint,
                        _emailController.controller),
                     Padding(
-                      padding: EdgeInsets.only(top: 30.5), // 위아래 여백 설정
+                      padding: const EdgeInsets.only(top: 30.5), // 위아래 여백 설정
                       child: TextButton(
                         onPressed: ()async {
                           final info = Info(
@@ -68,15 +68,17 @@ class FindIdScreen1 extends StatelessWidget {
                           );
                           try {
                             await sendEmailProvider.getVerificationCode(info: info);
-                            Navigator.push(
+                            if (context.mounted) {
+                              Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) =>  FindIdScreen2(),
                               ),
                             );
+                            }
                           } catch (e) {
                             // 에러 처리
-                            print('Error: $e');
+                            debugPrint('Error: $e');
                           }
                         },
                         style: TextButton.styleFrom(
@@ -85,11 +87,11 @@ class FindIdScreen1 extends StatelessWidget {
                             borderRadius: BorderRadius.circular(20),
                           ),
                         ),
-                        child: SizedBox(
+                        child: const SizedBox(
                           width: 230,
                           child: Text(
                             '다음',
-                            style: app_text_style.button,
+                            style: AppTextStyle.button,
                             textAlign: TextAlign.center,
                           ),
                         ),
@@ -99,19 +101,19 @@ class FindIdScreen1 extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.symmetric(vertical: 20), // 위아래 여백 설정
+                padding: const EdgeInsets.symmetric(vertical: 20), // 위아래 여백 설정
                 child: TextButton(
                   onPressed: () {
                     // 다른 계정으로 로그인 버튼 눌렀을 때의 동작 구현
                   },
-                  child: Text(
+                  child: const Text(
                     '다른 계정으로 로그인',
-                    style: app_text_style.otherLoginTextStyle,
+                    style: AppTextStyle.otherLoginTextStyle,
                   ),
                 ),
               ),
               Padding(
-                padding: EdgeInsets.symmetric(vertical: 0), // 위아래 여백 설정
+                padding: const EdgeInsets.symmetric(vertical: 0), // 위아래 여백 설정
                 child: SizedBox(
                   width: 166,
                   child: Row(
@@ -161,13 +163,13 @@ class FindIdScreen1 extends StatelessWidget {
   Widget buildInputField(String label, String hint, TextStyle labelTextStyle,
       TextStyle hintTextStyle, TextEditingController controller) {
     return Container(
-      margin: EdgeInsets.only(bottom: 8.5),
+      margin: const EdgeInsets.only(bottom: 8.5),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
             Container(
-              margin: EdgeInsets.only(bottom: 4.5),
+              margin: const EdgeInsets.only(bottom: 4.5),
               alignment: Alignment.topLeft,
               child: Text(
                 label,
@@ -182,7 +184,7 @@ class FindIdScreen1 extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
             ),
             child: Padding(
-               padding: EdgeInsets.fromLTRB(18, 12, 18, 12), // 좌우 및 상하 여백 설정
+               padding: const EdgeInsets.fromLTRB(18, 12, 18, 12), // 좌우 및 상하 여백 설정
               child: TextField(
                 controller: controller,
                 textAlignVertical: TextAlignVertical.center, // 텍스트 수직 정렬

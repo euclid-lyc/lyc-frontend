@@ -26,7 +26,10 @@ class CustomSearchBar extends StatelessWidget {
           },
           icon: SvgPicture.asset(
             "assets/icon/search.svg",
-            color: Colors.black.withOpacity(0.4),
+            colorFilter: ColorFilter.mode(
+              Colors.black.withOpacity(0.4),
+              BlendMode.srcIn,
+            ),
           ),
         ),
       ],

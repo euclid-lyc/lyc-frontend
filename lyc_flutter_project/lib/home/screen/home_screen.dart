@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lyc_flutter_project/common/widget/custom_loading.dart';
 import 'package:lyc_flutter_project/common/widget/home_appbar.dart';
+import 'package:lyc_flutter_project/common/widget/nav_bar.dart';
 import 'package:lyc_flutter_project/common/widget/preview_posting_card.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/common/widget/round_image.dart';
 import 'package:lyc_flutter_project/home/provider/home_provider.dart';
 import 'package:lyc_flutter_project/mypage/model/mypage_posting_preview.dart';
+import 'package:lyc_flutter_project/routes/routes.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -32,6 +34,8 @@ class _HomeScreenState extends State<HomeScreen> {
     return Consumer<HomeProvider>(
       builder: (context, value, child) {
         return Scaffold(
+          floatingActionButton: NavBar(currentRouteName: Routes.home.name),
+          floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
           backgroundColor: AppColor.lightGrey,
           appBar: const HomeAppbar(),
           body: ListView(
@@ -377,7 +381,10 @@ class TitleRow extends StatelessWidget {
           onTap: onTap,
           child: SvgPicture.asset(
             'assets/icon_plus.svg',
-            color: const Color(0xffA6A6A6),
+            colorFilter: const ColorFilter.mode(
+              Color(0xffA6A6A6),
+              BlendMode.srcIn,
+            ),
           ),
         ),
       ],

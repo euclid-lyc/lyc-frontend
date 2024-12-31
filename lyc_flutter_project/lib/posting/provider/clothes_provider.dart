@@ -64,24 +64,24 @@ class ClothesProvider extends ChangeNotifier {
   void tUpdateFit(String text) {
     _postingText = _postingText.copyWith(fit: text);
     notifyListeners();
-    print(_postingText.fit);
+    debugPrint(_postingText.fit);
   }
 
   Future<bool> canUploadImage() async {
     if (_postingImage.memberId == null) {
-      print("memberId is null");
+      debugPrint("memberId is null");
       return false;
     }
     if (_postingImage.title == null) {
-      print("title is null");
+      debugPrint("title is null");
       return false;
     }
     if (_postingImage.text == null) {
-      print("text is null");
+      debugPrint("text is null");
       return false;
     }
     if (_postingImage.image == null) {
-      print("image is null");
+      debugPrint("image is null");
       return false;
     }
     return true;
@@ -89,19 +89,19 @@ class ClothesProvider extends ChangeNotifier {
 
   bool canUploadText() {
     if (_postingText.title == "") {
-      print("title is null");
+      debugPrint("title is null");
       return false;
     }
     if (_postingText.material == "") {
-      print("material is null");
+      debugPrint("material is null");
       return false;
     }
     if (_postingText.fit == "") {
-      print("fit is null");
+      debugPrint("fit is null");
       return false;
     }
     if (_postingText.text == "") {
-      print("text is null");
+      debugPrint("text is null");
       return false;
     }
     return true;
@@ -121,7 +121,7 @@ class ClothesProvider extends ChangeNotifier {
         image: image,
       );
     } else {
-      print("can't upload");
+      debugPrint("can't upload");
     }
   }
 
@@ -131,7 +131,7 @@ class ClothesProvider extends ChangeNotifier {
         posting: _postingText,
       );
     } else {
-      print("can't upload");
+      debugPrint("can't upload");
     }
   }
 }
