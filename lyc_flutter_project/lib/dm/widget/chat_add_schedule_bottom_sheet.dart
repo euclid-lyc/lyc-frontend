@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lyc_flutter_project/common/const/typographies.dart';
 import 'package:lyc_flutter_project/common/widget/custom_text_button.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
@@ -16,6 +17,9 @@ class ChatAddScheduleBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final toast = FToast();
+    toast.init(context);
+
     return Padding(
       padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
       child: Container(
@@ -161,6 +165,22 @@ class ChatAddScheduleBottomSheet extends StatelessWidget {
                       label: "추가",
                       onPressed: () async {
                         await value.makeSchedule();
+                        toast.showToast(
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(25.0),
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.3),
+                                  blurRadius: 3,
+                                )
+                              ]
+                            ),
+                            child: const Text("일정이 생성되었습니다"),
+                          ),
+                        );
                         if (context.mounted) {
                           Navigator.pop(context);
                         }
