@@ -84,7 +84,7 @@ class ChatScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                const ChatInputField(),
+                ChatInputField(provider: value),
               ],
             );
           },

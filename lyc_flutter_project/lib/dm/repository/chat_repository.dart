@@ -4,6 +4,7 @@ import 'package:lyc_flutter_project/common/model/api_response.dart';
 import 'package:lyc_flutter_project/config/secret.dart';
 import 'package:lyc_flutter_project/dm/model/chat_message_model.dart';
 import 'package:lyc_flutter_project/dm/model/chat_model.dart';
+import 'package:lyc_flutter_project/dm/model/make_schedule_model.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'chat_repository.g.dart';
@@ -23,7 +24,7 @@ class ChatRepositoryProvider extends ChangeNotifier {
 @RestApi()
 abstract class ChatRepository {
   factory ChatRepository(Dio dio, {String baseUrl}) = _ChatRepository;
-  
+
   @GET("")
   @Headers({"accessToken": "true"})
   Future<ApiResponse<ChatListModel>> getChatList({
@@ -37,5 +38,12 @@ abstract class ChatRepository {
     @Path("chatId") required int chatId,
     @Query("pageSize") required int pageSize,
     @Query("cursorDateTime") required String cursorDateTime,
+  });
+
+  @POST("/{chatId}/schedules")
+  @Headers({"accessToken": "true"})
+  Future<ApiResponse<MakeScheduleModel>> makeSchedule({
+    @Path("chatId") required int chatId,
+    @Body() required MakeScheduleModel model,
   });
 }

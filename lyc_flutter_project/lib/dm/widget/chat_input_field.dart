@@ -6,7 +6,12 @@ import 'package:lyc_flutter_project/dm/widget/chat_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 
 class ChatInputField extends StatelessWidget {
-  const ChatInputField({super.key});
+  final ChatProvider provider;
+
+  const ChatInputField({
+    super.key,
+    required this.provider,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +37,7 @@ class ChatInputField extends StatelessWidget {
                 onPressed: () {
                   showModalBottomSheet(
                     context: context,
-                    builder: (context) => const ChatBottomSheet(),
+                    builder: (context) => ChatBottomSheet(provider: provider),
                   );
                 },
                 icon: SvgPicture.asset(
