@@ -7,6 +7,7 @@ import 'package:lyc_flutter_project/common/dio/dio.dart';
 import 'package:lyc_flutter_project/common/model/api_response.dart';
 import 'package:lyc_flutter_project/config/secret.dart';
 import 'package:lyc_flutter_project/dm/model/chat_message_model.dart';
+import 'package:lyc_flutter_project/dm/model/make_schedule_model.dart';
 import 'package:lyc_flutter_project/dm/model/message_model.dart';
 import 'package:lyc_flutter_project/dm/repository/chat_repository.dart';
 import 'package:stomp_dart_client/stomp_dart_client.dart';
@@ -28,6 +29,7 @@ class ChatProvider extends ChangeNotifier {
     scrollController = ScrollController()..addListener(paginateMessages);
     textEditingController = TextEditingController();
     focusNode = FocusNode();
+    now = DateTime.now();
     initChat();
   }
 
@@ -40,9 +42,11 @@ class ChatProvider extends ChangeNotifier {
     }
   }
 
+  // ----------------- 채팅 ---------------------------------------
   late final ScrollController scrollController;
   late final TextEditingController textEditingController;
   late final FocusNode focusNode;
+  late final DateTime now;
 
   bool get isTextFieldEnable => textEditingController.text.isNotEmpty;
 
@@ -54,8 +58,6 @@ class ChatProvider extends ChangeNotifier {
 
   String initialCursor = '';
   bool loading = false;
-
-  final String now = DateTime.now().toString();
 
   List<MessageModel> get messageList => _messageList;
 
@@ -175,7 +177,7 @@ class ChatProvider extends ChangeNotifier {
       MessageModel(
         content: content,
         type: BubbleType.sendBubble,
-        createdAt: now,
+        createdAt: now.toString(),
       ),
       ..._messageList,
     ];
@@ -202,7 +204,7 @@ class ChatProvider extends ChangeNotifier {
                 content: msg.content,
                 type: BubbleType.receiverBubble,
                 image: profileImage,
-                createdAt: now,
+                createdAt: now.toString(),
               ),
               ..._messageList,
             ];
@@ -235,6 +237,73 @@ class ChatProvider extends ChangeNotifier {
       Exception(e);
     }
   }
+
+  // ----------------- 채팅 ---------------------------------------
+
+  // ----------------- 일정 ---------------------------------------
+
+  DateTime queryDateTime = DateTime.now();
+  String memo = '';
+  bool allDay = false;
+
+  void yearSelected(int number) {
+    queryDateTime = queryDateTime.copyWith(year: number);
+    notifyListeners();
+  }
+
+  void monthSelected(int number) {
+    queryDateTime = queryDateTime.copyWith(month: number);
+    notifyListeners();
+  }
+
+  void daySelected(int number) {
+    queryDateTime = queryDateTime.copyWith(day: number);
+    notifyListeners();
+  }
+
+  void hourSelected(int number) {
+    queryDateTime = queryDateTime.copyWith(hour: number);
+    notifyListeners();
+  }
+
+  void minuteSelected(int number) {
+    queryDateTime = queryDateTime.copyWith(minute: number);
+    notifyListeners();
+  }
+
+  void toggleAllDay(p0) {
+    allDay = p0;
+    notifyListeners();
+  }
+
+  void memoChanged(String text) {
+    memo = text;
+  }
+
+  Future<void> makeSchedule() async {
+    late final String date;
+    if (allDay) {
+      date = "${queryDateTime.year}-${queryDateTime.month.toString().padLeft(2, '0')}-${queryDateTime.day.toString().padLeft(2, '0')}";
+    } else {
+      date = queryDateTime.toIso8601String();
+    }
+    try {
+      final result = await repository.makeSchedule(
+        chatId: chatId,
+        model: MakeScheduleModel(
+          date: date,
+          memo: memo,
+        ),
+      );
+      debugPrint(result.message);
+    } on DioException {
+      debugPrint("makeSchedule 실패");
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
+  // ----------------- 일정 ---------------------------------------
 
   @override
   void dispose() {

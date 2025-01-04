@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lyc_flutter_project/common/const/assets.dart';
+import 'package:lyc_flutter_project/dm/provider/chat_provider.dart';
+import 'package:lyc_flutter_project/dm/widget/chat_add_schedule_bottom_sheet.dart';
+import 'package:provider/provider.dart';
 
 class ChatBottomSheet extends StatelessWidget {
-  const ChatBottomSheet({super.key});
+  final ChatProvider provider;
+
+  const ChatBottomSheet({
+    super.key,
+    required this.provider,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +43,15 @@ class ChatBottomSheet extends StatelessWidget {
           ChatPlusButton(
             label: '일정',
             asset: Assets.scheduleButton,
-            onTap: () {},
+            onTap: () {
+              Navigator.pop(context);
+              showModalBottomSheet(
+                context: context,
+                builder: (context) => ChatAddScheduleBottomSheet(provider: provider),
+                enableDrag: false,
+                isScrollControlled: true,
+              );
+            },
           ),
           ChatPlusButton(
             label: '의뢰',

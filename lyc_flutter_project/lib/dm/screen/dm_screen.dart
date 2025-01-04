@@ -76,7 +76,7 @@ class _DmScreenState extends State<DmScreen> {
                           width: 30,
                           height: 30,
                           child: SvgPicture.asset(
-                            "assets/icon/commission.svg.svg",
+                            "assets/icon/commission.svg",
                             fit: BoxFit.contain,
                           ),
                         ),
