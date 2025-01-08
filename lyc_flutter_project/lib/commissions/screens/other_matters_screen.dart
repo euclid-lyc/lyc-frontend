@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:lyc_flutter_project/commissions/screens/submission_success_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../../common/widget/normal_appbar.dart';
@@ -74,9 +75,9 @@ class OtherMattersScreenState extends State<OtherMattersScreen> {
       dateToUse: _desiredDate == null ? '' : DateFormat('yyyy-MM-dd').format(_desiredDate!),
       desiredDate: _receiveDate == null ? '' : DateFormat('yyyy-MM-dd').format(_receiveDate!),
       text: _additionalInfoController.controller.text,
-      isShareClothesList: shareClothesList,
+      isShared: shareClothesList,
     );
-    commissionsProvider.submitCommission(directerId: "string");
+    commissionsProvider.submitCommission(directerId: "string",context: context);
     //임시
   }
   @override
@@ -181,10 +182,11 @@ class OtherMattersScreenState extends State<OtherMattersScreen> {
                       try {
                         await createCommissions();
                         if (context.mounted) {
-                              context.goNamed(Routes.submissionSuccess.name);
+                              // context.goNamed(Routes.submissionSuccess.name);
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => const SubmissionSuccessScreen()));
                         }
                       } catch (e) {
-                        print("저장 실패");
+                        print("저장 실패3");
                       }
                     },
                     style: TextButton.styleFrom(

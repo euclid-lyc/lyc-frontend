@@ -11,7 +11,7 @@ class OtherMatters with _$OtherMatters {
     required String dateToUse,
     required String desiredDate,
     required String text,
-    required bool isShareClothesList,
+    required bool isShared,
   }) = _OtherMatters;
 
   factory OtherMatters.fromJson(Map<String, dynamic> json) => _$OtherMattersFromJson(json);
@@ -22,6 +22,6 @@ class OtherMatters with _$OtherMatters {
     dateToUse: '',
     desiredDate: '',
     text: '',
-    isShareClothesList: false,
+    isShared: false,
   );
 }

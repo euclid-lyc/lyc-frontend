@@ -48,6 +48,7 @@ class CommissionsProvider with ChangeNotifier {
   // submitComission 메서드 수정
   Future<void> submitCommission({
     required String directerId,
+    required BuildContext context,
   }) async {
     _isLoading = true;
     notifyListeners();
@@ -57,6 +58,7 @@ class CommissionsProvider with ChangeNotifier {
         basicInfo: basicInfo,
         desiredStyle : desiredStyle,
         otherMatters: otherMatters,
+        context: context,
       );
     } catch (e) {
       print(e);

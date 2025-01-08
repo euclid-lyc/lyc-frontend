@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:lyc_flutter_project/commissions/screens/other_matters_screen.dart';
 import 'package:lyc_flutter_project/common/widget/normal_appbar.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:provider/provider.dart';
@@ -110,10 +111,12 @@ class DesiredStyleScreenState extends State<DesiredStyleScreen> {
                         onPressed: () async {
                           try {
                             await createCommissions();
-                              context.goNamed(Routes.otherMatters.name);
-
+                            // if (mounted) {
+                            //   context.goNamed(Routes.otherMatters.name);
+                            // }
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => const OtherMattersScreen()));
                           } catch (e) {
-                            print("저장 실패");
+                            print("저장 실패2");
                           }
                         },
                         style: TextButton.styleFrom(

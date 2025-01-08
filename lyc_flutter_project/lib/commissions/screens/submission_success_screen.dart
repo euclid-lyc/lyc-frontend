@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lyc_flutter_project/common/widget/normal_appbar.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
+import 'package:lyc_flutter_project/home/screen/home_screen.dart';
 import 'package:lyc_flutter_project/styles/app_text_style.dart';
 
 import '../../routes/routes.dart';
@@ -73,7 +74,11 @@ class SubmissionSuccessScreen extends StatelessWidget {
                     padding: const EdgeInsets.only(top: 30.5),
                     child: TextButton(
                       onPressed: () {
-                        context.goNamed(Routes.home.name);
+                        // context.goNamed(Routes.home.name);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const HomeScreen()));
                       },
                       style: TextButton.styleFrom(
                         backgroundColor: AppColor.brown,

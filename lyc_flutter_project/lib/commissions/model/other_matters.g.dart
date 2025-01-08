@@ -13,7 +13,7 @@ _$OtherMattersImpl _$$OtherMattersImplFromJson(Map<String, dynamic> json) =>
       dateToUse: json['dateToUse'] as String,
       desiredDate: json['desiredDate'] as String,
       text: json['text'] as String,
-      isShareClothesList: json['isShareClothesList'] as bool,
+      isShared: json['isShared'] as bool,
     );
 
 Map<String, dynamic> _$$OtherMattersImplToJson(_$OtherMattersImpl instance) =>
@@ -23,5 +23,5 @@ Map<String, dynamic> _$$OtherMattersImplToJson(_$OtherMattersImpl instance) =>
       'dateToUse': instance.dateToUse,
       'desiredDate': instance.desiredDate,
       'text': instance.text,
-      'isShareClothesList': instance.isShareClothesList,
+      'isShared': instance.isShared,
     };

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:lyc_flutter_project/commissions/screens/desired_style_screen.dart';
 import 'package:lyc_flutter_project/common/widget/normal_appbar.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:provider/provider.dart';
@@ -169,10 +170,11 @@ class PrimaryInfoScreenState extends State<PrimaryInfoScreen> {
                           try {
                             await createCommissions();
                             if (context.mounted) {
-                              context.goNamed(Routes.desiredStyle.name);
+                              // context.goNamed(Routes.desiredStyle.name);
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => const DesiredStyleScreen()));
                             }
                           } catch (e) {
-                            print("저장 실패");
+                            print("저장 실패1");
                           }
                         },
                         style: TextButton.styleFrom(

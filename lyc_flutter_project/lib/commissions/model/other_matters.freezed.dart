@@ -25,7 +25,7 @@ mixin _$OtherMatters {
   String get dateToUse => throw _privateConstructorUsedError;
   String get desiredDate => throw _privateConstructorUsedError;
   String get text => throw _privateConstructorUsedError;
-  bool get isShareClothesList => throw _privateConstructorUsedError;
+  bool get isShared => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -45,7 +45,7 @@ abstract class $OtherMattersCopyWith<$Res> {
       String dateToUse,
       String desiredDate,
       String text,
-      bool isShareClothesList});
+      bool isShared});
 }
 
 /// @nodoc
@@ -66,7 +66,7 @@ class _$OtherMattersCopyWithImpl<$Res, $Val extends OtherMatters>
     Object? dateToUse = null,
     Object? desiredDate = null,
     Object? text = null,
-    Object? isShareClothesList = null,
+    Object? isShared = null,
   }) {
     return _then(_value.copyWith(
       minPrice: null == minPrice
@@ -89,9 +89,9 @@ class _$OtherMattersCopyWithImpl<$Res, $Val extends OtherMatters>
           ? _value.text
           : text // ignore: cast_nullable_to_non_nullable
               as String,
-      isShareClothesList: null == isShareClothesList
-          ? _value.isShareClothesList
-          : isShareClothesList // ignore: cast_nullable_to_non_nullable
+      isShared: null == isShared
+          ? _value.isShared
+          : isShared // ignore: cast_nullable_to_non_nullable
               as bool,
     ) as $Val);
   }
@@ -111,7 +111,7 @@ abstract class _$$OtherMattersImplCopyWith<$Res>
       String dateToUse,
       String desiredDate,
       String text,
-      bool isShareClothesList});
+      bool isShared});
 }
 
 /// @nodoc
@@ -130,7 +130,7 @@ class __$$OtherMattersImplCopyWithImpl<$Res>
     Object? dateToUse = null,
     Object? desiredDate = null,
     Object? text = null,
-    Object? isShareClothesList = null,
+    Object? isShared = null,
   }) {
     return _then(_$OtherMattersImpl(
       minPrice: null == minPrice
@@ -153,9 +153,9 @@ class __$$OtherMattersImplCopyWithImpl<$Res>
           ? _value.text
           : text // ignore: cast_nullable_to_non_nullable
               as String,
-      isShareClothesList: null == isShareClothesList
-          ? _value.isShareClothesList
-          : isShareClothesList // ignore: cast_nullable_to_non_nullable
+      isShared: null == isShared
+          ? _value.isShared
+          : isShared // ignore: cast_nullable_to_non_nullable
               as bool,
     ));
   }
@@ -170,7 +170,7 @@ class _$OtherMattersImpl implements _OtherMatters {
       required this.dateToUse,
       required this.desiredDate,
       required this.text,
-      required this.isShareClothesList});
+      required this.isShared});
 
   factory _$OtherMattersImpl.fromJson(Map<String, dynamic> json) =>
       _$$OtherMattersImplFromJson(json);
@@ -186,11 +186,11 @@ class _$OtherMattersImpl implements _OtherMatters {
   @override
   final String text;
   @override
-  final bool isShareClothesList;
+  final bool isShared;
 
   @override
   String toString() {
-    return 'OtherMatters(minPrice: $minPrice, maxPrice: $maxPrice, dateToUse: $dateToUse, desiredDate: $desiredDate, text: $text, isShareClothesList: $isShareClothesList)';
+    return 'OtherMatters(minPrice: $minPrice, maxPrice: $maxPrice, dateToUse: $dateToUse, desiredDate: $desiredDate, text: $text, isShared: $isShared)';
   }
 
   @override
@@ -207,14 +207,14 @@ class _$OtherMattersImpl implements _OtherMatters {
             (identical(other.desiredDate, desiredDate) ||
                 other.desiredDate == desiredDate) &&
             (identical(other.text, text) || other.text == text) &&
-            (identical(other.isShareClothesList, isShareClothesList) ||
-                other.isShareClothesList == isShareClothesList));
+            (identical(other.isShared, isShared) ||
+                other.isShared == isShared));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, minPrice, maxPrice, dateToUse,
-      desiredDate, text, isShareClothesList);
+      desiredDate, text, isShared);
 
   @JsonKey(ignore: true)
   @override
@@ -237,7 +237,7 @@ abstract class _OtherMatters implements OtherMatters {
       required final String dateToUse,
       required final String desiredDate,
       required final String text,
-      required final bool isShareClothesList}) = _$OtherMattersImpl;
+      required final bool isShared}) = _$OtherMattersImpl;
 
   factory _OtherMatters.fromJson(Map<String, dynamic> json) =
       _$OtherMattersImpl.fromJson;
@@ -253,7 +253,7 @@ abstract class _OtherMatters implements OtherMatters {
   @override
   String get text;
   @override
-  bool get isShareClothesList;
+  bool get isShared;
   @override
   @JsonKey(ignore: true)
   _$$OtherMattersImplCopyWith<_$OtherMattersImpl> get copyWith =>

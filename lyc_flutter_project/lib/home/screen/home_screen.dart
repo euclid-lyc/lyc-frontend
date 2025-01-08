@@ -11,6 +11,8 @@ import 'package:lyc_flutter_project/mypage/model/mypage_posting_preview.dart';
 import 'package:lyc_flutter_project/routes/routes.dart';
 import 'package:provider/provider.dart';
 
+import '../../commissions/screens/primary_info_screen.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -180,8 +182,19 @@ class _HomeScreenState extends State<HomeScreen> {
                               const SizedBox(height: 30),
                               Row(
                                 children: [
-                                  SvgPicture.asset('assets/icon_facebook.svg'),
-                                  const SizedBox(width: 10),
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => const PrimaryInfoScreen(),
+                                        ),
+                                      );
+                                    },
+                                    child: SvgPicture.asset(
+                                      'assets/icon_facebook.svg',
+                                    ),
+                                  ),
                                   SvgPicture.asset('assets/icon_linkedin.svg'),
                                   const SizedBox(width: 10),
                                   SvgPicture.asset('assets/icon_twitter.svg'),
