@@ -30,7 +30,7 @@ class _InfoModScreenState extends State<InfoModScreen> {
       backgroundColor: AppColor.lightGrey,
       appBar: const NormalAppbar(title: "푸시알림 설정"),
       body: DefaultPadding(
-        bottom: 40.0,
+        bottom: 20.0,
         child: Consumer<SettingProvider>(
           builder: (context, value, child) {
             return Column(

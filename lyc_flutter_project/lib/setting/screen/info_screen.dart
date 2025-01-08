@@ -39,7 +39,7 @@ class InfoScreen extends StatelessWidget {
           backgroundColor: AppColor.lightGrey,
           appBar: const NormalAppbar(title: "회원정보 변경"),
           body: DefaultPadding(
-            bottom: 40,
+            bottom: 20,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
