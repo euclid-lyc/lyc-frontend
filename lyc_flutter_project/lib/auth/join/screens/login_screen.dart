@@ -54,13 +54,13 @@ class LoginScreen extends StatelessWidget {
                   Container(
                     margin: const EdgeInsets.only(top: 13),
                     child: SizedBox(
-                      width: 220,
+                      width: 225,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           buildMoveButton(context, '회원가입', const JoinScreen1()),
-                          buildMoveButton(context, '아이디 찾기', FindIdScreen1()),
-                          buildMoveButton(context, '비밀번호 찾기', FindPasswordScreen1()),
+                          buildMoveButton(context, '아이디찾기', FindIdScreen1()),
+                          buildMoveButton(context, '비밀번호찾기', FindPasswordScreen1()),
                         ],
                       ),
                     ),
@@ -131,7 +131,7 @@ class LoginScreen extends StatelessWidget {
                 children: [
                   TextButton(
                     onPressed: () {
-                      // 다른 계정으로 로그인 버튼 눌렀을 때의 동작 구현
+
                     },
                     child: const Text(
                       '다른 계정으로 로그인',

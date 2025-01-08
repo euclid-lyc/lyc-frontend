@@ -4,32 +4,24 @@ import 'package:lyc_flutter_project/common/widget/normal_appbar.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:provider/provider.dart';
 import '../../../widget/Controller.dart';
-import '../../data/style_list.dart';
 import '../../routes/routes.dart';
 import '../../styles/app_text_style.dart';
 import '../provider/commissions_provider.dart';
+import '../../data/style_list.dart' as styles;
 
-class PrimaryInfoScreen extends StatefulWidget {
-  const PrimaryInfoScreen({super.key});
+class DesiredStyleScreen extends StatefulWidget {
+  const DesiredStyleScreen({super.key});
 
   @override
-  State<PrimaryInfoScreen> createState() => PrimaryInfoScreenState();
+  State<DesiredStyleScreen> createState() => DesiredStyleScreenState();
 }
 
-class PrimaryInfoScreenState extends State<PrimaryInfoScreen> {
-  final Controller _controller1_1 = Controller();
-  final Controller _controller1_2 = Controller();
-  final Controller _controller1_3 = Controller();
-  final Controller _controller1_4 = Controller();
+class DesiredStyleScreenState extends State<DesiredStyleScreen> {
+  final Controller _controller1 = Controller();
   final Controller _controller2 = Controller();
   final Controller _controller3 = Controller();
   final Controller _controller4 = Controller();
   final Controller _controller5 = Controller();
-  final Controller _controller6 = Controller();
-  final Controller _controller7 = Controller();
-  final Controller _controller8 = Controller();
-  final Controller _controller9 = Controller();
-  final Controller _controller10 = Controller();
 
   final membershipState = MembershipState();
 
@@ -38,37 +30,31 @@ class PrimaryInfoScreenState extends State<PrimaryInfoScreen> {
     Future<void> createCommissions() async {
       final commissionsProvider =
           Provider.of<CommissionsProvider>(context, listen: false);
-      commissionsProvider.basicInfo = commissionsProvider.basicInfo.copyWith(
-          height: int.tryParse(_controller1_1.controller.text) ?? 0,
-          weight: int.tryParse(_controller1_2.controller.text) ?? 0,
-          topSize: _controller1_3.controller.text,
-          bottomSize: _controller1_4.controller.text,
-          infoStyle: commissionsProvider.basicInfo.infoStyle.copyWith(
-              preferredStyleList: _controller2.controller.text.split(','),
-              nonPreferredStyleList: _controller3.controller.text.split(',')),
-          infoFit: commissionsProvider.basicInfo.infoFit.copyWith(
-              preferredFitList: _controller6.controller.text.split(','),
-              nonPreferredFitList: _controller7.controller.text.split(',')),
-          infoMaterial: commissionsProvider.basicInfo.infoMaterial.copyWith(
-              preferredMaterialList: _controller4.controller.text.split(','),
-              nonPreferredMaterialList:
-                  _controller5.controller.text.split(',')),
-          infoBodyType: commissionsProvider.basicInfo.infoBodyType.copyWith(
-              goodBodyTypeList: _controller8.controller.text.split(','),
-              badBodyTypeList: _controller9.controller.text.split(',')),
-          text: _controller10.controller.text);
+      commissionsProvider.desiredStyle =
+          commissionsProvider.desiredStyle.copyWith(
+        occasion: _controller1.controller.text,
+        styleList: commissionsProvider.desiredStyle.styleList
+            .copyWith(styleList: _controller2.controller.text.split(',')),
+        fitList: commissionsProvider.desiredStyle.fitList.copyWith(
+          fitList: _controller3.controller.text.split(','),
+        ),
+        materialList: commissionsProvider.desiredStyle.materialList.copyWith(
+          materialList: _controller4.controller.text.split(','),
+        ),
+        colorList: commissionsProvider.desiredStyle.colorList
+            .copyWith(colorList: _controller5.controller.text.split(',')),
+      );
     }
 
     return ChangeNotifierProvider(
       create: (_) => membershipState,
-      child: Builder(
-        builder: (context) => Scaffold(
-          backgroundColor: AppColor.lightGrey,
-          appBar: const NormalAppbar(
-            title: "의뢰서 작성하기",
-          ),
-          body: SingleChildScrollView(
-            child:Center(
+      child: Scaffold(
+        backgroundColor: AppColor.lightGrey,
+        appBar: const NormalAppbar(
+          title: "의뢰서 작성하기",
+        ),
+        body: SingleChildScrollView(
+          child: Center(
             child: Container(
               margin: const EdgeInsets.fromLTRB(30, 20, 30, 0),
               child: Column(
@@ -76,14 +62,14 @@ class PrimaryInfoScreenState extends State<PrimaryInfoScreen> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(bottom: 20),
-                    child: buildBodyTypeSection(),
+                    child: buildOccasionSection(),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 20),
                     child: buildStyleSection(
-                      title: 'Step 2. 평소 즐겨입는 스타일은 무엇인가요?',
+                      title: 'Step 2. 원하시는 스타일은 무엇인가요?',
                       notifier: membershipState._selected2,
-                      styles: StyleList.styleOptions,
+                      styles: styles.StyleList.styleOptions,
                       text: '기타 스타일 입력',
                       controller: _controller2,
                     ),
@@ -91,19 +77,19 @@ class PrimaryInfoScreenState extends State<PrimaryInfoScreen> {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 20),
                     child: buildStyleSection(
-                      title: 'Step 3. 평소 즐겨입지 않는 스타일은 무엇인가요?',
+                      title: 'Step 3. 원하시는 핏은 무엇인가요?',
                       notifier: membershipState._selected3,
-                      styles: StyleList.styleOptions,
-                      text: '기타 스타일 입력',
+                      styles: styles.StyleList.fitOptions,
+                      text: '기타 핏 입력',
                       controller: _controller3,
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 20),
                     child: buildStyleSection(
-                      title: 'Step 4. 선호하는 소재를 선택해 주세요.',
+                      title: 'Step 4. 원하시는 소재가 있나요?',
                       notifier: membershipState._selected4,
-                      styles: StyleList.materialOptions,
+                      styles: styles.StyleList.materialOptions,
                       text: '기타 소재 입력',
                       controller: _controller4,
                     ),
@@ -111,56 +97,12 @@ class PrimaryInfoScreenState extends State<PrimaryInfoScreen> {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 20),
                     child: buildStyleSection(
-                      title: 'Step 5. 선호하지 않는 소재를 선택해 주세요.',
+                      title: 'Step 5. 원하시는 색상이 있나요?',
                       notifier: membershipState._selected5,
-                      styles: StyleList.materialOptions,
-                      text: '기타 소재 입력',
+                      styles: styles.StyleList.colorsOptions,
+                      text: '기타 핏 입력',
                       controller: _controller5,
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 20),
-                    child: buildStyleSection(
-                      title: 'Step 6. 선호하는 핏을 선택해 주세요.',
-                      notifier: membershipState._selected6,
-                      styles: StyleList.fitOptions,
-                      text: '기타 핏 입력',
-                      controller: _controller6,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 20),
-                    child: buildStyleSection(
-                      title: 'Step 7. 선호하지 않는 핏을 선택해 주세요.',
-                      notifier: membershipState._selected7,
-                      styles: StyleList.fitOptions,
-                      text: '기타 핏 입력',
-                      controller: _controller7,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 20),
-                    child: buildStyleSection(
-                      title: 'Step 8. 강조하고 싶은 신체 부위가 있나요?',
-                      notifier: membershipState._selected8,
-                      styles: StyleList.bodyParts,
-                      text: '기타 핏 입력',
-                      controller: _controller8,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 20),
-                    child: buildStyleSection(
-                      title: 'Step 9. 보완하고 싶은 신체 부위가 있나요?',
-                      notifier: membershipState._selected9,
-                      styles: StyleList.bodyParts,
-                      text: '기타 핏 입력',
-                      controller: _controller9,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 20),
-                    child: buildAdditionalInfo('Step 10.추가로 작성하고 싶은 내용이 있나요?'),
                   ),
                   Padding(
                       padding: const EdgeInsets.only(bottom: 20),
@@ -168,9 +110,8 @@ class PrimaryInfoScreenState extends State<PrimaryInfoScreen> {
                         onPressed: () async {
                           try {
                             await createCommissions();
-                            if (context.mounted) {
-                              context.goNamed(Routes.desiredStyle.name);
-                            }
+                              context.goNamed(Routes.otherMatters.name);
+
                           } catch (e) {
                             print("저장 실패");
                           }
@@ -192,107 +133,49 @@ class PrimaryInfoScreenState extends State<PrimaryInfoScreen> {
               ),
             ),
           ),
-          ),
         ),
       ),
     );
   }
 
-  Widget buildAdditionalInfo(String text) {
+  Widget buildOccasionSection() {
     return Container(
-      width: 333,
-      height: 200,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-      ),
-      padding: const EdgeInsets.fromLTRB(19, 17.5, 19, 12.5),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            text,
-            style: AppTextStyle.littleTitle.copyWith(fontSize: 14),
-          ),
-          const SizedBox(height: 10),
-          Expanded(
-              child: TextField(
-            controller: _controller10.controller,
-            maxLines: null,
-            decoration: InputDecoration(
-              contentPadding:
-                  const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-              filled: false,
-              hintText: 'ex.종아리가 너무 두꺼운 게 고민이에요.',
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(20),
-                borderSide: BorderSide.none,
-              ),
-            ),
-            style: AppTextStyle.hint.copyWith(color: Colors.black),
-          )),
-        ],
-      ),
-    );
-  }
-
-  Widget buildBodyTypeSection() {
-    return Container(
-      width: 333,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-      ),
-      padding: const EdgeInsets.fromLTRB(19, 17.5, 19, 12.5),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Center(
-            child: Padding(
+        width: 333,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        padding: const EdgeInsets.fromLTRB(19, 17.5, 19, 12.5),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
               padding: EdgeInsets.only(bottom: 10.5),
               child: Text(
-                'Step 1. 본인의 체형을 알려주세요.',
+                'Step 1. 언제 입을 옷인가요?',
                 style: AppTextStyle.littleTitle.copyWith(fontSize: 14.0),
+                textAlign: TextAlign.left,
               ),
             ),
-          ),
-          Align(
-            alignment: Alignment.centerRight,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                buildInputField('키', _controller1_1),
-                buildInputField('몸무게', _controller1_2),
-                buildInputField('상의 사이즈', _controller1_3),
-                buildInputField('하의 사이즈', _controller1_4),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
+            buildInputField(_controller1),
+          ],
+        ));
   }
 
-  Widget buildInputField(String label, Controller controller) {
+  Widget buildInputField(Controller controller) {
     return Container(
       margin: const EdgeInsets.only(bottom: 7),
       child: Row(
         children: [
-          Expanded(
-            flex: 1,
-            child: Align(
-              alignment: Alignment.centerRight,
-              child: Text(
-                label,
-                style: AppTextStyle.hint.copyWith(color: Colors.black),
-              ),
-            ),
+          Text(
+            '입력',
+            style:
+                AppTextStyle.hint.copyWith(color: Colors.black, fontSize: 14),
           ),
           const SizedBox(width: 10),
           Expanded(
-            flex: 2,
             child: SizedBox(
-              height: 20,
+              height: 30,
               child: TextField(
                 controller: controller.controller,
                 decoration: InputDecoration(
@@ -306,7 +189,7 @@ class PrimaryInfoScreenState extends State<PrimaryInfoScreen> {
                   ),
                 ),
                 style: AppTextStyle.hint.copyWith(color: Colors.black),
-                keyboardType: TextInputType.number,
+                keyboardType: TextInputType.text,
               ),
             ),
           ),
@@ -448,13 +331,5 @@ class MembershipState extends ChangeNotifier {
   final ValueNotifier<List<String>> _selected4 =
       ValueNotifier<List<String>>([]);
   final ValueNotifier<List<String>> _selected5 =
-      ValueNotifier<List<String>>([]);
-  final ValueNotifier<List<String>> _selected6 =
-      ValueNotifier<List<String>>([]);
-  final ValueNotifier<List<String>> _selected7 =
-      ValueNotifier<List<String>>([]);
-  final ValueNotifier<List<String>> _selected8 =
-      ValueNotifier<List<String>>([]);
-  final ValueNotifier<List<String>> _selected9 =
       ValueNotifier<List<String>>([]);
 }

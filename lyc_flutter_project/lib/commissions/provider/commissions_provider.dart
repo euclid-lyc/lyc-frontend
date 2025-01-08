@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:lyc_flutter_project/commissions/model/basic_info.dart';
+import 'package:lyc_flutter_project/commissions/model/desired_style.dart';
 import '../model/other_matters.dart';
 import '../repository/commissions_repository.dart';
 
@@ -9,6 +10,7 @@ class CommissionsProvider with ChangeNotifier {
   bool _isLoading = false;
   String _directerId = '';
   BasicInfo _basicInfo = BasicInfo.defaultValue();
+  DesiredStyle _desiredStyle = DesiredStyle.defaultValue();
   OtherMatters _otherMatters = OtherMatters.defaultValue();
 
   CommissionsProvider({required this.repository});
@@ -18,6 +20,8 @@ class CommissionsProvider with ChangeNotifier {
   String get directerId => _directerId;
 
   BasicInfo get basicInfo => _basicInfo;
+
+  DesiredStyle get desiredStyle => _desiredStyle;
 
   OtherMatters get otherMatters => _otherMatters;
 
@@ -31,6 +35,11 @@ class CommissionsProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  set desiredStyle(DesiredStyle value) {
+    _desiredStyle = value;
+    notifyListeners();
+  }
+
   set otherMatters(OtherMatters value) {
     _otherMatters = value;
     notifyListeners();
@@ -39,16 +48,14 @@ class CommissionsProvider with ChangeNotifier {
   // submitComission 메서드 수정
   Future<void> submitCommission({
     required String directerId,
-    required BasicInfo basicInfo,
-    required OtherMatters otherMatters,
   }) async {
     _isLoading = true;
     notifyListeners();
     try {
-      // 직접 받은 파라미터를 사용하여 Repository 메서드 호출
       await repository.submitCommission(
         directerId: directerId,
         basicInfo: basicInfo,
+        desiredStyle : desiredStyle,
         otherMatters: otherMatters,
       );
     } catch (e) {

@@ -1,38 +1,27 @@
-import 'package:json_annotation/json_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
+part 'other_matters.freezed.dart';
 part 'other_matters.g.dart';
 
-@JsonSerializable()
-class OtherMatters {
-  final int minPrice;
-  final int maxPrice;
-  final String dateToUse;
-  final String desiredDate;
-  final String text;
-  final bool isShareClothesList;
+@freezed
+class OtherMatters with _$OtherMatters {
+  const factory OtherMatters({
+    required int minPrice,
+    required int maxPrice,
+    required String dateToUse,
+    required String desiredDate,
+    required String text,
+    required bool isShareClothesList,
+  }) = _OtherMatters;
 
-  OtherMatters({
-    required this.minPrice,
-    required this.maxPrice,
-    required this.dateToUse,
-    required this.desiredDate,
-    required this.text,
-    required this.isShareClothesList,
-  });
+  factory OtherMatters.fromJson(Map<String, dynamic> json) => _$OtherMattersFromJson(json);
 
-  factory OtherMatters.fromJson(Map<String, dynamic> json) =>
-      _$OtherMattersFromJson(json);
-
-  Map<String, dynamic> toJson() => _$OtherMattersToJson(this);
-
-  static OtherMatters defaultValue() {
-    return OtherMatters(
-      minPrice: 0,
-      maxPrice: 0,
-      dateToUse: '',
-      desiredDate: '',
-      text: '',
-      isShareClothesList: false,
-    );
-  }
+  factory OtherMatters.defaultValue() => const OtherMatters(
+    minPrice: 0,
+    maxPrice: 0,
+    dateToUse: '',
+    desiredDate: '',
+    text: '',
+    isShareClothesList: false,
+  );
 }
