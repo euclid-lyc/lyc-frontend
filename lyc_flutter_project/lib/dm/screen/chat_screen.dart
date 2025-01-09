@@ -57,6 +57,7 @@ class ChatScreen extends StatelessWidget {
           othersNickname: nickname,
           othersProfile: profileImage,
           closeDrawer: () => key.currentState!.closeEndDrawer(),
+          chatId: chatId,
         ),
         body: Consumer<ChatProvider>(
           builder: (context, value, child) {

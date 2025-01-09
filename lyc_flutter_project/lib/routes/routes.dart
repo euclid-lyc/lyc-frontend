@@ -173,4 +173,20 @@ class Routes {
     path: '/setting/withdrawal',
   );
 
+  // dm
+  static const RouteInfo dm = RouteInfo(
+    name: '/dm',
+    path: '/dm',
+  );
+
+  static const RouteInfo chat = RouteInfo(
+    name: '/dm/chat',
+    path: '/dm/chat',
+  );
+
+  static const RouteInfo schedule = RouteInfo(
+    name: '/dm/chat/schedule',
+    path: '/dm/chat/schedule',
+  );
+
 }

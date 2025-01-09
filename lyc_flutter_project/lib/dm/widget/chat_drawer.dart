@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lyc_flutter_project/common/const/assets.dart';
 import 'package:lyc_flutter_project/common/widget/image_networking.dart';
+import 'package:lyc_flutter_project/routes/routes.dart';
 
 class ChatDrawer extends StatelessWidget {
   final String myNickname;
@@ -9,6 +11,7 @@ class ChatDrawer extends StatelessWidget {
   final String othersNickname;
   final String othersProfile;
   final VoidCallback closeDrawer;
+  final int chatId;
 
   const ChatDrawer({
     super.key,
@@ -17,6 +20,7 @@ class ChatDrawer extends StatelessWidget {
     required this.othersNickname,
     required this.othersProfile,
     required this.closeDrawer,
+    required this.chatId,
   });
 
   @override
@@ -43,6 +47,10 @@ class ChatDrawer extends StatelessWidget {
                     height: 80.0,
                     width: 80.0,
                     color: Colors.yellow,
+                  ),
+                  onPlusIconPressed: () => context.pushNamed(
+                    Routes.schedule.name,
+                    extra: chatId,
                   ),
                 ),
                 ChatDrawerContent(
@@ -95,11 +103,13 @@ class ChatDrawerContent extends StatelessWidget {
   final String title;
   final Widget content;
   final bool showPlusIcon;
+  final VoidCallback? onPlusIconPressed;
 
   const ChatDrawerContent({
     super.key,
     required this.title,
     required this.content,
+    this.onPlusIconPressed,
     this.showPlusIcon = true,
   });
 
@@ -139,7 +149,7 @@ class ChatDrawerContent extends StatelessWidget {
                       BlendMode.srcIn,
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: onPlusIconPressed,
                 ),
             ],
           ),

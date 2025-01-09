@@ -5,6 +5,9 @@ import 'package:lyc_flutter_project/auth/find_id/screens/find_id_screen_3.dart';
 import 'package:lyc_flutter_project/auth/join/screens/login_screen.dart';
 import 'package:lyc_flutter_project/common/screen/splash_screen.dart';
 import 'package:lyc_flutter_project/director/screen/director_search_screen.dart';
+import 'package:lyc_flutter_project/dm/screen/chat_schedule_screen.dart';
+import 'package:lyc_flutter_project/dm/screen/chat_screen.dart';
+import 'package:lyc_flutter_project/dm/screen/dm_screen.dart';
 import 'package:lyc_flutter_project/feed/screen/feed_screen.dart';
 import 'package:lyc_flutter_project/home/screen/home_screen.dart';
 import 'package:lyc_flutter_project/mypage/screen/mypage_screen.dart';
@@ -91,6 +94,37 @@ final router = GoRouter(
       pageBuilder: (context, state) => const NoTransitionPage(
         child: SettingScreen(),
       ),
+    ),
+    GoRoute(
+      path: Routes.dm.path,
+      name: Routes.dm.name,
+      pageBuilder: (context, state) => const NoTransitionPage(
+        child: DmScreen(),
+      ),
+      routes: [
+        // GoRoute(
+        //   path: Routes.chat.path,
+        //   name: Routes.chat.name,
+        //   pageBuilder: (context, state) => NoTransitionPage(
+        //     child: ChatScreen(
+        //       // TODO(doyeon): 파라미터 extra로 전달
+        //       chatId: chatId,
+        //       nickname: nickname,
+        //       profileImage: profileImage,
+        //       createdAt: createdAt,
+        //     ),
+        //   ),
+        // ),
+        GoRoute(
+          path: Routes.schedule.path,
+          name: Routes.schedule.name,
+          pageBuilder: (context, state) => NoTransitionPage(
+            child: ChatScheduleScreen(
+              chatID: state.extra as int,
+            ),
+          ),
+        )
+      ],
     )
   ],
 );
