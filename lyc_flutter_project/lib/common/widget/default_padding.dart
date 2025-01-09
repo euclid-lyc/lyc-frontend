@@ -4,12 +4,12 @@ class DefaultPadding extends StatelessWidget {
   final Widget child;
   final double bottom;
 
-  const DefaultPadding({super.key, required this.child, this.bottom = 100});
+  const DefaultPadding({super.key, required this.child, this.bottom = 0});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+      padding: EdgeInsets.fromLTRB(20, 20, 20, bottom),
       child: child,
     );
   }

@@ -1,4 +1,7 @@
 import 'package:flutter/cupertino.dart';
+import 'package:lyc_flutter_project/commissions/model/basic_info.dart';
+import 'package:lyc_flutter_project/commissions/model/desired_style.dart';
+import '../model/other_matters.dart';
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/common/model/api_response.dart';
 // import 'package:lyc_flutter_project/commissions/model/basic_info.dart';
@@ -76,5 +79,27 @@ class CommissionsProvider with ChangeNotifier {
     if(!resp.isSuccess)Exception(resp.message);
 
 
-  }
-}
+
+//   // submitComission 메서드 수정
+//   Future<void> submitCommission({
+//     required String directerId,
+//     required BuildContext context,
+//   }) async {
+//     _isLoading = true;
+//     notifyListeners();
+//     try {
+//       await repository.submitCommission(
+//         directerId: directerId,
+//         basicInfo: basicInfo,
+//         desiredStyle : desiredStyle,
+//         otherMatters: otherMatters,
+//         context: context,
+//       );
+//     } catch (e) {
+//       print(e);
+//     } finally {
+//       _isLoading = false;
+//       notifyListeners();
+//     }
+//   }
+// }

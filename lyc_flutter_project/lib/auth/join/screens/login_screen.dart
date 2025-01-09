@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/routes/routes.dart';
 import 'package:provider/provider.dart';
+import '../../../commissions/screens/primary_info_screen.dart';
 import '../../../styles/app_text_style.dart';
 import '../../../widget/Controller.dart';
 import '../../find_id/Screens/find_id_screen_1.dart';
@@ -54,13 +55,14 @@ class LoginScreen extends StatelessWidget {
                   Container(
                     margin: const EdgeInsets.only(top: 13),
                     child: SizedBox(
-                      width: 220,
+                      width: 224,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           buildMoveButton(context, '회원가입', const JoinScreen1()),
-                          buildMoveButton(context, '아이디 찾기', FindIdScreen1()),
-                          buildMoveButton(context, '비밀번호 찾기', FindPasswordScreen1()),
+                          buildMoveButton(context, '아이디찾기', FindIdScreen1()),
+                          buildMoveButton(
+                              context, '비밀번호찾기', FindPasswordScreen1()),
                         ],
                       ),
                     ),
@@ -101,7 +103,9 @@ class LoginScreen extends StatelessWidget {
                         final pw = _pwController.controller.text;
 
                         await loginProvider.login(id, pw, context); // 로그인 요청
-                        if (loginProvider.isLoggedIn && loginProvider.memberId != null && context.mounted) {
+                        if (loginProvider.isLoggedIn &&
+                            loginProvider.memberId != null &&
+                            context.mounted) {
                           context.goNamed(Routes.home.name);
                         }
                       },
@@ -131,7 +135,7 @@ class LoginScreen extends StatelessWidget {
                 children: [
                   TextButton(
                     onPressed: () {
-                      // 다른 계정으로 로그인 버튼 눌렀을 때의 동작 구현
+
                     },
                     child: const Text(
                       '다른 계정으로 로그인',

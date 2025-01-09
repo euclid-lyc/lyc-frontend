@@ -35,7 +35,8 @@ class CustomInterceptor extends Interceptor {
   @override
   Future<void> onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
-    super.onRequest(options, handler);
+    // super.onRequest(options, handler);
+
     if (options.headers['accessToken'] == 'true') {
       options.headers.remove('accessToken');
       final accessToken = await storage.read(key: accessTokenKey);
@@ -43,6 +44,8 @@ class CustomInterceptor extends Interceptor {
         "Authorization": "Bearer $accessToken",
       });
     }
+
+    handler.next(options);
   }
 
   @override
@@ -64,34 +67,36 @@ class CustomInterceptor extends Interceptor {
           return;
         } on DioException catch (e) {
           if (e.response?.statusCode == 401) {
-            handler.next(e);
+            handler.reject(e);
           }
         }
+      }
 
-        if (errorCode == 'AA4008') {
-          final newAccessToken = err.response?.headers.value('access-token');
-          final newRefreshToken = err.response?.headers.value('refresh-token');
+      if (errorCode == 'AA4008') {
+        final newAccessToken = err.response?.headers.value('access-token');
+        final newRefreshToken = err.response?.headers.value('refresh-token');
 
-          if (newAccessToken != null && newRefreshToken != null) {
-            await storage.write(key: accessTokenKey, value: newAccessToken);
-            await storage.write(key: refreshTokenKey, value: newRefreshToken);
+        if (newAccessToken != null && newRefreshToken != null) {
+          await storage.write(key: accessTokenKey, value: newAccessToken);
+          await storage.write(key: refreshTokenKey, value: newRefreshToken);
 
-            final options = err.requestOptions;
-            options.headers['Authorization'] = "Bearer $newAccessToken";
+          final options = err.requestOptions;
+          options.headers['Authorization'] = "Bearer $newAccessToken";
 
-            try {
-              final response = await dio.fetch(options);
-              handler.resolve(response);
+          try {
+            final response = await dio.fetch(options);
+            handler.resolve(response);
+            return;
+          } on DioException catch (e) {
+            if (e.response?.statusCode == 401) {
+              // 로그아웃
+              handler.reject(e);
               return;
-            } on DioException catch (e) {
-              if (e.response?.statusCode == 401) {
-                // 로그아웃
-                return;
-              }
             }
           }
         }
       }
+
       handler.next(err);
     }
   }

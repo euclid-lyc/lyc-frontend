@@ -1,12 +1,26 @@
 import 'package:flutter/cupertino.dart';
+import 'package:lyc_flutter_project/commissions/screens/desired_style_screen.dart';
+import 'package:lyc_flutter_project/commissions/screens/other_matters_screen.dart';
+import 'package:lyc_flutter_project/commissions/screens/primary_info_screen.dart';
+import 'package:lyc_flutter_project/commissions/screens/submission_success_screen.dart';
 import 'package:lyc_flutter_project/common/screen/splash_screen.dart';
 import 'package:lyc_flutter_project/routes/route_info.dart';
 
 import '../auth/join/screens/login_screen.dart';
+import '../home/screen/home_screen.dart';
 
 final routes = {
   "/": (BuildContext context) => const SplashScreen(),
   "/login": (BuildContext context) => LoginScreen(),
+  "/home": (BuildContext context) => const HomeScreen(),
+  "/commissions/primaryInfo": (BuildContext context) =>
+      const PrimaryInfoScreen(),
+  "/commissions/otherMatters": (BuildContext context) =>
+      const DesiredStyleScreen(),
+  "/commissions/desiredStyle": (BuildContext context) =>
+      const OtherMattersScreen(),
+  "/commissions/submissionSuccess": (BuildContext context) =>
+      const SubmissionSuccessScreen(),
 };
 
 class Routes {
@@ -92,6 +106,24 @@ class Routes {
     path: '/auth/login',
   );
 
+  //commissions
+  static const RouteInfo primaryInfo = RouteInfo(
+    name: '/commissions/primaryInfo',
+    path: '/commissions/primaryInfo',
+  );
+  static const RouteInfo desiredStyle = RouteInfo(
+    name: '/commissions/desiredStyle',
+    path: '/commissions/desiredStyle',
+  );
+  static const RouteInfo otherMatters = RouteInfo(
+    name: '/commissions/otherMatters',
+    path: '/commissions/otherMatters',
+  );
+  static const RouteInfo submissionSuccess = RouteInfo(
+    name: '/commissions/submissionSuccess',
+    path: '/commissions/submissionSuccess',
+  );
+
   // home
   static const RouteInfo home = RouteInfo(
     name: '/home',
@@ -172,5 +204,4 @@ class Routes {
     name: '/setting/withdrawal',
     path: '/setting/withdrawal',
   );
-
 }

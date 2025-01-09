@@ -54,8 +54,7 @@ class SettingProvider extends ChangeNotifier {
   }
 
   void updateProfileImage(XFile newImage) {
-    _memberModel =
-        _memberModel!.copyWith(profileImage: newImage.path.toString());
+    _memberModel = _memberModel!.copyWith(profileImage: newImage.path.toString());
   }
 
   void updateNickname(String newNickname) {
@@ -115,10 +114,8 @@ class SettingProvider extends ChangeNotifier {
   Future<bool> checkOldPassword(String? pw) async {
     if (pw == null || pw.isEmpty) return false;
     try {
-      PasswordModel tempModel =
-          PasswordModel(oldPassword: pw, newPassword: "", confirmPassword: " ");
-      await repositoryProvider.repository
-          .updatePassword(passwordModel: tempModel);
+      PasswordModel tempModel = PasswordModel(oldPassword: pw, newPassword: "", confirmPassword: " ");
+      await repositoryProvider.repository.updatePassword(passwordModel: tempModel);
       return false;
     } on DioException catch (e) {
       if (e.response?.data["code"] == "MEMBER4013") {
@@ -130,9 +127,7 @@ class SettingProvider extends ChangeNotifier {
   }
 
   Future<bool> saveNewPassword() async {
-    if (_oldPassword == null ||
-        _newPassword == null ||
-        _confirmPassword == null) {
+    if (_oldPassword == null || _newPassword == null || _confirmPassword == null) {
       return false;
     }
     try {
@@ -370,8 +365,7 @@ class SettingProvider extends ChangeNotifier {
         badBodyTypeList: _styleInfo!.badBodyTypes.bodyTypes,
         details: _styleInfo!.details,
       );
-      await repositoryProvider.repository
-          .updateStyleInfo(styleModel: styleModel);
+      await repositoryProvider.repository.updateStyleInfo(styleModel: styleModel);
     } catch (e) {
       if (e is ApiResponse) {
         Exception(e.message);
@@ -437,8 +431,7 @@ class SettingProvider extends ChangeNotifier {
     } else {
       list.add(selected);
     }
-    _styleInfo =
-        _styleInfo!.copyWith(preferredStyle: StyleListModel(styles: list));
+    _styleInfo = _styleInfo!.copyWith(preferredStyle: StyleListModel(styles: list));
     notifyListeners();
   }
 
@@ -449,8 +442,7 @@ class SettingProvider extends ChangeNotifier {
     } else {
       list.add(selected);
     }
-    _styleInfo =
-        _styleInfo!.copyWith(nonPreferredStyle: StyleListModel(styles: list));
+    _styleInfo = _styleInfo!.copyWith(nonPreferredStyle: StyleListModel(styles: list));
     notifyListeners();
   }
 
@@ -461,8 +453,7 @@ class SettingProvider extends ChangeNotifier {
     } else {
       list.add(selected);
     }
-    _styleInfo = _styleInfo!
-        .copyWith(preferredMaterials: MaterialModel(materials: list));
+    _styleInfo = _styleInfo!.copyWith(preferredMaterials: MaterialModel(materials: list));
     notifyListeners();
   }
 
@@ -473,8 +464,7 @@ class SettingProvider extends ChangeNotifier {
     } else {
       list.add(selected);
     }
-    _styleInfo = _styleInfo!
-        .copyWith(nonPreferredMaterials: MaterialModel(materials: list));
+    _styleInfo = _styleInfo!.copyWith(nonPreferredMaterials: MaterialModel(materials: list));
     notifyListeners();
   }
 
@@ -507,8 +497,7 @@ class SettingProvider extends ChangeNotifier {
     } else {
       list.add(selected);
     }
-    _styleInfo =
-        _styleInfo!.copyWith(badBodyTypes: BodyTypeModel(bodyTypes: list));
+    _styleInfo = _styleInfo!.copyWith(badBodyTypes: BodyTypeModel(bodyTypes: list));
     notifyListeners();
   }
 
@@ -520,8 +509,7 @@ class SettingProvider extends ChangeNotifier {
     try {
       _loadingStyeInfo = true;
       notifyListeners();
-      final resp =
-          await repositoryProvider.repository.getStyleInfo(memberId: memberId);
+      final resp = await repositoryProvider.repository.getStyleInfo(memberId: memberId);
       _styleInfo = resp.result;
       _topSize = int.parse(style.spec.topSize.substring(5));
       _bottomSize = int.parse(style.spec.bottomSize.substring(5));
