@@ -81,14 +81,14 @@ class CommissionsRepository {
         'Authorization': 'Bearer $token',
         'Content-Type': 'application/json',
       });
-      print('보낸 데이터: $data');
-      print("토큰 : $token");
+      debugPrint ('보낸 데이터: $data');
+      debugPrint ("토큰 : $token");
       final response = await dio.post(url, data: data, options: options);
 
       if (response.statusCode == 200) {
-        print("데이터 전송 성공");
+        debugPrint ("데이터 전송 성공");
       } else {
-        print(response.statusCode);
+        debugPrint (response.statusCode as String?);
         throw Exception('데이터 요청에 실패했습니다');
       }
     } catch (e) {
