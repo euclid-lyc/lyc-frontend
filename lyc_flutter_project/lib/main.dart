@@ -27,6 +27,9 @@ import 'package:lyc_flutter_project/auth/join/Provider/join_provider.dart';
 import 'package:lyc_flutter_project/auth/join/screens/join_screen_6.dart';
 import 'package:lyc_flutter_project/auth/service/storage_service.dart';
 
+import 'commissions/provider/commissions_provider.dart';
+import 'commissions/repository/commissions_repository.dart';
+
 Future<void> main() async {
   Provider.debugCheckInvalidValueType = null;
   runApp(
@@ -158,7 +161,12 @@ Future<void> main() async {
               storageService: Provider.of<StorageService>(context, listen: false),
             ),
           ),
-        )
+        ),
+        ChangeNotifierProvider(
+          create: (context) => CommissionsProvider(
+            repository: CommissionsRepository(dio: context.read<DioProvider>().dio,),
+          ),
+        ),
       ],
       child: const MyApp(),
     ),

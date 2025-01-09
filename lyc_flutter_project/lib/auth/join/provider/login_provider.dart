@@ -97,7 +97,7 @@ class LoginProvider extends ChangeNotifier {
         await storage.write(key: refreshTokenKey, value: refreshToken);
         await storage.write(key: accessTokenKey, value: accessToken);
         await _saveMemberId(memberId);
-
+        await storage.read(key: accessTokenKey);
         _isLoggedIn = true;
         notifyListeners();
       } else if (context.mounted) {
