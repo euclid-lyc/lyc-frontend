@@ -36,7 +36,6 @@ class CustomInterceptor extends Interceptor {
   Future<void> onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
     super.onRequest(options, handler);
-
     if (options.headers['accessToken'] == 'true') {
       options.headers.remove('accessToken');
       final accessToken = await storage.read(key: accessTokenKey);
