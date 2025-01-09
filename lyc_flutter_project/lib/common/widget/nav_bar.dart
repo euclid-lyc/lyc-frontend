@@ -135,6 +135,9 @@ class NavBar extends StatelessWidget {
                           ? Image.network(
                               provider.profile!,
                               fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) => Image.asset(
+                                'assets/image_not_found.png',
+                              ),
                             )
                           : Container(color: Colors.white),
                     ),
@@ -188,5 +191,3 @@ class NavBarItem extends StatelessWidget {
     );
   }
 }
-
-void temp() {}
