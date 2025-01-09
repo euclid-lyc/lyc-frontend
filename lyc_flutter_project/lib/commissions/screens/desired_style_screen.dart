@@ -57,7 +57,7 @@ class DesiredStyleScreenState extends State<DesiredStyleScreen> {
         body: SingleChildScrollView(
           child: Center(
             child: Container(
-              margin: const EdgeInsets.fromLTRB(30, 20, 30, 0),
+              margin: const EdgeInsets.fromLTRB(32, 20, 32, 0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -143,17 +143,17 @@ class DesiredStyleScreenState extends State<DesiredStyleScreen> {
 
   Widget buildOccasionSection() {
     return Container(
-        width: 333,
+        width: 332,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(20),
         ),
-        padding: const EdgeInsets.fromLTRB(19, 17.5, 19, 12.5),
+        padding: const EdgeInsets.fromLTRB(20, 16, 20, 12),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: EdgeInsets.only(bottom: 10.5),
+              padding: EdgeInsets.only(bottom: 12),
               child: Text(
                 'Step 1. 언제 입을 옷인가요?',
                 style: AppTextStyle.littleTitle.copyWith(fontSize: 14.0),
@@ -167,7 +167,7 @@ class DesiredStyleScreenState extends State<DesiredStyleScreen> {
 
   Widget buildInputField(Controller controller) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 7),
+      margin: const EdgeInsets.only(bottom: 8),
       child: Row(
         children: [
           Text(
@@ -175,10 +175,10 @@ class DesiredStyleScreenState extends State<DesiredStyleScreen> {
             style:
                 AppTextStyle.hint.copyWith(color: Colors.black, fontSize: 14),
           ),
-          const SizedBox(width: 10),
+          const SizedBox(width: 12),
           Expanded(
             child: SizedBox(
-              height: 30,
+              height: 32,
               child: TextField(
                 controller: controller.controller,
                 decoration: InputDecoration(
@@ -212,18 +212,18 @@ class DesiredStyleScreenState extends State<DesiredStyleScreen> {
       controller.controller.text = notifier.value.join(',');
     });
     return Container(
-      width: 333,
-      height: 210,
+      width: 332,
+      height: 212,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
       ),
-      padding: const EdgeInsets.fromLTRB(15, 20, 14, 12.5),
+      padding: const EdgeInsets.fromLTRB(16, 20, 16, 12),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-              padding: const EdgeInsets.only(bottom: 13.5),
+              padding: const EdgeInsets.only(bottom: 12),
               child: Text(
                 title,
                 style: AppTextStyle.littleTitle.copyWith(fontSize: 14.0),
@@ -232,8 +232,8 @@ class DesiredStyleScreenState extends State<DesiredStyleScreen> {
               padding: const EdgeInsets.only(bottom: 12),
               child: buildStyleOptions(styles: styles, notifier: notifier)),
           SizedBox(
-            width: 298,
-            height: 30,
+            width: 300,
+            height: 32,
             child: TextField(
               controller: controller.controller,
               decoration: InputDecoration(
@@ -245,7 +245,7 @@ class DesiredStyleScreenState extends State<DesiredStyleScreen> {
                   borderSide: BorderSide.none,
                 ),
                 contentPadding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
               ),
               style: AppTextStyle.hint.copyWith(color: Colors.black),
             ),

@@ -55,7 +55,7 @@ class LoginScreen extends StatelessWidget {
                   Container(
                     margin: const EdgeInsets.only(top: 13),
                     child: SizedBox(
-                      width: 225,
+                      width: 224,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
