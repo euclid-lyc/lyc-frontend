@@ -16,35 +16,36 @@ class ScheduleBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: const EdgeInsets.only(top: 12.0),
       height: 1500,
-      decoration: const BoxDecoration(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(20.0),
-          topRight: Radius.circular(20.0),
-        ),
-        color: Colors.white,
-      ),
       padding: const EdgeInsets.symmetric(
         horizontal: 16.0,
         vertical: 20.0,
       ),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(20.0),
+          topRight: Radius.circular(20.0),
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            spreadRadius: 2.0,
+            blurRadius: 6.0,
+          ),
+        ],
+      ),
       child: Column(
         children: [
-          GestureDetector(
-            onVerticalDragUpdate: (details) {
-              scrollController.position.moveTo(
-                scrollController.position.pixels - details.delta.dy,
-              );
-            },
-            child: Container(
-              decoration: BoxDecoration(
-                color: AppColor.beige,
-                borderRadius: BorderRadius.circular(20.0),
-              ),
-              height: 12.0,
-              width: 100.0,
-              margin: const EdgeInsets.only(bottom: 20.0),
+          Container(
+            decoration: BoxDecoration(
+              color: AppColor.beige,
+              borderRadius: BorderRadius.circular(20.0),
             ),
+            height: 12.0,
+            width: 100.0,
+            margin: const EdgeInsets.only(bottom: 20.0),
           ),
           Expanded(
             child: ListView.builder(
