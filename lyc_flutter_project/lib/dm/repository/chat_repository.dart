@@ -5,6 +5,7 @@ import 'package:lyc_flutter_project/config/secret.dart';
 import 'package:lyc_flutter_project/dm/model/chat_message_model.dart';
 import 'package:lyc_flutter_project/dm/model/chat_model.dart';
 import 'package:lyc_flutter_project/dm/model/make_schedule_model.dart';
+import 'package:lyc_flutter_project/dm/model/schedule_model_response.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'chat_repository.g.dart';
@@ -45,5 +46,14 @@ abstract class ChatRepository {
   Future<ApiResponse<MakeScheduleModel>> makeSchedule({
     @Path("chatId") required int chatId,
     @Body() required MakeScheduleModel model,
+  });
+
+  @GET("/{chatId}/schedules")
+  @Headers({"accessToken": "true"})
+  Future<ApiResponse<ScheduleModelListResponse>> getSchedules({
+    @Path("chatId") required int chatId,
+    @Query("year") required int year,
+    @Query("month") required int month,
+    @Query("day") int? day,
   });
 }

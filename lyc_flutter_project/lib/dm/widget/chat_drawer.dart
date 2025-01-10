@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lyc_flutter_project/common/const/assets.dart';
 import 'package:lyc_flutter_project/common/widget/image_networking.dart';
+import 'package:lyc_flutter_project/dm/provider/chat_provider.dart';
 import 'package:lyc_flutter_project/routes/routes.dart';
 
 class ChatDrawer extends StatelessWidget {
@@ -11,7 +12,7 @@ class ChatDrawer extends StatelessWidget {
   final String othersNickname;
   final String othersProfile;
   final VoidCallback closeDrawer;
-  final int chatId;
+  final ChatProvider provider;
 
   const ChatDrawer({
     super.key,
@@ -20,7 +21,7 @@ class ChatDrawer extends StatelessWidget {
     required this.othersNickname,
     required this.othersProfile,
     required this.closeDrawer,
-    required this.chatId,
+    required this.provider,
   });
 
   @override
@@ -50,7 +51,7 @@ class ChatDrawer extends StatelessWidget {
                   ),
                   onPlusIconPressed: () => context.pushNamed(
                     Routes.schedule.name,
-                    extra: chatId,
+                    extra: provider,
                   ),
                 ),
                 ChatDrawerContent(

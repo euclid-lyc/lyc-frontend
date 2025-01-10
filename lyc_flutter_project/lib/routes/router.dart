@@ -5,6 +5,7 @@ import 'package:lyc_flutter_project/auth/find_id/screens/find_id_screen_3.dart';
 import 'package:lyc_flutter_project/auth/join/screens/login_screen.dart';
 import 'package:lyc_flutter_project/common/screen/splash_screen.dart';
 import 'package:lyc_flutter_project/director/screen/director_search_screen.dart';
+import 'package:lyc_flutter_project/dm/provider/chat_provider.dart';
 import 'package:lyc_flutter_project/dm/screen/chat_schedule_screen.dart';
 import 'package:lyc_flutter_project/dm/screen/chat_screen.dart';
 import 'package:lyc_flutter_project/dm/screen/dm_screen.dart';
@@ -120,7 +121,7 @@ final router = GoRouter(
           name: Routes.schedule.name,
           pageBuilder: (context, state) => NoTransitionPage(
             child: ChatScheduleScreen(
-              chatID: state.extra as int,
+              provider: state.extra as ChatProvider,
             ),
           ),
         )
