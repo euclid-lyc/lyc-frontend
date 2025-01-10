@@ -16,6 +16,15 @@ class ChatScheduleScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double sheetPosition = 0.4;
+
+    void handleDrag(double delta) {
+      // 드래그 이동 비율 계산 및 위치 제한
+      double newPosition = sheetPosition - delta / MediaQuery.of(context).size.height;
+      sheetPosition = newPosition.clamp(0.3, 1.0);
+      provider.updateDraggablePosition(sheetPosition);
+    }
+
     return ChangeNotifierProvider.value(
       value: provider,
       child: Scaffold(
@@ -43,20 +52,25 @@ class ChatScheduleScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              DraggableScrollableSheet(
-                initialChildSize: 0.4,
-                minChildSize: 0.3,
-                maxChildSize: 1.0,
-                builder: (context, scrollController) {
-                  value.scheduleScrollController = scrollController;
-                  return SingleChildScrollView(
-                  controller: scrollController,
-                  child: ScheduleBottomSheet(
-                    scrollController: scrollController,
-                    schedules: value.schedules,
+              AnimatedBuilder(
+                animation: value,
+                builder: (context, _) => DraggableScrollableSheet(
+                    initialChildSize: value.draggablePosition,
+                    minChildSize: 0.3,
+                    maxChildSize: 1.0,
+                    builder: (context, draggableScrollController) {
+                      // DraggableScrollableSheet 컨트롤러를 상태에 저장
+                      value.setDraggableScrollController(draggableScrollController);
+
+                      return ScheduleBottomSheet(
+                        scrollController: value.listScrollController, // 리스트의 스크롤 컨트롤러
+                        schedules: value.schedules,
+                        onHandleDrag: (delta) {
+                          value.handleDraggableDrag(delta);
+                        },
+                      );
+                    },
                   ),
-                );
-                },
               ),
               if (value.loadingCalendar) const Center(child: CustomLoading()),
             ],

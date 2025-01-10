@@ -310,10 +310,35 @@ class ChatProvider extends ChangeNotifier {
   }
 
   DateTime? selectedDate;
-  ScrollController? scheduleScrollController;
+
+  // DraggableScrollableSheet의 컨트롤러
+  ScrollController? draggableScrollController;
+
+  // 리스트 스크롤 컨트롤러
+  final ScrollController listScrollController = ScrollController();
+
+  double _draggablePosition = 0.4;
+
+  double get draggablePosition => _draggablePosition;
+
+  void setDraggableScrollController(ScrollController controller) {
+    draggableScrollController = controller;
+  }
+
+  void updateDraggablePosition(double newPosition) {
+    _draggablePosition = newPosition.clamp(0.3, 1.0);
+    notifyListeners();
+  }
+
+  void handleDraggableDrag(double delta) {
+    if (draggableScrollController == null) return;
+
+    double newPosition = _draggablePosition - delta / 600;
+    updateDraggablePosition(newPosition);
+  }
 
   void scrollToSchedule(DateTime date) {
-    if (scheduleScrollController == null || !scheduleScrollController!.hasClients) {
+    if (!listScrollController.hasClients) {
       return;
     }
 
@@ -325,7 +350,7 @@ class ChatProvider extends ChangeNotifier {
     if (selectedScheduleIndex != -1) {
       const itemHeight = (12.0 * 2) + 40.0 + 1.0 + 16.0;
 
-      scheduleScrollController!.animateTo(
+      listScrollController.animateTo(
         selectedScheduleIndex * itemHeight,
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
