@@ -43,7 +43,7 @@ class ChatDrawer extends StatelessWidget {
                     content: CustomCalendar(
                       currentDateTime: value.calendarDate,
                       schedules: value.currentMonthSchedules,
-                      onScheduleTap: () {},
+                      onScheduleTap: (selectedDate) {},
                       backgroundColor: Colors.transparent,
                       miniMode: true,
                     ),

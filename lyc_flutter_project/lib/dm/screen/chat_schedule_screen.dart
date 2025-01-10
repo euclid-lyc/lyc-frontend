@@ -35,22 +35,28 @@ class ChatScheduleScreen extends StatelessWidget {
                     CustomCalendar(
                       currentDateTime: DateTime.now(),
                       schedules: value.schedules,
-                      onScheduleTap: () {},
+                      onScheduleTap: (selectedDate) {
+                        value.scrollToSchedule(selectedDate);
+                        debugPrint('선택');
+                      },
                     ),
                   ],
                 ),
               ),
               DraggableScrollableSheet(
-                initialChildSize: 0.3,
+                initialChildSize: 0.4,
                 minChildSize: 0.3,
                 maxChildSize: 1.0,
-                builder: (context, scrollController) => SingleChildScrollView(
+                builder: (context, scrollController) {
+                  value.scheduleScrollController = scrollController;
+                  return SingleChildScrollView(
                   controller: scrollController,
                   child: ScheduleBottomSheet(
                     scrollController: scrollController,
                     schedules: value.schedules,
                   ),
-                ),
+                );
+                },
               ),
               if (value.loadingCalendar) const Center(child: CustomLoading()),
             ],

@@ -298,11 +298,38 @@ class ChatProvider extends ChangeNotifier {
           memo: memo,
         ),
       );
+      scheduleList.clear();
+      currentMonthSchedules.clear();
+      initCalendar();
       debugPrint(result.message);
     } on DioException {
       debugPrint("makeSchedule 실패");
     } catch (e) {
       debugPrint(e.toString());
+    }
+  }
+
+  DateTime? selectedDate;
+  ScrollController? scheduleScrollController;
+
+  void scrollToSchedule(DateTime date) {
+    if (scheduleScrollController == null || !scheduleScrollController!.hasClients) {
+      return;
+    }
+
+    final selectedScheduleIndex = schedules.indexWhere((schedule) =>
+    schedule.date.year == date.year &&
+        schedule.date.month == date.month &&
+        schedule.date.day == date.day);
+
+    if (selectedScheduleIndex != -1) {
+      const itemHeight = (12.0 * 2) + 40.0 + 1.0 + 16.0;
+
+      scheduleScrollController!.animateTo(
+        selectedScheduleIndex * itemHeight,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
     }
   }
 

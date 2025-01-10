@@ -6,7 +6,7 @@ import 'package:lyc_flutter_project/dm/model/schedule_model.dart';
 class CustomCalendar extends StatelessWidget {
   final DateTime currentDateTime;
   final List<ScheduleModel> schedules;
-  final VoidCallback onScheduleTap;
+  final Function(DateTime) onScheduleTap;
   final Color backgroundColor;
   final bool miniMode;
 
@@ -86,7 +86,10 @@ class CustomCalendar extends StatelessWidget {
                   color: Colors.transparent,
                   child: InkWell(
                     borderRadius: BorderRadius.circular(8.0),
-                    onTap: miniMode ? null : (hasSchedule ? onScheduleTap : null),
+                    onTap: miniMode ? null : (hasSchedule ? () {
+                      debugPrint('날짜 선택: $displayDate');
+                      onScheduleTap.call(displayDate);
+                    } : null),
                     child: Container(
                       decoration: BoxDecoration(
                         color: hasSchedule ? AppColor.pink.withOpacity(0.5) : AppColor.grey.withOpacity(0.3),
