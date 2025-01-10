@@ -62,9 +62,7 @@ class ChatDrawer extends StatelessWidget {
                           title: const Text('나'),
                           // TODO: 내 프로필로 바꾸기
                           leading: ProfileImageNetworking(value.profileImage ?? ''),
-                          titleTextStyle: const TextStyle(
-                            fontSize: 14.0,
-                            fontWeight: FontWeight.w400,
+                          titleTextStyle: Typos.regular14.copyWith(
                             color: Colors.black,
                           ),
                         ),
@@ -72,7 +70,9 @@ class ChatDrawer extends StatelessWidget {
                         ListTile(
                           title: Text(value.nickname),
                           leading: ProfileImageNetworking(value.profileImage ?? ''),
-                          titleTextStyle: Typos.regular14,
+                          titleTextStyle: Typos.regular14.copyWith(
+                            color: Colors.black,
+                          ),
                         ),
                       ],
                     ),
