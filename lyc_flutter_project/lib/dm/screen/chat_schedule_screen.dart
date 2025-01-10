@@ -9,28 +9,15 @@ import 'package:lyc_flutter_project/dm/widget/schedule_bottom_sheet.dart';
 import 'package:lyc_flutter_project/dm/widget/select_month.dart';
 import 'package:provider/provider.dart';
 
-class ChatScheduleScreen extends StatefulWidget {
+class ChatScheduleScreen extends StatelessWidget {
   final ChatProvider provider;
 
   const ChatScheduleScreen({super.key, required this.provider});
 
   @override
-  State<ChatScheduleScreen> createState() => _ChatScheduleScreenState();
-}
-
-class _ChatScheduleScreenState extends State<ChatScheduleScreen> {
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      widget.provider.initCalendar();
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider.value(
-      value: widget.provider,
+      value: provider,
       child: Scaffold(
         appBar: const NormalAppbar(title: '일정'),
         backgroundColor: AppColor.lightGrey,

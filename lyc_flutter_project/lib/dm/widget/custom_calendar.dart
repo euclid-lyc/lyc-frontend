@@ -8,6 +8,7 @@ class CustomCalendar extends StatelessWidget {
   final List<ScheduleModel> schedules;
   final VoidCallback onScheduleTap;
   final Color backgroundColor;
+  final bool miniMode;
 
   const CustomCalendar({
     super.key,
@@ -15,6 +16,7 @@ class CustomCalendar extends StatelessWidget {
     required this.schedules,
     required this.onScheduleTap,
     this.backgroundColor = Colors.white,
+    this.miniMode = false,
   });
 
   bool _hasSchedule(DateTime date) {
@@ -36,7 +38,7 @@ class CustomCalendar extends StatelessWidget {
         color: backgroundColor,
         borderRadius: BorderRadius.circular(15.0),
       ),
-      margin: const EdgeInsets.only(top: 16.0),
+      margin: miniMode ? EdgeInsets.zero : const EdgeInsets.only(top: 16.0),
       width: double.infinity,
       padding: const EdgeInsets.all(12.0),
       child: Column(
@@ -46,23 +48,23 @@ class CustomCalendar extends StatelessWidget {
             children: weekDayLabels
                 .map(
                   (label) => Expanded(
-                child: Text(
-                  label,
-                  textAlign: TextAlign.center,
-                  style: Typos.semibold16,
-                ),
-              ),
-            )
+                    child: Text(
+                      label,
+                      textAlign: TextAlign.center,
+                      style: Typos.regular16,
+                    ),
+                  ),
+                )
                 .toList(),
           ),
-          // const SizedBox(height: 20.0),
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 8.0),
-            child: Divider(
+          Padding(
+            padding: miniMode ? EdgeInsets.zero : const EdgeInsets.symmetric(vertical: 8.0),
+            child: const Divider(
               color: AppColor.grey,
             ),
           ),
           GridView.builder(
+            padding: EdgeInsets.zero,
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -82,9 +84,9 @@ class CustomCalendar extends StatelessWidget {
               if (index >= firstWeekday && displayDate.difference(lastDayOfMonth).inDays <= 0) {
                 return Material(
                   color: Colors.transparent,
-                  borderRadius: BorderRadius.circular(8.0),
                   child: InkWell(
-                    onTap: hasSchedule ? onScheduleTap : null,
+                    borderRadius: BorderRadius.circular(8.0),
+                    onTap: miniMode ? null : (hasSchedule ? onScheduleTap : null),
                     child: Container(
                       decoration: BoxDecoration(
                         color: hasSchedule ? AppColor.pink.withOpacity(0.5) : AppColor.grey.withOpacity(0.3),
@@ -95,7 +97,7 @@ class CustomCalendar extends StatelessWidget {
                           Center(
                             child: Text(
                               '${displayDate.day}',
-                              style: Typos.semibold16,
+                              style: miniMode ? Typos.regular14 : Typos.semibold16,
                             ),
                           ),
                         ],

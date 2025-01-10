@@ -45,6 +45,7 @@ class ChatDrawer extends StatelessWidget {
                       schedules: value.currentMonthSchedules,
                       onScheduleTap: () {},
                       backgroundColor: Colors.transparent,
+                      miniMode: true,
                     ),
                     onPlusIconPressed: () => context.pushNamed(
                       Routes.schedule.name,
@@ -71,11 +72,7 @@ class ChatDrawer extends StatelessWidget {
                         ListTile(
                           title: Text(value.nickname),
                           leading: ProfileImageNetworking(value.profileImage ?? ''),
-                          titleTextStyle: const TextStyle(
-                            fontSize: 14.0,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.black,
-                          ),
+                          titleTextStyle: Typos.regular14,
                         ),
                       ],
                     ),
