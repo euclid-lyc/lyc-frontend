@@ -42,4 +42,15 @@ class StyleList{
     '허벅지',
     '복부',
   ];
+
+  static const List<String> colorsOptions = [
+    '화이트',
+    '베이지',
+    '옐로우',
+    '레드',
+    '그린',
+    '블루',
+    '퍼플',
+    '블랙',
+  ];
 }

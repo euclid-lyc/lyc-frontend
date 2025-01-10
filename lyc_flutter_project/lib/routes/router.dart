@@ -3,11 +3,14 @@ import 'package:lyc_flutter_project/auth/find_id/screens/find_id_screen_1.dart';
 import 'package:lyc_flutter_project/auth/find_id/screens/find_id_screen_2.dart';
 import 'package:lyc_flutter_project/auth/find_id/screens/find_id_screen_3.dart';
 import 'package:lyc_flutter_project/auth/join/screens/login_screen.dart';
+import 'package:lyc_flutter_project/commissions/screens/desired_style_screen.dart';
+import 'package:lyc_flutter_project/commissions/screens/other_matters_screen.dart';
+import 'package:lyc_flutter_project/commissions/screens/primary_info_screen.dart';
+import 'package:lyc_flutter_project/commissions/screens/submission_success_screen.dart';
 import 'package:lyc_flutter_project/common/screen/splash_screen.dart';
 import 'package:lyc_flutter_project/director/screen/director_search_screen.dart';
 import 'package:lyc_flutter_project/dm/provider/chat_provider.dart';
 import 'package:lyc_flutter_project/dm/screen/chat_schedule_screen.dart';
-import 'package:lyc_flutter_project/dm/screen/chat_screen.dart';
 import 'package:lyc_flutter_project/dm/screen/dm_screen.dart';
 import 'package:lyc_flutter_project/feed/screen/feed_screen.dart';
 import 'package:lyc_flutter_project/home/screen/home_screen.dart';
@@ -94,6 +97,34 @@ final router = GoRouter(
       name: Routes.setting.name,
       pageBuilder: (context, state) => const NoTransitionPage(
         child: SettingScreen(),
+      ),
+    ),
+    GoRoute(
+      path: Routes.primaryInfo.path,
+      name: Routes.primaryInfo.name,
+      pageBuilder: (context, state) => const NoTransitionPage(
+        child: PrimaryInfoScreen(),
+      ),
+    ),
+    GoRoute(
+      path: Routes.desiredStyle.path,
+      name: Routes.desiredStyle.name,
+      pageBuilder: (context, state) => const NoTransitionPage(
+        child: DesiredStyleScreen(),
+      ),
+    ),
+    GoRoute(
+      path: Routes.otherMatters.path,
+      name: Routes.otherMatters.name,
+      pageBuilder: (context, state) => const NoTransitionPage(
+        child: OtherMattersScreen(),
+      ),
+    ),
+    GoRoute(
+      path: Routes.submissionSuccess.path,
+      name: Routes.submissionSuccess.name,
+      pageBuilder: (context, state) => const NoTransitionPage(
+        child: SubmissionSuccessScreen(),
       ),
     ),
     GoRoute(

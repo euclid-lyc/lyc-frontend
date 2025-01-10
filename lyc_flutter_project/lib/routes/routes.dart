@@ -92,6 +92,24 @@ class Routes {
     path: '/auth/login',
   );
 
+  //commissions
+  static const RouteInfo primaryInfo = RouteInfo(
+    name: '/commissions/primaryInfo',
+    path: '/commissions/primaryInfo',
+  );
+  static const RouteInfo desiredStyle = RouteInfo(
+    name: '/commissions/desiredStyle',
+    path: '/commissions/desiredStyle',
+  );
+  static const RouteInfo otherMatters = RouteInfo(
+    name: '/commissions/otherMatters',
+    path: '/commissions/otherMatters',
+  );
+  static const RouteInfo submissionSuccess = RouteInfo(
+    name: '/commissions/submissionSuccess',
+    path: '/commissions/submissionSuccess',
+  );
+
   // home
   static const RouteInfo home = RouteInfo(
     name: '/home',
