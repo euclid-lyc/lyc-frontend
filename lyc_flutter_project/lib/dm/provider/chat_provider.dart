@@ -33,6 +33,7 @@ class ChatProvider extends ChangeNotifier {
     focusNode = FocusNode();
     now = DateTime.now();
     initChat();
+    initCalendar();
   }
 
   bool _disposed = false;
@@ -314,6 +315,9 @@ class ChatProvider extends ChangeNotifier {
   // 달 별 일정들을 리스트로 저장
   List<List<ScheduleModel>> scheduleList = [];
 
+  // 미니 달력에서 보여주기 위해 이번 달 일정 따로 저장
+  List<ScheduleModel> currentMonthSchedules = [];
+
   // 인덱스로 월별 일정을 꺼내 보여줌
   int calendarIndex = 0;
 
@@ -358,6 +362,16 @@ class ChatProvider extends ChangeNotifier {
       year: date.year,
       month: date.month,
     );
+    if (currentMonthSchedules.isEmpty) {
+      currentMonthSchedules = result.result.schedules
+          .map(
+            (e) => ScheduleModel(
+              date: DateTime.parse(e.date),
+              memo: e.memo,
+            ),
+          )
+          .toList();
+    }
     // prev면 리스트 앞에 넣기
     if (prev) {
       scheduleList = [

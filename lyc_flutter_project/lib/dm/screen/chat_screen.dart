@@ -53,10 +53,6 @@ class ChatScreen extends StatelessWidget {
             onTap: () => key.currentState!.openEndDrawer(),
           ),
           endDrawer: ChatDrawer(
-            myNickname: '나',
-            myProfile: '',
-            othersNickname: nickname,
-            othersProfile: profileImage,
             closeDrawer: () => key.currentState!.closeEndDrawer(),
             provider: value,
           ),

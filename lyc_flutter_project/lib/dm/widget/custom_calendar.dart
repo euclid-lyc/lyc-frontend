@@ -7,12 +7,14 @@ class CustomCalendar extends StatelessWidget {
   final DateTime currentDateTime;
   final List<ScheduleModel> schedules;
   final VoidCallback onScheduleTap;
+  final Color backgroundColor;
 
   const CustomCalendar({
     super.key,
     required this.currentDateTime,
     required this.schedules,
     required this.onScheduleTap,
+    this.backgroundColor = Colors.white,
   });
 
   bool _hasSchedule(DateTime date) {
@@ -31,7 +33,7 @@ class CustomCalendar extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: backgroundColor,
         borderRadius: BorderRadius.circular(15.0),
       ),
       margin: const EdgeInsets.only(top: 16.0),
