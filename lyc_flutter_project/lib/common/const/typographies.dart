@@ -4,6 +4,11 @@ import 'package:flutter/material.dart';
 class Typos {
   const Typos._();
 
+  static const TextStyle semibold20 = TextStyle(
+    fontSize: 20.0,
+    fontWeight: FontWeight.w600,
+  );
+
   static const TextStyle regular18 = TextStyle(
     fontSize: 18.0,
     fontWeight: FontWeight.w400,
