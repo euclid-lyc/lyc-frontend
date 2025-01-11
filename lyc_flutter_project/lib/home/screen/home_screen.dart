@@ -25,7 +25,9 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<HomeProvider>().getPostingPreview();
+      context.read<HomeProvider>()
+        ..getPostingPreview()
+        ..getDirectors();
     });
   }
 
@@ -70,38 +72,38 @@ class _HomeScreenState extends State<HomeScreen> {
                     const Line(),
                     SizedBox(
                       height: 100,
-                      child: ListView(
-                        scrollDirection: Axis.horizontal,
-                        children: [
-                          for (var i = 0; i < 10; i++)
-                            Container(
-                              decoration: buildWhiteRoundBox(),
-                              margin: const EdgeInsets.symmetric(horizontal: 8),
-                              height: 90,
-                              width: 90,
-                              alignment: Alignment.center,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  SizedBox(
-                                    height: 50,
-                                    width: 50,
-                                    child: RoundImage(
-                                      image: Image.asset(
-                                        'assets/ex_profile2.png',
-                                        fit: BoxFit.cover,
-                                      ),
+                      child: ListView.builder(
+                        itemCount: value.directors.length,
+                        itemBuilder: (context, index) {
+                          final director = value.directors[index];
+                          return Container(
+                            decoration: buildWhiteRoundBox(),
+                            margin: const EdgeInsets.symmetric(horizontal: 8),
+                            height: 90,
+                            width: 90,
+                            alignment: Alignment.center,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                  height: 50,
+                                  width: 50,
+                                  child: RoundImage(
+                                    image: Image.network(
+                                      director.profileImage,
+                                      fit: BoxFit.cover,
                                     ),
                                   ),
-                                  const SizedBox(height: 3),
-                                  const Text(
-                                    'Winter',
-                                    style: TextStyle(color: AppColor.deepGrey),
-                                  ),
-                                ],
-                              ),
+                                ),
+                                const SizedBox(height: 3),
+                                Text(
+                                  director.nickname,
+                                  style: const TextStyle(color: AppColor.deepGrey),
+                                ),
+                              ],
                             ),
-                        ],
+                          );
+                        },
                       ),
                     ),
 
@@ -113,8 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         for (var i = 0; i < 10; i++)
                           Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 5),
+                            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                             margin: const EdgeInsets.symmetric(vertical: 8),
                             decoration: buildWhiteRoundBox(),
                             width: double.infinity,
@@ -151,16 +152,14 @@ class _HomeScreenState extends State<HomeScreen> {
               // 유클리드
               const MarginBox(),
               Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 30, vertical: 40),
+                padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 40),
                 color: const Color(0xffF4F5F6),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
                       '유클리드',
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
                     ),
                     const MarginBox(),
                     Row(
@@ -251,8 +250,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     const MarginBox(),
                     Text(
                       'Copyright © 2024. All rights reserved.',
-                      style:
-                          TextStyle(color: AppColor.deepGrey.withOpacity(0.8)),
+                      style: TextStyle(color: AppColor.deepGrey.withOpacity(0.8)),
                     )
                   ],
                 ),
