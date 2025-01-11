@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
-import 'package:lyc_flutter_project/commissions/screens/desired_style_screen.dart';
-import 'package:lyc_flutter_project/commissions/screens/other_matters_screen.dart';
-import 'package:lyc_flutter_project/commissions/screens/primary_info_screen.dart';
-import 'package:lyc_flutter_project/commissions/screens/submission_success_screen.dart';
+import 'package:lyc_flutter_project/commissions/screen/desired_style_screen.dart';
+import 'package:lyc_flutter_project/commissions/screen/other_matters_screen.dart';
+import 'package:lyc_flutter_project/commissions/screen/primary_info_screen.dart';
+import 'package:lyc_flutter_project/commissions/screen/submission_success_screen.dart';
 import 'package:lyc_flutter_project/common/screen/splash_screen.dart';
 import 'package:lyc_flutter_project/routes/route_info.dart';
 

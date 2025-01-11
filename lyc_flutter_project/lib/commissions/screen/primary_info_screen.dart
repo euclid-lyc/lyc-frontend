@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:lyc_flutter_project/commissions/screens/desired_style_screen.dart';
 import 'package:lyc_flutter_project/common/widget/normal_appbar.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:provider/provider.dart';
@@ -9,6 +8,7 @@ import '../../data/style_list.dart';
 import '../../routes/routes.dart';
 import '../../styles/app_text_style.dart';
 import '../provider/commissions_provider.dart';
+import 'desired_style_screen.dart';
 
 class PrimaryInfoScreen extends StatefulWidget {
   const PrimaryInfoScreen({super.key});
@@ -39,25 +39,25 @@ class PrimaryInfoScreenState extends State<PrimaryInfoScreen> {
     Future<void> createCommissions() async {
       final commissionsProvider =
           Provider.of<CommissionsProvider>(context, listen: false);
-      commissionsProvider.basicInfo = commissionsProvider.basicInfo.copyWith(
-          height: int.tryParse(_controller1_1.controller.text) ?? 0,
-          weight: int.tryParse(_controller1_2.controller.text) ?? 0,
-          topSize: _controller1_3.controller.text,
-          bottomSize: _controller1_4.controller.text,
-          infoStyle: commissionsProvider.basicInfo.infoStyle.copyWith(
-              preferredStyleList: _controller2.controller.text.split(','),
-              nonPreferredStyleList: _controller3.controller.text.split(',')),
-          infoFit: commissionsProvider.basicInfo.infoFit.copyWith(
-              preferredFitList: _controller6.controller.text.split(','),
-              nonPreferredFitList: _controller7.controller.text.split(',')),
-          infoMaterial: commissionsProvider.basicInfo.infoMaterial.copyWith(
-              preferredMaterialList: _controller4.controller.text.split(','),
-              nonPreferredMaterialList:
-                  _controller5.controller.text.split(',')),
-          infoBodyType: commissionsProvider.basicInfo.infoBodyType.copyWith(
-              goodBodyTypeList: _controller8.controller.text.split(','),
-              badBodyTypeList: _controller9.controller.text.split(',')),
-          text: _controller10.controller.text);
+      // commissionsProvider.basicInfo = commissionsProvider.basicInfo.copyWith(
+      //     height: int.tryParse(_controller1_1.controller.text) ?? 0,
+      //     weight: int.tryParse(_controller1_2.controller.text) ?? 0,
+      //     topSize: _controller1_3.controller.text,
+      //     bottomSize: _controller1_4.controller.text,
+      //     infoStyle: commissionsProvider.basicInfo.infoStyle.copyWith(
+      //         preferredStyleList: _controller2.controller.text.split(','),
+      //         nonPreferredStyleList: _controller3.controller.text.split(',')),
+      //     infoFit: commissionsProvider.basicInfo.infoFit.copyWith(
+      //         preferredFitList: _controller6.controller.text.split(','),
+      //         nonPreferredFitList: _controller7.controller.text.split(',')),
+      //     infoMaterial: commissionsProvider.basicInfo.infoMaterial.copyWith(
+      //         preferredMaterialList: _controller4.controller.text.split(','),
+      //         nonPreferredMaterialList:
+      //             _controller5.controller.text.split(',')),
+      //     infoBodyType: commissionsProvider.basicInfo.infoBodyType.copyWith(
+      //         goodBodyTypeList: _controller8.controller.text.split(','),
+      //         badBodyTypeList: _controller9.controller.text.split(',')),
+      //     text: _controller10.controller.text);
     }
 
     return ChangeNotifierProvider(
@@ -71,7 +71,7 @@ class PrimaryInfoScreenState extends State<PrimaryInfoScreen> {
           body: SingleChildScrollView(
             child:Center(
             child: Container(
-              margin: const EdgeInsets.fromLTRB(30, 20, 30, 0),
+              margin: const EdgeInsets.fromLTRB(20, 16, 20, 16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -174,7 +174,7 @@ class PrimaryInfoScreenState extends State<PrimaryInfoScreen> {
                               Navigator.push(context, MaterialPageRoute(builder: (context) => const DesiredStyleScreen()));
                             }
                           } catch (e) {
-                            print("저장 실패1");
+                            debugPrint("저장 실패1");
                           }
                         },
                         style: TextButton.styleFrom(
@@ -202,13 +202,13 @@ class PrimaryInfoScreenState extends State<PrimaryInfoScreen> {
 
   Widget buildAdditionalInfo(String text) {
     return Container(
-      width: 333,
+      width: 332,
       height: 200,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
       ),
-      padding: const EdgeInsets.fromLTRB(19, 17.5, 19, 12.5),
+      padding: const EdgeInsets.fromLTRB(20, 16, 20, 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -223,7 +223,7 @@ class PrimaryInfoScreenState extends State<PrimaryInfoScreen> {
             maxLines: null,
             decoration: InputDecoration(
               contentPadding:
-                  const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                  const EdgeInsets.symmetric(vertical: 0, horizontal: 12),
               filled: false,
               hintText: 'ex.종아리가 너무 두꺼운 게 고민이에요.',
               border: OutlineInputBorder(
@@ -240,18 +240,18 @@ class PrimaryInfoScreenState extends State<PrimaryInfoScreen> {
 
   Widget buildBodyTypeSection() {
     return Container(
-      width: 333,
+      width: 332,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
       ),
-      padding: const EdgeInsets.fromLTRB(19, 17.5, 19, 12.5),
+      padding: const EdgeInsets.fromLTRB(20, 16, 20, 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Center(
             child: Padding(
-              padding: EdgeInsets.only(bottom: 10.5),
+              padding: const EdgeInsets.only(bottom: 12),
               child: Text(
                 'Step 1. 본인의 체형을 알려주세요.',
                 style: AppTextStyle.littleTitle.copyWith(fontSize: 14.0),
@@ -277,7 +277,7 @@ class PrimaryInfoScreenState extends State<PrimaryInfoScreen> {
 
   Widget buildInputField(String label, Controller controller) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 7),
+      margin: const EdgeInsets.only(bottom: 8),
       child: Row(
         children: [
           Expanded(
@@ -290,7 +290,7 @@ class PrimaryInfoScreenState extends State<PrimaryInfoScreen> {
               ),
             ),
           ),
-          const SizedBox(width: 10),
+          const SizedBox(width: 12),
           Expanded(
             flex: 2,
             child: SizedBox(
@@ -328,18 +328,18 @@ class PrimaryInfoScreenState extends State<PrimaryInfoScreen> {
       controller.controller.text = notifier.value.join(',');
     });
     return Container(
-      width: 333,
-      height: 210,
+      width: 332,
+      height: 212,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
       ),
-      padding: const EdgeInsets.fromLTRB(15, 20, 14, 12.5),
+      padding: const EdgeInsets.fromLTRB(16, 20, 16, 12),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-              padding: const EdgeInsets.only(bottom: 13.5),
+              padding: const EdgeInsets.only(bottom: 12),
               child: Text(
                 title,
                 style: AppTextStyle.littleTitle.copyWith(fontSize: 14.0),
@@ -348,7 +348,7 @@ class PrimaryInfoScreenState extends State<PrimaryInfoScreen> {
               padding: const EdgeInsets.only(bottom: 12),
               child: buildStyleOptions(styles: styles, notifier: notifier)),
           SizedBox(
-            width: 298,
+            width: 296,
             height: 30,
             child: TextField(
               controller: controller.controller,
@@ -361,7 +361,7 @@ class PrimaryInfoScreenState extends State<PrimaryInfoScreen> {
                   borderSide: BorderSide.none,
                 ),
                 contentPadding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
               ),
               style: AppTextStyle.hint.copyWith(color: Colors.black),
             ),
@@ -414,12 +414,12 @@ class PrimaryInfoScreenState extends State<PrimaryInfoScreen> {
               notifier.value = updatedStyles;
             },
             child: Container(
-              margin: const EdgeInsets.only(right: 3),
+              margin: const EdgeInsets.only(right: 4),
               decoration: BoxDecoration(
                 color: isSelected ? AppColor.brown : AppColor.lightGrey,
                 borderRadius: BorderRadius.circular(20),
               ),
-              padding: const EdgeInsets.symmetric(vertical: 7),
+              padding: const EdgeInsets.symmetric(vertical: 8),
               child: Center(
                 child: Text(
                   style,

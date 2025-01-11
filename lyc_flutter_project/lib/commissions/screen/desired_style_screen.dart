@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:lyc_flutter_project/commissions/screens/other_matters_screen.dart';
+import 'package:lyc_flutter_project/commissions/screen/other_matters_screen.dart';
 import 'package:lyc_flutter_project/common/widget/normal_appbar.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:provider/provider.dart';
@@ -9,6 +9,7 @@ import '../../routes/routes.dart';
 import '../../styles/app_text_style.dart';
 import '../provider/commissions_provider.dart';
 import '../../data/style_list.dart' as styles;
+import 'other_matters_screen.dart';
 
 class DesiredStyleScreen extends StatefulWidget {
   const DesiredStyleScreen({super.key});
@@ -31,20 +32,20 @@ class DesiredStyleScreenState extends State<DesiredStyleScreen> {
     Future<void> createCommissions() async {
       final commissionsProvider =
           Provider.of<CommissionsProvider>(context, listen: false);
-      commissionsProvider.desiredStyle =
-          commissionsProvider.desiredStyle.copyWith(
-        occasion: _controller1.controller.text,
-        styleList: commissionsProvider.desiredStyle.styleList
-            .copyWith(styleList: _controller2.controller.text.split(',')),
-        fitList: commissionsProvider.desiredStyle.fitList.copyWith(
-          fitList: _controller3.controller.text.split(','),
-        ),
-        materialList: commissionsProvider.desiredStyle.materialList.copyWith(
-          materialList: _controller4.controller.text.split(','),
-        ),
-        colorList: commissionsProvider.desiredStyle.colorList
-            .copyWith(colorList: _controller5.controller.text.split(',')),
-      );
+      // commissionsProvider.desiredStyle =
+      //     commissionsProvider.desiredStyle.copyWith(
+      //   occasion: _controller1.controller.text,
+      //   styleList: commissionsProvider.desiredStyle.styleList
+      //       .copyWith(styleList: _controller2.controller.text.split(',')),
+      //   fitList: commissionsProvider.desiredStyle.fitList.copyWith(
+      //     fitList: _controller3.controller.text.split(','),
+      //   ),
+      //   materialList: commissionsProvider.desiredStyle.materialList.copyWith(
+      //     materialList: _controller4.controller.text.split(','),
+      //   ),
+      //   colorList: commissionsProvider.desiredStyle.colorList
+      //       .copyWith(colorList: _controller5.controller.text.split(',')),
+      // );
     }
 
     return ChangeNotifierProvider(

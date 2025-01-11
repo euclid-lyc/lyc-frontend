@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import 'package:lyc_flutter_project/commissions/screens/submission_success_screen.dart';
+import 'package:lyc_flutter_project/commissions/screen/submission_success_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../../common/widget/normal_appbar.dart';
@@ -69,16 +69,16 @@ class OtherMattersScreenState extends State<OtherMattersScreen> {
   Future<void> createCommissions() async {
     final commissionsProvider = Provider.of<CommissionsProvider>(context, listen: false);
 
-    commissionsProvider.otherMatters = commissionsProvider.otherMatters.copyWith(
-      minPrice: int.parse(_minPriceController.controller.text),
-      maxPrice: int.parse(_maxPriceController.controller.text),
-      dateToUse: _desiredDate == null ? '' : DateFormat('yyyy-MM-dd').format(_desiredDate!),
-      desiredDate: _receiveDate == null ? '' : DateFormat('yyyy-MM-dd').format(_receiveDate!),
-      text: _additionalInfoController.controller.text,
-      isShared: shareClothesList,
-    );
-    commissionsProvider.submitCommission(directerId: "string",context: context);
-    //임시
+    // commissionsProvider.otherMatters = commissionsProvider.otherMatters.copyWith(
+    //   minPrice: int.parse(_minPriceController.controller.text),
+    //   maxPrice: int.parse(_maxPriceController.controller.text),
+    //   dateToUse: _desiredDate == null ? '' : DateFormat('yyyy-MM-dd').format(_desiredDate!),
+    //   desiredDate: _receiveDate == null ? '' : DateFormat('yyyy-MM-dd').format(_receiveDate!),
+    //   text: _additionalInfoController.controller.text,
+    //   isShared: shareClothesList,
+    // );
+    // commissionsProvider.submitCommission(directerId: "string",context: context);
+    // //임시
   }
   @override
   Widget build(BuildContext context) {
@@ -88,7 +88,7 @@ class OtherMattersScreenState extends State<OtherMattersScreen> {
       body: SingleChildScrollView(
         child: Center(
           child: Container(
-            margin: const EdgeInsets.fromLTRB(30, 20, 30, 0),
+            margin: const EdgeInsets.fromLTRB(32, 20, 32, 0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -101,7 +101,7 @@ class OtherMattersScreenState extends State<OtherMattersScreen> {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    padding: const EdgeInsets.fromLTRB(19, 17.5, 19, 17.5),
+                    padding: const EdgeInsets.fromLTRB(20, 16, 20, 16),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -219,12 +219,12 @@ class OtherMattersScreenState extends State<OtherMattersScreen> {
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
       ),
-      padding: const EdgeInsets.fromLTRB(19, 17.5, 19, 17.5),
+      padding: const EdgeInsets.fromLTRB(20, 16, 20, 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: EdgeInsets.only(bottom: 10.5),
+            padding: const EdgeInsets.only(bottom: 12),
             child: Text(
               title,
               style: AppTextStyle.littleTitle.copyWith(fontSize: 14.0),
@@ -239,14 +239,14 @@ class OtherMattersScreenState extends State<OtherMattersScreen> {
 
   Widget buildInputField(Controller controller) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 7),
+      margin: const EdgeInsets.only(bottom: 8),
       child: Row(
         children: [
           Text(
             '입력',
             style: AppTextStyle.hint.copyWith(color: Colors.black, fontSize: 14),
           ),
-          const SizedBox(width: 10),
+          const SizedBox(width: 12),
           Expanded(
             child: SizedBox(
               height: 30,
@@ -272,22 +272,22 @@ class OtherMattersScreenState extends State<OtherMattersScreen> {
   }
 
   Widget buildDateSection(String title, DateTime? date, String type) {
-    TextEditingController _controller = TextEditingController(
+    TextEditingController controller = TextEditingController(
       text: date == null ? '' : DateFormat('yyyy-MM-dd').format(date),
     );
 
     return Container(
-      width: 333,
+      width: 332,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
       ),
-      padding: const EdgeInsets.fromLTRB(19, 17.5, 19, 12.5),
+      padding: const EdgeInsets.fromLTRB(20, 16, 20, 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: EdgeInsets.only(bottom: 10.5),
+            padding: const EdgeInsets.only(bottom: 12),
             child: Text(
               title,
               style: AppTextStyle.littleTitle.copyWith(fontSize: 14.0),
@@ -298,14 +298,14 @@ class OtherMattersScreenState extends State<OtherMattersScreen> {
             onTap: () => _selectDate(context, type),
             child: AbsorbPointer(
               child: TextField(
-                controller: _controller,
+                controller: controller,
                 decoration: InputDecoration(
                   hintText: date == null ? '날짜를 선택하세요.' : null,
                   hintStyle: AppTextStyle.labelTextStyle,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 10),
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 12),
                 ),
               ),
             ),
@@ -317,30 +317,29 @@ class OtherMattersScreenState extends State<OtherMattersScreen> {
 
   Widget buildSwitchSection(String title, bool switchValue) {
     return Container(
-      width: 333,
+      width: 332,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
       ),
-      padding: const EdgeInsets.fromLTRB(19, 17.5, 19, 12.5),
+      padding: const EdgeInsets.fromLTRB(20, 16, 20, 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: EdgeInsets.only(bottom: 10.5),
+            padding: const EdgeInsets.only(bottom: 12),
             child: Text(
               title,
               style: AppTextStyle.littleTitle.copyWith(fontSize: 14.0),
               textAlign: TextAlign.left,
             ),
           ),
-          Container(
+          SizedBox(
             width: 100,
             height: 50,
             child: Stack(
               alignment: Alignment.center,
               children: [
-                // 배경을 위한 원
                 Positioned(
                   child: Container(
                     width: 100,
@@ -351,7 +350,6 @@ class OtherMattersScreenState extends State<OtherMattersScreen> {
                     ),
                   ),
                 ),
-                // 왼쪽 버튼: "네"
                 Positioned(
                   left: 0,
                   child: GestureDetector(

@@ -8,8 +8,6 @@ import 'package:lyc_flutter_project/styles/app_text_style.dart';
 
 import '../../routes/routes.dart';
 
-
-
 class SubmissionSuccessScreen extends StatelessWidget {
   const SubmissionSuccessScreen({super.key});
 

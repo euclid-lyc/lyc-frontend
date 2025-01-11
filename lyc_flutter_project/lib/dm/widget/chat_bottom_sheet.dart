@@ -4,7 +4,7 @@ import 'package:lyc_flutter_project/commissions/screen/commissions_screen.dart';
 import 'package:lyc_flutter_project/common/const/assets.dart';
 import 'package:lyc_flutter_project/dm/provider/chat_provider.dart';
 import 'package:lyc_flutter_project/dm/widget/chat_add_schedule_bottom_sheet.dart';
-import 'package:provider/provider.dart';
+
 
 class ChatBottomSheet extends StatelessWidget {
   final ChatProvider provider;
@@ -60,9 +60,8 @@ class ChatBottomSheet extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const CommissionsScreen(chatId: '',)),  // NextScreen은 이동하려는 화면
+                MaterialPageRoute(builder: (context) => CommissionsScreen(chatId: provider.chatId)),
               );
-
             },
           ),
         ],

@@ -1,11 +1,13 @@
 import 'package:dio/dio.dart'hide Headers;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:lyc_flutter_project/commissions/model/commission_terminate_result.dart';
+import 'package:lyc_flutter_project/commissions/model/commissions_response.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:lyc_flutter_project/commissions/model/basic_info.dart';
 import 'package:lyc_flutter_project/commissions/model/desired_style.dart';
 import 'package:lyc_flutter_project/commissions/model/other_matters.dart';
+import '../../common/model/api_response.dart';
 import '../../config/secret.dart';
 
 // Retrofit 인터페이스 정의
@@ -114,15 +116,28 @@ abstract class CommissionsRepository {
   //   }
   // }
 
-
   @PATCH('/chats/{chatId}/commissions/termination-request')
   @Headers({
     'accessToken': 'true',
   })
-  Future<Response> terminateCommission({
+  Future<ApiResponse<CommissionTerminateResult>> terminateCommission({
     @Path() required int chatId,
   });
+
+  @PATCH('/chats/commissions/{commissionsId}')
+  @Headers({
+    'accessToken': 'true',
+  })
+  Future<ApiResponse<CommissionsResponse>> updateCommission({
+    @Path() required int commissionId,
+  });
+
+ /* @GET('/chats/commissions/{commissionsId}')
+
+*/
 }
+
+
 // void _showErrorDialog(BuildContext context, String title, String message) {
 //   showDialog(
 //     context: context,

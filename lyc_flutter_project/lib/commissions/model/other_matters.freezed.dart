@@ -213,8 +213,8 @@ class _$OtherMattersImpl implements _OtherMatters {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, minPrice, maxPrice, dateToUse,
-      desiredDate, text, isShared);
+  int get hashCode => Object.hash(
+      runtimeType, minPrice, maxPrice, dateToUse, desiredDate, text, isShared);
 
   @JsonKey(ignore: true)
   @override
