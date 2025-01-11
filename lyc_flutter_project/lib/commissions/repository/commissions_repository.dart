@@ -4,9 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/commissions/model/commission_terminate_result.dart';
 import 'package:lyc_flutter_project/commissions/model/commissions_response.dart';
 import 'package:retrofit/retrofit.dart';
-import 'package:lyc_flutter_project/commissions/model/basic_info.dart';
-import 'package:lyc_flutter_project/commissions/model/desired_style.dart';
-import 'package:lyc_flutter_project/commissions/model/other_matters.dart';
 import '../../common/model/api_response.dart';
 import '../../config/secret.dart';
 

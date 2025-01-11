@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:lyc_flutter_project/commissions/screen/submission_success_screen.dart';
 import 'package:provider/provider.dart';
-
 import '../../common/widget/normal_appbar.dart';
 import '../../data/app_color.dart';
-import '../../routes/routes.dart';
 import '../../styles/app_text_style.dart';
 import '../../widget/Controller.dart';
 import '../provider/commissions_provider.dart';
@@ -67,7 +64,7 @@ class OtherMattersScreenState extends State<OtherMattersScreen> {
   }
 
   Future<void> createCommissions() async {
-    final commissionsProvider = Provider.of<CommissionsProvider>(context, listen: false);
+   // final commissionsProvider = Provider.of<CommissionsProvider>(context, listen: false);
 
     // commissionsProvider.otherMatters = commissionsProvider.otherMatters.copyWith(
     //   minPrice: int.parse(_minPriceController.controller.text),
