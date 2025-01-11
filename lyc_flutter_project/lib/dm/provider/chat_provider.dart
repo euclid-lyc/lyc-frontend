@@ -9,6 +9,8 @@ import 'package:lyc_flutter_project/config/secret.dart';
 import 'package:lyc_flutter_project/dm/model/chat_message_model.dart';
 import 'package:lyc_flutter_project/dm/model/make_schedule_model.dart';
 import 'package:lyc_flutter_project/dm/model/message_model.dart';
+import 'package:lyc_flutter_project/dm/model/schedule_model.dart';
+import 'package:lyc_flutter_project/dm/model/schedule_model_response.dart';
 import 'package:lyc_flutter_project/dm/repository/chat_repository.dart';
 import 'package:stomp_dart_client/stomp_dart_client.dart';
 
@@ -31,6 +33,7 @@ class ChatProvider extends ChangeNotifier {
     focusNode = FocusNode();
     now = DateTime.now();
     initChat();
+    initCalendar();
   }
 
   bool _disposed = false;
@@ -240,7 +243,7 @@ class ChatProvider extends ChangeNotifier {
 
   // ----------------- 채팅 ---------------------------------------
 
-  // ----------------- 일정 ---------------------------------------
+  // ----------------- 일정 추가 ---------------------------------------
 
   DateTime queryDateTime = DateTime.now();
   String memo = '';
@@ -295,6 +298,9 @@ class ChatProvider extends ChangeNotifier {
           memo: memo,
         ),
       );
+      scheduleList.clear();
+      currentMonthSchedules.clear();
+      initCalendar();
       debugPrint(result.message);
     } on DioException {
       debugPrint("makeSchedule 실패");
@@ -303,7 +309,153 @@ class ChatProvider extends ChangeNotifier {
     }
   }
 
-  // ----------------- 일정 ---------------------------------------
+  DateTime? selectedDate;
+
+  // DraggableScrollableSheet의 컨트롤러
+  ScrollController? draggableScrollController;
+
+  // 리스트 스크롤 컨트롤러
+  final ScrollController listScrollController = ScrollController();
+
+  double _draggablePosition = 0.4;
+
+  double get draggablePosition => _draggablePosition;
+
+  void setDraggableScrollController(ScrollController controller) {
+    draggableScrollController = controller;
+  }
+
+  void updateDraggablePosition(double newPosition) {
+    _draggablePosition = newPosition.clamp(0.3, 1.0);
+    notifyListeners();
+  }
+
+  void handleDraggableDrag(double delta) {
+    if (draggableScrollController == null) return;
+
+    double newPosition = _draggablePosition - delta / 600;
+    updateDraggablePosition(newPosition);
+  }
+
+  void scrollToSchedule(DateTime date) {
+    if (!listScrollController.hasClients) {
+      return;
+    }
+
+    final selectedScheduleIndex = schedules.indexWhere((schedule) =>
+    schedule.date.year == date.year &&
+        schedule.date.month == date.month &&
+        schedule.date.day == date.day);
+
+    if (selectedScheduleIndex != -1) {
+      const itemHeight = (12.0 * 2) + 40.0 + 1.0 + 16.0;
+
+      listScrollController.animateTo(
+        selectedScheduleIndex * itemHeight,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    }
+  }
+
+  // ----------------- 일정 추가 ---------------------------------------
+
+  // ----------------- 일정 화면 ---------------------------------------
+
+  DateTime calendarDate = DateTime.now();
+
+  // 달 별 일정들을 리스트로 저장
+  List<List<ScheduleModel>> scheduleList = [];
+
+  // 미니 달력에서 보여주기 위해 이번 달 일정 따로 저장
+  List<ScheduleModel> currentMonthSchedules = [];
+
+  // 인덱스로 월별 일정을 꺼내 보여줌
+  int calendarIndex = 0;
+
+  bool loadingCalendar = false;
+
+  List<ScheduleModel> get schedules => scheduleList.isEmpty ? [] : scheduleList[calendarIndex];
+
+  void showPrevMonth() {
+    calendarDate = calendarDate.copyWith(month: calendarDate.month - 1);
+    if (calendarIndex > 0) {
+      calendarIndex--;
+    } else {
+      getSchedules(date: calendarDate, prev: true);
+    }
+    notifyListeners();
+  }
+
+  Future<void> showNextMonth() async {
+    calendarDate = calendarDate.copyWith(month: calendarDate.month + 1);
+    if (calendarIndex < scheduleList.length - 1) {
+      calendarIndex++;
+    } else {
+      await getSchedules(date: calendarDate);
+      calendarIndex++;
+    }
+    notifyListeners();
+  }
+
+  void initCalendar() {
+    getSchedules(date: calendarDate);
+  }
+
+  Future<void> getSchedules({
+    required DateTime date,
+    bool prev = false,
+  }) async {
+    if (loadingCalendar) return;
+
+    loadingCalendar = true;
+    final ApiResponse<ScheduleModelListResponse> result = await repository.getSchedules(
+      chatId: chatId,
+      year: date.year,
+      month: date.month,
+    );
+    if (currentMonthSchedules.isEmpty) {
+      currentMonthSchedules = result.result.schedules
+          .map(
+            (e) => ScheduleModel(
+              date: DateTime.parse(e.date),
+              memo: e.memo,
+            ),
+          )
+          .toList();
+    }
+    // prev면 리스트 앞에 넣기
+    if (prev) {
+      scheduleList = [
+        result.result.schedules
+            .map(
+              (e) => ScheduleModel(
+                date: DateTime.parse(e.date),
+                memo: e.memo,
+              ),
+            )
+            .toList(),
+        ...scheduleList,
+      ];
+    } else {
+      scheduleList = [
+        ...scheduleList,
+        result.result.schedules
+            .map(
+              (e) => ScheduleModel(
+                date: DateTime.parse(e.date),
+                memo: e.memo,
+              ),
+            )
+            .toList(),
+      ];
+    }
+    debugPrint('${date.year}년 ${date.month}월 일정 가져오기 성공');
+    notifyListeners();
+    loadingCalendar = false;
+  }
+
+  // ----------------- 일정 화면 ---------------------------------------
 
   @override
   void dispose() {
