@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
+import 'package:lyc_flutter_project/auth/join/screens/login_screen.dart';
 import 'package:lyc_flutter_project/common/widget/custom_loading.dart';
 import 'package:lyc_flutter_project/common/widget/home_appbar.dart';
 import 'package:lyc_flutter_project/common/widget/nav_bar.dart';
@@ -76,31 +78,37 @@ class _HomeScreenState extends State<HomeScreen> {
                         itemCount: value.directors.length,
                         itemBuilder: (context, index) {
                           final director = value.directors[index];
-                          return Container(
-                            decoration: buildWhiteRoundBox(),
-                            margin: const EdgeInsets.symmetric(horizontal: 8),
-                            height: 90,
-                            width: 90,
-                            alignment: Alignment.center,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SizedBox(
-                                  height: 50,
-                                  width: 50,
-                                  child: RoundImage(
-                                    image: Image.network(
-                                      director.profileImage,
-                                      fit: BoxFit.cover,
+                          return GestureDetector(
+                            onTap: () => context.pushNamed(
+                              Routes.mypage.name,
+                              extra: {director.memberId, false},
+                            ),
+                            child: Container(
+                              decoration: buildWhiteRoundBox(),
+                              margin: const EdgeInsets.symmetric(horizontal: 8),
+                              height: 90,
+                              width: 90,
+                              alignment: Alignment.center,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    height: 50,
+                                    width: 50,
+                                    child: RoundImage(
+                                      image: Image.network(
+                                        director.profileImage,
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                const SizedBox(height: 3),
-                                Text(
-                                  director.nickname,
-                                  style: const TextStyle(color: AppColor.deepGrey),
-                                ),
-                              ],
+                                  const SizedBox(height: 3),
+                                  Text(
+                                    director.nickname,
+                                    style: const TextStyle(color: AppColor.deepGrey),
+                                  ),
+                                ],
+                              ),
                             ),
                           );
                         },
