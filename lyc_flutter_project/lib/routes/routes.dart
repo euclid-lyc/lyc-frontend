@@ -7,20 +7,10 @@ import 'package:lyc_flutter_project/common/screen/splash_screen.dart';
 import 'package:lyc_flutter_project/routes/route_info.dart';
 
 import '../auth/join/screens/login_screen.dart';
-import '../home/screen/home_screen.dart';
 
 final routes = {
   "/": (BuildContext context) => const SplashScreen(),
   "/login": (BuildContext context) => LoginScreen(),
-  "/home": (BuildContext context) => const HomeScreen(),
-  "/commissions/primaryInfo": (BuildContext context) =>
-      const PrimaryInfoScreen(),
-  "/commissions/otherMatters": (BuildContext context) =>
-      const DesiredStyleScreen(),
-  "/commissions/desiredStyle": (BuildContext context) =>
-      const OtherMattersScreen(),
-  "/commissions/submissionSuccess": (BuildContext context) =>
-      const SubmissionSuccessScreen(),
 };
 
 class Routes {
@@ -204,4 +194,21 @@ class Routes {
     name: '/setting/withdrawal',
     path: '/setting/withdrawal',
   );
+
+  // dm
+  static const RouteInfo dm = RouteInfo(
+    name: '/dm',
+    path: '/dm',
+  );
+
+  static const RouteInfo chat = RouteInfo(
+    name: '/dm/chat',
+    path: '/dm/chat',
+  );
+
+  static const RouteInfo schedule = RouteInfo(
+    name: '/dm/chat/schedule',
+    path: '/dm/chat/schedule',
+  );
+
 }

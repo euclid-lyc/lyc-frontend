@@ -36,58 +36,52 @@ class ChatScreen extends StatelessWidget {
         profileImage: profileImage,
         createdAt: createdAt,
       ),
-      child: Scaffold(
-        key: key,
-        backgroundColor: Colors.white,
-        resizeToAvoidBottomInset: true,
-        appBar: NormalAppbar(
-          title: nickname,
-          icon: SvgPicture.asset(
-            Assets.menu,
-            colorFilter: const ColorFilter.mode(
-              Colors.white,
-              BlendMode.srcIn,
+      child: Consumer<ChatProvider>(
+        builder: (context, value, child) => Scaffold(
+          key: key,
+          backgroundColor: Colors.white,
+          resizeToAvoidBottomInset: true,
+          appBar: NormalAppbar(
+            title: nickname,
+            icon: SvgPicture.asset(
+              Assets.menu,
+              colorFilter: const ColorFilter.mode(
+                Colors.white,
+                BlendMode.srcIn,
+              ),
             ),
+            onTap: () => key.currentState!.openEndDrawer(),
           ),
-          onTap: () => key.currentState!.openEndDrawer(),
-        ),
-        endDrawer: ChatDrawer(
-          myNickname: '나',
-          myProfile: '',
-          othersNickname: nickname,
-          othersProfile: profileImage,
-          closeDrawer: () => key.currentState!.closeEndDrawer(),
-        ),
-        body: Consumer<ChatProvider>(
-          builder: (context, value, child) {
-            if (value.loading) {
-              return const Center(child: CustomLoading());
-            }
-            return Column(
-              children: [
-                Expanded(
-                  child: Align(
-                    alignment: Alignment.topCenter,
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      controller: value.scrollController,
-                      reverse: true,
-                      padding: const EdgeInsets.only(top: 12.0, bottom: 20.0, right: 12.0, left: 12.0),
-                      itemCount: value.messageList.length,
-                      itemBuilder: (context, index) {
-                        return MessageBubble(
-                          messageModel: value.messageList[index],
-                          previousModel: index + 1 < value.messageList.length ? value.messageList[index + 1] : null,
-                          nextModel: index > 0 ? value.messageList[index - 1] : null,
-                        );
-                      },
+          endDrawer: ChatDrawer(
+            closeDrawer: () => key.currentState!.closeEndDrawer(),
+            provider: value,
+          ),
+          body: value.loading
+              ? const Center(child: CustomLoading())
+              : Column(
+                  children: [
+                    Expanded(
+                      child: Align(
+                        alignment: Alignment.topCenter,
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          controller: value.scrollController,
+                          reverse: true,
+                          padding: const EdgeInsets.only(top: 12.0, bottom: 20.0, right: 12.0, left: 12.0),
+                          itemCount: value.messageList.length,
+                          itemBuilder: (context, index) {
+                            return MessageBubble(
+                              messageModel: value.messageList[index],
+                              previousModel: index + 1 < value.messageList.length ? value.messageList[index + 1] : null,
+                              nextModel: index > 0 ? value.messageList[index - 1] : null,
+                            );
+                          },
+                        ),
+                      ),
                     ),
-                  ),
+                    ChatInputField(provider: value),
+                  ],
                 ),
-                ChatInputField(provider: value),
-              ],
-            );
-          },
         ),
       ),
     );
