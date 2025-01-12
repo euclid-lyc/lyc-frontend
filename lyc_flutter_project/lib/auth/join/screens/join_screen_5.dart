@@ -115,7 +115,7 @@ class JoinScreenState5 extends State<JoinScreen5> {
     );
   }
 
-  Widget buildCheckField(bool _isAgreed, String text, Function(bool?) onChanged) {
+  Widget buildCheckField(bool isAgreed, String text, Function(bool?) onChanged) {
     return Container(
       alignment: Alignment.topLeft,
       margin: const EdgeInsets.only(bottom: 20),
@@ -123,7 +123,7 @@ class JoinScreenState5 extends State<JoinScreen5> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Checkbox(
-            value: _isAgreed,
+            value: isAgreed,
             onChanged: onChanged,
           ),
           Expanded(

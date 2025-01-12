@@ -151,7 +151,7 @@ class DesiredStyleScreenState extends State<DesiredStyleScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: EdgeInsets.only(bottom: 12),
+              padding: const EdgeInsets.only(bottom: 12),
               child: Text(
                 'Step 1. 언제 입을 옷인가요?',
                 style: AppTextStyle.littleTitle.copyWith(fontSize: 14.0),
