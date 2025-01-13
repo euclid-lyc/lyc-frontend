@@ -6,6 +6,7 @@ import 'package:flutter_chat_bubble/bubble_type.dart';
 import 'package:lyc_flutter_project/common/dio/dio.dart';
 import 'package:lyc_flutter_project/common/model/api_response.dart';
 import 'package:lyc_flutter_project/config/secret.dart';
+import 'package:lyc_flutter_project/dm/model/chat_image_model.dart';
 import 'package:lyc_flutter_project/dm/model/chat_message_model.dart';
 import 'package:lyc_flutter_project/dm/model/make_schedule_model.dart';
 import 'package:lyc_flutter_project/dm/model/message_model.dart';
@@ -342,10 +343,7 @@ class ChatProvider extends ChangeNotifier {
       return;
     }
 
-    final selectedScheduleIndex = schedules.indexWhere((schedule) =>
-    schedule.date.year == date.year &&
-        schedule.date.month == date.month &&
-        schedule.date.day == date.day);
+    final selectedScheduleIndex = schedules.indexWhere((schedule) => schedule.date.year == date.year && schedule.date.month == date.month && schedule.date.day == date.day);
 
     if (selectedScheduleIndex != -1) {
       const itemHeight = (12.0 * 2) + 40.0 + 1.0 + 16.0;
@@ -457,12 +455,65 @@ class ChatProvider extends ChangeNotifier {
 
   // ----------------- 일정 화면 ---------------------------------------
 
+  // ----------------- 미디어 화면 ---------------------------------------
+
+  List<ChatImageModel> _images = [];
+
+  List<ChatImageModel> get images => _images;
+
+  bool _loadingImages = false;
+  bool _hasMoreImages = true;
+
+  Future<void> getImages({
+    bool refresh = false,
+    int pageSize = 30,
+    String cursorDateTime = "2099-12-31T00:00:00",
+  }) async {
+    if (_loadingImages || (!refresh && !_hasMoreImages)) {
+      return;
+    }
+
+    if (!refresh && _images.isNotEmpty) {
+      cursorDateTime = _images.last.createdAt;
+    }
+
+    try {
+      _loadingImages = true;
+      final result = await repository.getImages(
+        chatId: chatId,
+        pageSize: pageSize,
+        cursorDateTime: cursorDateTime,
+      );
+
+      final data = result.result.images;
+      _images = [..._images, ...data];
+
+      if (data.length < pageSize) {
+        _hasMoreImages = false;
+      }
+      _loadingImages = false;
+    } catch (e) {
+      if (e is ApiResponse) {
+        debugPrint(e.message);
+      } else {
+        debugPrint("채팅: getImages 오류: $e");
+      }
+    }
+  }
+
+  void initImages() {
+    getImages(refresh: true);
+  }
+
+  // ----------------- 미디어 화면 ---------------------------------------
+
   @override
   void dispose() {
     _disposed = true;
     _client?.deactivate();
     _client = null;
     _messageList.clear();
+    _images.clear();
     scrollController.removeListener(paginateMessages);
     scrollController.dispose();
     textEditingController.dispose();
