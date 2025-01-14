@@ -6,7 +6,7 @@ import '../../common/widget/normal_appbar.dart';
 import '../../data/app_color.dart';
 import '../../styles/app_text_style.dart';
 import 'package:provider/provider.dart';
-//todo 의뢰 상태에 따라 "종료하시겠습니까? 상대방의 응답을 기다리는 중입니다" 띄우기
+
 class CommissionsScreen extends StatefulWidget {
   const CommissionsScreen({super.key, required this.chatId});
 

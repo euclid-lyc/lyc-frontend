@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lyc_flutter_project/commissions/model/commission_request.dart';
 import 'package:lyc_flutter_project/commissions/screen/other_matters_screen.dart';
 import 'package:lyc_flutter_project/common/widget/normal_appbar.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
@@ -27,22 +28,13 @@ class DesiredStyleScreenState extends State<DesiredStyleScreen> {
   @override
   Widget build(BuildContext context) {
     Future<void> createCommissions() async {
-    //  final commissionsProvider =
+  final commissionsProvider =
           Provider.of<CommissionsProvider>(context, listen: false);
-      // commissionsProvider.desiredStyle =
-      //     commissionsProvider.desiredStyle.copyWith(
-      //   occasion: _controller1.controller.text,
-      //   styleList: commissionsProvider.desiredStyle.styleList
-      //       .copyWith(styleList: _controller2.controller.text.split(',')),
-      //   fitList: commissionsProvider.desiredStyle.fitList.copyWith(
-      //     fitList: _controller3.controller.text.split(','),
-      //   ),
-      //   materialList: commissionsProvider.desiredStyle.materialList.copyWith(
-      //     materialList: _controller4.controller.text.split(','),
-      //   ),
-      //   colorList: commissionsProvider.desiredStyle.colorList
-      //       .copyWith(colorList: _controller5.controller.text.split(',')),
-      // );
+     commissionsProvider.request =
+      commissionsProvider.request.copyWith(
+        desiredStyle: DesiredStyle(occasion: _controller1.controller.text, styleList:StyleList(styleList: _controller2.controller.text.split(',')),
+           fitList:  FitList(fitList: _controller3.controller.text.split(',')), materialList:MaterialList(materialList: _controller4.controller.text.split(',')),
+            colorList: ColorList(colorList:_controller5.controller.text.split(','))));
     }
 
     return ChangeNotifierProvider(
@@ -114,7 +106,7 @@ class DesiredStyleScreenState extends State<DesiredStyleScreen> {
                             // }
                             Navigator.push(context, MaterialPageRoute(builder: (context) => const OtherMattersScreen()));
                           } catch (e) {
-                            print("저장 실패2");
+                            debugPrint("저장 실패-2");
                           }
                         },
                         style: TextButton.styleFrom(

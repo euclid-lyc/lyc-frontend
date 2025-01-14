@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:lyc_flutter_project/commissions/model/commission_request.dart';
 import 'package:lyc_flutter_project/commissions/screen/submission_success_screen.dart';
+import 'package:provider/provider.dart';
 import '../../common/widget/normal_appbar.dart';
 import '../../data/app_color.dart';
 import '../../styles/app_text_style.dart';
 import '../../widget/Controller.dart';
+import '../provider/commissions_provider.dart';
 
 
 class OtherMattersScreen extends StatefulWidget {
@@ -35,7 +38,6 @@ class OtherMattersScreenState extends State<OtherMattersScreen> {
             hintColor: AppColor.brown,
             buttonTheme: const ButtonThemeData(textTheme: ButtonTextTheme.primary),
             scaffoldBackgroundColor: Colors.white,
-            dialogBackgroundColor: Colors.white,
             colorScheme: const ColorScheme.light(
               primary: AppColor.brown,
               secondary: AppColor.brown,
@@ -63,18 +65,20 @@ class OtherMattersScreenState extends State<OtherMattersScreen> {
   }
 
   Future<void> createCommissions() async {
-   // final commissionsProvider = Provider.of<CommissionsProvider>(context, listen: false);
+   final commissionsProvider = Provider.of<CommissionsProvider>(context, listen: false);
 
-    // commissionsProvider.otherMatters = commissionsProvider.otherMatters.copyWith(
-    //   minPrice: int.parse(_minPriceController.controller.text),
-    //   maxPrice: int.parse(_maxPriceController.controller.text),
-    //   dateToUse: _desiredDate == null ? '' : DateFormat('yyyy-MM-dd').format(_desiredDate!),
-    //   desiredDate: _receiveDate == null ? '' : DateFormat('yyyy-MM-dd').format(_receiveDate!),
-    //   text: _additionalInfoController.controller.text,
-    //   isShared: shareClothesList,
-    // );
-    // commissionsProvider.submitCommission(directerId: "string",context: context);
-    // //임시
+    commissionsProvider.request = commissionsProvider.request.copyWith(
+      otherMatters: OtherMatters(
+      minPrice: int.parse(_minPriceController.controller.text),
+      maxPrice: int.parse(_maxPriceController.controller.text),
+      dateToUse: _desiredDate == null ? '' : DateFormat('yyyy-MM-dd').format(_desiredDate!),
+      desiredDate: _receiveDate == null ? '' : DateFormat('yyyy-MM-dd').format(_receiveDate!),
+      text: _additionalInfoController.controller.text,
+      isShared: shareClothesList,
+      ),
+    );
+    commissionsProvider.createCommission();
+
   }
   @override
   Widget build(BuildContext context) {
@@ -182,7 +186,7 @@ class OtherMattersScreenState extends State<OtherMattersScreen> {
                           Navigator.push(context, MaterialPageRoute(builder: (context) => const SubmissionSuccessScreen()));
                         }
                       } catch (e) {
-                        print("저장 실패3");
+                        debugPrint("저장 실패-3");
                       }
                     },
                     style: TextButton.styleFrom(

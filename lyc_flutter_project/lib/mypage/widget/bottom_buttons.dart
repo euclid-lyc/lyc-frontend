@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+
 import 'package:lyc_flutter_project/mypage/screen/attendance_screen.dart';
 import 'package:lyc_flutter_project/mypage/screen/review_home_screen.dart';
 import 'package:lyc_flutter_project/mypage/screen/stamp_screen.dart';
 import 'package:lyc_flutter_project/mypage/widget/custom_button_in_profile_box.dart';
 
-import '../../routes/routes.dart';
+import '../../commissions/screen/primary_info_screen.dart';
+
 
 class BottomButtons extends StatelessWidget {
   final int memberId;
@@ -69,8 +70,14 @@ class BottomButtons extends StatelessWidget {
             memberId: memberId,
             text: '의뢰하기',
             onPressed: () async {
-          context.goNamed(Routes.otherMatters.name);
-        }
+              // context.goNamed(Routes.primaryInfo.name);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => PrimaryInfoScreen(directorId: memberId),
+                ),
+              );
+            },
           ),
           const SizedBox(width: 15),
           CustomButtonInProfileBox(

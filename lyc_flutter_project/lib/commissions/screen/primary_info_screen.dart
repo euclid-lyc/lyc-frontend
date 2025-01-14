@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:lyc_flutter_project/commissions/model/commission_request.dart';
 import 'package:lyc_flutter_project/common/widget/normal_appbar.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:provider/provider.dart';
 import '../../../widget/Controller.dart';
-import '../../data/style_list.dart';
+import '../../data/style_list.dart' as styles;
 import '../../styles/app_text_style.dart';
 import '../provider/commissions_provider.dart';
 import 'desired_style_screen.dart';
 
 class PrimaryInfoScreen extends StatefulWidget {
-  const PrimaryInfoScreen({super.key});
+  const PrimaryInfoScreen({super.key, required this.directorId});
+  final int directorId;
 
   @override
   State<PrimaryInfoScreen> createState() => PrimaryInfoScreenState();
@@ -35,27 +37,27 @@ class PrimaryInfoScreenState extends State<PrimaryInfoScreen> {
   @override
   Widget build(BuildContext context) {
     Future<void> createCommissions() async {
-     // final commissionsProvider =
+      final commissionsProvider =
           Provider.of<CommissionsProvider>(context, listen: false);
-      // commissionsProvider.basicInfo = commissionsProvider.basicInfo.copyWith(
-      //     height: int.tryParse(_controller1_1.controller.text) ?? 0,
-      //     weight: int.tryParse(_controller1_2.controller.text) ?? 0,
-      //     topSize: _controller1_3.controller.text,
-      //     bottomSize: _controller1_4.controller.text,
-      //     infoStyle: commissionsProvider.basicInfo.infoStyle.copyWith(
-      //         preferredStyleList: _controller2.controller.text.split(','),
-      //         nonPreferredStyleList: _controller3.controller.text.split(',')),
-      //     infoFit: commissionsProvider.basicInfo.infoFit.copyWith(
-      //         preferredFitList: _controller6.controller.text.split(','),
-      //         nonPreferredFitList: _controller7.controller.text.split(',')),
-      //     infoMaterial: commissionsProvider.basicInfo.infoMaterial.copyWith(
-      //         preferredMaterialList: _controller4.controller.text.split(','),
-      //         nonPreferredMaterialList:
-      //             _controller5.controller.text.split(',')),
-      //     infoBodyType: commissionsProvider.basicInfo.infoBodyType.copyWith(
-      //         goodBodyTypeList: _controller8.controller.text.split(','),
-      //         badBodyTypeList: _controller9.controller.text.split(',')),
-      //     text: _controller10.controller.text);
+      commissionsProvider.request = commissionsProvider.request.copyWith(
+        directorId: widget.directorId,
+        basicInfo: BasicInfo(height: int.tryParse(_controller1_1.controller.text) ?? 0, weight:  int.tryParse(_controller1_2.controller.text) ?? 0,
+            topSize: _controller1_3.controller.text, bottomSize: _controller1_4.controller.text,
+            postalCode: 0, address: "address", detailAddress: "detailAddress",
+            //주소 관련 내용이 여기 들어갈 필요가 있을까
+            text:_controller10.controller.text, infoStyle: InfoStyle(preferredStyleList: _controller2.controller.text.split(','),
+              nonPreferredStyleList: _controller3.controller.text.split(',')), infoFit:InfoFit(
+          preferredFitList: _controller6.controller.text.split(','),
+          nonPreferredFitList: _controller7.controller.text.split(','))
+        ,infoMaterial: InfoMaterial(
+      preferredMaterialList: _controller4.controller.text.split(','),
+      nonPreferredMaterialList:
+      _controller5.controller.text.split(','))
+      , infoBodyType: InfoBodyType(
+          goodBodyTypeList: _controller8.controller.text.split(','),
+          badBodyTypeList: _controller9.controller.text.split(','))
+      ));
+
     }
 
     return ChangeNotifierProvider(
@@ -82,7 +84,7 @@ class PrimaryInfoScreenState extends State<PrimaryInfoScreen> {
                     child: buildStyleSection(
                       title: 'Step 2. 평소 즐겨입는 스타일은 무엇인가요?',
                       notifier: membershipState._selected2,
-                      styles: StyleList.styleOptions,
+                      styles: styles.StyleList.styleOptions,
                       text: '기타 스타일 입력',
                       controller: _controller2,
                     ),
@@ -92,7 +94,7 @@ class PrimaryInfoScreenState extends State<PrimaryInfoScreen> {
                     child: buildStyleSection(
                       title: 'Step 3. 평소 즐겨입지 않는 스타일은 무엇인가요?',
                       notifier: membershipState._selected3,
-                      styles: StyleList.styleOptions,
+                      styles:  styles.StyleList.styleOptions,
                       text: '기타 스타일 입력',
                       controller: _controller3,
                     ),
@@ -102,7 +104,7 @@ class PrimaryInfoScreenState extends State<PrimaryInfoScreen> {
                     child: buildStyleSection(
                       title: 'Step 4. 선호하는 소재를 선택해 주세요.',
                       notifier: membershipState._selected4,
-                      styles: StyleList.materialOptions,
+                      styles:  styles.StyleList.materialOptions,
                       text: '기타 소재 입력',
                       controller: _controller4,
                     ),
@@ -112,7 +114,7 @@ class PrimaryInfoScreenState extends State<PrimaryInfoScreen> {
                     child: buildStyleSection(
                       title: 'Step 5. 선호하지 않는 소재를 선택해 주세요.',
                       notifier: membershipState._selected5,
-                      styles: StyleList.materialOptions,
+                      styles: styles.StyleList.materialOptions,
                       text: '기타 소재 입력',
                       controller: _controller5,
                     ),
@@ -122,7 +124,7 @@ class PrimaryInfoScreenState extends State<PrimaryInfoScreen> {
                     child: buildStyleSection(
                       title: 'Step 6. 선호하는 핏을 선택해 주세요.',
                       notifier: membershipState._selected6,
-                      styles: StyleList.fitOptions,
+                      styles:  styles.StyleList.fitOptions,
                       text: '기타 핏 입력',
                       controller: _controller6,
                     ),
@@ -132,7 +134,7 @@ class PrimaryInfoScreenState extends State<PrimaryInfoScreen> {
                     child: buildStyleSection(
                       title: 'Step 7. 선호하지 않는 핏을 선택해 주세요.',
                       notifier: membershipState._selected7,
-                      styles: StyleList.fitOptions,
+                      styles:  styles.StyleList.fitOptions,
                       text: '기타 핏 입력',
                       controller: _controller7,
                     ),
@@ -142,7 +144,7 @@ class PrimaryInfoScreenState extends State<PrimaryInfoScreen> {
                     child: buildStyleSection(
                       title: 'Step 8. 강조하고 싶은 신체 부위가 있나요?',
                       notifier: membershipState._selected8,
-                      styles: StyleList.bodyParts,
+                      styles:  styles.StyleList.bodyParts,
                       text: '기타 핏 입력',
                       controller: _controller8,
                     ),
@@ -152,7 +154,7 @@ class PrimaryInfoScreenState extends State<PrimaryInfoScreen> {
                     child: buildStyleSection(
                       title: 'Step 9. 보완하고 싶은 신체 부위가 있나요?',
                       notifier: membershipState._selected9,
-                      styles: StyleList.bodyParts,
+                      styles:  styles.StyleList.bodyParts,
                       text: '기타 핏 입력',
                       controller: _controller9,
                     ),
@@ -172,7 +174,7 @@ class PrimaryInfoScreenState extends State<PrimaryInfoScreen> {
                               Navigator.push(context, MaterialPageRoute(builder: (context) => const DesiredStyleScreen()));
                             }
                           } catch (e) {
-                            debugPrint("저장 실패1");
+                            debugPrint("저장 실패-1");
                           }
                         },
                         style: TextButton.styleFrom(

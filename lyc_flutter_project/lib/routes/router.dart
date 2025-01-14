@@ -99,13 +99,13 @@ final router = GoRouter(
         child: SettingScreen(),
       ),
     ),
-    GoRoute(
-      path: Routes.primaryInfo.path,
-      name: Routes.primaryInfo.name,
-      pageBuilder: (context, state) => const NoTransitionPage(
-        child: PrimaryInfoScreen(),
-      ),
-    ),
+    // GoRoute(
+      // path: Routes.primaryInfo.path,
+      // name: Routes.primaryInfo.name,
+      // pageBuilder: (context, state) => const NoTransitionPage(
+      //   child: PrimaryInfoScreen(directorId: d,),
+      // ),
+    // ),
     GoRoute(
       path: Routes.desiredStyle.path,
       name: Routes.desiredStyle.name,
