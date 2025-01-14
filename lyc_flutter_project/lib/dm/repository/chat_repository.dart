@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart' hide Headers;
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/common/model/api_response.dart';
@@ -77,5 +79,13 @@ abstract class ChatRepository {
   @Headers({"accessToken": "true"})
   Future<ApiResponse<String>> terminateChat({
     @Path("chatId") required int chatId,
+  });
+
+  @POST("/{chatId}/messages/images")
+  @Headers({"accessToken": "true"})
+  @MultiPart()
+  Future<ApiResponse<String>> uploadImageToS3({
+    @Path("chatId") required int chatId,
+    @Part(name: "image") required File image,
   });
 }

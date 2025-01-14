@@ -19,12 +19,8 @@ class MessageBubble extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isMe = messageModel.type == BubbleType.sendBubble;
-    bool showImage = !isMe &&
-        ((previousModel == null) ||
-            (previousModel != null &&
-                previousModel!.type != messageModel.type));
-    bool reduceHeightMargin =
-        nextModel != null && (messageModel.type == nextModel!.type);
+    bool showImage = !isMe && ((previousModel == null) || (previousModel != null && previousModel!.type != messageModel.type));
+    bool reduceHeightMargin = nextModel != null && (messageModel.type == nextModel!.type);
     return Container(
       margin: EdgeInsets.only(bottom: reduceHeightMargin ? 6.0 : 12.0),
       child: Row(
@@ -36,19 +32,43 @@ class MessageBubble extends StatelessWidget {
             width: 36.0,
             child: showImage ? ProfileImageNetworking(messageModel.image!) : null,
           ),
-          ChatBubble(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-            clipper: ChatBubbleClipper5(type: messageModel.type),
-            backGroundColor: isMe ? AppColor.brown : AppColor.grey,
-            child: Text(
-              messageModel.content,
-              textAlign: isMe ? TextAlign.right : TextAlign.left,
-              style: TextStyle(
-                color: isMe ? Colors.white : Colors.black,
-                fontSize: 16.0,
+          if (messageModel.isText)
+            ChatBubble(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+              clipper: ChatBubbleClipper5(type: messageModel.type),
+              backGroundColor: isMe ? AppColor.brown : AppColor.grey,
+              child: Text(
+                messageModel.content,
+                textAlign: isMe ? TextAlign.right : TextAlign.left,
+                style: TextStyle(
+                  color: isMe ? Colors.white : Colors.black,
+                  fontSize: 16.0,
+                ),
+              ),
+            )
+          else
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16.0),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.shade200,
+                    offset: const Offset(1.0, 1.0),
+                    spreadRadius: 0.0,
+                    blurRadius: 2.0,
+                  ),
+                ],
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(16.0),
+                child: Image.network(
+                  messageModel.content,
+                  fit: BoxFit.cover,
+                  height: 120,
+                  width: 120,
+                ),
               ),
             ),
-          ),
         ],
       ),
     );

@@ -1,8 +1,10 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_bubble/bubble_type.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:lyc_flutter_project/common/dio/dio.dart';
 import 'package:lyc_flutter_project/common/model/api_response.dart';
 import 'package:lyc_flutter_project/config/secret.dart';
@@ -59,11 +61,61 @@ class ChatProvider extends ChangeNotifier {
   bool hasMore = true;
   bool loadingMessages = false;
   StompClient? _client;
-
   String initialCursor = '';
   bool loading = false;
 
+  // 채팅으로 전송할 사진
+  XFile? _imageToSend;
+
+  // 이미지 전송 로딩
+  bool sendImageLoading = false;
+
   List<MessageModel> get messageList => _messageList;
+
+  XFile? get imageToSend => _imageToSend;
+
+  // 전송할 이미지를 provider 내부에 저장
+  void showImageToSend({
+    required XFile? image,
+  }) {
+    _imageToSend = image;
+    notifyListeners();
+  }
+
+  // 전송할 이미지 삭제
+  void removeImageToSend() {
+    _imageToSend = null;
+    notifyListeners();
+  }
+
+  Future<void> sendImage() async {
+    if (_imageToSend == null) return;
+
+    try {
+      sendImageLoading = true;
+      // upload image to S3
+      final image = File(_imageToSend!.path);
+      final result = await repository.uploadImageToS3(
+        chatId: chatId,
+        image: image,
+      );
+
+      // send message
+      sendMessage(
+        content: result.result,
+        isText: false,
+      );
+    } catch (e) {
+      if (e is ApiResponse) {
+        debugPrint("sendImage: ${e.message}");
+      } else {
+        debugPrint("sendImage: $e");
+      }
+    } finally {
+      _imageToSend = null;
+      sendImageLoading = false;
+    }
+  }
 
   Future<void> initChat() async {
     loading = true;
@@ -112,6 +164,7 @@ class ChatProvider extends ChangeNotifier {
               type: e.sender == nickname ? BubbleType.receiverBubble : BubbleType.sendBubble,
               image: e.profileImage,
               createdAt: e.createdAt,
+              isText: e.isText,
             ),
           )
           .toList();
@@ -182,6 +235,7 @@ class ChatProvider extends ChangeNotifier {
         content: content,
         type: BubbleType.sendBubble,
         createdAt: now.toString(),
+        isText: isText,
       ),
       ..._messageList,
     ];
@@ -209,6 +263,7 @@ class ChatProvider extends ChangeNotifier {
                 type: BubbleType.receiverBubble,
                 image: profileImage,
                 createdAt: now.toString(),
+                isText: msg.isText,
               ),
               ..._messageList,
             ];

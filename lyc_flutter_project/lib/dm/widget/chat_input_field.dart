@@ -80,6 +80,9 @@ class ChatInputField extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 16.0, right: 20.0),
                 onPressed: () {
                   provider.onFieldSubmitted();
+                  if (provider.imageToSend != null) {
+                    provider.sendImage();
+                  }
                 },
                 icon: SvgPicture.asset(
                   "assets/icon_dm.svg",

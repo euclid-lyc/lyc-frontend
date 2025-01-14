@@ -5,11 +5,13 @@ class MessageModel {
   final BubbleType type;
   final String? image;
   final String createdAt;
+  final bool isText;
 
   const MessageModel({
     required this.content,
     required this.type,
     required this.createdAt,
+    required this.isText,
     this.image,
   });
 }
