@@ -38,12 +38,16 @@ class ChatDrawer extends StatelessWidget {
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
                         itemCount: value.images.length,
-                        itemBuilder: (context, index) => ClipRRect(
-                          borderRadius: BorderRadius.circular(10.0),
-                          child: Image.network(
-                            value.images[index].imageUrl,
-                            width: 80.0,
-                            height: 80.0,
+                        itemBuilder: (context, index) => Container(
+                          margin: const EdgeInsets.only(right: 8.0),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(10.0),
+                            child: Image.network(
+                              value.images[index].imageUrl,
+                              width: 80.0,
+                              height: 80.0,
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
                       ),

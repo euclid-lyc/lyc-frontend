@@ -37,6 +37,8 @@ class ChatProvider extends ChangeNotifier {
     now = DateTime.now();
     initChat();
     initCalendar();
+
+    initImages();
   }
 
   bool _disposed = false;
@@ -89,7 +91,7 @@ class ChatProvider extends ChangeNotifier {
   }
 
   Future<void> sendImage() async {
-    if (_imageToSend == null) return;
+    if (sendImageLoading || _imageToSend == null) return;
 
     try {
       sendImageLoading = true;
@@ -105,6 +107,10 @@ class ChatProvider extends ChangeNotifier {
         content: result.result,
         isText: false,
       );
+
+      // 사진 및 동영상 refresh
+      _images.clear();
+      initImages();
     } catch (e) {
       if (e is ApiResponse) {
         debugPrint("sendImage: ${e.message}");

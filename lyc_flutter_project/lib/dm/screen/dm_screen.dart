@@ -106,7 +106,7 @@ class _DmScreenState extends State<DmScreen> {
                             navigateMypage: false,
                             profile: chat.profileImage,
                             nickname: chat.nickname,
-                            content: chat.isText ? chat.content : "",
+                            content: chat.isText ? chat.content : "사진을 보냈습니다.",
                           ),
                         ),
                       );
