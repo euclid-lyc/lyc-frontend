@@ -77,36 +77,30 @@ class _MypageScreenState extends State<MypageScreen> {
                   children: [
                     // 프로필 영역
                     Expanded(
-                      flex: 3,
+                      flex: 2,
                       child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Expanded(
-                            flex: 13,
                             child: value.hasProfile ? ProfileBox.fromModel(profile: value.profile) : const CustomLoading(),
                           ),
-                          Expanded(
-                            flex: 5,
-                            child: IconsInProfileBox(
-                              memberId: memberId,
-                              isMypage: true,
-                            ),
+                          IconsInProfileBox(
+                            memberId: memberId,
+                            isMypage: true,
                           ),
                         ],
                       ),
                     ),
-                    // 게시글 영역
-                    const SizedBox(height: 20),
                     Expanded(
                       child: BottomButtons(
                         memberId: memberId,
                         isLoginUser: widget.extra.values.first,
                       ),
                     ),
-                    const SizedBox(height: 20),
                   ],
                 ),
               ),
+              // 게시글 영역
               body: Column(
                 children: [
                   Container(
