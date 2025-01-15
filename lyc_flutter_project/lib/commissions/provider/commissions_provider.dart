@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:lyc_flutter_project/commissions/model/commission_model.dart';
 import 'package:lyc_flutter_project/commissions/model/commission_request.dart';
 import '../repository/commissions_repository.dart';
@@ -12,7 +13,6 @@ class CommissionsProvider with ChangeNotifier {
   bool _isLoading = false;
 
   List<CommissionModel> _commissionList = [];
-
   bool get isLoading => _isLoading;
 
   get commissionList => _commissionList;
@@ -34,40 +34,39 @@ class CommissionsProvider with ChangeNotifier {
     }
   }
 
-  Future<void> getCommissionList({
-    bool refresh = false,
-    int pageSize = 10,
-  }) async {
-    if (_isLoading) return;
 
-    _isLoading = true;
-
-    notifyListeners();
-
-    try {
-      // _commissionList가 비어 있지 않으면 마지막 항목의 createdAt을 사용
-      final lastCreatedAt = _commissionList.isNotEmpty
-          ? DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS").format(
-              _commissionList[_commissionList.length - 1].createdAt as DateTime,
-            )
-          : DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS").format(DateTime.now());
-
-      final resp = await repositoryProvider.commissionsRepository
-          .getCommissionList(pageSize: pageSize, dateTime: lastCreatedAt);
-      debugPrint(resp.message as String?);
-      if (!resp.isSuccess) throw Exception(resp.message);
-
-      final list = resp.result.commissions;
-      _commissionList = refresh ? list : [..._commissionList, ...list];
-    } catch (e) {
-      debugPrint('Error: $e');
-    } finally {
-      _isLoading = false;
+    Future<void> getCommissionList({
+      bool refresh = false,
+      int pageSize = 10,
+    }) async {
+      if (_isLoading) return;
+      _isLoading = true;
       notifyListeners();
-    }
-  }
+      try {
+        final lastCreatedAt = _commissionList.isNotEmpty
+            ? DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS").format(
+          _commissionList[_commissionList.length - 1].createdAt as DateTime,
+        )
+            : DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS").format(DateTime.now());
+        final resp = await repositoryProvider.commissionsRepository
+            .getCommissionList(pageSize: pageSize, dateTime: lastCreatedAt);
 
-  Future<void> terminateCommission(int chatId) async {
+
+        if (!resp.isSuccess) throw Exception(resp.message);
+
+       //todo refresh일 경우와 그냥 구분하기
+        _commissionList = resp.result;
+
+
+      } catch (e) {
+        debugPrint('Error: $e');
+      } finally {
+        _isLoading = false;
+        notifyListeners();
+      }
+    }
+
+    Future<void> terminateCommission(int chatId) async {
     _isLoading = true;
     notifyListeners();
     try {

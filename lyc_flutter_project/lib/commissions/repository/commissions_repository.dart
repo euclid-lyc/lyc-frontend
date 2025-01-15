@@ -39,7 +39,7 @@ abstract class CommissionsRepository {
   @Headers({
     'accessToken': 'true',
   })
-  Future<ApiResponse<CommissionListModel>> getCommissionList({
+  Future<ApiResponse<List<CommissionModel>>> getCommissionList({
     @Query("pageSize") required int pageSize,
     @Query("cursorDateTime") required String dateTime,
   });

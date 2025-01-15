@@ -31,7 +31,7 @@ class _CommissionsRepository implements CommissionsRepository {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'chats/commissions',
+            '/chats/commissions',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -52,7 +52,7 @@ class _CommissionsRepository implements CommissionsRepository {
   }
 
   @override
-  Future<ApiResponse<CommissionListModel>> getCommissionList({
+  Future<ApiResponse<List<CommissionModel>>> getCommissionList({
     required int pageSize,
     required String dateTime,
   }) async {
@@ -64,22 +64,28 @@ class _CommissionsRepository implements CommissionsRepository {
     final _headers = <String, dynamic>{r'accessToken': 'true'};
     _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<ApiResponse<CommissionListModel>>(
+    final _options = _setStreamType<ApiResponse<List<CommissionModel>>>(
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'chats/commissions',
+            '/chats/commissions',
             queryParameters: queryParameters,
             data: _data,
           )
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late ApiResponse<CommissionListModel> _value;
+    late ApiResponse<List<CommissionModel>> _value;
     try {
-      _value = ApiResponse<CommissionListModel>.fromJson(
+      _value = ApiResponse<List<CommissionModel>>.fromJson(
         _result.data!,
-        (json) => CommissionListModel.fromJson(json as Map<String, dynamic>),
+        (json) => json is List<dynamic>
+            ? json
+                .map<CommissionModel>(
+                  (i) => CommissionModel.fromJson(i as Map<String, dynamic>),
+                )
+                .toList()
+            : List.empty(),
       );
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);

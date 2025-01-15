@@ -15,6 +15,9 @@ class CommissionRequest with _$CommissionRequest {
   factory CommissionRequest.fromJson(Map<String, dynamic> json) =>
       _$CommissionRequestFromJson(json);
 
+  // Map<String, dynamic> toJson() => _$CommissionRequestToJson(this);
+
+
   static CommissionRequest defaultValue() {
     return CommissionRequest(
       directorId: 0,
