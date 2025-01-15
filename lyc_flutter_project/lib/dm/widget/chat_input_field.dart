@@ -3,7 +3,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/dm/provider/chat_provider.dart';
 import 'package:lyc_flutter_project/dm/widget/chat_bottom_sheet.dart';
-import 'package:provider/provider.dart';
 
 class ChatInputField extends StatelessWidget {
   final ChatProvider provider;
@@ -54,13 +53,18 @@ class ChatInputField extends StatelessWidget {
                 child: TextField(
                   keyboardType: TextInputType.multiline,
                   onTapOutside: (event) => FocusScope.of(context).unfocus,
-                  focusNode: context.read<ChatProvider>().focusNode,
-                  controller: context.read<ChatProvider>().textEditingController,
+                  focusNode: provider.focusNode,
+                  controller: provider.textEditingController,
                   maxLines: null,
                   textAlignVertical: TextAlignVertical.top,
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    border: const OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(5.0)), borderSide: BorderSide.none),
+                    border: const OutlineInputBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(5.0),
+                      ),
+                      borderSide: BorderSide.none,
+                    ),
                     hintText: "메시지 입력",
                     hintStyle: TextStyle(
                       color: AppColor.deepGrey.withOpacity(0.5),
@@ -75,7 +79,10 @@ class ChatInputField extends StatelessWidget {
               IconButton(
                 padding: const EdgeInsets.only(left: 16.0, right: 20.0),
                 onPressed: () {
-                  context.read<ChatProvider>().onFieldSubmitted();
+                  provider.onFieldSubmitted();
+                  if (provider.imageToSend != null) {
+                    provider.sendImage();
+                  }
                 },
                 icon: SvgPicture.asset(
                   "assets/icon_dm.svg",
