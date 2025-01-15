@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:lyc_flutter_project/commissions/model/commission_request.dart';
+import 'package:lyc_flutter_project/commissions/model/commission_model.dart';
 import 'package:lyc_flutter_project/commissions/screen/submission_success_screen.dart';
 import 'package:provider/provider.dart';
 import '../../common/widget/normal_appbar.dart';
@@ -67,7 +67,7 @@ class OtherMattersScreenState extends State<OtherMattersScreen> {
   Future<void> createCommissions() async {
    final commissionsProvider = Provider.of<CommissionsProvider>(context, listen: false);
 
-    commissionsProvider.request = commissionsProvider.request.copyWith(
+    commissionsProvider.model = commissionsProvider.model.copyWith(
       otherMatters: OtherMatters(
       minPrice: int.parse(_minPriceController.controller.text),
       maxPrice: int.parse(_maxPriceController.controller.text),

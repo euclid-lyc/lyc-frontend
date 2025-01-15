@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'commission_request.dart';
+part of 'commission_model.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,32 +14,32 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-CommissionRequest _$CommissionRequestFromJson(Map<String, dynamic> json) {
-  return _CommissionRequest.fromJson(json);
+CommissionModel _$CommissionModelFromJson(Map<String, dynamic> json) {
+  return _CommissionModel.fromJson(json);
 }
 
 /// @nodoc
-mixin _$CommissionRequest {
+mixin _$CommissionModel {
   int get directorId => throw _privateConstructorUsedError;
   BasicInfo get basicInfo => throw _privateConstructorUsedError;
   DesiredStyle get desiredStyle => throw _privateConstructorUsedError;
   OtherMatters get otherMatters => throw _privateConstructorUsedError;
 
-  /// Serializes this CommissionRequest to a JSON map.
+  /// Serializes this CommissionModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
-  /// Create a copy of CommissionRequest
+  /// Create a copy of CommissionModel
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $CommissionRequestCopyWith<CommissionRequest> get copyWith =>
+  $CommissionModelCopyWith<CommissionModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $CommissionRequestCopyWith<$Res> {
-  factory $CommissionRequestCopyWith(
-          CommissionRequest value, $Res Function(CommissionRequest) then) =
-      _$CommissionRequestCopyWithImpl<$Res, CommissionRequest>;
+abstract class $CommissionModelCopyWith<$Res> {
+  factory $CommissionModelCopyWith(
+          CommissionModel value, $Res Function(CommissionModel) then) =
+      _$CommissionModelCopyWithImpl<$Res, CommissionModel>;
   @useResult
   $Res call(
       {int directorId,
@@ -53,16 +53,16 @@ abstract class $CommissionRequestCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$CommissionRequestCopyWithImpl<$Res, $Val extends CommissionRequest>
-    implements $CommissionRequestCopyWith<$Res> {
-  _$CommissionRequestCopyWithImpl(this._value, this._then);
+class _$CommissionModelCopyWithImpl<$Res, $Val extends CommissionModel>
+    implements $CommissionModelCopyWith<$Res> {
+  _$CommissionModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of CommissionRequest
+  /// Create a copy of CommissionModel
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -92,7 +92,7 @@ class _$CommissionRequestCopyWithImpl<$Res, $Val extends CommissionRequest>
     ) as $Val);
   }
 
-  /// Create a copy of CommissionRequest
+  /// Create a copy of CommissionModel
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -102,7 +102,7 @@ class _$CommissionRequestCopyWithImpl<$Res, $Val extends CommissionRequest>
     });
   }
 
-  /// Create a copy of CommissionRequest
+  /// Create a copy of CommissionModel
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -112,7 +112,7 @@ class _$CommissionRequestCopyWithImpl<$Res, $Val extends CommissionRequest>
     });
   }
 
-  /// Create a copy of CommissionRequest
+  /// Create a copy of CommissionModel
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -124,11 +124,11 @@ class _$CommissionRequestCopyWithImpl<$Res, $Val extends CommissionRequest>
 }
 
 /// @nodoc
-abstract class _$$CommissionRequestImplCopyWith<$Res>
-    implements $CommissionRequestCopyWith<$Res> {
-  factory _$$CommissionRequestImplCopyWith(_$CommissionRequestImpl value,
-          $Res Function(_$CommissionRequestImpl) then) =
-      __$$CommissionRequestImplCopyWithImpl<$Res>;
+abstract class _$$CommissionModelImplCopyWith<$Res>
+    implements $CommissionModelCopyWith<$Res> {
+  factory _$$CommissionModelImplCopyWith(_$CommissionModelImpl value,
+          $Res Function(_$CommissionModelImpl) then) =
+      __$$CommissionModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -146,14 +146,14 @@ abstract class _$$CommissionRequestImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$CommissionRequestImplCopyWithImpl<$Res>
-    extends _$CommissionRequestCopyWithImpl<$Res, _$CommissionRequestImpl>
-    implements _$$CommissionRequestImplCopyWith<$Res> {
-  __$$CommissionRequestImplCopyWithImpl(_$CommissionRequestImpl _value,
-      $Res Function(_$CommissionRequestImpl) _then)
+class __$$CommissionModelImplCopyWithImpl<$Res>
+    extends _$CommissionModelCopyWithImpl<$Res, _$CommissionModelImpl>
+    implements _$$CommissionModelImplCopyWith<$Res> {
+  __$$CommissionModelImplCopyWithImpl(
+      _$CommissionModelImpl _value, $Res Function(_$CommissionModelImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of CommissionRequest
+  /// Create a copy of CommissionModel
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -163,7 +163,7 @@ class __$$CommissionRequestImplCopyWithImpl<$Res>
     Object? desiredStyle = null,
     Object? otherMatters = null,
   }) {
-    return _then(_$CommissionRequestImpl(
+    return _then(_$CommissionModelImpl(
       directorId: null == directorId
           ? _value.directorId
           : directorId // ignore: cast_nullable_to_non_nullable
@@ -186,15 +186,15 @@ class __$$CommissionRequestImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$CommissionRequestImpl implements _CommissionRequest {
-  _$CommissionRequestImpl(
+class _$CommissionModelImpl implements _CommissionModel {
+  _$CommissionModelImpl(
       {this.directorId = 0,
       required this.basicInfo,
       required this.desiredStyle,
       required this.otherMatters});
 
-  factory _$CommissionRequestImpl.fromJson(Map<String, dynamic> json) =>
-      _$$CommissionRequestImplFromJson(json);
+  factory _$CommissionModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CommissionModelImplFromJson(json);
 
   @override
   @JsonKey()
@@ -208,14 +208,14 @@ class _$CommissionRequestImpl implements _CommissionRequest {
 
   @override
   String toString() {
-    return 'CommissionRequest(directorId: $directorId, basicInfo: $basicInfo, desiredStyle: $desiredStyle, otherMatters: $otherMatters)';
+    return 'CommissionModel(directorId: $directorId, basicInfo: $basicInfo, desiredStyle: $desiredStyle, otherMatters: $otherMatters)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$CommissionRequestImpl &&
+            other is _$CommissionModelImpl &&
             (identical(other.directorId, directorId) ||
                 other.directorId == directorId) &&
             (identical(other.basicInfo, basicInfo) ||
@@ -231,32 +231,32 @@ class _$CommissionRequestImpl implements _CommissionRequest {
   int get hashCode => Object.hash(
       runtimeType, directorId, basicInfo, desiredStyle, otherMatters);
 
-  /// Create a copy of CommissionRequest
+  /// Create a copy of CommissionModel
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$CommissionRequestImplCopyWith<_$CommissionRequestImpl> get copyWith =>
-      __$$CommissionRequestImplCopyWithImpl<_$CommissionRequestImpl>(
+  _$$CommissionModelImplCopyWith<_$CommissionModelImpl> get copyWith =>
+      __$$CommissionModelImplCopyWithImpl<_$CommissionModelImpl>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$CommissionRequestImplToJson(
+    return _$$CommissionModelImplToJson(
       this,
     );
   }
 }
 
-abstract class _CommissionRequest implements CommissionRequest {
-  factory _CommissionRequest(
+abstract class _CommissionModel implements CommissionModel {
+  factory _CommissionModel(
       {final int directorId,
       required final BasicInfo basicInfo,
       required final DesiredStyle desiredStyle,
-      required final OtherMatters otherMatters}) = _$CommissionRequestImpl;
+      required final OtherMatters otherMatters}) = _$CommissionModelImpl;
 
-  factory _CommissionRequest.fromJson(Map<String, dynamic> json) =
-      _$CommissionRequestImpl.fromJson;
+  factory _CommissionModel.fromJson(Map<String, dynamic> json) =
+      _$CommissionModelImpl.fromJson;
 
   @override
   int get directorId;
@@ -267,11 +267,11 @@ abstract class _CommissionRequest implements CommissionRequest {
   @override
   OtherMatters get otherMatters;
 
-  /// Create a copy of CommissionRequest
+  /// Create a copy of CommissionModel
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$CommissionRequestImplCopyWith<_$CommissionRequestImpl> get copyWith =>
+  _$$CommissionModelImplCopyWith<_$CommissionModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 

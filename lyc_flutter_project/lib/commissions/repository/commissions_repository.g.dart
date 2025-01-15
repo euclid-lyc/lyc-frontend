@@ -18,41 +18,7 @@ class _CommissionsRepository implements CommissionsRepository {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<ApiResponse<CommissionResponse>> createCommission({
-    CommissionRequest? commissionRequest,
-  }) async {
-    final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    queryParameters.removeWhere((k, v) => v == null);
-    final _headers = <String, dynamic>{r'accessToken': 'true'};
-    _headers.removeWhere((k, v) => v == null);
-    final _data = commissionRequest;
-    final _options = _setStreamType<ApiResponse<CommissionResponse>>(
-      Options(method: 'POST', headers: _headers, extra: _extra)
-          .compose(
-            _dio.options,
-            '/chats/commissions',
-            queryParameters: queryParameters,
-            data: _data,
-          )
-          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
-    );
-    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late ApiResponse<CommissionResponse> _value;
-    try {
-      _value = ApiResponse<CommissionResponse>.fromJson(
-        _result.data!,
-        (json) => CommissionResponse.fromJson(json as Map<String, dynamic>),
-      );
-    } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options);
-      rethrow;
-    }
-    return _value;
-  }
-
-  @override
-  Future<ApiResponse<List<CommissionModel>>> getCommissionList({
+  Future<ApiResponse<List<CommissionResult>>> getCommissionList({
     required int pageSize,
     required String dateTime,
   }) async {
@@ -64,7 +30,7 @@ class _CommissionsRepository implements CommissionsRepository {
     final _headers = <String, dynamic>{r'accessToken': 'true'};
     _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<ApiResponse<List<CommissionModel>>>(
+    final _options = _setStreamType<ApiResponse<List<CommissionResult>>>(
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -75,14 +41,14 @@ class _CommissionsRepository implements CommissionsRepository {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late ApiResponse<List<CommissionModel>> _value;
+    late ApiResponse<List<CommissionResult>> _value;
     try {
-      _value = ApiResponse<List<CommissionModel>>.fromJson(
+      _value = ApiResponse<List<CommissionResult>>.fromJson(
         _result.data!,
         (json) => json is List<dynamic>
             ? json
-                .map<CommissionModel>(
-                  (i) => CommissionModel.fromJson(i as Map<String, dynamic>),
+                .map<CommissionResult>(
+                  (i) => CommissionResult.fromJson(i as Map<String, dynamic>),
                 )
                 .toList()
             : List.empty(),
@@ -95,53 +61,21 @@ class _CommissionsRepository implements CommissionsRepository {
   }
 
   @override
-  Future<ApiResponse<CommissionTerminateResult>> terminateCommission({
-    required int chatId,
+  Future<ApiResponse<CommissionResponse>> createCommission({
+    CommissionModel? commissionModel,
   }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{r'accessToken': 'true'};
     _headers.removeWhere((k, v) => v == null);
-    const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<ApiResponse<CommissionTerminateResult>>(
-      Options(method: 'PATCH', headers: _headers, extra: _extra)
-          .compose(
-            _dio.options,
-            '/chats/${chatId}/commissions/termination-request',
-            queryParameters: queryParameters,
-            data: _data,
-          )
-          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
-    );
-    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late ApiResponse<CommissionTerminateResult> _value;
-    try {
-      _value = ApiResponse<CommissionTerminateResult>.fromJson(
-        _result.data!,
-        (json) =>
-            CommissionTerminateResult.fromJson(json as Map<String, dynamic>),
-      );
-    } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options);
-      rethrow;
-    }
-    return _value;
-  }
-
-  @override
-  Future<ApiResponse<CommissionResponse>> updateCommission({
-    required int commissionId,
-  }) async {
-    final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{r'accessToken': 'true'};
-    _headers.removeWhere((k, v) => v == null);
-    const Map<String, dynamic>? _data = null;
+    final _data = <String, dynamic>{};
+    _data.addAll(commissionModel?.toJson() ?? <String, dynamic>{});
     final _options = _setStreamType<ApiResponse<CommissionResponse>>(
-      Options(method: 'PATCH', headers: _headers, extra: _extra)
+      Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/chats/commissions/{commissionsId}',
+            '/chats/commissions',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -186,6 +120,208 @@ class _CommissionsRepository implements CommissionsRepository {
       _value = ApiResponse<CommissionResponse>.fromJson(
         _result.data!,
         (json) => CommissionResponse.fromJson(json as Map<String, dynamic>),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<ApiResponse<CommissionResponse>> updateCommission({
+    required int commissionId,
+    CommissionModel? commissionModel,
+  }) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{r'accessToken': 'true'};
+    _headers.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    _data.addAll(commissionModel?.toJson() ?? <String, dynamic>{});
+    final _options = _setStreamType<ApiResponse<CommissionResponse>>(
+      Options(method: 'PATCH', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/chats/commissions/{commissionsId}',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late ApiResponse<CommissionResponse> _value;
+    try {
+      _value = ApiResponse<CommissionResponse>.fromJson(
+        _result.data!,
+        (json) => CommissionResponse.fromJson(json as Map<String, dynamic>),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<ApiResponse<CommissionResponse>> acceptCommission({
+    required int commissionId,
+  }) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'accessToken': 'true'};
+    _headers.removeWhere((k, v) => v == null);
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<ApiResponse<CommissionResponse>>(
+      Options(method: 'PATCH', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/chats/commissions/{commissionsId}/accept',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late ApiResponse<CommissionResponse> _value;
+    try {
+      _value = ApiResponse<CommissionResponse>.fromJson(
+        _result.data!,
+        (json) => CommissionResponse.fromJson(json as Map<String, dynamic>),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<ApiResponse<CommissionResponse>> declineCommission({
+    required int commissionId,
+  }) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'accessToken': 'true'};
+    _headers.removeWhere((k, v) => v == null);
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<ApiResponse<CommissionResponse>>(
+      Options(method: 'PATCH', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/chats/commissions/{commissionsId}/decline',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late ApiResponse<CommissionResponse> _value;
+    try {
+      _value = ApiResponse<CommissionResponse>.fromJson(
+        _result.data!,
+        (json) => CommissionResponse.fromJson(json as Map<String, dynamic>),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<ApiResponse<CommissionResponse>> acceptTerminate({
+    required int chatId,
+  }) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'accessToken': 'true'};
+    _headers.removeWhere((k, v) => v == null);
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<ApiResponse<CommissionResponse>>(
+      Options(method: 'PATCH', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/chats/${chatId}/commissions/termination',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late ApiResponse<CommissionResponse> _value;
+    try {
+      _value = ApiResponse<CommissionResponse>.fromJson(
+        _result.data!,
+        (json) => CommissionResponse.fromJson(json as Map<String, dynamic>),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<ApiResponse<CommissionResponse>> cancelTerminate({
+    required int chatId,
+  }) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'accessToken': 'true'};
+    _headers.removeWhere((k, v) => v == null);
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<ApiResponse<CommissionResponse>>(
+      Options(method: 'PATCH', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/chats/${chatId}/commissions/termination-cancel',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late ApiResponse<CommissionResponse> _value;
+    try {
+      _value = ApiResponse<CommissionResponse>.fromJson(
+        _result.data!,
+        (json) => CommissionResponse.fromJson(json as Map<String, dynamic>),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<ApiResponse<CommissionTerminateResult>> terminateCommission({
+    required int chatId,
+  }) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'accessToken': 'true'};
+    _headers.removeWhere((k, v) => v == null);
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<ApiResponse<CommissionTerminateResult>>(
+      Options(method: 'PATCH', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/chats/${chatId}/commissions/termination-request',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late ApiResponse<CommissionTerminateResult> _value;
+    try {
+      _value = ApiResponse<CommissionTerminateResult>.fromJson(
+        _result.data!,
+        (json) =>
+            CommissionTerminateResult.fromJson(json as Map<String, dynamic>),
       );
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);

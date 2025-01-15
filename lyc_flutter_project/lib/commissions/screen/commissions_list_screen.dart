@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:lyc_flutter_project/commissions/model/commission_model.dart';
+import 'package:lyc_flutter_project/commissions/model/commission_response.dart';
 import 'package:lyc_flutter_project/commissions/screen/primary_info_screen.dart';
 import 'package:lyc_flutter_project/common/widget/custom_loading.dart';
+import 'package:lyc_flutter_project/common/widget/custom_text_button.dart';
 import 'package:lyc_flutter_project/common/widget/default_padding.dart';
 import 'package:lyc_flutter_project/common/widget/member_list.dart';
 import 'package:lyc_flutter_project/common/widget/normal_appbar.dart';
@@ -63,7 +64,7 @@ class _CommissionsListScreenState extends State<CommissionsListScreen> {
                 sliver: SliverList(
                   delegate: SliverChildBuilderDelegate(
                     (context, index) {
-                      final CommissionModel commissionModel =
+                      final CommissionResult commissionResult =
                           value.commissionList[index];
                       return Padding(
                         padding: const EdgeInsets.only(bottom: 8),
@@ -78,8 +79,15 @@ class _CommissionsListScreenState extends State<CommissionsListScreen> {
                           ),
                           child: MemberList(
                             navigateMypage: false,
-                            profile: commissionModel.profileImage,
-                            nickname: commissionModel.nickname,
+                            profile: commissionResult.profileImage,
+                            nickname: commissionResult.nickname,
+                            id: commissionResult.loginId,
+                            button: const CustomTextButton(
+                              label: "의뢰서 확인하기",textColor: Colors.black,backgroundColor: AppColor.grey,
+                        //     onPressed:(){
+                        //      의뢰서 확인하기 페이지
+                        // },
+                            )
                           ),
                         ),
                       );

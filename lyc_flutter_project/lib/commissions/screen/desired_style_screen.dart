@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lyc_flutter_project/commissions/model/commission_request.dart';
+import 'package:lyc_flutter_project/commissions/model/commission_model.dart';
 import 'package:lyc_flutter_project/commissions/screen/other_matters_screen.dart';
 import 'package:lyc_flutter_project/common/widget/normal_appbar.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
@@ -30,8 +30,8 @@ class DesiredStyleScreenState extends State<DesiredStyleScreen> {
     Future<void> createCommissions() async {
   final commissionsProvider =
           Provider.of<CommissionsProvider>(context, listen: false);
-     commissionsProvider.request =
-      commissionsProvider.request.copyWith(
+     commissionsProvider.model =
+      commissionsProvider.model.copyWith(
         desiredStyle: DesiredStyle(occasion: _controller1.controller.text, styleList:StyleList(styleList: _controller2.controller.text.split(',')),
            fitList:  FitList(fitList: _controller3.controller.text.split(',')), materialList:MaterialList(materialList: _controller4.controller.text.split(',')),
             colorList: ColorList(colorList:_controller5.controller.text.split(','))));

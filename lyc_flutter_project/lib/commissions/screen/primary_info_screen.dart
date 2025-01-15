@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lyc_flutter_project/commissions/model/commission_request.dart';
+import 'package:lyc_flutter_project/commissions/model/commission_model.dart';
 import 'package:lyc_flutter_project/common/widget/normal_appbar.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:provider/provider.dart';
@@ -39,7 +39,7 @@ class PrimaryInfoScreenState extends State<PrimaryInfoScreen> {
     Future<void> createCommissions() async {
       final commissionsProvider =
           Provider.of<CommissionsProvider>(context, listen: false);
-      commissionsProvider.request = commissionsProvider.request.copyWith(
+      commissionsProvider.model = commissionsProvider.model.copyWith(
         directorId: widget.directorId,
         basicInfo: BasicInfo(height: int.tryParse(_controller1_1.controller.text) ?? 0, weight:  int.tryParse(_controller1_2.controller.text) ?? 0,
             topSize: _controller1_3.controller.text, bottomSize: _controller1_4.controller.text,

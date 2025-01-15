@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:lyc_flutter_project/commissions/model/commission_model.dart';
-import 'package:lyc_flutter_project/commissions/model/commission_request.dart';
+import 'package:lyc_flutter_project/commissions/model/commission_response.dart';
 import '../repository/commissions_repository.dart';
 import 'package:intl/intl.dart';
 
@@ -12,19 +12,19 @@ class CommissionsProvider with ChangeNotifier {
 
   bool _isLoading = false;
 
-  List<CommissionModel> _commissionList = [];
+  List<CommissionResult> _commissionList = [];
   bool get isLoading => _isLoading;
 
   get commissionList => _commissionList;
 
-  CommissionRequest request = CommissionRequest.defaultValue();
+  CommissionModel model = CommissionModel.defaultValue();
 
   Future<void> createCommission() async {
     _isLoading = true;
     notifyListeners();
     try {
       final resp = await repositoryProvider.commissionsRepository
-          .createCommission(commissionRequest: request);
+          .createCommission(commissionModel: model);
       if (!resp.isSuccess) throw Exception(resp.message);
     } catch (e) {
       debugPrint('Error: $e');
@@ -45,7 +45,7 @@ class CommissionsProvider with ChangeNotifier {
       try {
         final lastCreatedAt = _commissionList.isNotEmpty
             ? DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS").format(
-          _commissionList[_commissionList.length - 1].createdAt as DateTime,
+          _commissionList[_commissionList.length - 1].createdAt,
         )
             : DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS").format(DateTime.now());
         final resp = await repositoryProvider.commissionsRepository
