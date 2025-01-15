@@ -100,14 +100,14 @@ class _MyCoordiGridViewState extends State<MyCoordiGridView> {
       itemBuilder: (context, index) {
         if (index == 0) {
           return GestureDetector(
-            onTap: () {
+            onTap: () async {
               if (widget.category == 0) {
                 final coordiProvider = CoordiProvider(
                   repositoryProvider: context.read<CoordiRepositoryProvider>(),
                   loginProvider: context.read<LoginProvider>(),
                 );
                 // 나의코디->코디 추가
-                pushWithoutNavBar(
+                await pushWithoutNavBar(
                   context,
                   MaterialPageRoute(
                     builder: (context) => AddPostingScreen(
@@ -116,6 +116,7 @@ class _MyCoordiGridViewState extends State<MyCoordiGridView> {
                     ),
                   ),
                 );
+                refresh();
               } else if (widget.category == 1) {
                 // 저장한코디->코디 탐색
               } else if (widget.category == 3) {

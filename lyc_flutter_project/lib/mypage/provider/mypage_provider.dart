@@ -224,6 +224,9 @@ class MypageProvider extends ChangeNotifier {
     String cursorDateTime = "9999-12-31T23:59:59.0000",
   }) async {
     debugPrint("mypage provider: getList: 호출");
+    debugPrint("mypage provider: getList: loading=$loading");
+    debugPrint("mypage provider: getList: refresh=$refresh");
+    debugPrint("mypage provider: getList: 호출");
     if (loading || (!refresh && !getHasMore())) return;
     debugPrint("mypage provider: getList: 시작");
 

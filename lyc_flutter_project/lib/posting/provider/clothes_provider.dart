@@ -77,8 +77,7 @@ class ClothesProvider extends ChangeNotifier {
       return false;
     }
     if (_postingImage.text == null) {
-      debugPrint("text is null");
-      return false;
+      _postingImage = _postingImage.copyWith(text: "");
     }
     if (_postingImage.image == null) {
       debugPrint("image is null");
@@ -101,8 +100,7 @@ class ClothesProvider extends ChangeNotifier {
       return false;
     }
     if (_postingText.text == "") {
-      debugPrint("text is null");
-      return false;
+      _postingText = _postingText.copyWith(text: "");
     }
     return true;
   }
