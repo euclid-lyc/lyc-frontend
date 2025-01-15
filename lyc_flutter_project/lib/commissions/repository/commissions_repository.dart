@@ -18,7 +18,7 @@ class CommissionsRepositoryProvider extends ChangeNotifier {
 
   CommissionsRepositoryProvider({required this.dio}) {
     commissionsRepository =
-        CommissionsRepository(dio, baseUrl: "http://$ip/lyc");
+        CommissionsRepository(dio, baseUrl: "http://$ip/lyc/");
   }
 }
 
