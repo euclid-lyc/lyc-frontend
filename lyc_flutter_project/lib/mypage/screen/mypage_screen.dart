@@ -5,7 +5,11 @@ import 'package:lyc_flutter_project/common/widget/switch_category_button.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/mypage/layout/mypage_layout.dart';
 import 'package:lyc_flutter_project/mypage/provider/mypage_provider.dart';
+import 'package:lyc_flutter_project/mypage/widget/director_closet_list.dart';
+import 'package:lyc_flutter_project/mypage/widget/director_coordi_grid_view.dart';
 import 'package:lyc_flutter_project/mypage/widget/icons_in_profile_box.dart';
+import 'package:lyc_flutter_project/mypage/widget/my_closet_list.dart';
+import 'package:lyc_flutter_project/mypage/widget/my_coordi_grid_view.dart';
 import 'package:lyc_flutter_project/mypage/widget/profile_box.dart';
 import 'package:lyc_flutter_project/mypage/widget/bottom_buttons.dart';
 import 'package:provider/provider.dart';
@@ -26,18 +30,22 @@ class MypageScreen extends StatefulWidget {
 
 class _MypageScreenState extends State<MypageScreen> {
   late MypageProvider provider;
-  late int memberId;
+  late int memberId;  
+  late bool isLoginUser;
 
   @override
   void initState() {
     super.initState();
     if (widget.extra.keys.first == null && widget.extra.values.first) {
-        memberId = Provider.of<LoginProvider>(context, listen: false).memberId!;
+      memberId = Provider.of<LoginProvider>(context, listen: false).memberId!;
+      isLoginUser = true;
+      debugPrint("마이페이지: initState: login user");
     } else {
       memberId = widget.extra.keys.first!;
+      isLoginUser = false;
+      debugPrint("마이페이지: initState: login user 아님 ");
     }
-    provider = Provider.of<MypageProviderFactory>(context, listen: false)
-        .getProvider(
+    provider = Provider.of<MypageProviderFactory>(context, listen: false).getProvider(
       memberId,
       widget.extra.values.first,
     );
@@ -47,8 +55,7 @@ class _MypageScreenState extends State<MypageScreen> {
   void dispose() {
     super.dispose();
     if (!widget.extra.values.first) {
-      Provider.of<MypageProviderFactory>(context, listen: false)
-          .disposeProvider(
+      Provider.of<MypageProviderFactory>(context, listen: false).disposeProvider(
         memberId,
       );
     }
@@ -68,6 +75,7 @@ class _MypageScreenState extends State<MypageScreen> {
                 color: AppColor.beige,
                 child: Column(
                   children: [
+                    // 프로필 영역
                     Expanded(
                       flex: 3,
                       child: Row(
@@ -75,9 +83,7 @@ class _MypageScreenState extends State<MypageScreen> {
                         children: [
                           Expanded(
                             flex: 13,
-                            child: value.hasProfile
-                                ? ProfileBox.fromModel(profile: value.profile)
-                                : const CustomLoading(),
+                            child: value.hasProfile ? ProfileBox.fromModel(profile: value.profile) : const CustomLoading(),
                           ),
                           Expanded(
                             flex: 5,
@@ -89,6 +95,7 @@ class _MypageScreenState extends State<MypageScreen> {
                         ],
                       ),
                     ),
+                    // 게시글 영역
                     const SizedBox(height: 20),
                     Expanded(
                       child: BottomButtons(
@@ -130,11 +137,7 @@ class _MypageScreenState extends State<MypageScreen> {
                   ),
                   const SizedBox(height: 20.0),
                   Expanded(
-                    child: value.listLength == 0
-                        ? const Center(
-                            child: CustomLoading(),
-                          )
-                        : value.renderList(),
+                    child: buildPostings(value),
                   ),
                 ],
               ),
@@ -143,5 +146,54 @@ class _MypageScreenState extends State<MypageScreen> {
         },
       ),
     );
+  }
+
+  Widget buildPostings(MypageProvider value) {
+    if (value.loading) {
+      return const Center(
+        child: CustomLoading(),
+      );
+    } else {
+      switch (value.category) {
+        case 0:
+          return isLoginUser
+              ? MyCoordiGridView(
+                  postings: value.myCoordi,
+                  category: 0,
+                  provider: value,
+                )
+              : DirectorCoordiGridView(
+                  postings: value.myCoordi,
+                  category: 0,
+                  provider: value,
+                );
+        case 1:
+          return isLoginUser
+              ? MyCoordiGridView(
+                  postings: value.savedCoordi,
+                  category: 1,
+                  provider: value,
+                )
+              : DirectorCoordiGridView(
+                  postings: value.savedCoordi,
+                  category: 1,
+                  provider: value,
+                );
+        case 2:
+          return isLoginUser
+              ? MyClosetList(
+                  postings: value.myCloset,
+                  provider: value,
+                  memberId: memberId,
+                )
+              : DirectorClosetList(
+                  postings: value.myCloset,
+                  provider: value,
+                  memberId: memberId,
+                );
+        default:
+          return const CustomLoading();
+      }
+    }
   }
 }

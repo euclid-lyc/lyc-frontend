@@ -44,6 +44,7 @@ class _MyCoordiGridViewState extends State<MyCoordiGridView> {
   void initState() {
     super.initState();
     controller.addListener(listener);
+    debugPrint("my coordi grid view: initState: postings=${widget.postings}");
   }
 
   bool getLoading() {
