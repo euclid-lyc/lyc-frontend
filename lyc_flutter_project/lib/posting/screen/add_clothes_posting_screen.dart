@@ -78,19 +78,17 @@ class _AddClothesPostingScreenState extends State<AddClothesPostingScreen> {
 
   @override
   void dispose() {
-    super.dispose();
-
     iTitleController.removeListener(_updateTitle);
     iContentController.removeListener(_updateContent);
-
     tTitleController.removeListener(_tUpdateTitle);
     tTextController.removeListener(_tUpdateText);
 
     iTitleController.dispose();
     iContentController.dispose();
+    tTitleController.dispose();
+    tTextController.dispose();
 
-    tTitleController.dispose();
-    tTitleController.dispose();
+    super.dispose();
   }
 
   _updateTitle() {
