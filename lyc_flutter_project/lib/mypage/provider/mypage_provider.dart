@@ -261,10 +261,12 @@ class MypageProvider extends ChangeNotifier {
 
     try {
       updateLoading(true);
+      debugPrint("mypage provider: getList: 코디 API 호출");
+      debugPrint("mypage provider: getList: path=$memberId");
+      debugPrint("mypage provider: getList: query=${paginateQuery.pageSize}, ${paginateQuery.cursorDateTime}");
       switch (type) {
         case 0:
-          debugPrint("mypage provider: getList: 코디 API 호출");
-          final ApiResponse<CoordieResult> resp = await mypageRepositoryProvider.mypageRepository.getMyCoorides(
+          final resp = await mypageRepositoryProvider.mypageRepository.getMyCoordies(
             memberId: memberId,
             paginateQuery: paginateQuery,
           );
@@ -276,10 +278,9 @@ class MypageProvider extends ChangeNotifier {
                   ...resp.result.imageList,
                 ];
           updateHasMore(resp.result.imageList.length >= pageSize);
-          debugPrint("mypage provider: getList: 업데이트된 myCoordi 길이=${myCoordi.length}");
           debugPrint("mypage provider: getList: myCoordi=$myCoordi");
         case 1:
-          final resp = await mypageRepositoryProvider.mypageRepository.getSavedCoordies(
+          final ApiResponse<CoordiResult> resp = await mypageRepositoryProvider.mypageRepository.getSavedCoordies(
             memberId: memberId,
             paginateQuery: paginateQuery,
           );
