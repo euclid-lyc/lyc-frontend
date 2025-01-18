@@ -6,7 +6,8 @@ import 'package:flutter_chat_bubble/bubble_type.dart';
 import 'package:lyc_flutter_project/common/dio/dio.dart';
 import 'package:lyc_flutter_project/common/model/api_response.dart';
 import 'package:lyc_flutter_project/config/secret.dart';
-import 'package:lyc_flutter_project/dm/model/chat_message_model.dart';
+import 'package:lyc_flutter_project/dm/model/chat_member_model.dart';
+import 'package:lyc_flutter_project/dm/model/chat_room_model.dart';
 import 'package:lyc_flutter_project/dm/model/make_schedule_model.dart';
 import 'package:lyc_flutter_project/dm/model/message_model.dart';
 import 'package:lyc_flutter_project/dm/model/schedule_model.dart';
@@ -55,6 +56,8 @@ class ChatProvider extends ChangeNotifier {
 
   String? _accessToken;
   List<MessageModel> _messageList = [];
+  List<ChatMemberModel> _memberList = [];
+
   bool hasMore = true;
   bool loadingMessages = false;
   StompClient? _client;
@@ -99,12 +102,12 @@ class ChatProvider extends ChangeNotifier {
     }
     try {
       loadingMessages = true;
-      final ApiResponse<ChatMessageListModel> result = await repository.getChatMessages(
+      final ApiResponse<ChatRoomModel> result = await repository.getChatMessages(
         chatId: chatId,
         pageSize: pageSize,
         cursorDateTime: cursorDateTime,
       );
-      final messages = result.result.messages
+      final messages = result.result.messages.messages
           .map(
             (e) => MessageModel(
               content: e.content,
@@ -115,6 +118,17 @@ class ChatProvider extends ChangeNotifier {
           )
           .toList();
       _messageList = [...messages, ..._messageList];
+
+      final members = result.result.chatMembers.members.map(
+          (e) => ChatMemberModel(
+              nickname: e.nickname,
+              profileImage: e.profileImage,
+              isMine: e.isMine,
+              isDirector: e.isDirector),
+
+      )
+      .toList();
+      _memberList = [...members, ..._memberList];
     } on DioException {
       debugPrint("[에러] [메시지 목록 불러오기]");
     } finally {
