@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/commissions/model/commission_response.dart';
-import 'package:lyc_flutter_project/commissions/screen/primary_info_screen.dart';
+import 'package:lyc_flutter_project/commissions/screen/basic_info_screen.dart';
 import 'package:lyc_flutter_project/common/widget/custom_loading.dart';
 import 'package:lyc_flutter_project/common/widget/custom_text_button.dart';
 import 'package:lyc_flutter_project/common/widget/default_padding.dart';
@@ -72,7 +72,7 @@ class _CommissionsListScreenState extends State<CommissionsListScreen> {
                           onTap: () => pushWithoutNavBar(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => PrimaryInfoScreen(
+                              builder: (context) => const BasicInfoScreen(
                                 directorId: 0,
                               ),
                             ),

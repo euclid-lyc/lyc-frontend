@@ -5,7 +5,7 @@ import 'package:lyc_flutter_project/mypage/screen/review_home_screen.dart';
 import 'package:lyc_flutter_project/mypage/screen/stamp_screen.dart';
 import 'package:lyc_flutter_project/mypage/widget/custom_button_in_profile_box.dart';
 
-import '../../commissions/screen/primary_info_screen.dart';
+import '../../commissions/screen/basic_info_screen.dart';
 
 
 class BottomButtons extends StatelessWidget {
@@ -70,11 +70,11 @@ class BottomButtons extends StatelessWidget {
             memberId: memberId,
             text: '의뢰하기',
             onPressed: () async {
-              // context.goNamed(Routes.primaryInfo.name);
+              // context.goNamed(Routes.BasicInfo.name);
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => PrimaryInfoScreen(directorId: memberId),
+                  builder: (context) => BasicInfoScreen(directorId: memberId),
                 ),
               );
             },

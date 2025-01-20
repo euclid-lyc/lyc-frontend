@@ -5,7 +5,7 @@ import 'package:lyc_flutter_project/auth/find_id/screens/find_id_screen_3.dart';
 import 'package:lyc_flutter_project/auth/join/screens/login_screen.dart';
 import 'package:lyc_flutter_project/commissions/screen/desired_style_screen.dart';
 import 'package:lyc_flutter_project/commissions/screen/other_matters_screen.dart';
-import 'package:lyc_flutter_project/commissions/screen/primary_info_screen.dart';
+import 'package:lyc_flutter_project/commissions/screen/basic_info_screen.dart';
 import 'package:lyc_flutter_project/commissions/screen/submission_success_screen.dart';
 import 'package:lyc_flutter_project/common/screen/splash_screen.dart';
 import 'package:lyc_flutter_project/director/screen/director_search_screen.dart';
@@ -100,10 +100,10 @@ final router = GoRouter(
       ),
     ),
     // GoRoute(
-      // path: Routes.primaryInfo.path,
-      // name: Routes.primaryInfo.name,
+      // path: Routes.basicInfo.path,
+      // name: Routes.basicInfo.name,
       // pageBuilder: (context, state) => const NoTransitionPage(
-      //   child: PrimaryInfoScreen(directorId: d,),
+      //   child: BasicInfoScreen(directorId: d,),
       // ),
     // ),
     GoRoute(

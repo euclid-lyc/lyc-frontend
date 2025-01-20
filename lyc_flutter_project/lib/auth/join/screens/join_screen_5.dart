@@ -3,13 +3,11 @@ import 'package:lyc_flutter_project/common/widget/normal_appbar.dart';
 import 'package:lyc_flutter_project/auth/join/model/join_info.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:provider/provider.dart';
-import '../../../common/dio/dio.dart';
 import '../../../data/style_list.dart';
 import '../../../styles/app_text_style.dart';
 import '../../../widget/Controller.dart';
 import '../Provider/join_provider.dart';
 import 'join_screen_6.dart';
-import 'join_screen_7.dart';
 
 class JoinScreen5 extends StatefulWidget {
   const JoinScreen5({super.key});

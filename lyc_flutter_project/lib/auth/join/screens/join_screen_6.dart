@@ -6,7 +6,6 @@ import '../../../data/app_color.dart';
 import '../../../styles/app_text_style.dart';
 import '../Provider/join_provider.dart';
 import '../model/pushset.dart';
-import 'join_screen_5.dart';
 import 'join_screen_7.dart';
 
 class JoinScreen6 extends StatefulWidget {
