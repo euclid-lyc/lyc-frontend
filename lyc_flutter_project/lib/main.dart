@@ -24,7 +24,7 @@ import 'package:lyc_flutter_project/auth/find_pw/provider/find_pw_provider.dart'
 import 'package:lyc_flutter_project/auth/find_id/Provider/send_email_provider.dart';
 import 'package:lyc_flutter_project/auth/find_id/Provider/find_id_provider.dart';
 import 'package:lyc_flutter_project/auth/join/Provider/join_provider.dart';
-import 'package:lyc_flutter_project/auth/join/screens/join_screen_6.dart';
+import 'package:lyc_flutter_project/auth/join/screens/join_screen_5.dart';
 import 'package:lyc_flutter_project/auth/service/storage_service.dart';
 
 import 'commissions/provider/commissions_provider.dart';
