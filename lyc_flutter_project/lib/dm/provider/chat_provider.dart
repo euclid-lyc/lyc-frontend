@@ -57,15 +57,20 @@ class ChatProvider extends ChangeNotifier {
   String? _accessToken;
   List<MessageModel> _messageList = [];
   List<ChatMemberModel> _memberList = [];
-
+  int _commissionId = 0;
   bool hasMore = true;
   bool loadingMessages = false;
   StompClient? _client;
-
+  ChatMemberModel _isMine = ChatMemberModel.defaultValue();
   String initialCursor = '';
   bool loading = false;
 
   List<MessageModel> get messageList => _messageList;
+
+  List<ChatMemberModel> get memberList => _memberList;
+
+  int get commissionId => _commissionId;
+  ChatMemberModel get isMine => _isMine;
 
   Future<void> initChat() async {
     loading = true;
@@ -102,7 +107,8 @@ class ChatProvider extends ChangeNotifier {
     }
     try {
       loadingMessages = true;
-      final ApiResponse<ChatRoomModel> result = await repository.getChatMessages(
+      final ApiResponse<ChatRoomModel> result =
+          await repository.getChatMessages(
         chatId: chatId,
         pageSize: pageSize,
         cursorDateTime: cursorDateTime,
@@ -111,7 +117,9 @@ class ChatProvider extends ChangeNotifier {
           .map(
             (e) => MessageModel(
               content: e.content,
-              type: e.sender == nickname ? BubbleType.receiverBubble : BubbleType.sendBubble,
+              type: e.sender == nickname
+                  ? BubbleType.receiverBubble
+                  : BubbleType.sendBubble,
               image: e.profileImage,
               createdAt: e.createdAt,
             ),
@@ -119,16 +127,22 @@ class ChatProvider extends ChangeNotifier {
           .toList();
       _messageList = [...messages, ..._messageList];
 
-      final members = result.result.chatMembers.members.map(
-          (e) => ChatMemberModel(
-              nickname: e.nickname,
-              profileImage: e.profileImage,
-              isMine: e.isMine,
-              isDirector: e.isDirector),
-
-      )
-      .toList();
+      final members = result.result.chatMembers.members
+          .map(
+            (e) => ChatMemberModel(
+                nickname: e.nickname,
+                profileImage: e.profileImage,
+                isMine: e.isMine,
+                isDirector: e.isDirector),
+          )
+          .toList();
       _memberList = [...members, ..._memberList];
+
+      _isMine = _memberList.firstWhere((member) => member.isMine);
+
+      final commissionId = result.result.commissionId;
+      _commissionId = commissionId;
+
     } on DioException {
       debugPrint("[에러] [메시지 목록 불러오기]");
     } finally {
@@ -300,7 +314,8 @@ class ChatProvider extends ChangeNotifier {
   Future<void> makeSchedule() async {
     late final String date;
     if (allDay) {
-      date = "${queryDateTime.year}-${queryDateTime.month.toString().padLeft(2, '0')}-${queryDateTime.day.toString().padLeft(2, '0')}";
+      date =
+          "${queryDateTime.year}-${queryDateTime.month.toString().padLeft(2, '0')}-${queryDateTime.day.toString().padLeft(2, '0')}";
     } else {
       date = queryDateTime.toIso8601String();
     }
@@ -357,7 +372,7 @@ class ChatProvider extends ChangeNotifier {
     }
 
     final selectedScheduleIndex = schedules.indexWhere((schedule) =>
-    schedule.date.year == date.year &&
+        schedule.date.year == date.year &&
         schedule.date.month == date.month &&
         schedule.date.day == date.day);
 
@@ -389,7 +404,8 @@ class ChatProvider extends ChangeNotifier {
 
   bool loadingCalendar = false;
 
-  List<ScheduleModel> get schedules => scheduleList.isEmpty ? [] : scheduleList[calendarIndex];
+  List<ScheduleModel> get schedules =>
+      scheduleList.isEmpty ? [] : scheduleList[calendarIndex];
 
   void showPrevMonth() {
     calendarDate = calendarDate.copyWith(month: calendarDate.month - 1);
@@ -423,7 +439,8 @@ class ChatProvider extends ChangeNotifier {
     if (loadingCalendar) return;
 
     loadingCalendar = true;
-    final ApiResponse<ScheduleModelListResponse> result = await repository.getSchedules(
+    final ApiResponse<ScheduleModelListResponse> result =
+        await repository.getSchedules(
       chatId: chatId,
       year: date.year,
       month: date.month,
