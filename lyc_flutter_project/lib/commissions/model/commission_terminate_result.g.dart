@@ -11,9 +11,9 @@ CommissionTerminateResult _$CommissionTerminateResultFromJson(
     CommissionTerminateResult(
       code: json['code'] as String,
       message: json['message'] as String,
-      isSuccess: json['isSuccess'] as bool,
       result: CommissionTerminateDetail.fromJson(
           json['result'] as Map<String, dynamic>),
+      isSuccess: json['isSuccess'] as bool,
     );
 
 Map<String, dynamic> _$CommissionTerminateResultToJson(
@@ -21,8 +21,8 @@ Map<String, dynamic> _$CommissionTerminateResultToJson(
     <String, dynamic>{
       'code': instance.code,
       'message': instance.message,
-      'isSuccess': instance.isSuccess,
       'result': instance.result,
+      'isSuccess': instance.isSuccess,
     };
 
 CommissionTerminateDetail _$CommissionTerminateDetailFromJson(

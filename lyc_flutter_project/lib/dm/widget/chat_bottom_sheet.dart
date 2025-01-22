@@ -60,7 +60,9 @@ class ChatBottomSheet extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => CommissionsScreen(chatId: provider.chatId)),
+                MaterialPageRoute(builder: (context) =>
+                    CommissionsScreen(
+                     provider: provider)),
               );
             },
           ),

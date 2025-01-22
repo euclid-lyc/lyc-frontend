@@ -18,7 +18,147 @@ class _CommissionsRepository implements CommissionsRepository {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<ApiResponse<List<CommissionResult>>> getCommissionList({
+  Future<ApiResponse<List<ClothesModel>>> getClothesList({
+    required int chatId,
+  }) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'accessToken': 'true'};
+    _headers.removeWhere((k, v) => v == null);
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<ApiResponse<List<ClothesModel>>>(
+      Options(method: 'GET', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            'chats/${chatId}/commissions/saved-clothes',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late ApiResponse<List<ClothesModel>> _value;
+    try {
+      _value = ApiResponse<List<ClothesModel>>.fromJson(
+        _result.data!,
+        (json) => json is List<dynamic>
+            ? json
+                .map<ClothesModel>(
+                  (i) => ClothesModel.fromJson(i as Map<String, dynamic>),
+                )
+                .toList()
+            : List.empty(),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<ApiResponse<ClothesModel>> saveClothes({
+    required int chatId,
+    required ClothesModel clothes,
+  }) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'accessToken': 'true'};
+    _headers.removeWhere((k, v) => v == null);
+    final _data = clothes;
+    final _options = _setStreamType<ApiResponse<ClothesModel>>(
+      Options(method: 'POST', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            'chats/${chatId}/commissions/saved-clothes',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late ApiResponse<ClothesModel> _value;
+    try {
+      _value = ApiResponse<ClothesModel>.fromJson(
+        _result.data!,
+        (json) => ClothesModel.fromJson(json as Map<String, dynamic>),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<ApiResponse<ClothesModel>> deleteClothes({
+    required int chatId,
+    required int clothesId,
+  }) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'accessToken': 'true'};
+    _headers.removeWhere((k, v) => v == null);
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<ApiResponse<ClothesModel>>(
+      Options(method: 'DELETE', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            'chats/${chatId}/commissions/saved-clothes/${clothesId}',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late ApiResponse<ClothesModel> _value;
+    try {
+      _value = ApiResponse<ClothesModel>.fromJson(
+        _result.data!,
+        (json) => ClothesModel.fromJson(json as Map<String, dynamic>),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<ApiResponse<ClothesModel>> unshareClothes({
+    required int chatId,
+  }) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'accessToken': 'true'};
+    _headers.removeWhere((k, v) => v == null);
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<ApiResponse<ClothesModel>>(
+      Options(method: 'PATCH', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            'chats/${chatId}/commissions/saved-clothes/private',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late ApiResponse<ClothesModel> _value;
+    try {
+      _value = ApiResponse<ClothesModel>.fromJson(
+        _result.data!,
+        (json) => ClothesModel.fromJson(json as Map<String, dynamic>),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<ApiResponse<List<CommissionResponse>>> getCommissionList({
     required int pageSize,
     required String dateTime,
   }) async {
@@ -30,7 +170,7 @@ class _CommissionsRepository implements CommissionsRepository {
     final _headers = <String, dynamic>{r'accessToken': 'true'};
     _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<ApiResponse<List<CommissionResult>>>(
+    final _options = _setStreamType<ApiResponse<List<CommissionResponse>>>(
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -41,14 +181,16 @@ class _CommissionsRepository implements CommissionsRepository {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late ApiResponse<List<CommissionResult>> _value;
+    late ApiResponse<List<CommissionResponse>> _value;
     try {
-      _value = ApiResponse<List<CommissionResult>>.fromJson(
+      _value = ApiResponse<List<CommissionResponse>>.fromJson(
         _result.data!,
         (json) => json is List<dynamic>
             ? json
-                .map<CommissionResult>(
-                  (i) => CommissionResult.fromJson(i as Map<String, dynamic>),
+                .map<CommissionResponse>(
+                  (i) => CommissionResponse.fromJson(
+                    i as Map<String, dynamic>,
+                  ),
                 )
                 .toList()
             : List.empty(),
@@ -69,8 +211,7 @@ class _CommissionsRepository implements CommissionsRepository {
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{r'accessToken': 'true'};
     _headers.removeWhere((k, v) => v == null);
-    final _data = <String, dynamic>{};
-    _data.addAll(commissionModel?.toJson() ?? <String, dynamic>{});
+    final _data = commissionModel;
     final _options = _setStreamType<ApiResponse<CommissionResponse>>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
@@ -96,7 +237,7 @@ class _CommissionsRepository implements CommissionsRepository {
   }
 
   @override
-  Future<ApiResponse<CommissionResponse>> checkCommission({
+  Future<ApiResponse<CommissionResponseModel>> getCommission({
     required int commissionId,
   }) async {
     final _extra = <String, dynamic>{};
@@ -104,7 +245,7 @@ class _CommissionsRepository implements CommissionsRepository {
     final _headers = <String, dynamic>{r'accessToken': 'true'};
     _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<ApiResponse<CommissionResponse>>(
+    final _options = _setStreamType<ApiResponse<CommissionResponseModel>>(
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -115,11 +256,12 @@ class _CommissionsRepository implements CommissionsRepository {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late ApiResponse<CommissionResponse> _value;
+    late ApiResponse<CommissionResponseModel> _value;
     try {
-      _value = ApiResponse<CommissionResponse>.fromJson(
+      _value = ApiResponse<CommissionResponseModel>.fromJson(
         _result.data!,
-        (json) => CommissionResponse.fromJson(json as Map<String, dynamic>),
+        (json) =>
+            CommissionResponseModel.fromJson(json as Map<String, dynamic>),
       );
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
@@ -138,8 +280,7 @@ class _CommissionsRepository implements CommissionsRepository {
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{r'accessToken': 'true'};
     _headers.removeWhere((k, v) => v == null);
-    final _data = <String, dynamic>{};
-    _data.addAll(commissionModel?.toJson() ?? <String, dynamic>{});
+    final _data = commissionModel;
     final _options = _setStreamType<ApiResponse<CommissionResponse>>(
       Options(method: 'PATCH', headers: _headers, extra: _extra)
           .compose(

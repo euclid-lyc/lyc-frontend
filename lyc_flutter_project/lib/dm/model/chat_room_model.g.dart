@@ -8,7 +8,7 @@ part of 'chat_room_model.dart';
 
 ChatRoomModel _$ChatRoomModelFromJson(Map<String, dynamic> json) =>
     ChatRoomModel(
-      commissionId: json['commissionId'] as String,
+      commissionId: (json['commissionId'] as num).toInt(),
       chatMembers: ChatMemberListModel.fromJson(
           json['chatMembers'] as Map<String, dynamic>),
       messages: ChatMessageListModel.fromJson(

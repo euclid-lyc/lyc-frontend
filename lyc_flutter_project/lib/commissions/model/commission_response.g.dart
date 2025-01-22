@@ -8,22 +8,6 @@ part of 'commission_response.dart';
 
 CommissionResponse _$CommissionResponseFromJson(Map<String, dynamic> json) =>
     CommissionResponse(
-      code: json['code'] as String,
-      message: json['message'] as String,
-      result: CommissionResult.fromJson(json['result'] as Map<String, dynamic>),
-      isSuccess: json['isSuccess'] as bool,
-    );
-
-Map<String, dynamic> _$CommissionResponseToJson(CommissionResponse instance) =>
-    <String, dynamic>{
-      'code': instance.code,
-      'message': instance.message,
-      'result': instance.result,
-      'isSuccess': instance.isSuccess,
-    };
-
-CommissionResult _$CommissionResultFromJson(Map<String, dynamic> json) =>
-    CommissionResult(
       commissionId: (json['commissionId'] as num).toInt(),
       profileImage: json['profileImage'] as String,
       nickname: json['nickname'] as String,
@@ -31,7 +15,7 @@ CommissionResult _$CommissionResultFromJson(Map<String, dynamic> json) =>
       createdAt: DateTime.parse(json['createdAt'] as String),
     );
 
-Map<String, dynamic> _$CommissionResultToJson(CommissionResult instance) =>
+Map<String, dynamic> _$CommissionResponseToJson(CommissionResponse instance) =>
     <String, dynamic>{
       'commissionId': instance.commissionId,
       'profileImage': instance.profileImage,

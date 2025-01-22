@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:lyc_flutter_project/commissions/screen/tap_view_screen.dart';
 
 import 'package:lyc_flutter_project/mypage/screen/attendance_screen.dart';
 import 'package:lyc_flutter_project/mypage/screen/review_home_screen.dart';
 import 'package:lyc_flutter_project/mypage/screen/stamp_screen.dart';
 import 'package:lyc_flutter_project/mypage/widget/custom_button_in_profile_box.dart';
+import 'package:provider/provider.dart';
 
-import '../../commissions/screen/basic_info_screen.dart';
-
+import '../../auth/join/Provider/login_provider.dart';
 
 class BottomButtons extends StatelessWidget {
   final int memberId;
@@ -74,7 +75,12 @@ class BottomButtons extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => BasicInfoScreen(directorId: memberId),
+                  builder: (context) => TapViewScreen(
+                      directorId: memberId,
+                      memberId:
+                          Provider.of<LoginProvider>(context, listen: false)
+                              .memberId,
+                  title: "의뢰서 작성하기",)
                 ),
               );
             },

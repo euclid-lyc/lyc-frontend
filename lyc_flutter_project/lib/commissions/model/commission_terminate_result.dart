@@ -6,14 +6,16 @@ part 'commission_terminate_result.g.dart';
 class CommissionTerminateResult {
   final String code;
   final String message;
-  final bool isSuccess;
   final CommissionTerminateDetail result;
+  final bool isSuccess;
+
 
   CommissionTerminateResult({
     required this.code,
     required this.message,
-    required this.isSuccess,
     required this.result,
+    required this.isSuccess,
+
   });
 
   factory CommissionTerminateResult.fromJson(Map<String, dynamic> json) =>

@@ -569,9 +569,9 @@ class _$BasicInfoImpl implements _BasicInfo {
       required this.weight,
       required this.topSize,
       required this.bottomSize,
-      required this.postalCode,
-      required this.address,
-      required this.detailAddress,
+      this.postalCode = 0,
+      this.address = '',
+      this.detailAddress = '',
       required this.text,
       required this.infoStyle,
       required this.infoFit,
@@ -590,10 +590,13 @@ class _$BasicInfoImpl implements _BasicInfo {
   @override
   final String bottomSize;
   @override
+  @JsonKey()
   final int postalCode;
   @override
+  @JsonKey()
   final String address;
   @override
+  @JsonKey()
   final String detailAddress;
   @override
   final String text;
@@ -675,9 +678,9 @@ abstract class _BasicInfo implements BasicInfo {
       required final int weight,
       required final String topSize,
       required final String bottomSize,
-      required final int postalCode,
-      required final String address,
-      required final String detailAddress,
+      final int postalCode,
+      final String address,
+      final String detailAddress,
       required final String text,
       required final InfoStyle infoStyle,
       required final InfoFit infoFit,

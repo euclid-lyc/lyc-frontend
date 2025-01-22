@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:lyc_flutter_project/commissions/model/commission_model.dart';
 import 'package:lyc_flutter_project/commissions/model/commission_response.dart';
+import '../model/commission_response_model.dart';
 import '../repository/commissions_repository.dart';
 import 'package:intl/intl.dart';
 
@@ -12,10 +13,12 @@ class CommissionsProvider with ChangeNotifier {
 
   bool _isLoading = false;
 
-  List<CommissionResult> _commissionList = [];
   bool get isLoading => _isLoading;
 
-  get commissionList => _commissionList;
+
+  List<CommissionResponse> _commissionList = [];
+
+  List<CommissionResponse> get commissionList => _commissionList;
 
   CommissionModel model = CommissionModel.defaultValue();
 
@@ -25,6 +28,7 @@ class CommissionsProvider with ChangeNotifier {
     try {
       final resp = await repositoryProvider.commissionsRepository
           .createCommission(commissionModel: model);
+      model = CommissionModel.defaultValue();
       if (!resp.isSuccess) throw Exception(resp.message);
     } catch (e) {
       debugPrint('Error: $e');
@@ -34,39 +38,35 @@ class CommissionsProvider with ChangeNotifier {
     }
   }
 
+  Future<void> getCommissionList({
+    bool refresh = false,
+    int pageSize = 10,
+  }) async {
+    if (_isLoading) return;
+    _isLoading = true;
+    notifyListeners();
+    try {
+      final lastCreatedAt = _commissionList.isNotEmpty
+          ? DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS").format(
+              _commissionList[_commissionList.length - 1].createdAt,
+            )
+          : DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS").format(DateTime.now());
+      final resp = await repositoryProvider.commissionsRepository
+          .getCommissionList(pageSize: pageSize, dateTime: lastCreatedAt);
 
-    Future<void> getCommissionList({
-      bool refresh = false,
-      int pageSize = 10,
-    }) async {
-      if (_isLoading) return;
-      _isLoading = true;
+      if (!resp.isSuccess) throw Exception(resp.message);
+
+      //todo refresh일 경우와 그냥 구분하기
+      _commissionList = resp.result;
+    } catch (e) {
+      debugPrint('Error: $e');
+    } finally {
+      _isLoading = false;
       notifyListeners();
-      try {
-        final lastCreatedAt = _commissionList.isNotEmpty
-            ? DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS").format(
-          _commissionList[_commissionList.length - 1].createdAt,
-        )
-            : DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS").format(DateTime.now());
-        final resp = await repositoryProvider.commissionsRepository
-            .getCommissionList(pageSize: pageSize, dateTime: lastCreatedAt);
-
-
-        if (!resp.isSuccess) throw Exception(resp.message);
-
-       //todo refresh일 경우와 그냥 구분하기
-        _commissionList = resp.result;
-
-
-      } catch (e) {
-        debugPrint('Error: $e');
-      } finally {
-        _isLoading = false;
-        notifyListeners();
-      }
     }
+  }
 
-    Future<void> terminateCommission(int chatId) async {
+  Future<void> terminateCommission(int chatId) async {
     _isLoading = true;
     notifyListeners();
     try {
@@ -74,7 +74,7 @@ class CommissionsProvider with ChangeNotifier {
           .terminateCommission(chatId: chatId);
       if (!resp.isSuccess) throw Exception(resp.message);
     } catch (e) {
-      debugPrint('Error: $e');
+      debugPrint('Error: ${e.toString()}');
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -96,13 +96,35 @@ class CommissionsProvider with ChangeNotifier {
     }
   }
 
-  Future<void> checkCommission(int commissionId) async {
+  Future<CommissionResponseModel?> getCommission(int commissionId) async {
     _isLoading = true;
     notifyListeners();
     try {
       final resp = await repositoryProvider.commissionsRepository
-          .checkCommission(commissionId: commissionId);
-      if (!resp.isSuccess) throw Exception(resp.message);
+          .getCommission(commissionId: commissionId);
+      if (!resp.isSuccess) {
+        throw Exception(resp.message);
+      } else {
+        return resp.result;
+      }
+    } catch (e) {
+      debugPrint('Error: $e');
+      return null;
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  Future<void> acceptCommission(int commissionId)async {
+    _isLoading = true;
+    notifyListeners();
+    try {
+      final resp = await repositoryProvider.commissionsRepository
+          .acceptCommission(commissionId: commissionId);
+      if (!resp.isSuccess) {
+        throw Exception(resp.message);
+      }
     } catch (e) {
       debugPrint('Error: $e');
     } finally {
@@ -110,4 +132,23 @@ class CommissionsProvider with ChangeNotifier {
       notifyListeners();
     }
   }
+
+
+    Future<void> declineCommission(int commissionId)async {
+      _isLoading = true;
+      notifyListeners();
+      try {
+        final resp = await repositoryProvider.commissionsRepository
+            .declineCommission(commissionId: commissionId);
+        if (!resp.isSuccess) {
+          throw Exception(resp.message);
+        }
+      } catch (e) {
+        debugPrint('Error: $e');
+      } finally {
+        _isLoading = false;
+        notifyListeners();
+      }
+    }
+
 }

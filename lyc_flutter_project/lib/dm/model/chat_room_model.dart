@@ -8,7 +8,7 @@ part 'chat_room_model.g.dart';
 
 @JsonSerializable()
 class ChatRoomModel {
-  final String commissionId;
+  final int commissionId;
   final ChatMemberListModel chatMembers;
   final ChatMessageListModel messages;
 

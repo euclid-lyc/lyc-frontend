@@ -12,6 +12,7 @@ import '../../data/style_list.dart' as styles;
 class DesiredStyleScreen extends StatefulWidget {
   const DesiredStyleScreen({super.key});
 
+
   @override
   State<DesiredStyleScreen> createState() => DesiredStyleScreenState();
 }
@@ -41,9 +42,6 @@ class DesiredStyleScreenState extends State<DesiredStyleScreen> {
       create: (_) => membershipState,
       child: Scaffold(
         backgroundColor: AppColor.lightGrey,
-        appBar: const NormalAppbar(
-          title: "의뢰서 작성하기",
-        ),
         body: SingleChildScrollView(
           child: Center(
             child: Container(
@@ -101,10 +99,6 @@ class DesiredStyleScreenState extends State<DesiredStyleScreen> {
                         onPressed: () async {
                           try {
                             await createCommissions();
-                            // if (mounted) {
-                            //   context.goNamed(Routes.otherMatters.name);
-                            // }
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => const OtherMattersScreen()));
                           } catch (e) {
                             debugPrint("저장 실패-2");
                           }

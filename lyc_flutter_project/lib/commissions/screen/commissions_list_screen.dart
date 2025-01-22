@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/commissions/model/commission_response.dart';
-import 'package:lyc_flutter_project/commissions/screen/basic_info_screen.dart';
+import 'package:lyc_flutter_project/commissions/screen/tap_view_screen.dart';
 import 'package:lyc_flutter_project/common/widget/custom_loading.dart';
 import 'package:lyc_flutter_project/common/widget/custom_text_button.dart';
 import 'package:lyc_flutter_project/common/widget/default_padding.dart';
 import 'package:lyc_flutter_project/common/widget/member_list.dart';
 import 'package:lyc_flutter_project/common/widget/normal_appbar.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
-import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 import 'package:provider/provider.dart';
+import '../../auth/join/Provider/login_provider.dart';
+import '../model/commission_response_model.dart';
 import '../provider/commissions_provider.dart';
 
 class CommissionsListScreen extends StatefulWidget {
@@ -46,6 +47,10 @@ class _CommissionsListScreenState extends State<CommissionsListScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final int memberId = Provider.of<LoginProvider>(
+        context,
+        listen: false)
+        .memberId;
     return Scaffold(
       backgroundColor: AppColor.lightGrey,
       appBar: const NormalAppbar(
@@ -64,32 +69,41 @@ class _CommissionsListScreenState extends State<CommissionsListScreen> {
                 sliver: SliverList(
                   delegate: SliverChildBuilderDelegate(
                     (context, index) {
-                      final CommissionResult commissionResult =
+                      final CommissionResponse commissionResponse =
                           value.commissionList[index];
                       return Padding(
                         padding: const EdgeInsets.only(bottom: 8),
-                        child: GestureDetector(
-                          onTap: () => pushWithoutNavBar(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const BasicInfoScreen(
-                                directorId: 0,
-                              ),
-                            ),
-                          ),
-                          child: MemberList(
+                        child: MemberList(
                             navigateMypage: false,
-                            profile: commissionResult.profileImage,
-                            nickname: commissionResult.nickname,
-                            id: commissionResult.loginId,
-                            button: const CustomTextButton(
-                              label: "의뢰서 확인하기",textColor: Colors.black,backgroundColor: AppColor.grey,
-                        //     onPressed:(){
-                        //      의뢰서 확인하기 페이지
-                        // },
-                            )
-                          ),
-                        ),
+                            profile: commissionResponse.profileImage,
+                            nickname: commissionResponse.nickname,
+                            id: commissionResponse.loginId,
+                            button: CustomTextButton(
+                              label: "의뢰서 확인하기",
+                              textColor: Colors.black,
+                              backgroundColor: AppColor.grey,
+                              onPressed: () async {
+                                final CommissionResponseModel? model =
+                                    await value.getCommission(
+                                        commissionResponse.commissionId);
+                                if (context.mounted) {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => TapViewScreen(
+                                          directorId:
+                                              memberId,
+                                        memberId: memberId,
+                                        model:model,
+                                        title: "의뢰서 확인하기",
+                                        commissionId: model?.commissionId,
+                                      ),
+
+                                    ),
+                                  );
+                                }
+                              },
+                            )),
                       );
                     },
                     childCount: value.commissionList.length,

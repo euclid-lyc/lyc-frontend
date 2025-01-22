@@ -3,15 +3,17 @@ import 'package:intl/intl.dart';
 import 'package:lyc_flutter_project/commissions/model/commission_model.dart';
 import 'package:lyc_flutter_project/commissions/screen/submission_success_screen.dart';
 import 'package:provider/provider.dart';
-import '../../common/widget/normal_appbar.dart';
+import '../../common/widget/two_buttons.dart';
 import '../../data/app_color.dart';
 import '../../styles/app_text_style.dart';
 import '../../widget/Controller.dart';
 import '../provider/commissions_provider.dart';
 
-
 class OtherMattersScreen extends StatefulWidget {
-  const OtherMattersScreen({super.key});
+  const OtherMattersScreen({super.key, required this.isDirector,required this.commissionId});
+
+  final bool isDirector;
+  final int? commissionId;
 
   @override
   OtherMattersScreenState createState() => OtherMattersScreenState();
@@ -36,16 +38,15 @@ class OtherMattersScreenState extends State<OtherMattersScreen> {
           data: ThemeData.light().copyWith(
             primaryColor: AppColor.brown,
             hintColor: AppColor.brown,
-            buttonTheme: const ButtonThemeData(textTheme: ButtonTextTheme.primary),
+            buttonTheme:
+                const ButtonThemeData(textTheme: ButtonTextTheme.primary),
             scaffoldBackgroundColor: Colors.white,
             colorScheme: const ColorScheme.light(
               primary: AppColor.brown,
               secondary: AppColor.brown,
             ),
             textButtonTheme: TextButtonThemeData(
-              style: TextButton.styleFrom(
-                foregroundColor: AppColor.brown
-              ),
+              style: TextButton.styleFrom(foregroundColor: AppColor.brown),
             ),
           ),
           child: child!,
@@ -64,27 +65,32 @@ class OtherMattersScreenState extends State<OtherMattersScreen> {
     }
   }
 
-  Future<void> createCommissions() async {
-   final commissionsProvider = Provider.of<CommissionsProvider>(context, listen: false);
 
-    commissionsProvider.model = commissionsProvider.model.copyWith(
-      otherMatters: OtherMatters(
-      minPrice: int.parse(_minPriceController.controller.text),
-      maxPrice: int.parse(_maxPriceController.controller.text),
-      dateToUse: _desiredDate == null ? '' : DateFormat('yyyy-MM-dd').format(_desiredDate!),
-      desiredDate: _receiveDate == null ? '' : DateFormat('yyyy-MM-dd').format(_receiveDate!),
-      text: _additionalInfoController.controller.text,
-      isShared: shareClothesList,
-      ),
-    );
-    commissionsProvider.createCommission();
 
-  }
   @override
   Widget build(BuildContext context) {
+    final commissionsProvider =
+        Provider.of<CommissionsProvider>(context, listen: false);
+    final int? commissionId = widget.commissionId;
+    Future<void> createCommissions() async {
+      commissionsProvider.model = commissionsProvider.model.copyWith(
+        otherMatters: OtherMatters(
+          minPrice: int.parse(_minPriceController.controller.text),
+          maxPrice: int.parse(_maxPriceController.controller.text),
+          dateToUse: _desiredDate == null
+              ? ''
+              : DateFormat('yyyy-MM-dd').format(_desiredDate!),
+          desiredDate: _receiveDate == null
+              ? ''
+              : DateFormat('yyyy-MM-dd').format(_receiveDate!),
+          text: _additionalInfoController.controller.text,
+          isShared: shareClothesList,
+        ),
+      );
+      commissionsProvider.createCommission();
+    }
     return Scaffold(
       backgroundColor: AppColor.lightGrey,
-      appBar: const NormalAppbar(title: "의뢰서 작성하기"),
       body: SingleChildScrollView(
         child: Center(
           child: Container(
@@ -109,18 +115,21 @@ class OtherMattersScreenState extends State<OtherMattersScreen> {
                           padding: const EdgeInsets.only(bottom: 20),
                           child: Text(
                             "Step 1. 원하시는 코디의 가격대는 얼마인가요?",
-                            style: AppTextStyle.littleTitle.copyWith(fontSize: 14),
+                            style:
+                                AppTextStyle.littleTitle.copyWith(fontSize: 14),
                             textAlign: TextAlign.left,
                           ),
                         ),
                         RangeSlider(
                           values: RangeValues(
-                            double.parse(_minPriceController.controller.text.isNotEmpty
-                                ? _minPriceController.controller.text
-                                : '0'),
-                            double.parse(_maxPriceController.controller.text.isNotEmpty
-                                ? _maxPriceController.controller.text
-                                : '0'),
+                            double.parse(
+                                _minPriceController.controller.text.isNotEmpty
+                                    ? _minPriceController.controller.text
+                                    : '0'),
+                            double.parse(
+                                _maxPriceController.controller.text.isNotEmpty
+                                    ? _maxPriceController.controller.text
+                                    : '0'),
                           ),
                           min: 0,
                           max: 500000,
@@ -130,17 +139,20 @@ class OtherMattersScreenState extends State<OtherMattersScreen> {
                             '${_maxPriceController.controller.text}원',
                           ),
                           activeColor: AppColor.brown,
-                          inactiveColor:AppColor.grey,
+                          inactiveColor: AppColor.grey,
                           onChanged: (RangeValues values) {
                             setState(() {
-                              _minPriceController.controller.text = values.start.round().toString();
-                              _maxPriceController.controller.text = values.end.round().toString();
+                              _minPriceController.controller.text =
+                                  values.start.round().toString();
+                              _maxPriceController.controller.text =
+                                  values.end.round().toString();
                             });
                           },
                         ),
                         Text(
                           '선택한 가격대: ${_minPriceController.controller.text}원 ~ ${_maxPriceController.controller.text}원',
-                          style: AppTextStyle.littleTitle.copyWith(fontSize: 14),
+                          style:
+                              AppTextStyle.littleTitle.copyWith(fontSize: 14),
                         ),
                       ],
                     ),
@@ -167,41 +179,62 @@ class OtherMattersScreenState extends State<OtherMattersScreen> {
                 // Step 4: 자유 입력
                 Padding(
                   padding: const EdgeInsets.only(bottom: 20),
-                  child: buildTextSection("Step 4. 자유롭게 입력해 주세요", _additionalInfoController),
+                  child: buildTextSection(
+                      "Step 4. 자유롭게 입력해 주세요", _additionalInfoController),
                 ),
                 // Step 5: 옷 리스트 공유 여부
                 Padding(
                   padding: const EdgeInsets.only(bottom: 20),
-                  child: buildSwitchSection("Step 5. 옷 리스트를 공유받을까요?", shareClothesList),
+                  child: buildSwitchSection(
+                      "Step 5. 옷 리스트를 공유받을까요?", shareClothesList),
                 ),
-                // 저장 버튼
                 Padding(
                   padding: const EdgeInsets.only(bottom: 20),
-                  child: TextButton(
-                    onPressed: () async {
-                      try {
-                        await createCommissions();
-                        if (context.mounted) {
-                              // context.goNamed(Routes.submissionSuccess.name);
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => const SubmissionSuccessScreen()));
-                        }
-                      } catch (e) {
-                        debugPrint("저장 실패-3");
-                      }
-                    },
-                    style: TextButton.styleFrom(
-                      backgroundColor: AppColor.brown,
-                      minimumSize: const Size(120, 40),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                    ),
-                    child: const Text(
-                      '저장',
-                      style: AppTextStyle.button,
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
+                  child: widget.isDirector
+                      ? TwoButtons(
+                          fstOnPressed: () async {
+                            Navigator.pop(context);
+                            await commissionsProvider
+                                .acceptCommission(commissionId!);
+                          },
+                          scdOnPressed: () async {
+                            await commissionsProvider
+                                .declineCommission(commissionId!);
+                            if (context.mounted) {
+                              Navigator.pop(context);
+                            }
+                          },
+                          fstLabel: "수락",
+                          scdLabel: "거절",
+                        )
+                      : TextButton(
+                          onPressed: () async {
+                            try {
+                              await createCommissions();
+                              if (context.mounted) {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const SubmissionSuccessScreen()));
+                              }
+                            } catch (e) {
+                              debugPrint("저장 실패-3");
+                            }
+                          },
+                          style: TextButton.styleFrom(
+                            backgroundColor: AppColor.brown,
+                            minimumSize: const Size(120, 40),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                          ),
+                          child: const Text(
+                            '저장',
+                            style: AppTextStyle.button,
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
                 ),
               ],
             ),
@@ -209,8 +242,8 @@ class OtherMattersScreenState extends State<OtherMattersScreen> {
         ),
       ),
     );
-  }
 
+  }
 
   Widget buildTextSection(String title, Controller controller) {
     return Container(
@@ -244,7 +277,8 @@ class OtherMattersScreenState extends State<OtherMattersScreen> {
         children: [
           Text(
             '입력',
-            style: AppTextStyle.hint.copyWith(color: Colors.black, fontSize: 14),
+            style:
+                AppTextStyle.hint.copyWith(color: Colors.black, fontSize: 14),
           ),
           const SizedBox(width: 12),
           Expanded(
@@ -253,7 +287,8 @@ class OtherMattersScreenState extends State<OtherMattersScreen> {
               child: TextField(
                 controller: controller.controller,
                 decoration: InputDecoration(
-                  contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
+                  contentPadding:
+                      const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
                   fillColor: AppColor.grey,
                   filled: true,
                   border: OutlineInputBorder(

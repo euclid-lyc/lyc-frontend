@@ -32,7 +32,7 @@ class _MypageScreenState extends State<MypageScreen> {
   void initState() {
     super.initState();
     if (widget.extra.keys.first == null && widget.extra.values.first) {
-        memberId = Provider.of<LoginProvider>(context, listen: false).memberId!;
+        memberId = Provider.of<LoginProvider>(context, listen: false).memberId;
     } else {
       memberId = widget.extra.keys.first!;
     }
