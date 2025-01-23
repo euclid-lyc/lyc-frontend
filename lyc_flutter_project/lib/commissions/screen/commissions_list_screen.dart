@@ -8,7 +8,6 @@ import 'package:lyc_flutter_project/common/widget/member_list.dart';
 import 'package:lyc_flutter_project/common/widget/normal_appbar.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:provider/provider.dart';
-import '../../auth/join/Provider/login_provider.dart';
 import '../model/commission_response_model.dart';
 import '../provider/commissions_provider.dart';
 

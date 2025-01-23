@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:lyc_flutter_project/commissions/model/commission_model.dart';
-import 'package:lyc_flutter_project/commissions/screen/other_matters_screen.dart';
-import 'package:lyc_flutter_project/common/widget/normal_appbar.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:provider/provider.dart';
-import '../../../widget/Controller.dart';
 import '../../auth/join/Provider/login_provider.dart';
 import '../../common/widget/custom_loading.dart';
 import '../../common/widget/default_padding.dart';
 import '../../mypage/widget/select_buttons_in_posting.dart';
-import '../../setting/widget/custom_text_form_field.dart';
-import '../../styles/app_text_style.dart';
+
 import '../provider/commissions_provider.dart';
 import '../../data/style_list.dart' as styles;
 

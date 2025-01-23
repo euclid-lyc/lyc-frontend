@@ -3,7 +3,6 @@ import 'package:intl/intl.dart';
 import 'package:lyc_flutter_project/commissions/provider/commissions_provider.dart';
 import 'package:lyc_flutter_project/commissions/screen/tap_view_screen.dart';
 import 'package:lyc_flutter_project/dm/provider/chat_provider.dart';
-import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 import '../../common/widget/custom_alert_dialog.dart';
 import '../../common/widget/normal_appbar.dart';
