@@ -37,8 +37,6 @@ class BasicInfoScreenState extends State<BasicInfoScreen> {
             bottom: 20.0,
             child: Consumer<CommissionsProvider>(
               builder: (context, value, child) {
-                int topSize = value.topSize;
-                int bottomSize = value.bottomSize;
                 if (memberId == null) {
                   return const Center(
                     child: CustomLoading(),

@@ -104,7 +104,7 @@ class _CustomButtonState extends State<_CustomButton> {
           isPressed = false;
         });
         if (onPressed != null) {
-          onPressed!();
+          onPressed();
         }
       },
       onTapCancel: () {
