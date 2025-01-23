@@ -26,25 +26,25 @@ class CustomDialog extends StatelessWidget {
 
     return Dialog(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20.0), // 모서리 둥글게
+        borderRadius: BorderRadius.circular(20),
       ),
       child: Container(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: AppColor.beige, // 배경색
-          borderRadius: BorderRadius.circular(20.0),
+          color: AppColor.beige,
+          borderRadius: BorderRadius.circular(20),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const SizedBox(height: 10.0),
+            const SizedBox(height: 12),
             Text(
               title,
               style: AppTextStyle.littleTitle,
               textAlign: TextAlign.center,
             ),
-            if (subtitle != null) const SizedBox(height: 10.0),
+            if (subtitle != null) const SizedBox(height: 12),
             if (subtitle != null)
               Text(
                 subtitle!,
@@ -53,7 +53,7 @@ class CustomDialog extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
             if (leftButtonText != null || rightButtonText != null)
-              const SizedBox(height: 20.0),
+              const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -69,7 +69,7 @@ class CustomDialog extends StatelessWidget {
                   ),
               ],
             ),
-            const SizedBox(height: 10.0),
+            const SizedBox(height: 12),
           ],
         ),
       ),
@@ -114,16 +114,16 @@ class _CustomButtonState extends State<_CustomButton> {
       },
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
-        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
-          color: isPressed ? Colors.yellow : AppColor.mocha, // 눌렸을 때 배경색
-          borderRadius: BorderRadius.circular(10.0),
+          color: isPressed ? Colors.yellow : AppColor.mocha,
+          borderRadius: BorderRadius.circular(12),
         ),
         child: Text(
           widget.text,
           style: TextStyle(
             color: isPressed ? Colors.white : Colors.black, // 글자색
-            fontSize: 14.0,
+            fontSize: 14,
           ),
         ),
       ),

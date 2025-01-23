@@ -30,7 +30,7 @@ class DesiredStyleScreenState extends State<DesiredStyleScreen> {
           builder: (context, loginProvider, child) {
             memberId = loginProvider.memberId;
             return DefaultPadding(
-              bottom: 20.0,
+              bottom: 20,
               child: Consumer<CommissionsProvider>(
                   builder: (context, value, child) {
                 if (memberId == null) {
@@ -107,7 +107,7 @@ class DesiredStyleScreenState extends State<DesiredStyleScreen> {
 //             padding: const EdgeInsets.only(bottom: 12),
 //             child: Text(
 //               'Step 1. 언제 입을 옷인가요?',
-//               style: AppTextStyle.littleTitle.copyWith(fontSize: 14.0),
+//               style: AppTextStyle.littleTitle.copyWith(fontSize: 14),
 //               textAlign: TextAlign.left,
 //             ),
 //           ),
@@ -167,29 +167,29 @@ class ContentBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(
-        bottom: 20.0,
+        bottom: 20,
       ),
       padding: const EdgeInsets.symmetric(
-        vertical: 16.0,
-        horizontal: 20.0,
+        vertical: 16,
+        horizontal: 20,
       ),
-      //height: 200.0,
+      //height: 200,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(
-          20.0,
+          20,
         ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8),
             child: Text(
               title,
               style: const TextStyle(
                 fontWeight: FontWeight.w600,
-                fontSize: 16.0,
+                fontSize: 16,
               ),
             ),
           ),

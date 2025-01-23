@@ -64,7 +64,7 @@ class OtherMattersScreenState extends State<OtherMattersScreen> {
         builder: (context, loginProvider, child) {
           memberId = loginProvider.memberId;
           return DefaultPadding(
-            bottom: 20.0,
+            bottom: 20,
             child: Consumer<CommissionsProvider>(
               builder: (context, value, child) {
                 if (memberId == null) {
@@ -147,10 +147,8 @@ class OtherMattersScreenState extends State<OtherMattersScreen> {
                         child: CustomTextFormField(
                           hint: "ex. 졸업식 때 입고 싶어요. 바지로 부탁드려요.",
                           maxLines: 5,
-                          containerMargin: 0.0,
                           focusedBorderColor: Colors.transparent,
-                          focusedBorderWidth: 0.0,
-                          contentPaddingHorizontal: 8.0,
+                          contentPaddingHorizontal: 8,
                           initialValue: value.model.otherMatters.text,
                           onChanged: (text) => value.updateText(text: text),
                           enabled: !isDirector,
@@ -201,9 +199,11 @@ class OtherMattersScreenState extends State<OtherMattersScreen> {
                                         }
                                       } catch (e) {
                                         if (context.mounted) {
-                                          ScaffoldMessenger.of(context).showSnackBar(
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
                                             SnackBar(
-                                              content: Text("오류가 발생했습니다: ${e.toString()}"),
+                                              content: Text(
+                                                  "오류가 발생했습니다: ${e.toString()}"),
                                             ),
                                           );
                                         }
@@ -279,7 +279,7 @@ class OtherMattersScreenState extends State<OtherMattersScreen> {
             padding: const EdgeInsets.only(bottom: 12),
             child: Text(
               title,
-              style: AppTextStyle.littleTitle.copyWith(fontSize: 14.0),
+              style: AppTextStyle.littleTitle.copyWith(fontSize: 14),
               textAlign: TextAlign.left,
             ),
           ),
@@ -449,56 +449,51 @@ class _SwitchButtonState extends State<SwitchButton> {
     return GestureDetector(
       onTap: widget.enabled
           ? () {
-        setState(() {
-          _isSelected = !_isSelected;
-        });
-        widget.onTap?.call(_isSelected);
-      }
+              setState(() {
+                _isSelected = !_isSelected;
+              });
+              widget.onTap?.call(_isSelected);
+            }
           : null,
       child: Container(
-        width: 80, // 고정된 가로 길이
-        height: 30,
+        width: 80,
+        height: 32,
         decoration: BoxDecoration(
           color: _isSelected ? AppColor.beige : AppColor.lightGrey,
-          borderRadius: BorderRadius.circular(25),
+          borderRadius: BorderRadius.circular(20),
         ),
         child: Row(
-          mainAxisAlignment: _isSelected ? MainAxisAlignment.end : MainAxisAlignment.start,
+          mainAxisAlignment:
+              _isSelected ? MainAxisAlignment.end : MainAxisAlignment.start,
           children: [
             Visibility(
               visible: !_isSelected,
               child: Padding(
-                padding: const EdgeInsets.only(left: 8.0), // 왼쪽 여백 추가
-                child: Text(
-                  '네',
-                  style: TextStyle(
-                    color: _isSelected ? Colors.white : Colors.black,
-                    fontSize: 12,
-                  ),
-                ),
+                padding: const EdgeInsets.only(left: 8),
+                child: Text('네',
+                    style: _isSelected
+                        ? AppTextStyle.button
+                        : AppTextStyle.button.copyWith(color: Colors.white)),
               ),
             ),
             const Spacer(),
             Visibility(
               visible: _isSelected,
               child: Padding(
-                padding: const EdgeInsets.only(left: 8.0), // 왼쪽 여백 추가
-                child: Text(
-                  '아니오',
-                  style: TextStyle(
-                    color: !_isSelected ? Colors.white : Colors.black,
-                    fontSize: 12,
-                  ),
-                ),
+                padding: const EdgeInsets.only(left: 8),
+                child: Text('아니오',
+                    style: _isSelected
+                        ? AppTextStyle.button
+                        : AppTextStyle.button.copyWith(color: Colors.white)),
               ),
             ),
             Container(
               width: 20,
               height: 20,
-              margin: const EdgeInsets.all(5),
+              margin: const EdgeInsets.all(4),
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(50),
+                borderRadius: BorderRadius.circular(52),
               ),
             ),
           ],
@@ -507,9 +502,6 @@ class _SwitchButtonState extends State<SwitchButton> {
     );
   }
 }
-
-
-
 
 class ContentBox extends StatelessWidget {
   final String title;
@@ -525,29 +517,29 @@ class ContentBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(
-        bottom: 20.0,
+        bottom: 20,
       ),
       padding: const EdgeInsets.symmetric(
-        vertical: 16.0,
-        horizontal: 20.0,
+        vertical: 16,
+        horizontal: 20,
       ),
       //height: 200.0,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(
-          20.0,
+          20,
         ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8),
             child: Text(
               title,
               style: const TextStyle(
                 fontWeight: FontWeight.w600,
-                fontSize: 16.0,
+                fontSize: 16,
               ),
             ),
           ),

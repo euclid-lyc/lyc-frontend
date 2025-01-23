@@ -34,7 +34,7 @@ class BasicInfoScreenState extends State<BasicInfoScreen> {
         builder: (context, loginProvider, child) {
           memberId = loginProvider.memberId;
           return DefaultPadding(
-            bottom: 20.0,
+            bottom: 20,
             child: Consumer<CommissionsProvider>(
               builder: (context, value, child) {
                 if (memberId == null) {
@@ -203,10 +203,10 @@ class BasicInfoScreenState extends State<BasicInfoScreen> {
                         child: CustomTextFormField(
                             hint: "ex. 종아리가 너무 두꺼운 게 고민이에요.",
                             maxLines: 5,
-                            containerMargin: 0.0,
+
                             focusedBorderColor: Colors.transparent,
-                            focusedBorderWidth: 0.0,
-                            contentPaddingHorizontal: 8.0,
+
+
                             initialValue: value.model.basicInfo.text,
                             onChanged: (text) => value.updateText(text: text),
                             enabled: !isDirector),
@@ -297,23 +297,23 @@ class ContentBox extends StatelessWidget {
         vertical: 16.0,
         horizontal: 20.0,
       ),
-      //height: 200.0,
+
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(
-          20.0,
+          20,
         ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8),
             child: Text(
               title,
               style: const TextStyle(
                 fontWeight: FontWeight.w600,
-                fontSize: 16.0,
+                fontSize: 16,
               ),
             ),
           ),
@@ -345,7 +345,7 @@ class SpecInputLine extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -354,13 +354,13 @@ class SpecInputLine extends StatelessWidget {
               label,
               style: const TextStyle(
                 fontWeight: FontWeight.w500,
-                fontSize: 16.0,
+                fontSize: 16,
               ),
               textAlign: TextAlign.end,
             ),
           ),
           const SizedBox(
-            width: 20.0,
+            width: 20,
           ),
           Expanded(
             child: (label == "키" || label == "몸무게")
@@ -368,8 +368,8 @@ class SpecInputLine extends StatelessWidget {
                     fillColor: const Color(0xffE9E9E9),
                     focusedBorderColor: Colors.black,
                     focusedBorderWidth: 1.5,
-                    contentPaddingVertical: 4.0,
-                    fontSize: 16.0,
+                    contentPaddingVertical: 4,
+                    fontSize: 16,
                     isDense: true,
                     initialValue: initialValue ?? '',
                     keyboardType: TextInputType.number,
@@ -404,21 +404,21 @@ class SpecSizeBox extends StatelessWidget {
         return GestureDetector(
           onTap: onTap,
           child: Container(
-            margin: const EdgeInsets.symmetric(vertical: 8.0),
+            margin: const EdgeInsets.symmetric(vertical: 8),
             decoration: BoxDecoration(
               color: const Color(0xffE9E9E9),
-              borderRadius: BorderRadius.circular(20.0),
+              borderRadius: BorderRadius.circular(20),
             ),
             width: double.infinity,
             alignment: Alignment.centerLeft,
             padding: const EdgeInsets.symmetric(
-              vertical: 4.0,
-              horizontal: 20.0,
+              vertical: 4,
+              horizontal: 20,
             ),
             child: Text(
               getValue(value).toString(),
               style: const TextStyle(
-                fontSize: 16.0,
+                fontSize: 16,
                 fontWeight: FontWeight.w500,
               ),
             ),

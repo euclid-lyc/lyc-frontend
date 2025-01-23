@@ -12,15 +12,13 @@ class TapViewScreen extends StatefulWidget {
       {super.key,
       this.directorId,
       this.model,
-      // this.memberId,
+
       required this.title,
       this.commissionId,
       required this.isDirector,
       required this.isUpdate});
 
   final int? directorId;
-
-  // final int? memberId;
   final CommissionResponseModel? model;
   final String title;
   final int? commissionId;
