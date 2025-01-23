@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lyc_flutter_project/styles/app_text_style.dart';
 
 import '../../data/app_color.dart';
 
@@ -11,17 +12,18 @@ class CustomDialog extends StatelessWidget {
   final VoidCallback? onRightButtonPressed;
 
   const CustomDialog({
-    Key? key,
+    super.key,
     required this.title,
     this.subtitle,
     this.leftButtonText,
     this.rightButtonText,
     this.onLeftButtonPressed,
     this.onRightButtonPressed,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
+
     return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20.0), // 모서리 둥글게
@@ -34,29 +36,24 @@ class CustomDialog extends StatelessWidget {
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // 타이틀
+            const SizedBox(height: 10.0),
             Text(
               title,
-              style: const TextStyle(
-                color: Colors.black, // 타이틀 글자 색
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
+              style: AppTextStyle.littleTitle,
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 10.0),
+            if (subtitle != null) const SizedBox(height: 10.0),
             if (subtitle != null)
               Text(
                 subtitle!,
-                style: const TextStyle(
-                  color: AppColor.brown,
-                  fontSize: 14,
-                ),
+                style: AppTextStyle.labelTextStyle
+                    .copyWith(fontSize: 14, color: AppColor.brown),
                 textAlign: TextAlign.center,
               ),
-            const SizedBox(height: 20.0),
-            // 버튼들 (선택적)
+            if (leftButtonText != null || rightButtonText != null)
+              const SizedBox(height: 20.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -72,6 +69,7 @@ class CustomDialog extends StatelessWidget {
                   ),
               ],
             ),
+            const SizedBox(height: 10.0),
           ],
         ),
       ),
@@ -83,8 +81,7 @@ class _CustomButton extends StatefulWidget {
   final String text;
   final VoidCallback? onPressed;
 
-  const _CustomButton({Key? key, required this.text, this.onPressed})
-      : super(key: key);
+  const _CustomButton({super.key, required this.text, this.onPressed});
 
   @override
   State<_CustomButton> createState() => _CustomButtonState();
@@ -95,6 +92,7 @@ class _CustomButtonState extends State<_CustomButton> {
 
   @override
   Widget build(BuildContext context) {
+    VoidCallback? onPressed = widget.onPressed;
     return GestureDetector(
       onTapDown: (_) {
         setState(() {
@@ -105,8 +103,8 @@ class _CustomButtonState extends State<_CustomButton> {
         setState(() {
           isPressed = false;
         });
-        if (widget.onPressed != null) {
-          widget.onPressed!();
+        if (onPressed != null) {
+          onPressed!();
         }
       },
       onTapCancel: () {
@@ -132,4 +130,3 @@ class _CustomButtonState extends State<_CustomButton> {
     );
   }
 }
-

@@ -106,7 +106,7 @@ Widget updateCommission(
                       }
                     },
               child: Text(
-                isDirector ? "의뢰서는 작성자만 수정이 \n 가능합니다" : "의뢰서 수정하기",
+                isDirector ? "의뢰서는 작성자만 \n수정이 가능합니다" : "의뢰서 수정하기",
                 style: isDirector? AppTextStyle.littleTitle: AppTextStyle.title.copyWith(color: Colors.black)
               ),
             ),
@@ -171,7 +171,7 @@ Widget terminateCommission(
                         context: context,
                         builder: (BuildContext context) {
                           return CustomAlertDialog(
-                            title: "정말 의뢰 종료 요청을 보내시겠습니까?",
+                            title: "의뢰 종료 요청을 보내시겠습니까?",
                             leftButtonLabel: "취소",
                             rightButtonLabel: "종료",
                             leftButtonPressed: () =>
@@ -183,7 +183,7 @@ Widget terminateCommission(
                           );
                         },
                       );
-                      // result가 true이면 의뢰 종료 요청 진행
+
                       if (result == true) {
                         try {
                           await value.terminateCommission(chatId);
@@ -193,7 +193,7 @@ Widget terminateCommission(
                               context: context,
                               builder: (context) {
                                 return const CustomDialog(
-                                  title: ">의뢰 종료를 요청했습니다<",
+                                  title: "> 의뢰 종료를 요청했습니다 <",
                                   subtitle: "상대방이 승낙해야 의뢰가 종료됩니다.",
                                 );
                               },

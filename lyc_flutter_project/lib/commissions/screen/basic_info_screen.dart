@@ -69,7 +69,7 @@ class BasicInfoScreenState extends State<BasicInfoScreen> {
                             SpecInputLine(
                               label: "상의 사이즈",
                               initialValue: "",
-                              value: value.model.basicInfo.topSize,
+                              getValue: (p0) => p0.topSize,
                               enabled: !isDirector,
                               onTap: () {
                                 showDialog(
@@ -84,7 +84,7 @@ class BasicInfoScreenState extends State<BasicInfoScreen> {
                                     updateValue: (p0, p1) =>
                                         p0.updateTopSize(topSize: p1),
                                     fstOnPressed: () {
-                                      value.updateTopSize(topSize: topSize);
+                                      value.rollbackTopSize();
                                       Navigator.pop(context);
                                     },
                                     scdOnPressed: () => Navigator.pop(context),
@@ -95,7 +95,7 @@ class BasicInfoScreenState extends State<BasicInfoScreen> {
                             SpecInputLine(
                               label: "하의 사이즈",
                               initialValue: "",
-                              value: value.model.basicInfo.bottomSize,
+                              getValue: (p0) => p0.bottomSize,
                               enabled: !isDirector,
                               onTap: () {
                                 showDialog(
@@ -103,14 +103,13 @@ class BasicInfoScreenState extends State<BasicInfoScreen> {
                                   builder: (context) =>
                                       CustomNumberPicker<CommissionsProvider>(
                                     title: "하의 사이즈를 선택해주세요.",
-                                    minValue: 20,
+                                    minValue: 22,
                                     maxValue: 42,
                                     getValue: (p0) => p0.bottomSize,
                                     updateValue: (p0, p1) =>
                                         p0.updateBottomSize(bottomSize: p1),
                                     fstOnPressed: () {
-                                      value.updateBottomSize(
-                                          bottomSize: bottomSize);
+                                      value.rollbackBottomSize();
                                       Navigator.pop(context);
                                     },
                                     scdOnPressed: () => Navigator.pop(context),
@@ -182,17 +181,17 @@ class BasicInfoScreenState extends State<BasicInfoScreen> {
                             enabled: !isDirector),
                       ),
                       ContentBox(
-                        title: "9. 강조하고 싶은 신체 부위가 있나요?",
+                        title: "8. 강조하고 싶은 신체 부위가 있나요?",
                         child: ButtonList(
                             name: styles.StyleList.bodyParts,
                             selected: value
                                 .model.basicInfo.infoBodyType.goodBodyTypeList,
                             onSelected: (v) =>
-                                value.updateBadBodyTypes(selected: v),
+                                value.updateGoodBodyTypes(selected: v),
                             enabled: !isDirector),
                       ),
                       ContentBox(
-                        title: "10. 보완하고 싶은 신체 부위가 있나요?",
+                        title: "9. 보완하고 싶은 신체 부위가 있나요?",
                         child: ButtonList(
                             name: styles.StyleList.bodyParts,
                             selected: value
@@ -331,7 +330,7 @@ class SpecInputLine extends StatelessWidget {
   final String label;
   final String? initialValue;
   final VoidCallback? onTap;
-  final String? value;
+  final int Function(CommissionsProvider)? getValue;
   final Function(String)? onChanged;
   final bool enabled;
 
@@ -340,7 +339,7 @@ class SpecInputLine extends StatelessWidget {
     required this.label,
     required this.initialValue,
     this.onTap,
-    this.value,
+    this.getValue,
     this.onChanged,
     required this.enabled,
   });
@@ -381,7 +380,7 @@ class SpecInputLine extends StatelessWidget {
                   )
                 : SpecSizeBox(
                     onTap: onTap!,
-                    string: value,
+              getValue: getValue!,
                   ),
           ),
         ],
@@ -392,12 +391,12 @@ class SpecInputLine extends StatelessWidget {
 
 class SpecSizeBox extends StatelessWidget {
   final VoidCallback onTap;
-  final String? string;
+  final int Function(CommissionsProvider) getValue;
 
   const SpecSizeBox({
     super.key,
     required this.onTap,
-    required this.string,
+    required this.getValue,
   });
 
   @override
@@ -419,7 +418,7 @@ class SpecSizeBox extends StatelessWidget {
               horizontal: 20.0,
             ),
             child: Text(
-              string!,
+              getValue(value).toString(),
               style: const TextStyle(
                 fontSize: 16.0,
                 fontWeight: FontWeight.w500,

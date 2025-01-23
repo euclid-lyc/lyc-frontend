@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 
-// import 'package:lyc_flutter_project/commissions/model/commission_model.dart';
 import 'package:lyc_flutter_project/commissions/model/commission_response.dart';
 import '../model/commission_response_model.dart';
 import '../repository/commissions_repository.dart';
@@ -28,32 +27,38 @@ class CommissionsProvider with ChangeNotifier {
     _model = model;
   }
 
-
-
   void updateHeight({required int height}) {
-    _model.copyWith(basicInfo: _model.basicInfo.copyWith(height: height));
+    _model =_model.copyWith(basicInfo: _model.basicInfo.copyWith(height: height));
     notifyListeners();
   }
 
   void updateWeight({required int weight}) {
-    _model.copyWith(basicInfo: _model.basicInfo.copyWith(weight: weight));
+    _model =_model.copyWith(basicInfo: _model.basicInfo.copyWith(weight: weight));
     notifyListeners();
   }
 
   void updateTopSize({required int topSize}) {
-    _model.copyWith(
-        basicInfo: _model.basicInfo.copyWith(topSize: "SIZE_$topSize"));
+    _topSize = topSize;
+    notifyListeners();
+  }
+
+  void rollbackTopSize() {
+    _topSize = int.parse(_model.basicInfo.topSize.substring(5));
+    notifyListeners();
+  }
+
+  void rollbackBottomSize() {
+    _bottomSize = int.parse(_model.basicInfo.bottomSize.substring(5));
     notifyListeners();
   }
 
   void updateBottomSize({required int bottomSize}) {
-    _model.copyWith(
-        basicInfo: _model.basicInfo.copyWith(bottomSize: "SIZE_$bottomSize"));
+    _bottomSize =bottomSize;
     notifyListeners();
   }
 
   void updateText({required String text}) {
-    _model.copyWith(basicInfo: _model.basicInfo.copyWith(text: text));
+    _model = _model.copyWith(basicInfo: _model.basicInfo.copyWith(text: text));
     notifyListeners();
   }
 
@@ -178,8 +183,7 @@ class CommissionsProvider with ChangeNotifier {
     }
     _model = _model.copyWith(
         style: _model.style.copyWith(
-            styleList:
-                _model.style.styleList.copyWith(styleList: list)));
+            styleList: _model.style.styleList.copyWith(styleList: list)));
     notifyListeners();
   }
 
@@ -191,8 +195,8 @@ class CommissionsProvider with ChangeNotifier {
       list.add(selected);
     }
     _model = _model.copyWith(
-        style: _model.style.copyWith(
-            fitList: _model.style.fitList.copyWith(fitList: list)));
+        style: _model.style
+            .copyWith(fitList: _model.style.fitList.copyWith(fitList: list)));
     notifyListeners();
   }
 
@@ -218,8 +222,7 @@ class CommissionsProvider with ChangeNotifier {
       list.add(selected);
     }
     _model = _model.copyWith(
-        style: _model.style
-            .copyWith(colorList: ColorList(colorList: list)));
+        style: _model.style.copyWith(colorList: _model.style.colorList.copyWith(colorList: list)));
     notifyListeners();
   }
 
@@ -322,8 +325,12 @@ class CommissionsProvider with ChangeNotifier {
     _isLoading = true;
     notifyListeners();
     try {
+      _model = _model.copyWith(basicInfo: _model.basicInfo.copyWith(topSize: "SIZE_$_topSize",bottomSize: "SIZE_$_bottomSize"));
       final resp = await repositoryProvider.commissionsRepository
-          .updateCommission(commissionId: commissionId,commissionModel: _model);
+          .updateCommission(
+              commissionId: commissionId, commissionModel: _model);
+      debugPrint(resp.message);
+      debugPrint(resp.result.toString());
       if (!resp.isSuccess) throw Exception(resp.message);
     } catch (e) {
       debugPrint('Error: $e');
@@ -332,27 +339,28 @@ class CommissionsProvider with ChangeNotifier {
       notifyListeners();
     }
   }
-  late String topSizeString;
 
-  late int topSize;
+  int? _topSize;
+  int? _bottomSize;
 
-  late String bottomSizeString;
+  get topSize => _topSize;
 
-  late int bottomSize;
+  get bottomSize => _bottomSize;
+
   Future<CommissionResponseModel?> getCommission(int commissionId) async {
     _isLoading = true;
     notifyListeners();
     try {
-      final resp = await repositoryProvider.commissionsRepository.getCommission(commissionId: commissionId);
+      final resp = await repositoryProvider.commissionsRepository
+          .getCommission(commissionId: commissionId);
 
       if (!resp.isSuccess) {
         throw Exception(resp.message);
       } else {
         _model = resp.result.commission;
-        topSizeString = model.basicInfo.topSize;
-        bottomSizeString = model.basicInfo.bottomSize;
-        topSize = int.parse(topSizeString.replaceAll(RegExp(r'\D'),''));
-        bottomSize = int.parse(bottomSizeString.replaceAll(RegExp(r'\D'), ''));
+
+        _topSize = int.parse(_model.basicInfo.topSize.substring(5));
+        _bottomSize = int.parse(_model.basicInfo.bottomSize.substring(5));
         return resp.result;
       }
     } catch (e) {

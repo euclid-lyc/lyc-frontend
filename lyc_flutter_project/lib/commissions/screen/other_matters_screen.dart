@@ -11,6 +11,7 @@ import '../../setting/widget/custom_text_form_field.dart';
 import '../../styles/app_text_style.dart';
 import '../../widget/Controller.dart';
 import '../provider/commissions_provider.dart';
+import '../widget/custom_dialog.dart';
 
 class OtherMattersScreen extends StatefulWidget {
   const OtherMattersScreen(
@@ -184,10 +185,28 @@ class OtherMattersScreenState extends State<OtherMattersScreen> {
                             : widget.isUpdate
                                 ? TextButton(
                                     onPressed: () async {
+                                      Navigator.pop(context);
                                       try {
                                         value.updateCommission(commissionId!);
+                                        if (context.mounted) {
+                                          Navigator.pop(context);
+                                          showDialog(
+                                            context: context,
+                                            builder: (context) {
+                                              return const CustomDialog(
+                                                title: "> 의뢰서 수정이 완료되었습니다 <",
+                                              );
+                                            },
+                                          );
+                                        }
                                       } catch (e) {
-                                        debugPrint("저장 실패-3");
+                                        if (context.mounted) {
+                                          ScaffoldMessenger.of(context).showSnackBar(
+                                            SnackBar(
+                                              content: Text("오류가 발생했습니다: ${e.toString()}"),
+                                            ),
+                                          );
+                                        }
                                       }
                                     },
                                     style: TextButton.styleFrom(
@@ -217,7 +236,7 @@ class OtherMattersScreenState extends State<OtherMattersScreen> {
                                           );
                                         }
                                       } catch (e) {
-                                        debugPrint("저장 실패-3");
+                                        debugPrint("의뢰서 작성이 실패했습니다.");
                                       }
                                     },
                                     style: TextButton.styleFrom(

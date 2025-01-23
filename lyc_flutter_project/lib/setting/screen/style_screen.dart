@@ -75,7 +75,7 @@ class _StyleScreenState extends State<StyleScreen> {
                                       builder: (context) => CustomNumberPicker<SettingProvider>(
                                         title: "상의 사이즈를 선택해주세요.",
                                         minValue: 80,
-                                        maxValue: 120,
+                                        maxValue: 130,
                                         step: 5,
                                         getValue: (p0) => p0.topSize,
                                         updateValue: (p0, p1) => p0.updateTopSize(
@@ -99,7 +99,7 @@ class _StyleScreenState extends State<StyleScreen> {
                                       context: context,
                                       builder: (context) => CustomNumberPicker<SettingProvider>(
                                         title: "하의 사이즈를 선택해주세요.",
-                                        minValue: 24,
+                                        minValue: 22,
                                         maxValue: 42,
                                         getValue: (p0) => p0.bottomSize,
                                         updateValue: (p0, p1) => p0.updateBottomSize(

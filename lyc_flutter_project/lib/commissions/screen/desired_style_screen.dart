@@ -11,7 +11,8 @@ import '../../data/style_list.dart' as styles;
 
 class DesiredStyleScreen extends StatefulWidget {
   const DesiredStyleScreen({super.key, required this.isDirector});
-final bool isDirector;
+
+  final bool isDirector;
 
   @override
   State<DesiredStyleScreen> createState() => DesiredStyleScreenState();
@@ -19,7 +20,6 @@ final bool isDirector;
 
 class DesiredStyleScreenState extends State<DesiredStyleScreen> {
   int? memberId;
-
 
   @override
   Widget build(BuildContext context) {
@@ -33,72 +33,63 @@ class DesiredStyleScreenState extends State<DesiredStyleScreen> {
               bottom: 20.0,
               child: Consumer<CommissionsProvider>(
                   builder: (context, value, child) {
-                    if (memberId == null) {
-                      return const Center(
-                        child: CustomLoading(),
-                      );
-                    } else {
-                      return ListView(
-                        keyboardDismissBehavior:
+                if (memberId == null) {
+                  return const Center(
+                    child: CustomLoading(),
+                  );
+                } else {
+                  return ListView(
+                    keyboardDismissBehavior:
                         ScrollViewKeyboardDismissBehavior.onDrag,
-                        children: [
-                          // Padding(
-                          //   padding: const EdgeInsets.only(bottom: 20),
-                          //   child: buildOccasionSection(),
-                          // ),
-                          ContentBox(
-                            title: "2. 원하시는 스타일은 무엇인가요?",
-                            child: ButtonList(
-                              name: styles.StyleList.styleOptions,
-                              selected: value
-                                  .model.style.styleList.styleList,
-                              onSelected: (v) =>
-                                  value.updatePreferredStyle(selected: v),
-                                enabled:!isDirector),
+                    children: [
+                      // Padding(
+                      //   padding: const EdgeInsets.only(bottom: 20),
+                      //   child: buildOccasionSection(),
+                      // ),
+                      ContentBox(
+                        title: "2. 원하시는 스타일은 무엇인가요?",
+                        child: ButtonList(
+                            name: styles.StyleList.styleOptions,
+                            selected: value.model.style.styleList.styleList,
+                            onSelected: (v) =>
+                                value.updateStyleList(selected: v),
+                            enabled: !isDirector),
+                      ),
+                      ContentBox(
+                        title: "3. 원하시는 핏은 무엇인가요?",
+                        child: ButtonList(
+                            name: styles.StyleList.fitOptions,
+                            selected: value.model.style.fitList.fitList,
+                            onSelected: (v) => value.updateFitList(selected: v),
+                            enabled: !isDirector),
+                      ),
 
-                          ),
-                          ContentBox(
-                            title: "3. 원하시는 핏은 무엇인가요?",
-                            child: ButtonList(
-                              name: styles.StyleList.fitOptions,
-                              selected: value
-                                  .model.style.fitList.fitList,
-                              onSelected: (v) =>
-                                  value.updatePreferredFits(selected: v),
-                                enabled:    !isDirector),
-                          ),
-
-                          ContentBox(
-                            title: "4. 원하시는 소재는 무엇인가요?",
-                            child: ButtonList(
-                              name: styles.StyleList.materialOptions,
-                              selected: value
-                                  .model.style.materialList.materialList,
-                              onSelected: (v) =>
-                                  value.updatePreferredMaterials(selected: v),
-                                enabled: !isDirector),
-                          ),
-                          ContentBox(
-                            title: "4. 원하시는 색상은 무엇인가요?",
-                            child: ButtonList(
-                              name: styles.StyleList.colorsOptions,
-                              selected: value
-                                  .model.style.colorList.colorList,
-                              onSelected: (v) =>
-                                  value.updatePreferredMaterials(selected: v),
-                                enabled: !isDirector),
-                          ),
-
-                        ],
-
-                      );
-                    }
-                  }
-              ),
+                      ContentBox(
+                        title: "4. 원하시는 소재는 무엇인가요?",
+                        child: ButtonList(
+                            name: styles.StyleList.materialOptions,
+                            selected:
+                                value.model.style.materialList.materialList,
+                            onSelected: (v) =>
+                                value.updateMaterialList(selected: v),
+                            enabled: !isDirector),
+                      ),
+                      ContentBox(
+                        title: "4. 원하시는 색상은 무엇인가요?",
+                        child: ButtonList(
+                            name: styles.StyleList.colorsOptions,
+                            selected: value.model.style.colorList.colorList,
+                            onSelected: (v) =>
+                                value.updateColorList(selected: v),
+                            enabled: !isDirector),
+                      ),
+                    ],
+                  );
+                }
+              }),
             );
           },
-        )
-    );
+        ));
   }
 
 // Widget buildOccasionSection() {
@@ -160,9 +151,8 @@ class DesiredStyleScreenState extends State<DesiredStyleScreen> {
 //     ),
 //   );
 // }
-
-
 }
+
 class ContentBox extends StatelessWidget {
   final String title;
   final Widget child;
@@ -210,8 +200,6 @@ class ContentBox extends StatelessWidget {
   }
 }
 
-
-
 class ButtonList extends StatelessWidget {
   final List<String> name;
   final List<String> selected;
@@ -220,10 +208,10 @@ class ButtonList extends StatelessWidget {
 
   const ButtonList(
       {super.key,
-        required this.name,
-        required this.selected,
-        required this.onSelected,
-        required this.enabled});
+      required this.name,
+      required this.selected,
+      required this.onSelected,
+      required this.enabled});
 
   @override
   Widget build(BuildContext context) {
@@ -237,7 +225,7 @@ class ButtonList extends StatelessWidget {
                   name,
                   selected,
                   i,
-                      () => onSelected(name[i]),
+                  () => onSelected(name[i]),
                   AppColor.brown,
                   AppColor.lightGrey,
                   enabled: enabled,
@@ -253,7 +241,7 @@ class ButtonList extends StatelessWidget {
                   name,
                   selected,
                   i,
-                      () => onSelected(name[i]),
+                  () => onSelected(name[i]),
                   AppColor.brown,
                   AppColor.lightGrey,
                   enabled: enabled,
@@ -265,4 +253,3 @@ class ButtonList extends StatelessWidget {
     );
   }
 }
-
