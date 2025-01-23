@@ -56,7 +56,7 @@ class LoginProvider extends ChangeNotifier {
     if (_memberId == -1) return false;
 
     try {
-      final resp = await mypageRepository.getProfile(memberId: _memberId!);
+      final resp = await mypageRepository.getProfile(memberId: _memberId);
 
       if (resp.isSuccess) {
         _profile = resp.result.profileImage;

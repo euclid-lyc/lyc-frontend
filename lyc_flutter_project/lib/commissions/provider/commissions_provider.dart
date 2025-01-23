@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+
 // import 'package:lyc_flutter_project/commissions/model/commission_model.dart';
 import 'package:lyc_flutter_project/commissions/model/commission_response.dart';
 import '../model/commission_response_model.dart';
@@ -22,28 +23,40 @@ class CommissionsProvider with ChangeNotifier {
   CommissionModel _model = CommissionModel.defaultValue();
 
   CommissionModel get model => _model;
-  set model(CommissionModel model){
+
+  set model(CommissionModel model) {
     _model = model;
   }
 
 
+
   void updateHeight({required int height}) {
     _model.copyWith(basicInfo: _model.basicInfo.copyWith(height: height));
+    notifyListeners();
   }
+
   void updateWeight({required int weight}) {
     _model.copyWith(basicInfo: _model.basicInfo.copyWith(weight: weight));
-  }
-  void updateTopSize({required int topSize}) {
-    _model.copyWith(basicInfo: _model.basicInfo.copyWith(topSize: topSize.toString()));
-  }
-  void updateBottomSize({required int bottomSize}) {
-    _model.copyWith(basicInfo: _model.basicInfo.copyWith(bottomSize: bottomSize.toString()));
+    notifyListeners();
   }
 
+  void updateTopSize({required int topSize}) {
+    _model.copyWith(
+        basicInfo: _model.basicInfo.copyWith(topSize: "SIZE_$topSize"));
+    notifyListeners();
+  }
+
+  void updateBottomSize({required int bottomSize}) {
+    _model.copyWith(
+        basicInfo: _model.basicInfo.copyWith(bottomSize: "SIZE_$bottomSize"));
+    notifyListeners();
+  }
 
   void updateText({required String text}) {
-    _model.copyWith(basicInfo: _model.basicInfo.copyWith(text:text));
+    _model.copyWith(basicInfo: _model.basicInfo.copyWith(text: text));
+    notifyListeners();
   }
+
   void updatePreferredStyle({required String selected}) {
     List<String> list = _model.basicInfo.infoStyle.preferredStyleList;
     if (list.contains(selected)) {
@@ -52,8 +65,9 @@ class CommissionsProvider with ChangeNotifier {
       list.add(selected);
     }
     _model = _model.copyWith(
-        basicInfo: _model.basicInfo
-            .copyWith(infoStyle: _model.basicInfo.infoStyle.copyWith(preferredStyleList: list)));
+        basicInfo: _model.basicInfo.copyWith(
+            infoStyle:
+                _model.basicInfo.infoStyle.copyWith(preferredStyleList: list)));
     notifyListeners();
   }
 
@@ -65,8 +79,9 @@ class CommissionsProvider with ChangeNotifier {
       list.add(selected);
     }
     _model = _model.copyWith(
-        basicInfo: _model.basicInfo
-            .copyWith(infoStyle: _model.basicInfo.infoStyle.copyWith(nonPreferredStyleList: list)));
+        basicInfo: _model.basicInfo.copyWith(
+            infoStyle: _model.basicInfo.infoStyle
+                .copyWith(nonPreferredStyleList: list)));
     notifyListeners();
   }
 
@@ -78,8 +93,9 @@ class CommissionsProvider with ChangeNotifier {
       list.add(selected);
     }
     _model = _model.copyWith(
-        basicInfo: _model.basicInfo
-            .copyWith(infoMaterial: _model.basicInfo.infoMaterial.copyWith(preferredMaterialList: list)));
+        basicInfo: _model.basicInfo.copyWith(
+            infoMaterial: _model.basicInfo.infoMaterial
+                .copyWith(preferredMaterialList: list)));
     notifyListeners();
   }
 
@@ -92,7 +108,8 @@ class CommissionsProvider with ChangeNotifier {
     }
     _model = _model.copyWith(
         basicInfo: _model.basicInfo.copyWith(
-            infoMaterial: _model.basicInfo.infoMaterial.copyWith(nonPreferredMaterialList: list)));
+            infoMaterial: _model.basicInfo.infoMaterial
+                .copyWith(nonPreferredMaterialList: list)));
     notifyListeners();
   }
 
@@ -104,8 +121,9 @@ class CommissionsProvider with ChangeNotifier {
       list.add(selected);
     }
     _model = _model.copyWith(
-        basicInfo: _model.basicInfo
-            .copyWith(infoFit: _model.basicInfo.infoFit.copyWith(preferredFitList: list)));
+        basicInfo: _model.basicInfo.copyWith(
+            infoFit:
+                _model.basicInfo.infoFit.copyWith(preferredFitList: list)));
     notifyListeners();
   }
 
@@ -117,8 +135,9 @@ class CommissionsProvider with ChangeNotifier {
       list.add(selected);
     }
     _model = _model.copyWith(
-        basicInfo: _model.basicInfo
-            .copyWith(infoFit: _model.basicInfo.infoFit.copyWith(nonPreferredFitList: list)));
+        basicInfo: _model.basicInfo.copyWith(
+            infoFit:
+                _model.basicInfo.infoFit.copyWith(nonPreferredFitList: list)));
     notifyListeners();
   }
 
@@ -130,8 +149,9 @@ class CommissionsProvider with ChangeNotifier {
       list.add(selected);
     }
     _model = _model.copyWith(
-        basicInfo: _model.basicInfo
-            .copyWith(infoBodyType:_model.basicInfo.infoBodyType.copyWith(badBodyTypeList: list)));
+        basicInfo: _model.basicInfo.copyWith(
+            infoBodyType:
+                _model.basicInfo.infoBodyType.copyWith(badBodyTypeList: list)));
     notifyListeners();
   }
 
@@ -143,90 +163,101 @@ class CommissionsProvider with ChangeNotifier {
       list.add(selected);
     }
     _model = _model.copyWith(
-        basicInfo: _model.basicInfo
-            .copyWith(infoBodyType: _model.basicInfo.infoBodyType.copyWith(goodBodyTypeList:list)));
+        basicInfo: _model.basicInfo.copyWith(
+            infoBodyType: _model.basicInfo.infoBodyType
+                .copyWith(goodBodyTypeList: list)));
     notifyListeners();
   }
 
   void updateStyleList({required String selected}) {
-    List<String> list = _model.desiredStyle.styleList.styleList;
+    List<String> list = _model.style.styleList.styleList;
     if (list.contains(selected)) {
       list.remove(selected);
     } else {
       list.add(selected);
     }
     _model = _model.copyWith(
-        desiredStyle: _model.desiredStyle
-            .copyWith(styleList:_model.desiredStyle.styleList.copyWith(styleList: list)));
+        style: _model.style.copyWith(
+            styleList:
+                _model.style.styleList.copyWith(styleList: list)));
     notifyListeners();
   }
+
   void updateFitList({required String selected}) {
-    List<String> list = _model.desiredStyle.fitList.fitList;
+    List<String> list = _model.style.fitList.fitList;
     if (list.contains(selected)) {
       list.remove(selected);
     } else {
       list.add(selected);
     }
     _model = _model.copyWith(
-        desiredStyle: _model.desiredStyle.copyWith(fitList:_model.desiredStyle.fitList.copyWith(fitList: list)));
+        style: _model.style.copyWith(
+            fitList: _model.style.fitList.copyWith(fitList: list)));
     notifyListeners();
   }
+
   void updateMaterialList({required String selected}) {
-    List<String> list = _model.desiredStyle.materialList.materialList;
+    List<String> list = _model.style.materialList.materialList;
     if (list.contains(selected)) {
       list.remove(selected);
     } else {
       list.add(selected);
     }
     _model = _model.copyWith(
-        desiredStyle: _model.desiredStyle.copyWith(materialList: _model.desiredStyle.materialList.copyWith(materialList: list)));
+        style: _model.style.copyWith(
+            materialList:
+                _model.style.materialList.copyWith(materialList: list)));
     notifyListeners();
   }
 
   void updateColorList({required String selected}) {
-    List<String> list = _model.desiredStyle.colorList.colorList;
+    List<String> list = _model.style.colorList.colorList;
     if (list.contains(selected)) {
       list.remove(selected);
     } else {
       list.add(selected);
     }
     _model = _model.copyWith(
-        desiredStyle: _model.desiredStyle.copyWith(colorList: ColorList(colorList: list)));
+        style: _model.style
+            .copyWith(colorList: ColorList(colorList: list)));
     notifyListeners();
   }
 
-  void updateMinPrice({required int minPrice}){
-    _model = _model.copyWith(otherMatters: _model.otherMatters.copyWith(minPrice: minPrice));
+  void updateMinPrice({required int minPrice}) {
+    _model = _model.copyWith(
+        otherMatters: _model.otherMatters.copyWith(minPrice: minPrice));
+    notifyListeners();
   }
 
-  void updateMaxPrice({required int maxPrice}){
-    _model = _model.copyWith(otherMatters:_model.otherMatters.copyWith(maxPrice: maxPrice));
+  void updateMaxPrice({required int maxPrice}) {
+    _model = _model.copyWith(
+        otherMatters: _model.otherMatters.copyWith(maxPrice: maxPrice));
+    notifyListeners();
   }
 
   void updateDateToUse({required String dateToUse}) {
     _model = _model.copyWith(
-      otherMatters: _model.otherMatters.copyWith(dateToUse: dateToUse)
-    );
+        otherMatters: _model.otherMatters.copyWith(dateToUse: dateToUse));
+    notifyListeners();
   }
 
   void updateDesiredDate({required String desiredDate}) {
     _model = _model.copyWith(
-      otherMatters: _model.otherMatters.copyWith(desiredDate: desiredDate)
-    );
+        otherMatters: _model.otherMatters.copyWith(desiredDate: desiredDate));
+    notifyListeners();
   }
 
   void updateAdditionalText({required String text}) {
-    _model = _model.copyWith(
-      otherMatters: _model.otherMatters.copyWith(text: text)
-    );
+    _model =
+        _model.copyWith(otherMatters: _model.otherMatters.copyWith(text: text));
+    notifyListeners();
   }
 
   void updateIsShared({required bool isShared}) {
     _model = _model.copyWith(
-      otherMatters: _model.otherMatters.copyWith(isShared: isShared)
-    );
+        otherMatters: _model.otherMatters.copyWith(isShared: isShared));
+    notifyListeners();
   }
-
 
   Future<void> createCommission() async {
     _isLoading = true;
@@ -292,7 +323,7 @@ class CommissionsProvider with ChangeNotifier {
     notifyListeners();
     try {
       final resp = await repositoryProvider.commissionsRepository
-          .updateCommission(commissionId: commissionId);
+          .updateCommission(commissionId: commissionId,commissionModel: _model);
       if (!resp.isSuccess) throw Exception(resp.message);
     } catch (e) {
       debugPrint('Error: $e');
@@ -301,19 +332,29 @@ class CommissionsProvider with ChangeNotifier {
       notifyListeners();
     }
   }
+  late String topSizeString;
 
-  Future<CommissionResponseModel?> getCommission(
-      int commissionId) async {
+  late int topSize;
+
+  late String bottomSizeString;
+
+  late int bottomSize;
+  Future<CommissionResponseModel?> getCommission(int commissionId) async {
     _isLoading = true;
     notifyListeners();
     try {
-
-      final resp = await repositoryProvider.commissionsRepository
-          .getCommission(commissionId: commissionId);
-      debugPrint(resp.message);
+      final resp = await repositoryProvider.commissionsRepository.getCommission(commissionId: commissionId);
+      debugPrint("받아오기 성공1");
       if (!resp.isSuccess) {
+        debugPrint("받아오기 실패");
         throw Exception(resp.message);
       } else {
+        debugPrint("받아오기 성공");
+        _model = resp.result.commission;
+        topSizeString = model.basicInfo.topSize;
+        bottomSizeString = model.basicInfo.bottomSize;
+        topSize = int.parse(topSizeString.replaceAll(RegExp(r'\D'),''));
+        bottomSize = int.parse(bottomSizeString.replaceAll(RegExp(r'\D'), ''));
         return resp.result;
       }
     } catch (e) {
@@ -324,7 +365,6 @@ class CommissionsProvider with ChangeNotifier {
       notifyListeners();
     }
   }
-
 
   Future<void> acceptCommission(int commissionId) async {
     _isLoading = true;

@@ -51,10 +51,10 @@ class DesiredStyleScreenState extends State<DesiredStyleScreen> {
                             child: ButtonList(
                               name: styles.StyleList.styleOptions,
                               selected: value
-                                  .model.desiredStyle.styleList.styleList,
+                                  .model.style.styleList.styleList,
                               onSelected: (v) =>
                                   value.updatePreferredStyle(selected: v),
-                                enabled:    !isDirector),
+                                enabled:!isDirector),
 
                           ),
                           ContentBox(
@@ -62,7 +62,7 @@ class DesiredStyleScreenState extends State<DesiredStyleScreen> {
                             child: ButtonList(
                               name: styles.StyleList.fitOptions,
                               selected: value
-                                  .model.desiredStyle.fitList.fitList,
+                                  .model.style.fitList.fitList,
                               onSelected: (v) =>
                                   value.updatePreferredFits(selected: v),
                                 enabled:    !isDirector),
@@ -73,20 +73,20 @@ class DesiredStyleScreenState extends State<DesiredStyleScreen> {
                             child: ButtonList(
                               name: styles.StyleList.materialOptions,
                               selected: value
-                                  .model.desiredStyle.materialList.materialList,
+                                  .model.style.materialList.materialList,
                               onSelected: (v) =>
                                   value.updatePreferredMaterials(selected: v),
-                                enabled:    !isDirector),
+                                enabled: !isDirector),
                           ),
                           ContentBox(
                             title: "4. 원하시는 색상은 무엇인가요?",
                             child: ButtonList(
                               name: styles.StyleList.colorsOptions,
                               selected: value
-                                  .model.desiredStyle.colorList.colorList,
+                                  .model.style.colorList.colorList,
                               onSelected: (v) =>
                                   value.updatePreferredMaterials(selected: v),
-                                enabled:    !isDirector),
+                                enabled: !isDirector),
                           ),
 
                         ],
@@ -256,7 +256,7 @@ class ButtonList extends StatelessWidget {
                       () => onSelected(name[i]),
                   AppColor.brown,
                   AppColor.lightGrey,
-                  enabled: !enabled,
+                  enabled: enabled,
                 ),
               ),
           ],

@@ -23,13 +23,13 @@ class CommissionResponseModel with _$CommissionResponseModel {
 class CommissionModel {
   final int directorId;
   final BasicInfo basicInfo;
-  final DesiredStyle desiredStyle;
+  final DesiredStyle style;
   final OtherMatters otherMatters;
 
   CommissionModel({
     this.directorId = 0,
     required this.basicInfo,
-    required this.desiredStyle,
+    required this.style,
     required this.otherMatters,
   });
 
@@ -41,7 +41,7 @@ class CommissionModel {
     return CommissionModel(
       directorId: 0,
       basicInfo: BasicInfo.defaultValue(),
-      desiredStyle: DesiredStyle.defaultValue(),
+      style: DesiredStyle.defaultValue(),
       otherMatters: OtherMatters.defaultValue(),
     );
   }
@@ -49,13 +49,13 @@ class CommissionModel {
   CommissionModel copyWith({
     int? directorId,
     BasicInfo? basicInfo,
-    DesiredStyle? desiredStyle,
+    DesiredStyle? style,
     OtherMatters? otherMatters,
   }) {
     return CommissionModel(
       directorId: directorId ?? this.directorId,
       basicInfo: basicInfo ?? this.basicInfo,
-      desiredStyle: desiredStyle ?? this.desiredStyle,
+      style: style ?? this.style,
       otherMatters: otherMatters ?? this.otherMatters,
     );
   }
@@ -273,14 +273,14 @@ class InfoBodyType {
 
 @JsonSerializable()
 class DesiredStyle {
-  final String occasion;
+  // final String occasion;
   final StyleList styleList;
   final FitList fitList;
   final MaterialList materialList;
   final ColorList colorList;
 
   DesiredStyle({
-    required this.occasion,
+    // required this.occasion,
     required this.styleList,
     required this.fitList,
     required this.materialList,
@@ -293,7 +293,7 @@ class DesiredStyle {
 
   static DesiredStyle defaultValue() {
     return DesiredStyle(
-      occasion: '',
+      // occasion: '',
       styleList: StyleList.defaultValue(),
       fitList: FitList.defaultValue(),
       materialList: MaterialList.defaultValue(),
@@ -302,14 +302,14 @@ class DesiredStyle {
   }
 
   DesiredStyle copyWith({
-    String? occasion,
+    // String? occasion,
     StyleList? styleList,
     FitList? fitList,
     MaterialList? materialList,
     ColorList? colorList,
   }) {
     return DesiredStyle(
-      occasion: occasion ?? this.occasion,
+      // occasion: occasion ?? this.occasion,
       styleList: styleList ?? this.styleList,
       fitList: fitList ?? this.fitList,
       materialList: materialList ?? this.materialList,

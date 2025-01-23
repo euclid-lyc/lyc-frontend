@@ -28,8 +28,6 @@ abstract class CommissionsRepository {
   factory CommissionsRepository(Dio dio, {String baseUrl}) =
       _CommissionsRepository;
 
-
-
   //저장한 옷 관련 api
 
   //디렉터가 저장한 옷 목록 불러오기
@@ -70,8 +68,6 @@ abstract class CommissionsRepository {
     @Path() required int chatId,
   });
 
-
-
   //의뢰서 관련 api
 
   //의뢰 목록 불러오기
@@ -99,7 +95,7 @@ abstract class CommissionsRepository {
   @Headers({
     'accessToken': 'true',
   })
-  Future<ApiResponse<CommissionResponseModel?>> getCommission({
+  Future<ApiResponse<CommissionResponseModel>> getCommission({
     @Path() required int commissionId,
 
   });

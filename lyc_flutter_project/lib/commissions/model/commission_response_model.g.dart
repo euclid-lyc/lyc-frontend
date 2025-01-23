@@ -10,8 +10,7 @@ CommissionModel _$CommissionModelFromJson(Map<String, dynamic> json) =>
     CommissionModel(
       directorId: (json['directorId'] as num?)?.toInt() ?? 0,
       basicInfo: BasicInfo.fromJson(json['basicInfo'] as Map<String, dynamic>),
-      desiredStyle:
-          DesiredStyle.fromJson(json['desiredStyle'] as Map<String, dynamic>),
+      style: DesiredStyle.fromJson(json['style'] as Map<String, dynamic>),
       otherMatters:
           OtherMatters.fromJson(json['otherMatters'] as Map<String, dynamic>),
     );
@@ -20,7 +19,7 @@ Map<String, dynamic> _$CommissionModelToJson(CommissionModel instance) =>
     <String, dynamic>{
       'directorId': instance.directorId,
       'basicInfo': instance.basicInfo,
-      'desiredStyle': instance.desiredStyle,
+      'style': instance.style,
       'otherMatters': instance.otherMatters,
     };
 
@@ -124,7 +123,6 @@ Map<String, dynamic> _$InfoBodyTypeToJson(InfoBodyType instance) =>
     };
 
 DesiredStyle _$DesiredStyleFromJson(Map<String, dynamic> json) => DesiredStyle(
-      occasion: json['occasion'] as String,
       styleList: StyleList.fromJson(json['styleList'] as Map<String, dynamic>),
       fitList: FitList.fromJson(json['fitList'] as Map<String, dynamic>),
       materialList:
@@ -134,7 +132,6 @@ DesiredStyle _$DesiredStyleFromJson(Map<String, dynamic> json) => DesiredStyle(
 
 Map<String, dynamic> _$DesiredStyleToJson(DesiredStyle instance) =>
     <String, dynamic>{
-      'occasion': instance.occasion,
       'styleList': instance.styleList,
       'fitList': instance.fitList,
       'materialList': instance.materialList,

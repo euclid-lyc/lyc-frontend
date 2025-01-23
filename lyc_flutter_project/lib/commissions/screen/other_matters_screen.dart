@@ -83,16 +83,16 @@ class OtherMattersScreenState extends State<OtherMattersScreen> {
                             Padding(
                               padding: const EdgeInsets.only(bottom: 20),
                               child: Text(
-                                "Step 1. 원하시는 코디의 가격대는 얼마인가요?",
+                                "1. 원하시는 코디의 가격대는 얼마인가요?",
                                 style: AppTextStyle.littleTitle
-                                    .copyWith(fontSize: 14),
+                                    .copyWith(fontSize: 16),
                                 textAlign: TextAlign.left,
                               ),
                             ),
                             RangeSlider(
                               values: RangeValues(
-                                value.model.otherMatters.minPrice as double,
-                                value.model.otherMatters.maxPrice as double,
+                                value.model.otherMatters.minPrice.toDouble(),
+                                value.model.otherMatters.maxPrice.toDouble(),
                               ),
                               min: 0,
                               max: 500000,
@@ -125,7 +125,7 @@ class OtherMattersScreenState extends State<OtherMattersScreen> {
                       Padding(
                           padding: const EdgeInsets.only(bottom: 20),
                           child: buildDateSection(
-                            "Step 2. 언제 입고 싶으신가요?",
+                            "2. 언제 입고 싶으신가요?",
                             value.model.otherMatters.dateToUse,
                             (formattedDate) async =>
                                 value.updateDateToUse(dateToUse: formattedDate),
@@ -134,7 +134,7 @@ class OtherMattersScreenState extends State<OtherMattersScreen> {
                       Padding(
                         padding: const EdgeInsets.only(bottom: 20),
                         child: buildDateSection(
-                          "Step 3. 언제까지 수령하고 싶으신가요?",
+                          "3. 언제까지 수령하고 싶으신가요?",
                           value.model.otherMatters.desiredDate,
                           (formattedDate) async => value.updateDesiredDate(
                               desiredDate: formattedDate),
@@ -160,7 +160,7 @@ class OtherMattersScreenState extends State<OtherMattersScreen> {
                         child: SwitchSection(
                           initialValue: value.model.otherMatters.isShared,
                           onTap: (v) async => value.updateIsShared(isShared: v),
-                          title: "Step 5. 옷 리스트를 공유받을까요?",
+                          title: "5. 옷 리스트를 공유받을까요?",
                           enabled: !isDirector,
                         ),
                       ),
@@ -192,7 +192,7 @@ class OtherMattersScreenState extends State<OtherMattersScreen> {
                                     },
                                     style: TextButton.styleFrom(
                                       backgroundColor: AppColor.brown,
-                                      minimumSize: const Size(120, 40),
+                                      minimumSize: const Size(80, 40),
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(20),
                                       ),
@@ -323,7 +323,7 @@ class OtherMattersScreenState extends State<OtherMattersScreen> {
             padding: const EdgeInsets.only(bottom: 12),
             child: Text(
               title,
-              style: AppTextStyle.littleTitle.copyWith(fontSize: 14.0),
+              style: AppTextStyle.littleTitle.copyWith(fontSize: 16.0),
               textAlign: TextAlign.left,
             ),
           ),
@@ -386,18 +386,21 @@ class SwitchSection extends StatelessWidget {
         children: [
           Text(
             title,
-            style: AppTextStyle.littleTitle.copyWith(fontSize: 14),
+            style: AppTextStyle.littleTitle.copyWith(fontSize: 16),
           ),
           const SizedBox(height: 12),
           SwitchButton(
-              initialValue: initialValue, onTap: onTap, enabled: enabled),
+            initialValue: initialValue,
+            onTap: onTap,
+            enabled: enabled,
+          ),
         ],
       ),
     );
   }
 }
 
-class SwitchButton extends StatelessWidget {
+class SwitchButton extends StatefulWidget {
   const SwitchButton({
     super.key,
     required this.initialValue,
@@ -410,58 +413,84 @@ class SwitchButton extends StatelessWidget {
   final bool enabled;
 
   @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 100,
-      height: 30,
-      decoration: BoxDecoration(
-        color: AppColor.grey,
-        borderRadius: BorderRadius.circular(25),
-      ),
-      child: Row(
-        children: [
-          _buildOption(
-            text: '네',
-            isSelected: initialValue ?? false,
-            onTap: enabled ? () => onTap?.call(true) : () {},
-          ),
-          _buildOption(
-            text: '아니오',
-            isSelected: initialValue ?? false,
-            onTap: enabled ? () => onTap?.call(true) : () {},
-          ),
-        ],
-      ),
-    );
+  _SwitchButtonState createState() => _SwitchButtonState();
+}
+
+class _SwitchButtonState extends State<SwitchButton> {
+  late bool _isSelected;
+
+  @override
+  void initState() {
+    super.initState();
+    _isSelected = widget.initialValue ?? false;
   }
 
-  Widget _buildOption({
-    required String text,
-    required bool isSelected,
-    required VoidCallback? onTap,
-  }) {
+  @override
+  Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: widget.enabled
+          ? () {
+        setState(() {
+          _isSelected = !_isSelected;
+        });
+        widget.onTap?.call(_isSelected);
+      }
+          : null,
       child: Container(
-        width: 50,
+        width: 80, // 고정된 가로 길이
         height: 30,
         decoration: BoxDecoration(
-          color: isSelected ? AppColor.beige : AppColor.grey,
+          color: _isSelected ? AppColor.beige : AppColor.lightGrey,
           borderRadius: BorderRadius.circular(25),
         ),
-        child: Center(
-          child: Text(
-            text,
-            style: TextStyle(
-              color: isSelected ? Colors.white : Colors.black,
-              fontWeight: FontWeight.bold,
+        child: Row(
+          mainAxisAlignment: _isSelected ? MainAxisAlignment.end : MainAxisAlignment.start,
+          children: [
+            Visibility(
+              visible: !_isSelected,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 8.0), // 왼쪽 여백 추가
+                child: Text(
+                  '네',
+                  style: TextStyle(
+                    color: _isSelected ? Colors.white : Colors.black,
+                    fontSize: 12,
+                  ),
+                ),
+              ),
             ),
-          ),
+            const Spacer(),
+            Visibility(
+              visible: _isSelected,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 8.0), // 왼쪽 여백 추가
+                child: Text(
+                  '아니오',
+                  style: TextStyle(
+                    color: !_isSelected ? Colors.white : Colors.black,
+                    fontSize: 12,
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              width: 20,
+              height: 20,
+              margin: const EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(50),
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
 }
+
+
+
 
 class ContentBox extends StatelessWidget {
   final String title;

@@ -37,8 +37,8 @@ class BasicInfoScreenState extends State<BasicInfoScreen> {
             bottom: 20.0,
             child: Consumer<CommissionsProvider>(
               builder: (context, value, child) {
-                int topSize = int.parse(value.model.basicInfo.topSize);
-                int bottomSize = int.parse(value.model.basicInfo.bottomSize);
+                int topSize = value.topSize;
+                int bottomSize = value.bottomSize;
                 if (memberId == null) {
                   return const Center(
                     child: CustomLoading(),
@@ -58,20 +58,19 @@ class BasicInfoScreenState extends State<BasicInfoScreen> {
                                     value.model.basicInfo.height.toString(),
                                 onChanged: (p0) =>
                                     value.updateHeight(height: int.parse(p0)),
-                                enabled:
-                                !isDirector),
+                                enabled: !isDirector),
                             SpecInputLine(
                                 label: "몸무게",
                                 initialValue:
                                     value.model.basicInfo.weight.toString(),
                                 onChanged: (p0) =>
                                     value.updateWeight(weight: int.parse(p0)),
-                                enabled:    !isDirector),
+                                enabled: !isDirector),
                             SpecInputLine(
                               label: "상의 사이즈",
                               initialValue: "",
                               value: value.model.basicInfo.topSize,
-                              enabled:    !isDirector,
+                              enabled: !isDirector,
                               onTap: () {
                                 showDialog(
                                   context: context,
@@ -79,9 +78,8 @@ class BasicInfoScreenState extends State<BasicInfoScreen> {
                                       CustomNumberPicker<CommissionsProvider>(
                                     title: "상의 사이즈를 선택해주세요.",
                                     minValue: 80,
-                                    maxValue: 120,
-                                    getValue: (p0) =>
-                                        int.parse(p0.model.basicInfo.topSize),
+                                    maxValue: 130,
+                                    getValue: (p0) => p0.topSize,
                                     step: 5,
                                     updateValue: (p0, p1) =>
                                         p0.updateTopSize(topSize: p1),
@@ -105,10 +103,9 @@ class BasicInfoScreenState extends State<BasicInfoScreen> {
                                   builder: (context) =>
                                       CustomNumberPicker<CommissionsProvider>(
                                     title: "하의 사이즈를 선택해주세요.",
-                                    minValue: 24,
+                                    minValue: 20,
                                     maxValue: 42,
-                                    getValue: (p0) => int.parse(
-                                        p0.model.basicInfo.bottomSize),
+                                    getValue: (p0) => p0.bottomSize,
                                     updateValue: (p0, p1) =>
                                         p0.updateBottomSize(bottomSize: p1),
                                     fstOnPressed: () {
@@ -132,7 +129,7 @@ class BasicInfoScreenState extends State<BasicInfoScreen> {
                                 .model.basicInfo.infoStyle.preferredStyleList,
                             onSelected: (v) =>
                                 value.updatePreferredStyle(selected: v),
-                            enabled:    !isDirector),
+                            enabled: !isDirector),
                       ),
                       ContentBox(
                         title: "3. 평소 즐겨입지 않는 스타일은 무엇인가요?",
@@ -142,7 +139,7 @@ class BasicInfoScreenState extends State<BasicInfoScreen> {
                                 .nonPreferredStyleList,
                             onSelected: (v) =>
                                 value.updateNonPreferredStyle(selected: v),
-                            enabled:    !isDirector),
+                            enabled: !isDirector),
                       ),
                       ContentBox(
                         title: "4. 선호하는 소재를 선택해주세요.",
@@ -152,7 +149,7 @@ class BasicInfoScreenState extends State<BasicInfoScreen> {
                                 .preferredMaterialList,
                             onSelected: (v) =>
                                 value.updatePreferredMaterials(selected: v),
-                            enabled:    !isDirector),
+                            enabled: !isDirector),
                       ),
                       ContentBox(
                         title: "5. 선호하지 않는 소재를 선택해주세요.",
@@ -162,7 +159,7 @@ class BasicInfoScreenState extends State<BasicInfoScreen> {
                                 .nonPreferredMaterialList,
                             onSelected: (v) =>
                                 value.updateNonPreferredMaterials(selected: v),
-                            enabled:    !isDirector),
+                            enabled: !isDirector),
                       ),
                       ContentBox(
                         title: "6. 선호하는 핏을 선택해주세요.",
@@ -172,7 +169,7 @@ class BasicInfoScreenState extends State<BasicInfoScreen> {
                                 value.model.basicInfo.infoFit.preferredFitList,
                             onSelected: (v) =>
                                 value.updatePreferredFits(selected: v),
-                            enabled:    !isDirector),
+                            enabled: !isDirector),
                       ),
                       ContentBox(
                         title: "7. 선호하지 않는 핏을 선택해주세요.",
@@ -182,7 +179,7 @@ class BasicInfoScreenState extends State<BasicInfoScreen> {
                                 .model.basicInfo.infoFit.nonPreferredFitList,
                             onSelected: (v) =>
                                 value.updateNonPreferredFits(selected: v),
-                            enabled:    !isDirector),
+                            enabled: !isDirector),
                       ),
                       ContentBox(
                         title: "9. 강조하고 싶은 신체 부위가 있나요?",
@@ -192,7 +189,7 @@ class BasicInfoScreenState extends State<BasicInfoScreen> {
                                 .model.basicInfo.infoBodyType.goodBodyTypeList,
                             onSelected: (v) =>
                                 value.updateBadBodyTypes(selected: v),
-                            enabled:    !isDirector),
+                            enabled: !isDirector),
                       ),
                       ContentBox(
                         title: "10. 보완하고 싶은 신체 부위가 있나요?",
@@ -202,7 +199,7 @@ class BasicInfoScreenState extends State<BasicInfoScreen> {
                                 .model.basicInfo.infoBodyType.badBodyTypeList,
                             onSelected: (v) =>
                                 value.updateBadBodyTypes(selected: v),
-                            enabled:    !isDirector),
+                            enabled: !isDirector),
                       ),
                       ContentBox(
                         title: "10. 추가로 작성하고 싶은 내용이 있나요?",
@@ -257,7 +254,7 @@ class ButtonList extends StatelessWidget {
                   () => onSelected(name[i]),
                   AppColor.brown,
                   AppColor.lightGrey,
-                 enabled: enabled,
+                  enabled: enabled,
                 ),
               ),
           ],
@@ -273,7 +270,7 @@ class ButtonList extends StatelessWidget {
                   () => onSelected(name[i]),
                   AppColor.brown,
                   AppColor.lightGrey,
-                 enabled: !enabled,
+                  enabled: enabled,
                 ),
               ),
           ],

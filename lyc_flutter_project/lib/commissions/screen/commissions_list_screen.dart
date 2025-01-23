@@ -46,7 +46,6 @@ class _CommissionsListScreenState extends State<CommissionsListScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: AppColor.lightGrey,
       appBar: const NormalAppbar(
@@ -59,54 +58,55 @@ class _CommissionsListScreenState extends State<CommissionsListScreen> {
           }
           return DefaultPadding(
               child: CustomScrollView(
-            slivers: [
-              SliverPadding(
-                padding: const EdgeInsets.only(bottom: 16),
-                sliver: SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (context, index) {
-                      final CommissionResponse commissionResponse =
+                slivers: [
+                  SliverPadding(
+                    padding: const EdgeInsets.only(bottom: 16),
+                    sliver: SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                            (context, index) {
+                          final CommissionResponse commissionResponse =
                           value.commissionList[index];
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 8),
-                        child: MemberList(
-                            navigateMypage: false,
-                            profile: commissionResponse.profileImage,
-                            nickname: commissionResponse.nickname,
-                            id: commissionResponse.loginId,
-                            button: CustomTextButton(
-                              label: "의뢰서 확인하기",
-                              textColor: Colors.black,
-                              backgroundColor: AppColor.grey,
-                              onPressed: () async {
-                                final CommissionResponseModel? model =
+                          return Padding(
+                            padding: const EdgeInsets.only(bottom: 8),
+                            child: MemberList(
+                                navigateMypage: false,
+                                profile: commissionResponse.profileImage,
+                                nickname: commissionResponse.nickname,
+                                id: commissionResponse.loginId,
+                                button: CustomTextButton(
+                                  label: "의뢰서 확인하기",
+                                  textColor: Colors.black,
+                                  backgroundColor: AppColor.grey,
+                                  context: context,
+                                  onPressed: () async {
+                                    final CommissionResponseModel? model =
                                     await value.getCommission(
                                         commissionResponse.commissionId);
-                                if (context.mounted) {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => TapViewScreen(
-                                        //여기 true를 넣어도 되는지 깊은 고민..
-                                        isDirector: true,
-                                        model:model,
-                                        title: "의뢰서 확인하기",
-                                        commissionId: model?.commissionId, isUpdate: false,
-                                      ),
-
-                                    ),
-                                  );
-                                }
-                              },
-                            )),
-                      );
-                    },
-                    childCount: value.commissionList.length,
+                                    if (context.mounted&&model!=null) {
+                                      debugPrint("모델만 받아옴");
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => TapViewScreen(
+                                            isDirector: true,
+                                            model: model,
+                                            title: "의뢰서 확인하기",
+                                            commissionId: commissionResponse.commissionId,
+                                            isUpdate: false,
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                  },
+                                )),
+                          );
+                        },
+                        childCount: value.commissionList.length,
+                      ),
+                    ),
                   ),
-                ),
-              ),
-            ],
-          ));
+                ],
+              ));
         },
       ),
     );

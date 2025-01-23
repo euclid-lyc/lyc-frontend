@@ -103,7 +103,6 @@ class LoginScreen extends StatelessWidget {
 
                         await loginProvider.login(id, pw, context); // 로그인 요청
                         if (loginProvider.isLoggedIn &&
-                            loginProvider.memberId != null &&
                             context.mounted) {
                           context.goNamed(Routes.home.name);
                         }

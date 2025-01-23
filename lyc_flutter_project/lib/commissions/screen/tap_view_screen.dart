@@ -36,8 +36,6 @@ class TapViewState extends State<TapViewScreen> with TickerProviderStateMixin {
   late final CommissionResponseModel? model;
 
   late final int? directorId;
-
-  // late final int? memberId;
   late final int? commissionId;
 
   late final bool isDirector;
@@ -52,6 +50,7 @@ class TapViewState extends State<TapViewScreen> with TickerProviderStateMixin {
     isDirector = widget.isDirector;
     // ?? (directorId == memberId);
     _tabController = TabController(length: 3, vsync: this);
+    isUpdate = widget.isUpdate;
     super.initState();
   }
 
@@ -68,38 +67,48 @@ class TapViewState extends State<TapViewScreen> with TickerProviderStateMixin {
         appBar: NormalAppbar(title: title),
         body: Column(
           children: [
+            const SizedBox(height: 20),
             Container(
-              color: AppColor.beige,
-              child: TabBar(
-                labelColor: Colors.black,
-                unselectedLabelColor: Colors.white,
-                controller: _tabController,
-                indicator: BoxDecoration(
-                  color: AppColor.brown,
+                width: 360,
+                height: 40,
+                decoration: BoxDecoration(
+                  color: AppColor.beige,
                   borderRadius: BorderRadius.circular(20),
                 ),
-                tabs: [
-                  Container(
-                    alignment: Alignment.center,
-                    height: 40,
-                    child: const Text("기본 정보"),
+                child: TabBar(
+                  labelColor: Colors.black,
+                  unselectedLabelColor: Colors.white,
+                  controller: _tabController,
+                  indicator: BoxDecoration(
+                    color: AppColor.brown,
+                    borderRadius: BorderRadius.circular(20),
                   ),
-                  Container(
-                    alignment: Alignment.center,
-                    height: 40,
-                    child: const Text("원하는 스타일"),
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    height: 40,
-                    child: const Text("기타 사항"),
-                  ),
-                ],
-              ),
+                  tabs: [
+                    Container(
+                      alignment: Alignment.center,
+                      height: 40,
+                      width: 120,
+                      child: const Text("기본 정보"),
+                    ),
+                    Container(
+                      alignment: Alignment.center,
+                      height: 40,
+                      width: 128,
+                      child: const Text("원하는 스타일"),
+                    ),
+                    Container(
+                      alignment: Alignment.center,
+                      height: 40,
+                      width: 120,
+                      child: const Text("기타 사항"),
+                    ),
+                  ],
+                ),
+
             ),
             Expanded(
               child: TabBarView(controller: _tabController, children: [
-                BasicInfoScreen(model: model,isDirector: isDirector),
+                BasicInfoScreen(model: model, isDirector: isDirector),
                 DesiredStyleScreen(isDirector: isDirector),
                 OtherMattersScreen(
                     isDirector: isDirector,
