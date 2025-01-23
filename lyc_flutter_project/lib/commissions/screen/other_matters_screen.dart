@@ -170,12 +170,34 @@ class OtherMattersScreenState extends State<OtherMattersScreen> {
                                 fstOnPressed: () async {
                                   Navigator.pop(context);
                                   await value.acceptCommission(commissionId!);
+                                  if (context.mounted) {
+                                    Navigator.pop(context);
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return const CustomDialog(
+                                          title: "> 의뢰를 수락했습니다. <",
+                                          subtitle: "채팅이 시작됩니다.",
+                                        );
+                                      },
+                                    );
+                                  }
                                 },
                                 scdOnPressed: () async {
                                   await value.declineCommission(commissionId!);
                                   if (context.mounted) {
                                     Navigator.pop(context);
-                                  }
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return const CustomDialog(
+                                            title: "> 의뢰를 거절했습니다. <",
+                                            subtitle: "거절한 의뢰는 의뢰함에서 사라집니다.",
+                                          );
+                                        },
+                                      );
+                                    }
+
                                 },
                                 fstLabel: "수락",
                                 scdLabel: "거절",

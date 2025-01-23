@@ -106,7 +106,7 @@ Widget updateCommission(
                       }
                     },
               child: Text(
-                isDirector ? "의뢰서는 작성자만 \n수정이 가능합니다" : "의뢰서 수정하기",
+                isDirector ? " 작성자만 수정이 가능합니다" : "의뢰서 수정하기",
                 style: isDirector? AppTextStyle.littleTitle: AppTextStyle.title.copyWith(color: Colors.black)
               ),
             ),
