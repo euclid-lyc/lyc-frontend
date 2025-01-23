@@ -48,65 +48,85 @@ class _CommissionsListScreenState extends State<CommissionsListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.lightGrey,
-      appBar: const NormalAppbar(
-        title: "의뢰함",
-      ),
+      appBar: const NormalAppbar(title: "의뢰함"),
       body: Consumer<CommissionsProvider>(
         builder: (context, value, child) {
           if (value.isLoading) {
             return const Center(child: CustomLoading());
           }
+
           return DefaultPadding(
-              child: CustomScrollView(
-                slivers: [
-                  SliverPadding(
-                    padding: const EdgeInsets.only(bottom: 16),
-                    sliver: SliverList(
-                      delegate: SliverChildBuilderDelegate(
-                            (context, index) {
-                          final CommissionResponse commissionResponse =
-                          value.commissionList[index];
-                          return Padding(
-                            padding: const EdgeInsets.only(bottom: 8),
-                            child: MemberList(
-                                navigateMypage: false,
-                                profile: commissionResponse.profileImage,
-                                nickname: commissionResponse.nickname,
-                                id: commissionResponse.loginId,
-                                button: CustomTextButton(
-                                  label: "의뢰서 확인하기",
-                                  textColor: Colors.black,
-                                  backgroundColor: AppColor.grey,
-                                  context: context,
-                                  onPressed: () async {
-                                    final CommissionResponseModel? model =
-                                    await value.getCommission(
-                                        commissionResponse.commissionId);
-                                    if (context.mounted&&model!=null) {
-                                      debugPrint("모델만 받아옴");
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => TapViewScreen(
-                                            isDirector: true,
-                                            model: model,
-                                            title: "의뢰서 확인하기",
-                                            commissionId: commissionResponse.commissionId,
-                                            isUpdate: false,
-                                          ),
+            child: CustomScrollView(
+              controller: _scrollController,
+              slivers: [
+                SliverPadding(
+                  padding: const EdgeInsets.only(bottom: 16),
+                  sliver: SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      (context, index) {
+                        final CommissionResponse commissionResponse =
+                            value.commissionList[index];
+                        final int commissionId =
+                            commissionResponse.commissionId;
+
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 8),
+                          child: MemberList(
+                            navigateMypage: false,
+                            profile: commissionResponse.profileImage,
+                            nickname: commissionResponse.nickname,
+                            id: commissionResponse.loginId,
+                            button: CustomTextButton(
+                              label: "의뢰서 확인하기",
+                              textColor: Colors.black,
+                              backgroundColor: AppColor.grey,
+                              context: context,
+                              onPressed: () async {
+                                final navigator = Navigator.of(context);
+                                final scaffoldMessenger =
+                                    ScaffoldMessenger.of(context);
+//todo mounted check 다시
+                                try {
+                                  final CommissionResponseModel? model =
+                                      await value.getCommission(commissionId);
+
+                                  if (model != null) {
+                                    navigator.push(
+                                      MaterialPageRoute(
+                                        builder: (context) => TapViewScreen(
+                                          isDirector: true,
+                                          model: model,
+                                          title: "의뢰서 확인하기",
+                                          commissionId: commissionId,
+                                          isUpdate: false,
                                         ),
-                                      );
-                                    }
-                                  },
-                                )),
-                          );
-                        },
-                        childCount: value.commissionList.length,
-                      ),
+                                      ),
+                                    );
+                                  } else {
+                                    scaffoldMessenger.showSnackBar(
+                                      const SnackBar(
+                                          content: Text('의뢰서를 가져오는 데 실패했습니다.')),
+                                    );
+                                  }
+                                } catch (e) {
+                                  // Handle potential exceptions
+                                  if (!context.mounted) return;
+                                  scaffoldMessenger.showSnackBar(
+                                    SnackBar(content: Text('오류 발생: $e')),
+                                  );
+                                }
+                              },
+                            ),
+                          ),
+                        );
+                      },
+                      childCount: value.commissionList.length,
                     ),
                   ),
-                ],
-              ));
+                ),
+              ],
+            ),
+          );
         },
       ),
     );

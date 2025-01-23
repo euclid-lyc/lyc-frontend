@@ -344,12 +344,10 @@ class CommissionsProvider with ChangeNotifier {
     notifyListeners();
     try {
       final resp = await repositoryProvider.commissionsRepository.getCommission(commissionId: commissionId);
-      debugPrint("받아오기 성공1");
+
       if (!resp.isSuccess) {
-        debugPrint("받아오기 실패");
         throw Exception(resp.message);
       } else {
-        debugPrint("받아오기 성공");
         _model = resp.result.commission;
         topSizeString = model.basicInfo.topSize;
         bottomSizeString = model.basicInfo.bottomSize;
