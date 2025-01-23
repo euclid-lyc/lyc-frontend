@@ -58,12 +58,12 @@ class _MyClosetListState extends State<MyClosetList> {
       itemBuilder: (context, index) {
         if (index == 0) {
           return GestureDetector(
-            onTap: () {
+            onTap: () async {
               final clothesProvider = ClothesProvider(
                 repositoryProvider: context.read<ClothesRepositoryProvider>(),
                 memberId: widget.memberId,
               );
-              pushWithoutNavBar(
+              await pushWithoutNavBar(
                 context,
                 MaterialPageRoute(
                   builder: (context) {
@@ -73,6 +73,7 @@ class _MyClosetListState extends State<MyClosetList> {
                   },
                 ),
               );
+              widget.provider.refresh();
             },
             child: const ClosetElement(
               title: "옷 추가",

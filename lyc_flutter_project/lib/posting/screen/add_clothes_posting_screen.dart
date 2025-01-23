@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:lyc_flutter_project/common/const/typographies.dart';
 import 'package:lyc_flutter_project/common/widget/two_buttons.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/posting/provider/clothes_provider.dart';
-import 'package:lyc_flutter_project/posting/style/posting_text_style.dart';
 import 'package:lyc_flutter_project/common/widget/image_picker_widget.dart';
 import 'package:lyc_flutter_project/common/widget/normal_appbar.dart';
 import 'package:lyc_flutter_project/posting/widget/posting_content_text_field.dart';
@@ -20,14 +20,12 @@ class AddClothesPostingScreen extends StatefulWidget {
   });
 
   @override
-  State<AddClothesPostingScreen> createState() =>
-      _AddClothesPostingScreenState();
+  State<AddClothesPostingScreen> createState() => _AddClothesPostingScreenState();
 }
 
 class _AddClothesPostingScreenState extends State<AddClothesPostingScreen> {
   int curSelected = 1;
 
-  late XFile? _image;
   final ImagePicker picker = ImagePicker();
 
   late TextEditingController iTitleController;
@@ -78,19 +76,17 @@ class _AddClothesPostingScreenState extends State<AddClothesPostingScreen> {
 
   @override
   void dispose() {
-    super.dispose();
-
     iTitleController.removeListener(_updateTitle);
     iContentController.removeListener(_updateContent);
-
     tTitleController.removeListener(_tUpdateTitle);
     tTextController.removeListener(_tUpdateText);
 
     iTitleController.dispose();
     iContentController.dispose();
+    tTitleController.dispose();
+    tTextController.dispose();
 
-    tTitleController.dispose();
-    tTitleController.dispose();
+    super.dispose();
   }
 
   _updateTitle() {
@@ -119,9 +115,10 @@ class _AddClothesPostingScreenState extends State<AddClothesPostingScreen> {
         body: Consumer<ClothesProvider>(
           builder: (context, value, child) {
             return Padding(
-              padding: const EdgeInsets.fromLTRB(20, 25, 20, 20),
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
               child: Column(
                 children: <Widget>[
+                  const SizedBox(height: 20.0),
                   Container(
                     height: MediaQuery.of(context).size.height / 20,
                     decoration: BoxDecoration(
@@ -149,7 +146,6 @@ class _AddClothesPostingScreenState extends State<AddClothesPostingScreen> {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 20.0),
                   Expanded(child: curSelected == 1 ? addPhoto() : addText()),
                   const SizedBox(height: 20.0),
                   TwoButtons(
@@ -173,6 +169,7 @@ class _AddClothesPostingScreenState extends State<AddClothesPostingScreen> {
     return ListView(
       keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
       children: [
+        const SizedBox(height: 20.0),
         ImagePickerWidget(
           onImageSelected: _onImageSelected,
           picker: picker,
@@ -196,9 +193,10 @@ class _AddClothesPostingScreenState extends State<AddClothesPostingScreen> {
     return ListView(
       keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
       children: [
+        const SizedBox(height: 20.0),
         const Text(
           'Step 1. 옷의 이름은 무엇인가요?',
-          style: PostingTextStyle.stepTitle,
+          style: Typos.semibold16,
         ),
         const SizedBox(height: 14.0),
         Container(
@@ -215,7 +213,7 @@ class _AddClothesPostingScreenState extends State<AddClothesPostingScreen> {
         const SizedBox(height: 24.0),
         const Text(
           'Step 2. 소재감은 어떤가요?',
-          style: PostingTextStyle.stepTitle,
+          style: Typos.semibold16,
         ),
         const SizedBox(height: 14.0),
         Row(
@@ -251,7 +249,7 @@ class _AddClothesPostingScreenState extends State<AddClothesPostingScreen> {
         const SizedBox(height: 24.0),
         const Text(
           'Step 3. 핏은 어떤가요? ',
-          style: PostingTextStyle.stepTitle,
+          style: Typos.semibold16,
         ),
         const SizedBox(height: 14.0),
         Row(
@@ -287,7 +285,7 @@ class _AddClothesPostingScreenState extends State<AddClothesPostingScreen> {
         const SizedBox(height: 24.0),
         const Text(
           'Step 4. 더 자세한 사항을 입력해주세요.',
-          style: PostingTextStyle.stepTitle,
+          style: Typos.semibold16,
         ),
         const SizedBox(height: 14.0),
         PostingContentTextField(
@@ -299,9 +297,7 @@ class _AddClothesPostingScreenState extends State<AddClothesPostingScreen> {
   }
 
   void _onImageSelected(XFile image) {
-    setState(() {
-      _image = image;
-    });
+    setState(() {});
     widget.clothesProvider.iUpdateImage(image);
   }
 

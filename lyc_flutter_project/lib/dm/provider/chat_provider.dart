@@ -1,11 +1,15 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_bubble/bubble_type.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:lyc_flutter_project/common/dio/dio.dart';
 import 'package:lyc_flutter_project/common/model/api_response.dart';
 import 'package:lyc_flutter_project/config/secret.dart';
+import 'package:lyc_flutter_project/dm/model/chat_image_model.dart';
+import 'package:lyc_flutter_project/dm/model/chat_message_model.dart';
 import 'package:lyc_flutter_project/dm/model/chat_member_model.dart';
 import 'package:lyc_flutter_project/dm/model/chat_room_model.dart';
 import 'package:lyc_flutter_project/dm/model/make_schedule_model.dart';
@@ -35,6 +39,8 @@ class ChatProvider extends ChangeNotifier {
     now = DateTime.now();
     initChat();
     initCalendar();
+
+    initImages();
   }
 
   bool _disposed = false;
@@ -65,12 +71,67 @@ class ChatProvider extends ChangeNotifier {
   String initialCursor = '';
   bool loading = false;
 
+  // 채팅으로 전송할 사진
+  XFile? _imageToSend;
+
+  // 이미지 전송 로딩
+  bool sendImageLoading = false;
+
   List<MessageModel> get messageList => _messageList;
 
   List<ChatMemberModel> get memberList => _memberList;
 
   int get commissionId => _commissionId;
   ChatMemberModel get isMine => _isMine;
+
+  XFile? get imageToSend => _imageToSend;
+
+  // 전송할 이미지를 provider 내부에 저장
+  void showImageToSend({
+    required XFile? image,
+  }) {
+    _imageToSend = image;
+    notifyListeners();
+  }
+
+  // 전송할 이미지 삭제
+  void removeImageToSend() {
+    _imageToSend = null;
+    notifyListeners();
+  }
+
+  Future<void> sendImage() async {
+    if (sendImageLoading || _imageToSend == null) return;
+
+    try {
+      sendImageLoading = true;
+      // upload image to S3
+      final image = File(_imageToSend!.path);
+      final result = await repository.uploadImageToS3(
+        chatId: chatId,
+        image: image,
+      );
+
+      // send message
+      sendMessage(
+        content: result.result,
+        isText: false,
+      );
+
+      // 사진 및 동영상 refresh
+      _images.clear();
+      initImages();
+    } catch (e) {
+      if (e is ApiResponse) {
+        debugPrint("sendImage: ${e.message}");
+      } else {
+        debugPrint("sendImage: $e");
+      }
+    } finally {
+      _imageToSend = null;
+      sendImageLoading = false;
+    }
+  }
 
   Future<void> initChat() async {
     loading = true;
@@ -122,6 +183,7 @@ class ChatProvider extends ChangeNotifier {
                   : BubbleType.sendBubble,
               image: e.profileImage,
               createdAt: e.createdAt,
+              isText: e.isText,
             ),
           )
           .toList();
@@ -209,6 +271,7 @@ class ChatProvider extends ChangeNotifier {
         content: content,
         type: BubbleType.sendBubble,
         createdAt: now.toString(),
+        isText: isText,
       ),
       ..._messageList,
     ];
@@ -236,6 +299,7 @@ class ChatProvider extends ChangeNotifier {
                 type: BubbleType.receiverBubble,
                 image: profileImage,
                 createdAt: now.toString(),
+                isText: msg.isText,
               ),
               ..._messageList,
             ];
@@ -371,10 +435,7 @@ class ChatProvider extends ChangeNotifier {
       return;
     }
 
-    final selectedScheduleIndex = schedules.indexWhere((schedule) =>
-        schedule.date.year == date.year &&
-        schedule.date.month == date.month &&
-        schedule.date.day == date.day);
+    final selectedScheduleIndex = schedules.indexWhere((schedule) => schedule.date.year == date.year && schedule.date.month == date.month && schedule.date.day == date.day);
 
     if (selectedScheduleIndex != -1) {
       const itemHeight = (12.0 * 2) + 40.0 + 1.0 + 16.0;
@@ -488,12 +549,65 @@ class ChatProvider extends ChangeNotifier {
 
   // ----------------- 일정 화면 ---------------------------------------
 
+  // ----------------- 미디어 화면 ---------------------------------------
+
+  List<ChatImageModel> _images = [];
+
+  List<ChatImageModel> get images => _images;
+
+  bool _loadingImages = false;
+  bool _hasMoreImages = true;
+
+  Future<void> getImages({
+    bool refresh = false,
+    int pageSize = 30,
+    String cursorDateTime = "2099-12-31T00:00:00",
+  }) async {
+    if (_loadingImages || (!refresh && !_hasMoreImages)) {
+      return;
+    }
+
+    if (!refresh && _images.isNotEmpty) {
+      cursorDateTime = _images.last.createdAt;
+    }
+
+    try {
+      _loadingImages = true;
+      final result = await repository.getImages(
+        chatId: chatId,
+        pageSize: pageSize,
+        cursorDateTime: cursorDateTime,
+      );
+
+      final data = result.result.images;
+      _images = [..._images, ...data];
+
+      if (data.length < pageSize) {
+        _hasMoreImages = false;
+      }
+      _loadingImages = false;
+    } catch (e) {
+      if (e is ApiResponse) {
+        debugPrint(e.message);
+      } else {
+        debugPrint("채팅: getImages 오류: $e");
+      }
+    }
+  }
+
+  void initImages() {
+    getImages(refresh: true);
+  }
+
+  // ----------------- 미디어 화면 ---------------------------------------
+
   @override
   void dispose() {
     _disposed = true;
     _client?.deactivate();
     _client = null;
     _messageList.clear();
+    _images.clear();
     scrollController.removeListener(paginateMessages);
     scrollController.dispose();
     textEditingController.dispose();

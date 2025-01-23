@@ -8,6 +8,7 @@ import 'package:lyc_flutter_project/commissions/screen/submission_success_screen
 import 'package:lyc_flutter_project/common/screen/splash_screen.dart';
 import 'package:lyc_flutter_project/director/screen/director_search_screen.dart';
 import 'package:lyc_flutter_project/dm/provider/chat_provider.dart';
+import 'package:lyc_flutter_project/dm/screen/chat_media_screen.dart';
 import 'package:lyc_flutter_project/dm/screen/chat_schedule_screen.dart';
 import 'package:lyc_flutter_project/dm/screen/dm_screen.dart';
 import 'package:lyc_flutter_project/feed/screen/feed_screen.dart';
@@ -154,7 +155,16 @@ final router = GoRouter(
               provider: state.extra as ChatProvider,
             ),
           ),
-        )
+        ),
+        GoRoute(
+          path: Routes.media.path,
+          name: Routes.media.name,
+          pageBuilder: (context, state) => NoTransitionPage(
+            child: ChatMediaScreen(
+              provider: state.extra as ChatProvider,
+            ),
+          ),
+        ),
       ],
     )
   ],

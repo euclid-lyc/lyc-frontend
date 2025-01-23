@@ -1,15 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:lyc_flutter_project/common/model/api_response.dart';
 import 'package:lyc_flutter_project/common/model/paginate_query.dart';
-import 'package:lyc_flutter_project/common/widget/custom_loading.dart';
 import 'package:lyc_flutter_project/mypage/model/mypage_posting_preview.dart';
 import 'package:lyc_flutter_project/mypage/model/profile.dart';
 import 'package:lyc_flutter_project/mypage/model/result.dart';
 import 'package:lyc_flutter_project/mypage/repository/mypage_repository.dart';
-import 'package:lyc_flutter_project/mypage/widget/director_closet_list.dart';
-import 'package:lyc_flutter_project/mypage/widget/director_coordi_grid_view.dart';
-import 'package:lyc_flutter_project/mypage/widget/my_coordi_grid_view.dart';
-import 'package:lyc_flutter_project/mypage/widget/my_closet_list.dart';
 
 class MypageProviderFactory extends ChangeNotifier {
   final MypageRepositoryProvider mypageRepositoryProvider;
@@ -84,18 +79,40 @@ class MypageProvider extends ChangeNotifier {
 
   get hasProfile => _hasProfile;
 
-  get listLength => {
-        if (_category == 0)
-          myCoordi.length
-        else if (_category == 1)
-          savedCoordi.length
-        else
-          myCloset.length
-      };
+  int get listLength {
+    if (_category == 0) {
+      return myCoordi.length;
+    } else if (_category == 1) {
+      return savedCoordi.length;
+    } else {
+      return myCloset.length;
+    }
+  }
+
+  get postings {
+    if (_category == 0) {
+      return myCoordi;
+    } else if (_category == 1) {
+      return savedCoordi;
+    } else {
+      return myCloset;
+    }
+  }
+
+  bool get loading {
+    if (_category == 0) {
+      return _loadingCoordi;
+    } else if (_category == 1) {
+      return _loadingSaved;
+    } else {
+      return _loadingCloset;
+    }
+  }
 
   Future<void> save(int postingId) async {
-    final resp = await mypageRepositoryProvider.mypageRepository
-        .savePosting(postingId: postingId);
+    final resp = await mypageRepositoryProvider.mypageRepository.savePosting(
+      postingId: postingId,
+    );
     if (resp.isSuccess) {
       getList(type: 1, refresh: true);
     } else {
@@ -104,8 +121,9 @@ class MypageProvider extends ChangeNotifier {
   }
 
   Future<void> unsave(int postingId) async {
-    final resp = await mypageRepositoryProvider.mypageRepository
-        .unsavePosting(postingId: postingId);
+    final resp = await mypageRepositoryProvider.mypageRepository.unsavePosting(
+      postingId: postingId,
+    );
     if (resp.isSuccess) {
       getList(type: 1, refresh: true);
     } else {
@@ -114,14 +132,16 @@ class MypageProvider extends ChangeNotifier {
   }
 
   Future<void> like(int postingId) async {
-    final resp = await mypageRepositoryProvider.mypageRepository
-        .likePosting(postingId: postingId);
+    final resp = await mypageRepositoryProvider.mypageRepository.likePosting(
+      postingId: postingId,
+    );
     if (!resp.isSuccess) Exception(resp.message);
   }
 
   Future<void> dislike(int postingId) async {
-    final resp = await mypageRepositoryProvider.mypageRepository
-        .dislikePosting(postingId: postingId);
+    final resp = await mypageRepositoryProvider.mypageRepository.dislikePosting(
+      postingId: postingId,
+    );
     if (!resp.isSuccess) Exception(resp.message);
   }
 
@@ -193,55 +213,6 @@ class MypageProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Widget renderList() {
-    if (getLoading()) {
-      const Center(
-        child: CustomLoading(),
-      );
-      notifyListeners();
-    }
-    switch (_category) {
-      case 0:
-        return isLoginUser
-            ? MyCoordiGridView(
-                postings: myCoordi,
-                category: 0,
-                provider: this,
-              )
-            : DirectorCoordiGridView(
-                postings: myCoordi,
-                category: 0,
-                provider: this,
-              );
-      case 1:
-        return isLoginUser
-            ? MyCoordiGridView(
-                postings: savedCoordi,
-                category: 1,
-                provider: this,
-              )
-            : DirectorCoordiGridView(
-                postings: myCoordi,
-                category: 1,
-                provider: this,
-              );
-      case 2:
-        return isLoginUser
-            ? MyClosetList(
-                postings: myCloset,
-                provider: this,
-                memberId: memberId,
-              )
-            : DirectorClosetList(
-                postings: myCloset,
-                provider: this,
-                memberId: memberId,
-              );
-      default:
-        return const CustomLoading();
-    }
-  }
-
   Future<void> refresh() async {
     getList(refresh: true);
   }
@@ -252,7 +223,12 @@ class MypageProvider extends ChangeNotifier {
     int pageSize = 10,
     String cursorDateTime = "9999-12-31T23:59:59.0000",
   }) async {
-    if (getLoading() || (!refresh && !getHasMore())) return;
+    debugPrint("mypage provider: getList: 호출");
+    debugPrint("mypage provider: getList: loading=$loading");
+    debugPrint("mypage provider: getList: refresh=$refresh");
+    debugPrint("mypage provider: getList: 호출");
+    if (loading || (!refresh && !getHasMore())) return;
+    debugPrint("mypage provider: getList: 시작");
 
     if (type == 5) {
       type = _category;
@@ -267,31 +243,37 @@ class MypageProvider extends ChangeNotifier {
       switch (type) {
         case 0:
           if (myCoordi.isNotEmpty) {
-            paginateQuery =
-                paginateQuery.copyWith(cursorDateTime: myCoordi.last.createdAt);
+            paginateQuery = paginateQuery.copyWith(
+              cursorDateTime: myCoordi.last.createdAt,
+            );
           }
         case 1:
           if (savedCoordi.isNotEmpty) {
             paginateQuery = paginateQuery.copyWith(
-                cursorDateTime: savedCoordi.last.createdAt);
+              cursorDateTime: savedCoordi.last.createdAt,
+            );
           }
         case 2:
           if (myCloset.isNotEmpty) {
-            paginateQuery =
-                paginateQuery.copyWith(cursorDateTime: myCloset.last.createdAt);
+            paginateQuery = paginateQuery.copyWith(
+              cursorDateTime: myCloset.last.createdAt,
+            );
           }
       }
     }
 
     try {
       updateLoading(true);
+      debugPrint("mypage provider: getList: 코디 API 호출");
+      debugPrint("mypage provider: getList: path=$memberId");
+      debugPrint("mypage provider: getList: query=${paginateQuery.pageSize}, ${paginateQuery.cursorDateTime}");
       switch (type) {
         case 0:
-          final ApiResponse<CoordieResult> resp =
-              await mypageRepositoryProvider.mypageRepository.getMyCoorides(
+          final resp = await mypageRepositoryProvider.mypageRepository.getMyCoordies(
             memberId: memberId,
             paginateQuery: paginateQuery,
           );
+          debugPrint("mypage provider: getList: 코디 API 성공");
           myCoordi = refresh
               ? [...resp.result.imageList]
               : [
@@ -299,9 +281,9 @@ class MypageProvider extends ChangeNotifier {
                   ...resp.result.imageList,
                 ];
           updateHasMore(resp.result.imageList.length >= pageSize);
+          debugPrint("mypage provider: getList: myCoordi=$myCoordi");
         case 1:
-          final resp =
-              await mypageRepositoryProvider.mypageRepository.getSavedCoordies(
+          final ApiResponse<CoordiResult> resp = await mypageRepositoryProvider.mypageRepository.getSavedCoordies(
             memberId: memberId,
             paginateQuery: paginateQuery,
           );
@@ -313,8 +295,7 @@ class MypageProvider extends ChangeNotifier {
                 ];
           updateHasMore(resp.result.imageList.length >= pageSize);
         case 2:
-          final resp =
-              await mypageRepositoryProvider.mypageRepository.getMyCloset(
+          final resp = await mypageRepositoryProvider.mypageRepository.getMyCloset(
             memberId: memberId,
             paginateQuery: paginateQuery,
           );
@@ -329,7 +310,11 @@ class MypageProvider extends ChangeNotifier {
           throw Exception("카테고리 오류");
       }
     } catch (e) {
-      Exception(e);
+      if (e is ApiResponse) {
+        debugPrint("mypage privider: getList: 오류: ${e.message}");
+      } else {
+        debugPrint("mypage privider: getList: 오류: $e");
+      }
     } finally {
       updateLoading(false);
       notifyListeners();

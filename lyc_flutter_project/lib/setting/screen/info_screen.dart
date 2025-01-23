@@ -100,6 +100,7 @@ class InfoScreen extends StatelessWidget {
                                   CustomTextFormField(
                                     labelText: "닉네임",
                                     initialValue: member!.nickname,
+
                                     onChanged: (text) =>
                                         value.updateNickname(text),
                                     validator: (value) {

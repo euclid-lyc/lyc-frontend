@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:lyc_flutter_project/commissions/screen/commissions_screen.dart';
 import 'package:lyc_flutter_project/common/const/assets.dart';
 import 'package:lyc_flutter_project/dm/provider/chat_provider.dart';
@@ -16,6 +17,8 @@ class ChatBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ImagePicker picker = ImagePicker();
+
     return Container(
       width: double.infinity,
       decoration: const BoxDecoration(
@@ -34,12 +37,24 @@ class ChatBottomSheet extends StatelessWidget {
           ChatPlusButton(
             label: '사진',
             asset: Assets.photoButton,
-            onTap: () {},
+            onTap: () async {
+              final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+              provider.showImageToSend(image: image);
+              if (context.mounted) {
+                Navigator.pop(context);
+              }
+            },
           ),
           ChatPlusButton(
             label: '카메라',
             asset: Assets.cameraButton,
-            onTap: () {},
+            onTap: () async {
+              final XFile? image = await picker.pickImage(source: ImageSource.camera);
+              provider.showImageToSend(image: image);
+              if (context.mounted) {
+                Navigator.pop(context);
+              }
+            },
           ),
           ChatPlusButton(
             label: '일정',

@@ -18,7 +18,7 @@ class _MypageRepository implements MypageRepository {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<ApiResponse<CoordieResult>> getMyCoorides({
+  Future<ApiResponse<CoordiResult>> getMyCoordies({
     required int memberId,
     required PaginateQuery paginateQuery,
   }) async {
@@ -28,7 +28,7 @@ class _MypageRepository implements MypageRepository {
     final _headers = <String, dynamic>{r'accessToken': 'true'};
     _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<ApiResponse<CoordieResult>>(
+    final _options = _setStreamType<ApiResponse<CoordiResult>>(
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -39,11 +39,11 @@ class _MypageRepository implements MypageRepository {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late ApiResponse<CoordieResult> _value;
+    late ApiResponse<CoordiResult> _value;
     try {
-      _value = ApiResponse<CoordieResult>.fromJson(
+      _value = ApiResponse<CoordiResult>.fromJson(
         _result.data!,
-        (json) => CoordieResult.fromJson(json as Map<String, dynamic>),
+        (json) => CoordiResult.fromJson(json as Map<String, dynamic>),
       );
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
@@ -53,7 +53,7 @@ class _MypageRepository implements MypageRepository {
   }
 
   @override
-  Future<ApiResponse<CoordieResult>> getSavedCoordies({
+  Future<ApiResponse<CoordiResult>> getSavedCoordies({
     required int memberId,
     required PaginateQuery paginateQuery,
   }) async {
@@ -63,7 +63,7 @@ class _MypageRepository implements MypageRepository {
     final _headers = <String, dynamic>{r'accessToken': 'true'};
     _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<ApiResponse<CoordieResult>>(
+    final _options = _setStreamType<ApiResponse<CoordiResult>>(
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -74,11 +74,11 @@ class _MypageRepository implements MypageRepository {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late ApiResponse<CoordieResult> _value;
+    late ApiResponse<CoordiResult> _value;
     try {
-      _value = ApiResponse<CoordieResult>.fromJson(
+      _value = ApiResponse<CoordiResult>.fromJson(
         _result.data!,
-        (json) => CoordieResult.fromJson(json as Map<String, dynamic>),
+        (json) => CoordiResult.fromJson(json as Map<String, dynamic>),
       );
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
@@ -556,7 +556,7 @@ class _MypageRepository implements MypageRepository {
   }
 
   @override
-  Future<ApiResponse<CoordieResult>> getReviewList({
+  Future<ApiResponse<CoordiResult>> getReviewList({
     required int memberId,
     required PaginateQuery paginateQuery,
   }) async {
@@ -566,7 +566,7 @@ class _MypageRepository implements MypageRepository {
     final _headers = <String, dynamic>{r'accessToken': 'true'};
     _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<ApiResponse<CoordieResult>>(
+    final _options = _setStreamType<ApiResponse<CoordiResult>>(
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -577,11 +577,11 @@ class _MypageRepository implements MypageRepository {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late ApiResponse<CoordieResult> _value;
+    late ApiResponse<CoordiResult> _value;
     try {
-      _value = ApiResponse<CoordieResult>.fromJson(
+      _value = ApiResponse<CoordiResult>.fromJson(
         _result.data!,
-        (json) => CoordieResult.fromJson(json as Map<String, dynamic>),
+        (json) => CoordiResult.fromJson(json as Map<String, dynamic>),
       );
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);

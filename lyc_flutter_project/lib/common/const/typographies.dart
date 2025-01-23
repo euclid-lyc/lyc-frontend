@@ -9,6 +9,11 @@ class Typos {
     fontWeight: FontWeight.w600,
   );
 
+  static const TextStyle extraBold18 = TextStyle(
+    fontSize: 18.0,
+    fontWeight: FontWeight.w800,
+  );
+
   static const TextStyle regular18 = TextStyle(
     fontSize: 18.0,
     fontWeight: FontWeight.w400,

@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart' hide Headers;
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/common/model/api_response.dart';
 import 'package:lyc_flutter_project/config/secret.dart';
+import 'package:lyc_flutter_project/dm/model/chat_image_model.dart';
+import 'package:lyc_flutter_project/dm/model/chat_message_model.dart';
 import 'package:lyc_flutter_project/dm/model/chat_model.dart';
 import 'package:lyc_flutter_project/dm/model/chat_room_model.dart';
 import 'package:lyc_flutter_project/dm/model/make_schedule_model.dart';
@@ -55,5 +59,34 @@ abstract class ChatRepository {
     @Query("year") required int year,
     @Query("month") required int month,
     @Query("day") int? day,
+  });
+
+  @GET("/{chatId}/images")
+  @Headers({"accessToken": "true"})
+  Future<ApiResponse<ChatImageListModel>> getImages({
+    @Path("chatId") required int chatId,
+    @Query("pageSize") required int pageSize,
+    @Query("cursorDateTime") required String cursorDateTime,
+  });
+
+  @GET("/{chatId}/images/{imageId}")
+  @Headers({"accessToken": "true"})
+  Future<ApiResponse<ChatImageModel>> getAImage({
+    @Path("chatId") required int chatId,
+    @Path("imageId") required int imageId,
+  });
+
+  @PATCH("/{chatId}/termination")
+  @Headers({"accessToken": "true"})
+  Future<ApiResponse<String>> terminateChat({
+    @Path("chatId") required int chatId,
+  });
+
+  @POST("/{chatId}/messages/images")
+  @Headers({"accessToken": "true"})
+  @MultiPart()
+  Future<ApiResponse<String>> uploadImageToS3({
+    @Path("chatId") required int chatId,
+    @Part(name: "image") required File image,
   });
 }

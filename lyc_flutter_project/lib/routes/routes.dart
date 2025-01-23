@@ -207,4 +207,9 @@ class Routes {
     path: '/dm/chat/schedule',
   );
 
+  static const RouteInfo media = RouteInfo(
+    name: '/dm/chat/media',
+    path: '/dm/chat/media',
+  );
+
 }
