@@ -22,6 +22,7 @@ class CustomTextFormField extends StatefulWidget {
   final double containerMargin;
   final TextInputType? keyboardType;
   final String? labelText;
+  final bool? enabled;
 
   const CustomTextFormField({
     super.key,
@@ -45,6 +46,7 @@ class CustomTextFormField extends StatefulWidget {
     this.containerMargin = 8.0,
     this.keyboardType = TextInputType.text,
     this.labelText,
+    this.enabled
   });
 
   @override
@@ -96,6 +98,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         autovalidateMode: widget.autoValidateMode,
         maxLines: widget.maxLines,
         onChanged: widget.onChanged,
+        enabled: widget.enabled,
         readOnly: widget.readOnly,
         obscureText: widget.obscureText,
         style: TextStyle(

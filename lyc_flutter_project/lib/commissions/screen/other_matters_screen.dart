@@ -1,248 +1,248 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:lyc_flutter_project/commissions/model/commission_model.dart';
 import 'package:lyc_flutter_project/commissions/screen/submission_success_screen.dart';
 import 'package:provider/provider.dart';
+import '../../auth/join/Provider/login_provider.dart';
+import '../../common/widget/custom_loading.dart';
+import '../../common/widget/default_padding.dart';
 import '../../common/widget/two_buttons.dart';
 import '../../data/app_color.dart';
+import '../../setting/widget/custom_text_form_field.dart';
 import '../../styles/app_text_style.dart';
 import '../../widget/Controller.dart';
 import '../provider/commissions_provider.dart';
 
 class OtherMattersScreen extends StatefulWidget {
-  const OtherMattersScreen({super.key, required this.isDirector,required this.commissionId});
+  const OtherMattersScreen(
+      {super.key,
+      required this.isDirector,
+      required this.commissionId,
+      required this.isUpdate});
 
   final bool isDirector;
   final int? commissionId;
+  final bool isUpdate;
 
   @override
   OtherMattersScreenState createState() => OtherMattersScreenState();
 }
 
 class OtherMattersScreenState extends State<OtherMattersScreen> {
-  final Controller _minPriceController = Controller();
-  final Controller _maxPriceController = Controller();
-  final Controller _additionalInfoController = Controller();
-  DateTime? _desiredDate;
-  DateTime? _receiveDate;
-  bool shareClothesList = false;
+  int? memberId;
 
-  Future<void> _selectDate(BuildContext context, String type) async {
-    final DateTime? picked = await showDatePicker(
+  Future<DateTime?> _selectDate(BuildContext context) async {
+    DateTime today = DateTime.now();
+
+    return showDatePicker(
       context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2023),
-      lastDate: DateTime(2101),
+      initialDate: today,
+      firstDate: today,
+      lastDate: DateTime(today.year + 5),
       builder: (BuildContext context, Widget? child) {
         return Theme(
-          data: ThemeData.light().copyWith(
-            primaryColor: AppColor.brown,
-            hintColor: AppColor.brown,
-            buttonTheme:
-                const ButtonThemeData(textTheme: ButtonTextTheme.primary),
-            scaffoldBackgroundColor: Colors.white,
+          data: Theme.of(context).copyWith(
             colorScheme: const ColorScheme.light(
-              primary: AppColor.brown,
-              secondary: AppColor.brown,
-            ),
-            textButtonTheme: TextButtonThemeData(
-              style: TextButton.styleFrom(foregroundColor: AppColor.brown),
+              primary: AppColor.beige,
+              onPrimary: Colors.white, // 텍스트 색상
+              onSurface: Colors.black, // 버튼 및 텍스트 색상
             ),
           ),
           child: child!,
         );
       },
     );
-
-    if (picked != null && picked != _desiredDate) {
-      setState(() {
-        if (type == 'desired') {
-          _desiredDate = picked;
-        } else if (type == 'receive') {
-          _receiveDate = picked;
-        }
-      });
-    }
   }
-
-
 
   @override
   Widget build(BuildContext context) {
-    final commissionsProvider =
-        Provider.of<CommissionsProvider>(context, listen: false);
     final int? commissionId = widget.commissionId;
-    Future<void> createCommissions() async {
-      commissionsProvider.model = commissionsProvider.model.copyWith(
-        otherMatters: OtherMatters(
-          minPrice: int.parse(_minPriceController.controller.text),
-          maxPrice: int.parse(_maxPriceController.controller.text),
-          dateToUse: _desiredDate == null
-              ? ''
-              : DateFormat('yyyy-MM-dd').format(_desiredDate!),
-          desiredDate: _receiveDate == null
-              ? ''
-              : DateFormat('yyyy-MM-dd').format(_receiveDate!),
-          text: _additionalInfoController.controller.text,
-          isShared: shareClothesList,
-        ),
-      );
-      commissionsProvider.createCommission();
-    }
+    final bool isDirector = widget.isDirector;
     return Scaffold(
       backgroundColor: AppColor.lightGrey,
-      body: SingleChildScrollView(
-        child: Center(
-          child: Container(
-            margin: const EdgeInsets.fromLTRB(32, 20, 32, 0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                // Step 1: 가격대 선택
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 20),
-                  child: Container(
-                    width: 333,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    padding: const EdgeInsets.fromLTRB(20, 16, 20, 16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 20),
-                          child: Text(
-                            "Step 1. 원하시는 코디의 가격대는 얼마인가요?",
-                            style:
-                                AppTextStyle.littleTitle.copyWith(fontSize: 14),
-                            textAlign: TextAlign.left,
-                          ),
-                        ),
-                        RangeSlider(
-                          values: RangeValues(
-                            double.parse(
-                                _minPriceController.controller.text.isNotEmpty
-                                    ? _minPriceController.controller.text
-                                    : '0'),
-                            double.parse(
-                                _maxPriceController.controller.text.isNotEmpty
-                                    ? _maxPriceController.controller.text
-                                    : '0'),
-                          ),
-                          min: 0,
-                          max: 500000,
-                          divisions: 50,
-                          labels: RangeLabels(
-                            '${_minPriceController.controller.text}원',
-                            '${_maxPriceController.controller.text}원',
-                          ),
-                          activeColor: AppColor.brown,
-                          inactiveColor: AppColor.grey,
-                          onChanged: (RangeValues values) {
-                            setState(() {
-                              _minPriceController.controller.text =
-                                  values.start.round().toString();
-                              _maxPriceController.controller.text =
-                                  values.end.round().toString();
-                            });
-                          },
-                        ),
-                        Text(
-                          '선택한 가격대: ${_minPriceController.controller.text}원 ~ ${_maxPriceController.controller.text}원',
-                          style:
-                              AppTextStyle.littleTitle.copyWith(fontSize: 14),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                // Step 2: 입고 날짜 선택
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 20),
-                  child: buildDateSection(
-                    "Step 2. 언제 입고 싶으신가요?",
-                    _desiredDate,
-                    'desired',
-                  ),
-                ),
-                // Step 3: 수령 날짜 선택
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 20),
-                  child: buildDateSection(
-                    "Step 3. 언제까지 수령하고 싶으신가요?",
-                    _receiveDate,
-                    'receive',
-                  ),
-                ),
-                // Step 4: 자유 입력
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 20),
-                  child: buildTextSection(
-                      "Step 4. 자유롭게 입력해 주세요", _additionalInfoController),
-                ),
-                // Step 5: 옷 리스트 공유 여부
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 20),
-                  child: buildSwitchSection(
-                      "Step 5. 옷 리스트를 공유받을까요?", shareClothesList),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 20),
-                  child: widget.isDirector
-                      ? TwoButtons(
-                          fstOnPressed: () async {
-                            Navigator.pop(context);
-                            await commissionsProvider
-                                .acceptCommission(commissionId!);
-                          },
-                          scdOnPressed: () async {
-                            await commissionsProvider
-                                .declineCommission(commissionId!);
-                            if (context.mounted) {
-                              Navigator.pop(context);
-                            }
-                          },
-                          fstLabel: "수락",
-                          scdLabel: "거절",
-                        )
-                      : TextButton(
-                          onPressed: () async {
-                            try {
-                              await createCommissions();
-                              if (context.mounted) {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const SubmissionSuccessScreen()));
-                              }
-                            } catch (e) {
-                              debugPrint("저장 실패-3");
-                            }
-                          },
-                          style: TextButton.styleFrom(
-                            backgroundColor: AppColor.brown,
-                            minimumSize: const Size(120, 40),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
+      body: Consumer<LoginProvider>(
+        builder: (context, loginProvider, child) {
+          memberId = loginProvider.memberId;
+          return DefaultPadding(
+            bottom: 20.0,
+            child: Consumer<CommissionsProvider>(
+              builder: (context, value, child) {
+                if (memberId == null) {
+                  return const Center(
+                    child: CustomLoading(),
+                  );
+                } else {
+                  return ListView(
+                    keyboardDismissBehavior:
+                        ScrollViewKeyboardDismissBehavior.onDrag,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 20),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 20),
+                              child: Text(
+                                "Step 1. 원하시는 코디의 가격대는 얼마인가요?",
+                                style: AppTextStyle.littleTitle
+                                    .copyWith(fontSize: 14),
+                                textAlign: TextAlign.left,
+                              ),
                             ),
-                          ),
-                          child: const Text(
-                            '저장',
-                            style: AppTextStyle.button,
-                            textAlign: TextAlign.center,
-                          ),
+                            RangeSlider(
+                              values: RangeValues(
+                                value.model.otherMatters.minPrice as double,
+                                value.model.otherMatters.maxPrice as double,
+                              ),
+                              min: 0,
+                              max: 500000,
+                              divisions: 50,
+                              labels: RangeLabels(
+                                '${value.model.otherMatters.minPrice}원',
+                                '${value.model.otherMatters.maxPrice}원',
+                              ),
+                              activeColor: AppColor.brown,
+                              inactiveColor: AppColor.grey,
+                              onChanged: !isDirector
+                                  ? (RangeValues values) {
+                                      setState(() {
+                                        value.updateMinPrice(
+                                            minPrice: values.start.round());
+                                        value.updateMaxPrice(
+                                            maxPrice: values.end.round());
+                                      });
+                                    }
+                                  : null,
+                            ),
+                            Text(
+                              '선택한 가격대: ${value.model.otherMatters.minPrice}원 ~ ${value.model.otherMatters.maxPrice}원',
+                              style: AppTextStyle.littleTitle
+                                  .copyWith(fontSize: 14),
+                            ),
+                          ],
                         ),
-                ),
-              ],
+                      ),
+                      Padding(
+                          padding: const EdgeInsets.only(bottom: 20),
+                          child: buildDateSection(
+                            "Step 2. 언제 입고 싶으신가요?",
+                            value.model.otherMatters.dateToUse,
+                            (formattedDate) async =>
+                                value.updateDateToUse(dateToUse: formattedDate),
+                            enabled: !isDirector,
+                          )),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 20),
+                        child: buildDateSection(
+                          "Step 3. 언제까지 수령하고 싶으신가요?",
+                          value.model.otherMatters.desiredDate,
+                          (formattedDate) async => value.updateDesiredDate(
+                              desiredDate: formattedDate),
+                          enabled: !isDirector,
+                        ),
+                      ),
+                      ContentBox(
+                        title: "4.자유롭게 입력해 주세요",
+                        child: CustomTextFormField(
+                          hint: "ex. 졸업식 때 입고 싶어요. 바지로 부탁드려요.",
+                          maxLines: 5,
+                          containerMargin: 0.0,
+                          focusedBorderColor: Colors.transparent,
+                          focusedBorderWidth: 0.0,
+                          contentPaddingHorizontal: 8.0,
+                          initialValue: value.model.otherMatters.text,
+                          onChanged: (text) => value.updateText(text: text),
+                          enabled: !isDirector,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 20),
+                        child: SwitchSection(
+                          initialValue: value.model.otherMatters.isShared,
+                          onTap: (v) async => value.updateIsShared(isShared: v),
+                          title: "Step 5. 옷 리스트를 공유받을까요?",
+                          enabled: !isDirector,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 20),
+                        child: widget.isDirector
+                            ? TwoButtons(
+                                fstOnPressed: () async {
+                                  Navigator.pop(context);
+                                  await value.acceptCommission(commissionId!);
+                                },
+                                scdOnPressed: () async {
+                                  await value.declineCommission(commissionId!);
+                                  if (context.mounted) {
+                                    Navigator.pop(context);
+                                  }
+                                },
+                                fstLabel: "수락",
+                                scdLabel: "거절",
+                              )
+                            : widget.isUpdate
+                                ? TextButton(
+                                    onPressed: () async {
+                                      try {
+                                        value.updateCommission(commissionId!);
+                                      } catch (e) {
+                                        debugPrint("저장 실패-3");
+                                      }
+                                    },
+                                    style: TextButton.styleFrom(
+                                      backgroundColor: AppColor.brown,
+                                      minimumSize: const Size(120, 40),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                    ),
+                                    child: const Text(
+                                      '수정하기',
+                                      style: AppTextStyle.button,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  )
+                                : TextButton(
+                                    onPressed: () async {
+                                      try {
+                                        value.createCommission();
+                                        if (context.mounted) {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const SubmissionSuccessScreen(),
+                                            ),
+                                          );
+                                        }
+                                      } catch (e) {
+                                        debugPrint("저장 실패-3");
+                                      }
+                                    },
+                                    style: TextButton.styleFrom(
+                                      backgroundColor: AppColor.brown,
+                                      minimumSize: const Size(120, 40),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                    ),
+                                    child: const Text(
+                                      '의뢰하기',
+                                      style: AppTextStyle.button,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                      ),
+                    ],
+                  );
+                }
+              },
             ),
-          ),
-        ),
+          );
+        },
       ),
     );
-
   }
 
   Widget buildTextSection(String title, Controller controller) {
@@ -306,11 +306,9 @@ class OtherMattersScreenState extends State<OtherMattersScreen> {
     );
   }
 
-  Widget buildDateSection(String title, DateTime? date, String type) {
-    TextEditingController controller = TextEditingController(
-      text: date == null ? '' : DateFormat('yyyy-MM-dd').format(date),
-    );
-
+  Widget buildDateSection(
+      String title, String date, Future<void> Function(String) onUpdateDate,
+      {bool enabled = true}) {
     return Container(
       width: 332,
       decoration: BoxDecoration(
@@ -330,12 +328,21 @@ class OtherMattersScreenState extends State<OtherMattersScreen> {
             ),
           ),
           GestureDetector(
-            onTap: () => _selectDate(context, type),
+            onTap: enabled
+                ? () async {
+                    DateTime? selectedDate = await _selectDate(context);
+                    if (selectedDate != null) {
+                      String formattedDate =
+                          DateFormat('yyyy-MM-dd').format(selectedDate);
+                      await onUpdateDate(formattedDate);
+                    }
+                  }
+                : null,
             child: AbsorbPointer(
               child: TextField(
-                controller: controller,
+                readOnly: true,
                 decoration: InputDecoration(
-                  hintText: date == null ? '날짜를 선택하세요.' : null,
+                  hintText: date.isEmpty ? '날짜를 선택하세요.' : date,
                   hintStyle: AppTextStyle.labelTextStyle,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20),
@@ -349,99 +356,154 @@ class OtherMattersScreenState extends State<OtherMattersScreen> {
       ),
     );
   }
+}
 
-  Widget buildSwitchSection(String title, bool switchValue) {
+class SwitchSection extends StatelessWidget {
+  final bool? initialValue;
+  final Future<void> Function(bool)? onTap;
+  final String title;
+  final bool enabled;
+
+  const SwitchSection({
+    super.key,
+    required this.initialValue,
+    required this.onTap,
+    required this.title,
+    this.enabled = true,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       width: 332,
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
       ),
-      padding: const EdgeInsets.fromLTRB(20, 16, 20, 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: AppTextStyle.littleTitle.copyWith(fontSize: 14),
+          ),
+          const SizedBox(height: 12),
+          SwitchButton(
+              initialValue: initialValue, onTap: onTap, enabled: enabled),
+        ],
+      ),
+    );
+  }
+}
+
+class SwitchButton extends StatelessWidget {
+  const SwitchButton({
+    super.key,
+    required this.initialValue,
+    required this.onTap,
+    this.enabled = true,
+  });
+
+  final bool? initialValue;
+  final Future<void> Function(bool)? onTap;
+  final bool enabled;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 100,
+      height: 30,
+      decoration: BoxDecoration(
+        color: AppColor.grey,
+        borderRadius: BorderRadius.circular(25),
+      ),
+      child: Row(
+        children: [
+          _buildOption(
+            text: '네',
+            isSelected: initialValue ?? false,
+            onTap: enabled ? () => onTap?.call(true) : () {},
+          ),
+          _buildOption(
+            text: '아니오',
+            isSelected: initialValue ?? false,
+            onTap: enabled ? () => onTap?.call(true) : () {},
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildOption({
+    required String text,
+    required bool isSelected,
+    required VoidCallback? onTap,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 50,
+        height: 30,
+        decoration: BoxDecoration(
+          color: isSelected ? AppColor.beige : AppColor.grey,
+          borderRadius: BorderRadius.circular(25),
+        ),
+        child: Center(
+          child: Text(
+            text,
+            style: TextStyle(
+              color: isSelected ? Colors.white : Colors.black,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class ContentBox extends StatelessWidget {
+  final String title;
+  final Widget child;
+
+  const ContentBox({
+    super.key,
+    required this.title,
+    required this.child,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(
+        bottom: 20.0,
+      ),
+      padding: const EdgeInsets.symmetric(
+        vertical: 16.0,
+        horizontal: 20.0,
+      ),
+      //height: 200.0,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(
+          20.0,
+        ),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.only(bottom: 12),
+            padding: const EdgeInsets.all(8.0),
             child: Text(
               title,
-              style: AppTextStyle.littleTitle.copyWith(fontSize: 14.0),
-              textAlign: TextAlign.left,
+              style: const TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: 16.0,
+              ),
             ),
           ),
-          SizedBox(
-            width: 100,
-            height: 50,
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                Positioned(
-                  child: Container(
-                    width: 100,
-                    height: 30,
-                    decoration: BoxDecoration(
-                      color: AppColor.grey,
-                      borderRadius: BorderRadius.circular(25),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  left: 0,
-                  child: GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        shareClothesList = true;
-                      });
-                    },
-                    child: Container(
-                      width: 50,
-                      height: 30,
-                      decoration: BoxDecoration(
-                        color: switchValue ? AppColor.beige : AppColor.grey,
-                        borderRadius: BorderRadius.circular(25),
-                      ),
-                      child: Center(
-                        child: Text(
-                          '네',
-                          style: TextStyle(
-                            color: switchValue ? Colors.white : Colors.black,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  right: 0,
-                  child: GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        shareClothesList = false;
-                      });
-                    },
-                    child: Container(
-                      width: 50,
-                      height: 30,
-                      decoration: BoxDecoration(
-                        color: !switchValue ? AppColor.beige : AppColor.grey,
-                        borderRadius: BorderRadius.circular(25),
-                      ),
-                      child: Center(
-                        child: Text(
-                          '아니오',
-                          style: TextStyle(
-                            color: !switchValue ? Colors.white : Colors.black,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
+          child,
         ],
       ),
     );

@@ -15,4 +15,5 @@ abstract class AppColor {
   static const brown = Color(0xff8D8371);
   static const active = Color(0xff03A600);
   static const pink = Color(0xffB41414);
+  static const Color mocha = Color(0xFFD2B48C);
 }

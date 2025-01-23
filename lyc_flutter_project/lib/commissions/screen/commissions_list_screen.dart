@@ -47,10 +47,7 @@ class _CommissionsListScreenState extends State<CommissionsListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final int memberId = Provider.of<LoginProvider>(
-        context,
-        listen: false)
-        .memberId;
+
     return Scaffold(
       backgroundColor: AppColor.lightGrey,
       appBar: const NormalAppbar(
@@ -91,12 +88,11 @@ class _CommissionsListScreenState extends State<CommissionsListScreen> {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) => TapViewScreen(
-                                          directorId:
-                                              memberId,
-                                        memberId: memberId,
+                                        //여기 true를 넣어도 되는지 깊은 고민..
+                                        isDirector: true,
                                         model:model,
                                         title: "의뢰서 확인하기",
-                                        commissionId: model?.commissionId,
+                                        commissionId: model?.commissionId, isUpdate: false,
                                       ),
 
                                     ),

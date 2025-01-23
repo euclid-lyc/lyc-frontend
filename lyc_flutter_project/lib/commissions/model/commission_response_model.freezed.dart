@@ -22,11 +22,11 @@ CommissionResponseModel _$CommissionResponseModelFromJson(
 /// @nodoc
 mixin _$CommissionResponseModel {
   int get commissionId => throw _privateConstructorUsedError;
-  String get status => throw _privateConstructorUsedError;
   String get createdDate => throw _privateConstructorUsedError;
-  CommissionInfo get commissionInfo => throw _privateConstructorUsedError;
-  CommissionStyle get commissionStyle => throw _privateConstructorUsedError;
-  CommissionOther get commissionOther => throw _privateConstructorUsedError;
+  String get status => throw _privateConstructorUsedError;
+  BasicInfo get basicInfo => throw _privateConstructorUsedError;
+  DesiredStyle get desiredStyle => throw _privateConstructorUsedError;
+  OtherMatters get otherMatters => throw _privateConstructorUsedError;
 
   /// Serializes this CommissionResponseModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -46,15 +46,15 @@ abstract class $CommissionResponseModelCopyWith<$Res> {
   @useResult
   $Res call(
       {int commissionId,
-      String status,
       String createdDate,
-      CommissionInfo commissionInfo,
-      CommissionStyle commissionStyle,
-      CommissionOther commissionOther});
+      String status,
+      BasicInfo basicInfo,
+      DesiredStyle desiredStyle,
+      OtherMatters otherMatters});
 
-  $CommissionInfoCopyWith<$Res> get commissionInfo;
-  $CommissionStyleCopyWith<$Res> get commissionStyle;
-  $CommissionOtherCopyWith<$Res> get commissionOther;
+  $BasicInfoCopyWith<$Res> get basicInfo;
+  $DesiredStyleCopyWith<$Res> get desiredStyle;
+  $OtherMattersCopyWith<$Res> get otherMatters;
 }
 
 /// @nodoc
@@ -74,37 +74,37 @@ class _$CommissionResponseModelCopyWithImpl<$Res,
   @override
   $Res call({
     Object? commissionId = null,
-    Object? status = null,
     Object? createdDate = null,
-    Object? commissionInfo = null,
-    Object? commissionStyle = null,
-    Object? commissionOther = null,
+    Object? status = null,
+    Object? basicInfo = null,
+    Object? desiredStyle = null,
+    Object? otherMatters = null,
   }) {
     return _then(_value.copyWith(
       commissionId: null == commissionId
           ? _value.commissionId
           : commissionId // ignore: cast_nullable_to_non_nullable
               as int,
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as String,
       createdDate: null == createdDate
           ? _value.createdDate
           : createdDate // ignore: cast_nullable_to_non_nullable
               as String,
-      commissionInfo: null == commissionInfo
-          ? _value.commissionInfo
-          : commissionInfo // ignore: cast_nullable_to_non_nullable
-              as CommissionInfo,
-      commissionStyle: null == commissionStyle
-          ? _value.commissionStyle
-          : commissionStyle // ignore: cast_nullable_to_non_nullable
-              as CommissionStyle,
-      commissionOther: null == commissionOther
-          ? _value.commissionOther
-          : commissionOther // ignore: cast_nullable_to_non_nullable
-              as CommissionOther,
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String,
+      basicInfo: null == basicInfo
+          ? _value.basicInfo
+          : basicInfo // ignore: cast_nullable_to_non_nullable
+              as BasicInfo,
+      desiredStyle: null == desiredStyle
+          ? _value.desiredStyle
+          : desiredStyle // ignore: cast_nullable_to_non_nullable
+              as DesiredStyle,
+      otherMatters: null == otherMatters
+          ? _value.otherMatters
+          : otherMatters // ignore: cast_nullable_to_non_nullable
+              as OtherMatters,
     ) as $Val);
   }
 
@@ -112,9 +112,9 @@ class _$CommissionResponseModelCopyWithImpl<$Res,
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $CommissionInfoCopyWith<$Res> get commissionInfo {
-    return $CommissionInfoCopyWith<$Res>(_value.commissionInfo, (value) {
-      return _then(_value.copyWith(commissionInfo: value) as $Val);
+  $BasicInfoCopyWith<$Res> get basicInfo {
+    return $BasicInfoCopyWith<$Res>(_value.basicInfo, (value) {
+      return _then(_value.copyWith(basicInfo: value) as $Val);
     });
   }
 
@@ -122,9 +122,9 @@ class _$CommissionResponseModelCopyWithImpl<$Res,
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $CommissionStyleCopyWith<$Res> get commissionStyle {
-    return $CommissionStyleCopyWith<$Res>(_value.commissionStyle, (value) {
-      return _then(_value.copyWith(commissionStyle: value) as $Val);
+  $DesiredStyleCopyWith<$Res> get desiredStyle {
+    return $DesiredStyleCopyWith<$Res>(_value.desiredStyle, (value) {
+      return _then(_value.copyWith(desiredStyle: value) as $Val);
     });
   }
 
@@ -132,9 +132,9 @@ class _$CommissionResponseModelCopyWithImpl<$Res,
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $CommissionOtherCopyWith<$Res> get commissionOther {
-    return $CommissionOtherCopyWith<$Res>(_value.commissionOther, (value) {
-      return _then(_value.copyWith(commissionOther: value) as $Val);
+  $OtherMattersCopyWith<$Res> get otherMatters {
+    return $OtherMattersCopyWith<$Res>(_value.otherMatters, (value) {
+      return _then(_value.copyWith(otherMatters: value) as $Val);
     });
   }
 }
@@ -150,18 +150,18 @@ abstract class _$$CommissionResponseModelImplCopyWith<$Res>
   @useResult
   $Res call(
       {int commissionId,
-      String status,
       String createdDate,
-      CommissionInfo commissionInfo,
-      CommissionStyle commissionStyle,
-      CommissionOther commissionOther});
+      String status,
+      BasicInfo basicInfo,
+      DesiredStyle desiredStyle,
+      OtherMatters otherMatters});
 
   @override
-  $CommissionInfoCopyWith<$Res> get commissionInfo;
+  $BasicInfoCopyWith<$Res> get basicInfo;
   @override
-  $CommissionStyleCopyWith<$Res> get commissionStyle;
+  $DesiredStyleCopyWith<$Res> get desiredStyle;
   @override
-  $CommissionOtherCopyWith<$Res> get commissionOther;
+  $OtherMattersCopyWith<$Res> get otherMatters;
 }
 
 /// @nodoc
@@ -180,37 +180,37 @@ class __$$CommissionResponseModelImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? commissionId = null,
-    Object? status = null,
     Object? createdDate = null,
-    Object? commissionInfo = null,
-    Object? commissionStyle = null,
-    Object? commissionOther = null,
+    Object? status = null,
+    Object? basicInfo = null,
+    Object? desiredStyle = null,
+    Object? otherMatters = null,
   }) {
     return _then(_$CommissionResponseModelImpl(
       commissionId: null == commissionId
           ? _value.commissionId
           : commissionId // ignore: cast_nullable_to_non_nullable
               as int,
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as String,
       createdDate: null == createdDate
           ? _value.createdDate
           : createdDate // ignore: cast_nullable_to_non_nullable
               as String,
-      commissionInfo: null == commissionInfo
-          ? _value.commissionInfo
-          : commissionInfo // ignore: cast_nullable_to_non_nullable
-              as CommissionInfo,
-      commissionStyle: null == commissionStyle
-          ? _value.commissionStyle
-          : commissionStyle // ignore: cast_nullable_to_non_nullable
-              as CommissionStyle,
-      commissionOther: null == commissionOther
-          ? _value.commissionOther
-          : commissionOther // ignore: cast_nullable_to_non_nullable
-              as CommissionOther,
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String,
+      basicInfo: null == basicInfo
+          ? _value.basicInfo
+          : basicInfo // ignore: cast_nullable_to_non_nullable
+              as BasicInfo,
+      desiredStyle: null == desiredStyle
+          ? _value.desiredStyle
+          : desiredStyle // ignore: cast_nullable_to_non_nullable
+              as DesiredStyle,
+      otherMatters: null == otherMatters
+          ? _value.otherMatters
+          : otherMatters // ignore: cast_nullable_to_non_nullable
+              as OtherMatters,
     ));
   }
 }
@@ -220,11 +220,11 @@ class __$$CommissionResponseModelImplCopyWithImpl<$Res>
 class _$CommissionResponseModelImpl implements _CommissionResponseModel {
   _$CommissionResponseModelImpl(
       {required this.commissionId,
-      required this.status,
       required this.createdDate,
-      required this.commissionInfo,
-      required this.commissionStyle,
-      required this.commissionOther});
+      required this.status,
+      required this.basicInfo,
+      required this.desiredStyle,
+      required this.otherMatters});
 
   factory _$CommissionResponseModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$CommissionResponseModelImplFromJson(json);
@@ -232,19 +232,19 @@ class _$CommissionResponseModelImpl implements _CommissionResponseModel {
   @override
   final int commissionId;
   @override
-  final String status;
-  @override
   final String createdDate;
   @override
-  final CommissionInfo commissionInfo;
+  final String status;
   @override
-  final CommissionStyle commissionStyle;
+  final BasicInfo basicInfo;
   @override
-  final CommissionOther commissionOther;
+  final DesiredStyle desiredStyle;
+  @override
+  final OtherMatters otherMatters;
 
   @override
   String toString() {
-    return 'CommissionResponseModel(commissionId: $commissionId, status: $status, createdDate: $createdDate, commissionInfo: $commissionInfo, commissionStyle: $commissionStyle, commissionOther: $commissionOther)';
+    return 'CommissionResponseModel(commissionId: $commissionId, createdDate: $createdDate, status: $status, basicInfo: $basicInfo, desiredStyle: $desiredStyle, otherMatters: $otherMatters)';
   }
 
   @override
@@ -254,21 +254,21 @@ class _$CommissionResponseModelImpl implements _CommissionResponseModel {
             other is _$CommissionResponseModelImpl &&
             (identical(other.commissionId, commissionId) ||
                 other.commissionId == commissionId) &&
-            (identical(other.status, status) || other.status == status) &&
             (identical(other.createdDate, createdDate) ||
                 other.createdDate == createdDate) &&
-            (identical(other.commissionInfo, commissionInfo) ||
-                other.commissionInfo == commissionInfo) &&
-            (identical(other.commissionStyle, commissionStyle) ||
-                other.commissionStyle == commissionStyle) &&
-            (identical(other.commissionOther, commissionOther) ||
-                other.commissionOther == commissionOther));
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.basicInfo, basicInfo) ||
+                other.basicInfo == basicInfo) &&
+            (identical(other.desiredStyle, desiredStyle) ||
+                other.desiredStyle == desiredStyle) &&
+            (identical(other.otherMatters, otherMatters) ||
+                other.otherMatters == otherMatters));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, commissionId, status,
-      createdDate, commissionInfo, commissionStyle, commissionOther);
+  int get hashCode => Object.hash(runtimeType, commissionId, createdDate,
+      status, basicInfo, desiredStyle, otherMatters);
 
   /// Create a copy of CommissionResponseModel
   /// with the given fields replaced by the non-null parameter values.
@@ -290,11 +290,11 @@ class _$CommissionResponseModelImpl implements _CommissionResponseModel {
 abstract class _CommissionResponseModel implements CommissionResponseModel {
   factory _CommissionResponseModel(
           {required final int commissionId,
-          required final String status,
           required final String createdDate,
-          required final CommissionInfo commissionInfo,
-          required final CommissionStyle commissionStyle,
-          required final CommissionOther commissionOther}) =
+          required final String status,
+          required final BasicInfo basicInfo,
+          required final DesiredStyle desiredStyle,
+          required final OtherMatters otherMatters}) =
       _$CommissionResponseModelImpl;
 
   factory _CommissionResponseModel.fromJson(Map<String, dynamic> json) =
@@ -303,15 +303,15 @@ abstract class _CommissionResponseModel implements CommissionResponseModel {
   @override
   int get commissionId;
   @override
-  String get status;
-  @override
   String get createdDate;
   @override
-  CommissionInfo get commissionInfo;
+  String get status;
   @override
-  CommissionStyle get commissionStyle;
+  BasicInfo get basicInfo;
   @override
-  CommissionOther get commissionOther;
+  DesiredStyle get desiredStyle;
+  @override
+  OtherMatters get otherMatters;
 
   /// Create a copy of CommissionResponseModel
   /// with the given fields replaced by the non-null parameter values.
@@ -321,65 +321,71 @@ abstract class _CommissionResponseModel implements CommissionResponseModel {
       get copyWith => throw _privateConstructorUsedError;
 }
 
-CommissionInfo _$CommissionInfoFromJson(Map<String, dynamic> json) {
-  return _CommissionInfo.fromJson(json);
+BasicInfo _$BasicInfoFromJson(Map<String, dynamic> json) {
+  return _BasicInfo.fromJson(json);
 }
 
 /// @nodoc
-mixin _$CommissionInfo {
+mixin _$BasicInfo {
   int get height => throw _privateConstructorUsedError;
   int get weight => throw _privateConstructorUsedError;
   String get topSize => throw _privateConstructorUsedError;
   String get bottomSize => throw _privateConstructorUsedError;
+  int get postalCode => throw _privateConstructorUsedError;
+  String get address => throw _privateConstructorUsedError;
+  String get detailAddress => throw _privateConstructorUsedError;
   String get text => throw _privateConstructorUsedError;
-  List<CommissionInfoStyle> get commissionInfoStyleList =>
-      throw _privateConstructorUsedError;
-  List<CommissionInfoBodyType> get commissionInfoBodyTypeList =>
-      throw _privateConstructorUsedError;
-  List<CommissionInfoFit> get commissionInfoFitList =>
-      throw _privateConstructorUsedError;
-  List<CommissionInfoMaterial> get commissionInfoMaterialList =>
-      throw _privateConstructorUsedError;
+  InfoStyle get infoStyle => throw _privateConstructorUsedError;
+  InfoFit get infoFit => throw _privateConstructorUsedError;
+  InfoMaterial get infoMaterial => throw _privateConstructorUsedError;
+  InfoBodyType get infoBodyType => throw _privateConstructorUsedError;
 
-  /// Serializes this CommissionInfo to a JSON map.
+  /// Serializes this BasicInfo to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
-  /// Create a copy of CommissionInfo
+  /// Create a copy of BasicInfo
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $CommissionInfoCopyWith<CommissionInfo> get copyWith =>
+  $BasicInfoCopyWith<BasicInfo> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $CommissionInfoCopyWith<$Res> {
-  factory $CommissionInfoCopyWith(
-          CommissionInfo value, $Res Function(CommissionInfo) then) =
-      _$CommissionInfoCopyWithImpl<$Res, CommissionInfo>;
+abstract class $BasicInfoCopyWith<$Res> {
+  factory $BasicInfoCopyWith(BasicInfo value, $Res Function(BasicInfo) then) =
+      _$BasicInfoCopyWithImpl<$Res, BasicInfo>;
   @useResult
   $Res call(
       {int height,
       int weight,
       String topSize,
       String bottomSize,
+      int postalCode,
+      String address,
+      String detailAddress,
       String text,
-      List<CommissionInfoStyle> commissionInfoStyleList,
-      List<CommissionInfoBodyType> commissionInfoBodyTypeList,
-      List<CommissionInfoFit> commissionInfoFitList,
-      List<CommissionInfoMaterial> commissionInfoMaterialList});
+      InfoStyle infoStyle,
+      InfoFit infoFit,
+      InfoMaterial infoMaterial,
+      InfoBodyType infoBodyType});
+
+  $InfoStyleCopyWith<$Res> get infoStyle;
+  $InfoFitCopyWith<$Res> get infoFit;
+  $InfoMaterialCopyWith<$Res> get infoMaterial;
+  $InfoBodyTypeCopyWith<$Res> get infoBodyType;
 }
 
 /// @nodoc
-class _$CommissionInfoCopyWithImpl<$Res, $Val extends CommissionInfo>
-    implements $CommissionInfoCopyWith<$Res> {
-  _$CommissionInfoCopyWithImpl(this._value, this._then);
+class _$BasicInfoCopyWithImpl<$Res, $Val extends BasicInfo>
+    implements $BasicInfoCopyWith<$Res> {
+  _$BasicInfoCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of CommissionInfo
+  /// Create a copy of BasicInfo
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -388,11 +394,14 @@ class _$CommissionInfoCopyWithImpl<$Res, $Val extends CommissionInfo>
     Object? weight = null,
     Object? topSize = null,
     Object? bottomSize = null,
+    Object? postalCode = null,
+    Object? address = null,
+    Object? detailAddress = null,
     Object? text = null,
-    Object? commissionInfoStyleList = null,
-    Object? commissionInfoBodyTypeList = null,
-    Object? commissionInfoFitList = null,
-    Object? commissionInfoMaterialList = null,
+    Object? infoStyle = null,
+    Object? infoFit = null,
+    Object? infoMaterial = null,
+    Object? infoBodyType = null,
   }) {
     return _then(_value.copyWith(
       height: null == height
@@ -411,36 +420,88 @@ class _$CommissionInfoCopyWithImpl<$Res, $Val extends CommissionInfo>
           ? _value.bottomSize
           : bottomSize // ignore: cast_nullable_to_non_nullable
               as String,
+      postalCode: null == postalCode
+          ? _value.postalCode
+          : postalCode // ignore: cast_nullable_to_non_nullable
+              as int,
+      address: null == address
+          ? _value.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as String,
+      detailAddress: null == detailAddress
+          ? _value.detailAddress
+          : detailAddress // ignore: cast_nullable_to_non_nullable
+              as String,
       text: null == text
           ? _value.text
           : text // ignore: cast_nullable_to_non_nullable
               as String,
-      commissionInfoStyleList: null == commissionInfoStyleList
-          ? _value.commissionInfoStyleList
-          : commissionInfoStyleList // ignore: cast_nullable_to_non_nullable
-              as List<CommissionInfoStyle>,
-      commissionInfoBodyTypeList: null == commissionInfoBodyTypeList
-          ? _value.commissionInfoBodyTypeList
-          : commissionInfoBodyTypeList // ignore: cast_nullable_to_non_nullable
-              as List<CommissionInfoBodyType>,
-      commissionInfoFitList: null == commissionInfoFitList
-          ? _value.commissionInfoFitList
-          : commissionInfoFitList // ignore: cast_nullable_to_non_nullable
-              as List<CommissionInfoFit>,
-      commissionInfoMaterialList: null == commissionInfoMaterialList
-          ? _value.commissionInfoMaterialList
-          : commissionInfoMaterialList // ignore: cast_nullable_to_non_nullable
-              as List<CommissionInfoMaterial>,
+      infoStyle: null == infoStyle
+          ? _value.infoStyle
+          : infoStyle // ignore: cast_nullable_to_non_nullable
+              as InfoStyle,
+      infoFit: null == infoFit
+          ? _value.infoFit
+          : infoFit // ignore: cast_nullable_to_non_nullable
+              as InfoFit,
+      infoMaterial: null == infoMaterial
+          ? _value.infoMaterial
+          : infoMaterial // ignore: cast_nullable_to_non_nullable
+              as InfoMaterial,
+      infoBodyType: null == infoBodyType
+          ? _value.infoBodyType
+          : infoBodyType // ignore: cast_nullable_to_non_nullable
+              as InfoBodyType,
     ) as $Val);
+  }
+
+  /// Create a copy of BasicInfo
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $InfoStyleCopyWith<$Res> get infoStyle {
+    return $InfoStyleCopyWith<$Res>(_value.infoStyle, (value) {
+      return _then(_value.copyWith(infoStyle: value) as $Val);
+    });
+  }
+
+  /// Create a copy of BasicInfo
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $InfoFitCopyWith<$Res> get infoFit {
+    return $InfoFitCopyWith<$Res>(_value.infoFit, (value) {
+      return _then(_value.copyWith(infoFit: value) as $Val);
+    });
+  }
+
+  /// Create a copy of BasicInfo
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $InfoMaterialCopyWith<$Res> get infoMaterial {
+    return $InfoMaterialCopyWith<$Res>(_value.infoMaterial, (value) {
+      return _then(_value.copyWith(infoMaterial: value) as $Val);
+    });
+  }
+
+  /// Create a copy of BasicInfo
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $InfoBodyTypeCopyWith<$Res> get infoBodyType {
+    return $InfoBodyTypeCopyWith<$Res>(_value.infoBodyType, (value) {
+      return _then(_value.copyWith(infoBodyType: value) as $Val);
+    });
   }
 }
 
 /// @nodoc
-abstract class _$$CommissionInfoImplCopyWith<$Res>
-    implements $CommissionInfoCopyWith<$Res> {
-  factory _$$CommissionInfoImplCopyWith(_$CommissionInfoImpl value,
-          $Res Function(_$CommissionInfoImpl) then) =
-      __$$CommissionInfoImplCopyWithImpl<$Res>;
+abstract class _$$BasicInfoImplCopyWith<$Res>
+    implements $BasicInfoCopyWith<$Res> {
+  factory _$$BasicInfoImplCopyWith(
+          _$BasicInfoImpl value, $Res Function(_$BasicInfoImpl) then) =
+      __$$BasicInfoImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -448,22 +509,34 @@ abstract class _$$CommissionInfoImplCopyWith<$Res>
       int weight,
       String topSize,
       String bottomSize,
+      int postalCode,
+      String address,
+      String detailAddress,
       String text,
-      List<CommissionInfoStyle> commissionInfoStyleList,
-      List<CommissionInfoBodyType> commissionInfoBodyTypeList,
-      List<CommissionInfoFit> commissionInfoFitList,
-      List<CommissionInfoMaterial> commissionInfoMaterialList});
+      InfoStyle infoStyle,
+      InfoFit infoFit,
+      InfoMaterial infoMaterial,
+      InfoBodyType infoBodyType});
+
+  @override
+  $InfoStyleCopyWith<$Res> get infoStyle;
+  @override
+  $InfoFitCopyWith<$Res> get infoFit;
+  @override
+  $InfoMaterialCopyWith<$Res> get infoMaterial;
+  @override
+  $InfoBodyTypeCopyWith<$Res> get infoBodyType;
 }
 
 /// @nodoc
-class __$$CommissionInfoImplCopyWithImpl<$Res>
-    extends _$CommissionInfoCopyWithImpl<$Res, _$CommissionInfoImpl>
-    implements _$$CommissionInfoImplCopyWith<$Res> {
-  __$$CommissionInfoImplCopyWithImpl(
-      _$CommissionInfoImpl _value, $Res Function(_$CommissionInfoImpl) _then)
+class __$$BasicInfoImplCopyWithImpl<$Res>
+    extends _$BasicInfoCopyWithImpl<$Res, _$BasicInfoImpl>
+    implements _$$BasicInfoImplCopyWith<$Res> {
+  __$$BasicInfoImplCopyWithImpl(
+      _$BasicInfoImpl _value, $Res Function(_$BasicInfoImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of CommissionInfo
+  /// Create a copy of BasicInfo
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -472,13 +545,16 @@ class __$$CommissionInfoImplCopyWithImpl<$Res>
     Object? weight = null,
     Object? topSize = null,
     Object? bottomSize = null,
+    Object? postalCode = null,
+    Object? address = null,
+    Object? detailAddress = null,
     Object? text = null,
-    Object? commissionInfoStyleList = null,
-    Object? commissionInfoBodyTypeList = null,
-    Object? commissionInfoFitList = null,
-    Object? commissionInfoMaterialList = null,
+    Object? infoStyle = null,
+    Object? infoFit = null,
+    Object? infoMaterial = null,
+    Object? infoBodyType = null,
   }) {
-    return _then(_$CommissionInfoImpl(
+    return _then(_$BasicInfoImpl(
       height: null == height
           ? _value.height
           : height // ignore: cast_nullable_to_non_nullable
@@ -495,50 +571,61 @@ class __$$CommissionInfoImplCopyWithImpl<$Res>
           ? _value.bottomSize
           : bottomSize // ignore: cast_nullable_to_non_nullable
               as String,
+      postalCode: null == postalCode
+          ? _value.postalCode
+          : postalCode // ignore: cast_nullable_to_non_nullable
+              as int,
+      address: null == address
+          ? _value.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as String,
+      detailAddress: null == detailAddress
+          ? _value.detailAddress
+          : detailAddress // ignore: cast_nullable_to_non_nullable
+              as String,
       text: null == text
           ? _value.text
           : text // ignore: cast_nullable_to_non_nullable
               as String,
-      commissionInfoStyleList: null == commissionInfoStyleList
-          ? _value._commissionInfoStyleList
-          : commissionInfoStyleList // ignore: cast_nullable_to_non_nullable
-              as List<CommissionInfoStyle>,
-      commissionInfoBodyTypeList: null == commissionInfoBodyTypeList
-          ? _value._commissionInfoBodyTypeList
-          : commissionInfoBodyTypeList // ignore: cast_nullable_to_non_nullable
-              as List<CommissionInfoBodyType>,
-      commissionInfoFitList: null == commissionInfoFitList
-          ? _value._commissionInfoFitList
-          : commissionInfoFitList // ignore: cast_nullable_to_non_nullable
-              as List<CommissionInfoFit>,
-      commissionInfoMaterialList: null == commissionInfoMaterialList
-          ? _value._commissionInfoMaterialList
-          : commissionInfoMaterialList // ignore: cast_nullable_to_non_nullable
-              as List<CommissionInfoMaterial>,
+      infoStyle: null == infoStyle
+          ? _value.infoStyle
+          : infoStyle // ignore: cast_nullable_to_non_nullable
+              as InfoStyle,
+      infoFit: null == infoFit
+          ? _value.infoFit
+          : infoFit // ignore: cast_nullable_to_non_nullable
+              as InfoFit,
+      infoMaterial: null == infoMaterial
+          ? _value.infoMaterial
+          : infoMaterial // ignore: cast_nullable_to_non_nullable
+              as InfoMaterial,
+      infoBodyType: null == infoBodyType
+          ? _value.infoBodyType
+          : infoBodyType // ignore: cast_nullable_to_non_nullable
+              as InfoBodyType,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$CommissionInfoImpl implements _CommissionInfo {
-  _$CommissionInfoImpl(
+class _$BasicInfoImpl implements _BasicInfo {
+  _$BasicInfoImpl(
       {required this.height,
       required this.weight,
       required this.topSize,
       required this.bottomSize,
+      this.postalCode = 0,
+      this.address = '',
+      this.detailAddress = '',
       required this.text,
-      required final List<CommissionInfoStyle> commissionInfoStyleList,
-      required final List<CommissionInfoBodyType> commissionInfoBodyTypeList,
-      required final List<CommissionInfoFit> commissionInfoFitList,
-      required final List<CommissionInfoMaterial> commissionInfoMaterialList})
-      : _commissionInfoStyleList = commissionInfoStyleList,
-        _commissionInfoBodyTypeList = commissionInfoBodyTypeList,
-        _commissionInfoFitList = commissionInfoFitList,
-        _commissionInfoMaterialList = commissionInfoMaterialList;
+      required this.infoStyle,
+      required this.infoFit,
+      required this.infoMaterial,
+      required this.infoBodyType});
 
-  factory _$CommissionInfoImpl.fromJson(Map<String, dynamic> json) =>
-      _$$CommissionInfoImplFromJson(json);
+  factory _$BasicInfoImpl.fromJson(Map<String, dynamic> json) =>
+      _$$BasicInfoImplFromJson(json);
 
   @override
   final int height;
@@ -549,69 +636,53 @@ class _$CommissionInfoImpl implements _CommissionInfo {
   @override
   final String bottomSize;
   @override
+  @JsonKey()
+  final int postalCode;
+  @override
+  @JsonKey()
+  final String address;
+  @override
+  @JsonKey()
+  final String detailAddress;
+  @override
   final String text;
-  final List<CommissionInfoStyle> _commissionInfoStyleList;
   @override
-  List<CommissionInfoStyle> get commissionInfoStyleList {
-    if (_commissionInfoStyleList is EqualUnmodifiableListView)
-      return _commissionInfoStyleList;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_commissionInfoStyleList);
-  }
-
-  final List<CommissionInfoBodyType> _commissionInfoBodyTypeList;
+  final InfoStyle infoStyle;
   @override
-  List<CommissionInfoBodyType> get commissionInfoBodyTypeList {
-    if (_commissionInfoBodyTypeList is EqualUnmodifiableListView)
-      return _commissionInfoBodyTypeList;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_commissionInfoBodyTypeList);
-  }
-
-  final List<CommissionInfoFit> _commissionInfoFitList;
+  final InfoFit infoFit;
   @override
-  List<CommissionInfoFit> get commissionInfoFitList {
-    if (_commissionInfoFitList is EqualUnmodifiableListView)
-      return _commissionInfoFitList;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_commissionInfoFitList);
-  }
-
-  final List<CommissionInfoMaterial> _commissionInfoMaterialList;
+  final InfoMaterial infoMaterial;
   @override
-  List<CommissionInfoMaterial> get commissionInfoMaterialList {
-    if (_commissionInfoMaterialList is EqualUnmodifiableListView)
-      return _commissionInfoMaterialList;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_commissionInfoMaterialList);
-  }
+  final InfoBodyType infoBodyType;
 
   @override
   String toString() {
-    return 'CommissionInfo(height: $height, weight: $weight, topSize: $topSize, bottomSize: $bottomSize, text: $text, commissionInfoStyleList: $commissionInfoStyleList, commissionInfoBodyTypeList: $commissionInfoBodyTypeList, commissionInfoFitList: $commissionInfoFitList, commissionInfoMaterialList: $commissionInfoMaterialList)';
+    return 'BasicInfo(height: $height, weight: $weight, topSize: $topSize, bottomSize: $bottomSize, postalCode: $postalCode, address: $address, detailAddress: $detailAddress, text: $text, infoStyle: $infoStyle, infoFit: $infoFit, infoMaterial: $infoMaterial, infoBodyType: $infoBodyType)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$CommissionInfoImpl &&
+            other is _$BasicInfoImpl &&
             (identical(other.height, height) || other.height == height) &&
             (identical(other.weight, weight) || other.weight == weight) &&
             (identical(other.topSize, topSize) || other.topSize == topSize) &&
             (identical(other.bottomSize, bottomSize) ||
                 other.bottomSize == bottomSize) &&
+            (identical(other.postalCode, postalCode) ||
+                other.postalCode == postalCode) &&
+            (identical(other.address, address) || other.address == address) &&
+            (identical(other.detailAddress, detailAddress) ||
+                other.detailAddress == detailAddress) &&
             (identical(other.text, text) || other.text == text) &&
-            const DeepCollectionEquality().equals(
-                other._commissionInfoStyleList, _commissionInfoStyleList) &&
-            const DeepCollectionEquality().equals(
-                other._commissionInfoBodyTypeList,
-                _commissionInfoBodyTypeList) &&
-            const DeepCollectionEquality()
-                .equals(other._commissionInfoFitList, _commissionInfoFitList) &&
-            const DeepCollectionEquality().equals(
-                other._commissionInfoMaterialList,
-                _commissionInfoMaterialList));
+            (identical(other.infoStyle, infoStyle) ||
+                other.infoStyle == infoStyle) &&
+            (identical(other.infoFit, infoFit) || other.infoFit == infoFit) &&
+            (identical(other.infoMaterial, infoMaterial) ||
+                other.infoMaterial == infoMaterial) &&
+            (identical(other.infoBodyType, infoBodyType) ||
+                other.infoBodyType == infoBodyType));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -622,44 +693,48 @@ class _$CommissionInfoImpl implements _CommissionInfo {
       weight,
       topSize,
       bottomSize,
+      postalCode,
+      address,
+      detailAddress,
       text,
-      const DeepCollectionEquality().hash(_commissionInfoStyleList),
-      const DeepCollectionEquality().hash(_commissionInfoBodyTypeList),
-      const DeepCollectionEquality().hash(_commissionInfoFitList),
-      const DeepCollectionEquality().hash(_commissionInfoMaterialList));
+      infoStyle,
+      infoFit,
+      infoMaterial,
+      infoBodyType);
 
-  /// Create a copy of CommissionInfo
+  /// Create a copy of BasicInfo
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$CommissionInfoImplCopyWith<_$CommissionInfoImpl> get copyWith =>
-      __$$CommissionInfoImplCopyWithImpl<_$CommissionInfoImpl>(
-          this, _$identity);
+  _$$BasicInfoImplCopyWith<_$BasicInfoImpl> get copyWith =>
+      __$$BasicInfoImplCopyWithImpl<_$BasicInfoImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$CommissionInfoImplToJson(
+    return _$$BasicInfoImplToJson(
       this,
     );
   }
 }
 
-abstract class _CommissionInfo implements CommissionInfo {
-  factory _CommissionInfo(
+abstract class _BasicInfo implements BasicInfo {
+  factory _BasicInfo(
       {required final int height,
       required final int weight,
       required final String topSize,
       required final String bottomSize,
+      final int postalCode,
+      final String address,
+      final String detailAddress,
       required final String text,
-      required final List<CommissionInfoStyle> commissionInfoStyleList,
-      required final List<CommissionInfoBodyType> commissionInfoBodyTypeList,
-      required final List<CommissionInfoFit> commissionInfoFitList,
-      required final List<CommissionInfoMaterial>
-          commissionInfoMaterialList}) = _$CommissionInfoImpl;
+      required final InfoStyle infoStyle,
+      required final InfoFit infoFit,
+      required final InfoMaterial infoMaterial,
+      required final InfoBodyType infoBodyType}) = _$BasicInfoImpl;
 
-  factory _CommissionInfo.fromJson(Map<String, dynamic> json) =
-      _$CommissionInfoImpl.fromJson;
+  factory _BasicInfo.fromJson(Map<String, dynamic> json) =
+      _$BasicInfoImpl.fromJson;
 
   @override
   int get height;
@@ -670,51 +745,822 @@ abstract class _CommissionInfo implements CommissionInfo {
   @override
   String get bottomSize;
   @override
+  int get postalCode;
+  @override
+  String get address;
+  @override
+  String get detailAddress;
+  @override
   String get text;
   @override
-  List<CommissionInfoStyle> get commissionInfoStyleList;
+  InfoStyle get infoStyle;
   @override
-  List<CommissionInfoBodyType> get commissionInfoBodyTypeList;
+  InfoFit get infoFit;
   @override
-  List<CommissionInfoFit> get commissionInfoFitList;
+  InfoMaterial get infoMaterial;
   @override
-  List<CommissionInfoMaterial> get commissionInfoMaterialList;
+  InfoBodyType get infoBodyType;
 
-  /// Create a copy of CommissionInfo
+  /// Create a copy of BasicInfo
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$CommissionInfoImplCopyWith<_$CommissionInfoImpl> get copyWith =>
+  _$$BasicInfoImplCopyWith<_$BasicInfoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
-CommissionInfoStyle _$CommissionInfoStyleFromJson(Map<String, dynamic> json) {
-  return _CommissionInfoStyle.fromJson(json);
+InfoStyle _$InfoStyleFromJson(Map<String, dynamic> json) {
+  return _InfoStyle.fromJson(json);
 }
 
 /// @nodoc
-mixin _$CommissionInfoStyle {
+mixin _$InfoStyle {
+  List<String> get preferredStyleList => throw _privateConstructorUsedError;
+  List<String> get nonPreferredStyleList => throw _privateConstructorUsedError;
+
+  /// Serializes this InfoStyle to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of InfoStyle
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $InfoStyleCopyWith<InfoStyle> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $InfoStyleCopyWith<$Res> {
+  factory $InfoStyleCopyWith(InfoStyle value, $Res Function(InfoStyle) then) =
+      _$InfoStyleCopyWithImpl<$Res, InfoStyle>;
+  @useResult
+  $Res call(
+      {List<String> preferredStyleList, List<String> nonPreferredStyleList});
+}
+
+/// @nodoc
+class _$InfoStyleCopyWithImpl<$Res, $Val extends InfoStyle>
+    implements $InfoStyleCopyWith<$Res> {
+  _$InfoStyleCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of InfoStyle
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? preferredStyleList = null,
+    Object? nonPreferredStyleList = null,
+  }) {
+    return _then(_value.copyWith(
+      preferredStyleList: null == preferredStyleList
+          ? _value.preferredStyleList
+          : preferredStyleList // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      nonPreferredStyleList: null == nonPreferredStyleList
+          ? _value.nonPreferredStyleList
+          : nonPreferredStyleList // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$InfoStyleImplCopyWith<$Res>
+    implements $InfoStyleCopyWith<$Res> {
+  factory _$$InfoStyleImplCopyWith(
+          _$InfoStyleImpl value, $Res Function(_$InfoStyleImpl) then) =
+      __$$InfoStyleImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {List<String> preferredStyleList, List<String> nonPreferredStyleList});
+}
+
+/// @nodoc
+class __$$InfoStyleImplCopyWithImpl<$Res>
+    extends _$InfoStyleCopyWithImpl<$Res, _$InfoStyleImpl>
+    implements _$$InfoStyleImplCopyWith<$Res> {
+  __$$InfoStyleImplCopyWithImpl(
+      _$InfoStyleImpl _value, $Res Function(_$InfoStyleImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of InfoStyle
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? preferredStyleList = null,
+    Object? nonPreferredStyleList = null,
+  }) {
+    return _then(_$InfoStyleImpl(
+      preferredStyleList: null == preferredStyleList
+          ? _value._preferredStyleList
+          : preferredStyleList // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      nonPreferredStyleList: null == nonPreferredStyleList
+          ? _value._nonPreferredStyleList
+          : nonPreferredStyleList // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$InfoStyleImpl implements _InfoStyle {
+  _$InfoStyleImpl(
+      {final List<String> preferredStyleList = const [],
+      final List<String> nonPreferredStyleList = const []})
+      : _preferredStyleList = preferredStyleList,
+        _nonPreferredStyleList = nonPreferredStyleList;
+
+  factory _$InfoStyleImpl.fromJson(Map<String, dynamic> json) =>
+      _$$InfoStyleImplFromJson(json);
+
+  final List<String> _preferredStyleList;
+  @override
+  @JsonKey()
+  List<String> get preferredStyleList {
+    if (_preferredStyleList is EqualUnmodifiableListView)
+      return _preferredStyleList;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_preferredStyleList);
+  }
+
+  final List<String> _nonPreferredStyleList;
+  @override
+  @JsonKey()
+  List<String> get nonPreferredStyleList {
+    if (_nonPreferredStyleList is EqualUnmodifiableListView)
+      return _nonPreferredStyleList;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_nonPreferredStyleList);
+  }
+
+  @override
+  String toString() {
+    return 'InfoStyle(preferredStyleList: $preferredStyleList, nonPreferredStyleList: $nonPreferredStyleList)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$InfoStyleImpl &&
+            const DeepCollectionEquality()
+                .equals(other._preferredStyleList, _preferredStyleList) &&
+            const DeepCollectionEquality()
+                .equals(other._nonPreferredStyleList, _nonPreferredStyleList));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_preferredStyleList),
+      const DeepCollectionEquality().hash(_nonPreferredStyleList));
+
+  /// Create a copy of InfoStyle
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$InfoStyleImplCopyWith<_$InfoStyleImpl> get copyWith =>
+      __$$InfoStyleImplCopyWithImpl<_$InfoStyleImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$InfoStyleImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _InfoStyle implements InfoStyle {
+  factory _InfoStyle(
+      {final List<String> preferredStyleList,
+      final List<String> nonPreferredStyleList}) = _$InfoStyleImpl;
+
+  factory _InfoStyle.fromJson(Map<String, dynamic> json) =
+      _$InfoStyleImpl.fromJson;
+
+  @override
+  List<String> get preferredStyleList;
+  @override
+  List<String> get nonPreferredStyleList;
+
+  /// Create a copy of InfoStyle
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$InfoStyleImplCopyWith<_$InfoStyleImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+InfoFit _$InfoFitFromJson(Map<String, dynamic> json) {
+  return _InfoFit.fromJson(json);
+}
+
+/// @nodoc
+mixin _$InfoFit {
+  List<String> get preferredFitList => throw _privateConstructorUsedError;
+  List<String> get nonPreferredFitList => throw _privateConstructorUsedError;
+
+  /// Serializes this InfoFit to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of InfoFit
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $InfoFitCopyWith<InfoFit> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $InfoFitCopyWith<$Res> {
+  factory $InfoFitCopyWith(InfoFit value, $Res Function(InfoFit) then) =
+      _$InfoFitCopyWithImpl<$Res, InfoFit>;
+  @useResult
+  $Res call({List<String> preferredFitList, List<String> nonPreferredFitList});
+}
+
+/// @nodoc
+class _$InfoFitCopyWithImpl<$Res, $Val extends InfoFit>
+    implements $InfoFitCopyWith<$Res> {
+  _$InfoFitCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of InfoFit
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? preferredFitList = null,
+    Object? nonPreferredFitList = null,
+  }) {
+    return _then(_value.copyWith(
+      preferredFitList: null == preferredFitList
+          ? _value.preferredFitList
+          : preferredFitList // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      nonPreferredFitList: null == nonPreferredFitList
+          ? _value.nonPreferredFitList
+          : nonPreferredFitList // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$InfoFitImplCopyWith<$Res> implements $InfoFitCopyWith<$Res> {
+  factory _$$InfoFitImplCopyWith(
+          _$InfoFitImpl value, $Res Function(_$InfoFitImpl) then) =
+      __$$InfoFitImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({List<String> preferredFitList, List<String> nonPreferredFitList});
+}
+
+/// @nodoc
+class __$$InfoFitImplCopyWithImpl<$Res>
+    extends _$InfoFitCopyWithImpl<$Res, _$InfoFitImpl>
+    implements _$$InfoFitImplCopyWith<$Res> {
+  __$$InfoFitImplCopyWithImpl(
+      _$InfoFitImpl _value, $Res Function(_$InfoFitImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of InfoFit
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? preferredFitList = null,
+    Object? nonPreferredFitList = null,
+  }) {
+    return _then(_$InfoFitImpl(
+      preferredFitList: null == preferredFitList
+          ? _value._preferredFitList
+          : preferredFitList // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      nonPreferredFitList: null == nonPreferredFitList
+          ? _value._nonPreferredFitList
+          : nonPreferredFitList // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$InfoFitImpl implements _InfoFit {
+  _$InfoFitImpl(
+      {final List<String> preferredFitList = const [],
+      final List<String> nonPreferredFitList = const []})
+      : _preferredFitList = preferredFitList,
+        _nonPreferredFitList = nonPreferredFitList;
+
+  factory _$InfoFitImpl.fromJson(Map<String, dynamic> json) =>
+      _$$InfoFitImplFromJson(json);
+
+  final List<String> _preferredFitList;
+  @override
+  @JsonKey()
+  List<String> get preferredFitList {
+    if (_preferredFitList is EqualUnmodifiableListView)
+      return _preferredFitList;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_preferredFitList);
+  }
+
+  final List<String> _nonPreferredFitList;
+  @override
+  @JsonKey()
+  List<String> get nonPreferredFitList {
+    if (_nonPreferredFitList is EqualUnmodifiableListView)
+      return _nonPreferredFitList;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_nonPreferredFitList);
+  }
+
+  @override
+  String toString() {
+    return 'InfoFit(preferredFitList: $preferredFitList, nonPreferredFitList: $nonPreferredFitList)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$InfoFitImpl &&
+            const DeepCollectionEquality()
+                .equals(other._preferredFitList, _preferredFitList) &&
+            const DeepCollectionEquality()
+                .equals(other._nonPreferredFitList, _nonPreferredFitList));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_preferredFitList),
+      const DeepCollectionEquality().hash(_nonPreferredFitList));
+
+  /// Create a copy of InfoFit
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$InfoFitImplCopyWith<_$InfoFitImpl> get copyWith =>
+      __$$InfoFitImplCopyWithImpl<_$InfoFitImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$InfoFitImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _InfoFit implements InfoFit {
+  factory _InfoFit(
+      {final List<String> preferredFitList,
+      final List<String> nonPreferredFitList}) = _$InfoFitImpl;
+
+  factory _InfoFit.fromJson(Map<String, dynamic> json) = _$InfoFitImpl.fromJson;
+
+  @override
+  List<String> get preferredFitList;
+  @override
+  List<String> get nonPreferredFitList;
+
+  /// Create a copy of InfoFit
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$InfoFitImplCopyWith<_$InfoFitImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+InfoMaterial _$InfoMaterialFromJson(Map<String, dynamic> json) {
+  return _InfoMaterial.fromJson(json);
+}
+
+/// @nodoc
+mixin _$InfoMaterial {
+  List<String> get preferredMaterialList => throw _privateConstructorUsedError;
+  List<String> get nonPreferredMaterialList =>
+      throw _privateConstructorUsedError;
+
+  /// Serializes this InfoMaterial to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of InfoMaterial
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $InfoMaterialCopyWith<InfoMaterial> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $InfoMaterialCopyWith<$Res> {
+  factory $InfoMaterialCopyWith(
+          InfoMaterial value, $Res Function(InfoMaterial) then) =
+      _$InfoMaterialCopyWithImpl<$Res, InfoMaterial>;
+  @useResult
+  $Res call(
+      {List<String> preferredMaterialList,
+      List<String> nonPreferredMaterialList});
+}
+
+/// @nodoc
+class _$InfoMaterialCopyWithImpl<$Res, $Val extends InfoMaterial>
+    implements $InfoMaterialCopyWith<$Res> {
+  _$InfoMaterialCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of InfoMaterial
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? preferredMaterialList = null,
+    Object? nonPreferredMaterialList = null,
+  }) {
+    return _then(_value.copyWith(
+      preferredMaterialList: null == preferredMaterialList
+          ? _value.preferredMaterialList
+          : preferredMaterialList // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      nonPreferredMaterialList: null == nonPreferredMaterialList
+          ? _value.nonPreferredMaterialList
+          : nonPreferredMaterialList // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$InfoMaterialImplCopyWith<$Res>
+    implements $InfoMaterialCopyWith<$Res> {
+  factory _$$InfoMaterialImplCopyWith(
+          _$InfoMaterialImpl value, $Res Function(_$InfoMaterialImpl) then) =
+      __$$InfoMaterialImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {List<String> preferredMaterialList,
+      List<String> nonPreferredMaterialList});
+}
+
+/// @nodoc
+class __$$InfoMaterialImplCopyWithImpl<$Res>
+    extends _$InfoMaterialCopyWithImpl<$Res, _$InfoMaterialImpl>
+    implements _$$InfoMaterialImplCopyWith<$Res> {
+  __$$InfoMaterialImplCopyWithImpl(
+      _$InfoMaterialImpl _value, $Res Function(_$InfoMaterialImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of InfoMaterial
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? preferredMaterialList = null,
+    Object? nonPreferredMaterialList = null,
+  }) {
+    return _then(_$InfoMaterialImpl(
+      preferredMaterialList: null == preferredMaterialList
+          ? _value._preferredMaterialList
+          : preferredMaterialList // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      nonPreferredMaterialList: null == nonPreferredMaterialList
+          ? _value._nonPreferredMaterialList
+          : nonPreferredMaterialList // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$InfoMaterialImpl implements _InfoMaterial {
+  _$InfoMaterialImpl(
+      {final List<String> preferredMaterialList = const [],
+      final List<String> nonPreferredMaterialList = const []})
+      : _preferredMaterialList = preferredMaterialList,
+        _nonPreferredMaterialList = nonPreferredMaterialList;
+
+  factory _$InfoMaterialImpl.fromJson(Map<String, dynamic> json) =>
+      _$$InfoMaterialImplFromJson(json);
+
+  final List<String> _preferredMaterialList;
+  @override
+  @JsonKey()
+  List<String> get preferredMaterialList {
+    if (_preferredMaterialList is EqualUnmodifiableListView)
+      return _preferredMaterialList;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_preferredMaterialList);
+  }
+
+  final List<String> _nonPreferredMaterialList;
+  @override
+  @JsonKey()
+  List<String> get nonPreferredMaterialList {
+    if (_nonPreferredMaterialList is EqualUnmodifiableListView)
+      return _nonPreferredMaterialList;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_nonPreferredMaterialList);
+  }
+
+  @override
+  String toString() {
+    return 'InfoMaterial(preferredMaterialList: $preferredMaterialList, nonPreferredMaterialList: $nonPreferredMaterialList)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$InfoMaterialImpl &&
+            const DeepCollectionEquality()
+                .equals(other._preferredMaterialList, _preferredMaterialList) &&
+            const DeepCollectionEquality().equals(
+                other._nonPreferredMaterialList, _nonPreferredMaterialList));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_preferredMaterialList),
+      const DeepCollectionEquality().hash(_nonPreferredMaterialList));
+
+  /// Create a copy of InfoMaterial
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$InfoMaterialImplCopyWith<_$InfoMaterialImpl> get copyWith =>
+      __$$InfoMaterialImplCopyWithImpl<_$InfoMaterialImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$InfoMaterialImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _InfoMaterial implements InfoMaterial {
+  factory _InfoMaterial(
+      {final List<String> preferredMaterialList,
+      final List<String> nonPreferredMaterialList}) = _$InfoMaterialImpl;
+
+  factory _InfoMaterial.fromJson(Map<String, dynamic> json) =
+      _$InfoMaterialImpl.fromJson;
+
+  @override
+  List<String> get preferredMaterialList;
+  @override
+  List<String> get nonPreferredMaterialList;
+
+  /// Create a copy of InfoMaterial
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$InfoMaterialImplCopyWith<_$InfoMaterialImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+InfoBodyType _$InfoBodyTypeFromJson(Map<String, dynamic> json) {
+  return _InfoBodyType.fromJson(json);
+}
+
+/// @nodoc
+mixin _$InfoBodyType {
+  List<String> get goodBodyTypeList => throw _privateConstructorUsedError;
+  List<String> get badBodyTypeList => throw _privateConstructorUsedError;
+
+  /// Serializes this InfoBodyType to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of InfoBodyType
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $InfoBodyTypeCopyWith<InfoBodyType> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $InfoBodyTypeCopyWith<$Res> {
+  factory $InfoBodyTypeCopyWith(
+          InfoBodyType value, $Res Function(InfoBodyType) then) =
+      _$InfoBodyTypeCopyWithImpl<$Res, InfoBodyType>;
+  @useResult
+  $Res call({List<String> goodBodyTypeList, List<String> badBodyTypeList});
+}
+
+/// @nodoc
+class _$InfoBodyTypeCopyWithImpl<$Res, $Val extends InfoBodyType>
+    implements $InfoBodyTypeCopyWith<$Res> {
+  _$InfoBodyTypeCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of InfoBodyType
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? goodBodyTypeList = null,
+    Object? badBodyTypeList = null,
+  }) {
+    return _then(_value.copyWith(
+      goodBodyTypeList: null == goodBodyTypeList
+          ? _value.goodBodyTypeList
+          : goodBodyTypeList // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      badBodyTypeList: null == badBodyTypeList
+          ? _value.badBodyTypeList
+          : badBodyTypeList // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$InfoBodyTypeImplCopyWith<$Res>
+    implements $InfoBodyTypeCopyWith<$Res> {
+  factory _$$InfoBodyTypeImplCopyWith(
+          _$InfoBodyTypeImpl value, $Res Function(_$InfoBodyTypeImpl) then) =
+      __$$InfoBodyTypeImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({List<String> goodBodyTypeList, List<String> badBodyTypeList});
+}
+
+/// @nodoc
+class __$$InfoBodyTypeImplCopyWithImpl<$Res>
+    extends _$InfoBodyTypeCopyWithImpl<$Res, _$InfoBodyTypeImpl>
+    implements _$$InfoBodyTypeImplCopyWith<$Res> {
+  __$$InfoBodyTypeImplCopyWithImpl(
+      _$InfoBodyTypeImpl _value, $Res Function(_$InfoBodyTypeImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of InfoBodyType
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? goodBodyTypeList = null,
+    Object? badBodyTypeList = null,
+  }) {
+    return _then(_$InfoBodyTypeImpl(
+      goodBodyTypeList: null == goodBodyTypeList
+          ? _value._goodBodyTypeList
+          : goodBodyTypeList // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      badBodyTypeList: null == badBodyTypeList
+          ? _value._badBodyTypeList
+          : badBodyTypeList // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$InfoBodyTypeImpl implements _InfoBodyType {
+  _$InfoBodyTypeImpl(
+      {final List<String> goodBodyTypeList = const [],
+      final List<String> badBodyTypeList = const []})
+      : _goodBodyTypeList = goodBodyTypeList,
+        _badBodyTypeList = badBodyTypeList;
+
+  factory _$InfoBodyTypeImpl.fromJson(Map<String, dynamic> json) =>
+      _$$InfoBodyTypeImplFromJson(json);
+
+  final List<String> _goodBodyTypeList;
+  @override
+  @JsonKey()
+  List<String> get goodBodyTypeList {
+    if (_goodBodyTypeList is EqualUnmodifiableListView)
+      return _goodBodyTypeList;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_goodBodyTypeList);
+  }
+
+  final List<String> _badBodyTypeList;
+  @override
+  @JsonKey()
+  List<String> get badBodyTypeList {
+    if (_badBodyTypeList is EqualUnmodifiableListView) return _badBodyTypeList;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_badBodyTypeList);
+  }
+
+  @override
+  String toString() {
+    return 'InfoBodyType(goodBodyTypeList: $goodBodyTypeList, badBodyTypeList: $badBodyTypeList)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$InfoBodyTypeImpl &&
+            const DeepCollectionEquality()
+                .equals(other._goodBodyTypeList, _goodBodyTypeList) &&
+            const DeepCollectionEquality()
+                .equals(other._badBodyTypeList, _badBodyTypeList));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_goodBodyTypeList),
+      const DeepCollectionEquality().hash(_badBodyTypeList));
+
+  /// Create a copy of InfoBodyType
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$InfoBodyTypeImplCopyWith<_$InfoBodyTypeImpl> get copyWith =>
+      __$$InfoBodyTypeImplCopyWithImpl<_$InfoBodyTypeImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$InfoBodyTypeImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _InfoBodyType implements InfoBodyType {
+  factory _InfoBodyType(
+      {final List<String> goodBodyTypeList,
+      final List<String> badBodyTypeList}) = _$InfoBodyTypeImpl;
+
+  factory _InfoBodyType.fromJson(Map<String, dynamic> json) =
+      _$InfoBodyTypeImpl.fromJson;
+
+  @override
+  List<String> get goodBodyTypeList;
+  @override
+  List<String> get badBodyTypeList;
+
+  /// Create a copy of InfoBodyType
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$InfoBodyTypeImplCopyWith<_$InfoBodyTypeImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+DesiredStyle _$DesiredStyleFromJson(Map<String, dynamic> json) {
+  return _DesiredStyle.fromJson(json);
+}
+
+/// @nodoc
+mixin _$DesiredStyle {
   String get occasion => throw _privateConstructorUsedError;
   StyleList get styleList => throw _privateConstructorUsedError;
   FitList get fitList => throw _privateConstructorUsedError;
   MaterialList get materialList => throw _privateConstructorUsedError;
   ColorList get colorList => throw _privateConstructorUsedError;
 
-  /// Serializes this CommissionInfoStyle to a JSON map.
+  /// Serializes this DesiredStyle to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
-  /// Create a copy of CommissionInfoStyle
+  /// Create a copy of DesiredStyle
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $CommissionInfoStyleCopyWith<CommissionInfoStyle> get copyWith =>
+  $DesiredStyleCopyWith<DesiredStyle> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $CommissionInfoStyleCopyWith<$Res> {
-  factory $CommissionInfoStyleCopyWith(
-          CommissionInfoStyle value, $Res Function(CommissionInfoStyle) then) =
-      _$CommissionInfoStyleCopyWithImpl<$Res, CommissionInfoStyle>;
+abstract class $DesiredStyleCopyWith<$Res> {
+  factory $DesiredStyleCopyWith(
+          DesiredStyle value, $Res Function(DesiredStyle) then) =
+      _$DesiredStyleCopyWithImpl<$Res, DesiredStyle>;
   @useResult
   $Res call(
       {String occasion,
@@ -730,16 +1576,16 @@ abstract class $CommissionInfoStyleCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$CommissionInfoStyleCopyWithImpl<$Res, $Val extends CommissionInfoStyle>
-    implements $CommissionInfoStyleCopyWith<$Res> {
-  _$CommissionInfoStyleCopyWithImpl(this._value, this._then);
+class _$DesiredStyleCopyWithImpl<$Res, $Val extends DesiredStyle>
+    implements $DesiredStyleCopyWith<$Res> {
+  _$DesiredStyleCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of CommissionInfoStyle
+  /// Create a copy of DesiredStyle
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -774,7 +1620,7 @@ class _$CommissionInfoStyleCopyWithImpl<$Res, $Val extends CommissionInfoStyle>
     ) as $Val);
   }
 
-  /// Create a copy of CommissionInfoStyle
+  /// Create a copy of DesiredStyle
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -784,7 +1630,7 @@ class _$CommissionInfoStyleCopyWithImpl<$Res, $Val extends CommissionInfoStyle>
     });
   }
 
-  /// Create a copy of CommissionInfoStyle
+  /// Create a copy of DesiredStyle
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -794,7 +1640,7 @@ class _$CommissionInfoStyleCopyWithImpl<$Res, $Val extends CommissionInfoStyle>
     });
   }
 
-  /// Create a copy of CommissionInfoStyle
+  /// Create a copy of DesiredStyle
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -804,7 +1650,7 @@ class _$CommissionInfoStyleCopyWithImpl<$Res, $Val extends CommissionInfoStyle>
     });
   }
 
-  /// Create a copy of CommissionInfoStyle
+  /// Create a copy of DesiredStyle
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -816,11 +1662,11 @@ class _$CommissionInfoStyleCopyWithImpl<$Res, $Val extends CommissionInfoStyle>
 }
 
 /// @nodoc
-abstract class _$$CommissionInfoStyleImplCopyWith<$Res>
-    implements $CommissionInfoStyleCopyWith<$Res> {
-  factory _$$CommissionInfoStyleImplCopyWith(_$CommissionInfoStyleImpl value,
-          $Res Function(_$CommissionInfoStyleImpl) then) =
-      __$$CommissionInfoStyleImplCopyWithImpl<$Res>;
+abstract class _$$DesiredStyleImplCopyWith<$Res>
+    implements $DesiredStyleCopyWith<$Res> {
+  factory _$$DesiredStyleImplCopyWith(
+          _$DesiredStyleImpl value, $Res Function(_$DesiredStyleImpl) then) =
+      __$$DesiredStyleImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -841,14 +1687,14 @@ abstract class _$$CommissionInfoStyleImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$CommissionInfoStyleImplCopyWithImpl<$Res>
-    extends _$CommissionInfoStyleCopyWithImpl<$Res, _$CommissionInfoStyleImpl>
-    implements _$$CommissionInfoStyleImplCopyWith<$Res> {
-  __$$CommissionInfoStyleImplCopyWithImpl(_$CommissionInfoStyleImpl _value,
-      $Res Function(_$CommissionInfoStyleImpl) _then)
+class __$$DesiredStyleImplCopyWithImpl<$Res>
+    extends _$DesiredStyleCopyWithImpl<$Res, _$DesiredStyleImpl>
+    implements _$$DesiredStyleImplCopyWith<$Res> {
+  __$$DesiredStyleImplCopyWithImpl(
+      _$DesiredStyleImpl _value, $Res Function(_$DesiredStyleImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of CommissionInfoStyle
+  /// Create a copy of DesiredStyle
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -859,7 +1705,7 @@ class __$$CommissionInfoStyleImplCopyWithImpl<$Res>
     Object? materialList = null,
     Object? colorList = null,
   }) {
-    return _then(_$CommissionInfoStyleImpl(
+    return _then(_$DesiredStyleImpl(
       occasion: null == occasion
           ? _value.occasion
           : occasion // ignore: cast_nullable_to_non_nullable
@@ -886,16 +1732,16 @@ class __$$CommissionInfoStyleImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$CommissionInfoStyleImpl implements _CommissionInfoStyle {
-  _$CommissionInfoStyleImpl(
+class _$DesiredStyleImpl implements _DesiredStyle {
+  _$DesiredStyleImpl(
       {required this.occasion,
       required this.styleList,
       required this.fitList,
       required this.materialList,
       required this.colorList});
 
-  factory _$CommissionInfoStyleImpl.fromJson(Map<String, dynamic> json) =>
-      _$$CommissionInfoStyleImplFromJson(json);
+  factory _$DesiredStyleImpl.fromJson(Map<String, dynamic> json) =>
+      _$$DesiredStyleImplFromJson(json);
 
   @override
   final String occasion;
@@ -910,14 +1756,14 @@ class _$CommissionInfoStyleImpl implements _CommissionInfoStyle {
 
   @override
   String toString() {
-    return 'CommissionInfoStyle(occasion: $occasion, styleList: $styleList, fitList: $fitList, materialList: $materialList, colorList: $colorList)';
+    return 'DesiredStyle(occasion: $occasion, styleList: $styleList, fitList: $fitList, materialList: $materialList, colorList: $colorList)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$CommissionInfoStyleImpl &&
+            other is _$DesiredStyleImpl &&
             (identical(other.occasion, occasion) ||
                 other.occasion == occasion) &&
             (identical(other.styleList, styleList) ||
@@ -934,33 +1780,32 @@ class _$CommissionInfoStyleImpl implements _CommissionInfoStyle {
   int get hashCode => Object.hash(
       runtimeType, occasion, styleList, fitList, materialList, colorList);
 
-  /// Create a copy of CommissionInfoStyle
+  /// Create a copy of DesiredStyle
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$CommissionInfoStyleImplCopyWith<_$CommissionInfoStyleImpl> get copyWith =>
-      __$$CommissionInfoStyleImplCopyWithImpl<_$CommissionInfoStyleImpl>(
-          this, _$identity);
+  _$$DesiredStyleImplCopyWith<_$DesiredStyleImpl> get copyWith =>
+      __$$DesiredStyleImplCopyWithImpl<_$DesiredStyleImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$CommissionInfoStyleImplToJson(
+    return _$$DesiredStyleImplToJson(
       this,
     );
   }
 }
 
-abstract class _CommissionInfoStyle implements CommissionInfoStyle {
-  factory _CommissionInfoStyle(
+abstract class _DesiredStyle implements DesiredStyle {
+  factory _DesiredStyle(
       {required final String occasion,
       required final StyleList styleList,
       required final FitList fitList,
       required final MaterialList materialList,
-      required final ColorList colorList}) = _$CommissionInfoStyleImpl;
+      required final ColorList colorList}) = _$DesiredStyleImpl;
 
-  factory _CommissionInfoStyle.fromJson(Map<String, dynamic> json) =
-      _$CommissionInfoStyleImpl.fromJson;
+  factory _DesiredStyle.fromJson(Map<String, dynamic> json) =
+      _$DesiredStyleImpl.fromJson;
 
   @override
   String get occasion;
@@ -973,1151 +1818,11 @@ abstract class _CommissionInfoStyle implements CommissionInfoStyle {
   @override
   ColorList get colorList;
 
-  /// Create a copy of CommissionInfoStyle
+  /// Create a copy of DesiredStyle
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$CommissionInfoStyleImplCopyWith<_$CommissionInfoStyleImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-CommissionInfoBodyType _$CommissionInfoBodyTypeFromJson(
-    Map<String, dynamic> json) {
-  return _CommissionInfoBodyType.fromJson(json);
-}
-
-/// @nodoc
-mixin _$CommissionInfoBodyType {
-  List<String> get bodyTypes => throw _privateConstructorUsedError;
-
-  /// Serializes this CommissionInfoBodyType to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of CommissionInfoBodyType
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $CommissionInfoBodyTypeCopyWith<CommissionInfoBodyType> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $CommissionInfoBodyTypeCopyWith<$Res> {
-  factory $CommissionInfoBodyTypeCopyWith(CommissionInfoBodyType value,
-          $Res Function(CommissionInfoBodyType) then) =
-      _$CommissionInfoBodyTypeCopyWithImpl<$Res, CommissionInfoBodyType>;
-  @useResult
-  $Res call({List<String> bodyTypes});
-}
-
-/// @nodoc
-class _$CommissionInfoBodyTypeCopyWithImpl<$Res,
-        $Val extends CommissionInfoBodyType>
-    implements $CommissionInfoBodyTypeCopyWith<$Res> {
-  _$CommissionInfoBodyTypeCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of CommissionInfoBodyType
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? bodyTypes = null,
-  }) {
-    return _then(_value.copyWith(
-      bodyTypes: null == bodyTypes
-          ? _value.bodyTypes
-          : bodyTypes // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-    ) as $Val);
-  }
-}
-
-/// @nodoc
-abstract class _$$CommissionInfoBodyTypeImplCopyWith<$Res>
-    implements $CommissionInfoBodyTypeCopyWith<$Res> {
-  factory _$$CommissionInfoBodyTypeImplCopyWith(
-          _$CommissionInfoBodyTypeImpl value,
-          $Res Function(_$CommissionInfoBodyTypeImpl) then) =
-      __$$CommissionInfoBodyTypeImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({List<String> bodyTypes});
-}
-
-/// @nodoc
-class __$$CommissionInfoBodyTypeImplCopyWithImpl<$Res>
-    extends _$CommissionInfoBodyTypeCopyWithImpl<$Res,
-        _$CommissionInfoBodyTypeImpl>
-    implements _$$CommissionInfoBodyTypeImplCopyWith<$Res> {
-  __$$CommissionInfoBodyTypeImplCopyWithImpl(
-      _$CommissionInfoBodyTypeImpl _value,
-      $Res Function(_$CommissionInfoBodyTypeImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of CommissionInfoBodyType
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? bodyTypes = null,
-  }) {
-    return _then(_$CommissionInfoBodyTypeImpl(
-      bodyTypes: null == bodyTypes
-          ? _value._bodyTypes
-          : bodyTypes // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-    ));
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$CommissionInfoBodyTypeImpl implements _CommissionInfoBodyType {
-  _$CommissionInfoBodyTypeImpl({required final List<String> bodyTypes})
-      : _bodyTypes = bodyTypes;
-
-  factory _$CommissionInfoBodyTypeImpl.fromJson(Map<String, dynamic> json) =>
-      _$$CommissionInfoBodyTypeImplFromJson(json);
-
-  final List<String> _bodyTypes;
-  @override
-  List<String> get bodyTypes {
-    if (_bodyTypes is EqualUnmodifiableListView) return _bodyTypes;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_bodyTypes);
-  }
-
-  @override
-  String toString() {
-    return 'CommissionInfoBodyType(bodyTypes: $bodyTypes)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$CommissionInfoBodyTypeImpl &&
-            const DeepCollectionEquality()
-                .equals(other._bodyTypes, _bodyTypes));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_bodyTypes));
-
-  /// Create a copy of CommissionInfoBodyType
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$CommissionInfoBodyTypeImplCopyWith<_$CommissionInfoBodyTypeImpl>
-      get copyWith => __$$CommissionInfoBodyTypeImplCopyWithImpl<
-          _$CommissionInfoBodyTypeImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$CommissionInfoBodyTypeImplToJson(
-      this,
-    );
-  }
-}
-
-abstract class _CommissionInfoBodyType implements CommissionInfoBodyType {
-  factory _CommissionInfoBodyType({required final List<String> bodyTypes}) =
-      _$CommissionInfoBodyTypeImpl;
-
-  factory _CommissionInfoBodyType.fromJson(Map<String, dynamic> json) =
-      _$CommissionInfoBodyTypeImpl.fromJson;
-
-  @override
-  List<String> get bodyTypes;
-
-  /// Create a copy of CommissionInfoBodyType
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$CommissionInfoBodyTypeImplCopyWith<_$CommissionInfoBodyTypeImpl>
-      get copyWith => throw _privateConstructorUsedError;
-}
-
-CommissionInfoFit _$CommissionInfoFitFromJson(Map<String, dynamic> json) {
-  return _CommissionInfoFit.fromJson(json);
-}
-
-/// @nodoc
-mixin _$CommissionInfoFit {
-  List<String> get fits => throw _privateConstructorUsedError;
-
-  /// Serializes this CommissionInfoFit to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of CommissionInfoFit
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $CommissionInfoFitCopyWith<CommissionInfoFit> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $CommissionInfoFitCopyWith<$Res> {
-  factory $CommissionInfoFitCopyWith(
-          CommissionInfoFit value, $Res Function(CommissionInfoFit) then) =
-      _$CommissionInfoFitCopyWithImpl<$Res, CommissionInfoFit>;
-  @useResult
-  $Res call({List<String> fits});
-}
-
-/// @nodoc
-class _$CommissionInfoFitCopyWithImpl<$Res, $Val extends CommissionInfoFit>
-    implements $CommissionInfoFitCopyWith<$Res> {
-  _$CommissionInfoFitCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of CommissionInfoFit
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? fits = null,
-  }) {
-    return _then(_value.copyWith(
-      fits: null == fits
-          ? _value.fits
-          : fits // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-    ) as $Val);
-  }
-}
-
-/// @nodoc
-abstract class _$$CommissionInfoFitImplCopyWith<$Res>
-    implements $CommissionInfoFitCopyWith<$Res> {
-  factory _$$CommissionInfoFitImplCopyWith(_$CommissionInfoFitImpl value,
-          $Res Function(_$CommissionInfoFitImpl) then) =
-      __$$CommissionInfoFitImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({List<String> fits});
-}
-
-/// @nodoc
-class __$$CommissionInfoFitImplCopyWithImpl<$Res>
-    extends _$CommissionInfoFitCopyWithImpl<$Res, _$CommissionInfoFitImpl>
-    implements _$$CommissionInfoFitImplCopyWith<$Res> {
-  __$$CommissionInfoFitImplCopyWithImpl(_$CommissionInfoFitImpl _value,
-      $Res Function(_$CommissionInfoFitImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of CommissionInfoFit
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? fits = null,
-  }) {
-    return _then(_$CommissionInfoFitImpl(
-      fits: null == fits
-          ? _value._fits
-          : fits // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-    ));
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$CommissionInfoFitImpl implements _CommissionInfoFit {
-  _$CommissionInfoFitImpl({required final List<String> fits}) : _fits = fits;
-
-  factory _$CommissionInfoFitImpl.fromJson(Map<String, dynamic> json) =>
-      _$$CommissionInfoFitImplFromJson(json);
-
-  final List<String> _fits;
-  @override
-  List<String> get fits {
-    if (_fits is EqualUnmodifiableListView) return _fits;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_fits);
-  }
-
-  @override
-  String toString() {
-    return 'CommissionInfoFit(fits: $fits)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$CommissionInfoFitImpl &&
-            const DeepCollectionEquality().equals(other._fits, _fits));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_fits));
-
-  /// Create a copy of CommissionInfoFit
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$CommissionInfoFitImplCopyWith<_$CommissionInfoFitImpl> get copyWith =>
-      __$$CommissionInfoFitImplCopyWithImpl<_$CommissionInfoFitImpl>(
-          this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$CommissionInfoFitImplToJson(
-      this,
-    );
-  }
-}
-
-abstract class _CommissionInfoFit implements CommissionInfoFit {
-  factory _CommissionInfoFit({required final List<String> fits}) =
-      _$CommissionInfoFitImpl;
-
-  factory _CommissionInfoFit.fromJson(Map<String, dynamic> json) =
-      _$CommissionInfoFitImpl.fromJson;
-
-  @override
-  List<String> get fits;
-
-  /// Create a copy of CommissionInfoFit
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$CommissionInfoFitImplCopyWith<_$CommissionInfoFitImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-CommissionInfoMaterial _$CommissionInfoMaterialFromJson(
-    Map<String, dynamic> json) {
-  return _CommissionInfoMaterial.fromJson(json);
-}
-
-/// @nodoc
-mixin _$CommissionInfoMaterial {
-  List<String> get materials => throw _privateConstructorUsedError;
-
-  /// Serializes this CommissionInfoMaterial to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of CommissionInfoMaterial
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $CommissionInfoMaterialCopyWith<CommissionInfoMaterial> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $CommissionInfoMaterialCopyWith<$Res> {
-  factory $CommissionInfoMaterialCopyWith(CommissionInfoMaterial value,
-          $Res Function(CommissionInfoMaterial) then) =
-      _$CommissionInfoMaterialCopyWithImpl<$Res, CommissionInfoMaterial>;
-  @useResult
-  $Res call({List<String> materials});
-}
-
-/// @nodoc
-class _$CommissionInfoMaterialCopyWithImpl<$Res,
-        $Val extends CommissionInfoMaterial>
-    implements $CommissionInfoMaterialCopyWith<$Res> {
-  _$CommissionInfoMaterialCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of CommissionInfoMaterial
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? materials = null,
-  }) {
-    return _then(_value.copyWith(
-      materials: null == materials
-          ? _value.materials
-          : materials // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-    ) as $Val);
-  }
-}
-
-/// @nodoc
-abstract class _$$CommissionInfoMaterialImplCopyWith<$Res>
-    implements $CommissionInfoMaterialCopyWith<$Res> {
-  factory _$$CommissionInfoMaterialImplCopyWith(
-          _$CommissionInfoMaterialImpl value,
-          $Res Function(_$CommissionInfoMaterialImpl) then) =
-      __$$CommissionInfoMaterialImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({List<String> materials});
-}
-
-/// @nodoc
-class __$$CommissionInfoMaterialImplCopyWithImpl<$Res>
-    extends _$CommissionInfoMaterialCopyWithImpl<$Res,
-        _$CommissionInfoMaterialImpl>
-    implements _$$CommissionInfoMaterialImplCopyWith<$Res> {
-  __$$CommissionInfoMaterialImplCopyWithImpl(
-      _$CommissionInfoMaterialImpl _value,
-      $Res Function(_$CommissionInfoMaterialImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of CommissionInfoMaterial
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? materials = null,
-  }) {
-    return _then(_$CommissionInfoMaterialImpl(
-      materials: null == materials
-          ? _value._materials
-          : materials // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-    ));
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$CommissionInfoMaterialImpl implements _CommissionInfoMaterial {
-  _$CommissionInfoMaterialImpl({required final List<String> materials})
-      : _materials = materials;
-
-  factory _$CommissionInfoMaterialImpl.fromJson(Map<String, dynamic> json) =>
-      _$$CommissionInfoMaterialImplFromJson(json);
-
-  final List<String> _materials;
-  @override
-  List<String> get materials {
-    if (_materials is EqualUnmodifiableListView) return _materials;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_materials);
-  }
-
-  @override
-  String toString() {
-    return 'CommissionInfoMaterial(materials: $materials)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$CommissionInfoMaterialImpl &&
-            const DeepCollectionEquality()
-                .equals(other._materials, _materials));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_materials));
-
-  /// Create a copy of CommissionInfoMaterial
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$CommissionInfoMaterialImplCopyWith<_$CommissionInfoMaterialImpl>
-      get copyWith => __$$CommissionInfoMaterialImplCopyWithImpl<
-          _$CommissionInfoMaterialImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$CommissionInfoMaterialImplToJson(
-      this,
-    );
-  }
-}
-
-abstract class _CommissionInfoMaterial implements CommissionInfoMaterial {
-  factory _CommissionInfoMaterial({required final List<String> materials}) =
-      _$CommissionInfoMaterialImpl;
-
-  factory _CommissionInfoMaterial.fromJson(Map<String, dynamic> json) =
-      _$CommissionInfoMaterialImpl.fromJson;
-
-  @override
-  List<String> get materials;
-
-  /// Create a copy of CommissionInfoMaterial
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$CommissionInfoMaterialImplCopyWith<_$CommissionInfoMaterialImpl>
-      get copyWith => throw _privateConstructorUsedError;
-}
-
-CommissionStyle _$CommissionStyleFromJson(Map<String, dynamic> json) {
-  return _CommissionStyle.fromJson(json);
-}
-
-/// @nodoc
-mixin _$CommissionStyle {
-  List<CommissionInfoStyle> get style => throw _privateConstructorUsedError;
-  List<CommissionInfoMaterial> get material =>
-      throw _privateConstructorUsedError;
-  List<CommissionInfoFit> get fit => throw _privateConstructorUsedError;
-  List<CommissionInfoColor> get color => throw _privateConstructorUsedError;
-
-  /// Serializes this CommissionStyle to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of CommissionStyle
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $CommissionStyleCopyWith<CommissionStyle> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $CommissionStyleCopyWith<$Res> {
-  factory $CommissionStyleCopyWith(
-          CommissionStyle value, $Res Function(CommissionStyle) then) =
-      _$CommissionStyleCopyWithImpl<$Res, CommissionStyle>;
-  @useResult
-  $Res call(
-      {List<CommissionInfoStyle> style,
-      List<CommissionInfoMaterial> material,
-      List<CommissionInfoFit> fit,
-      List<CommissionInfoColor> color});
-}
-
-/// @nodoc
-class _$CommissionStyleCopyWithImpl<$Res, $Val extends CommissionStyle>
-    implements $CommissionStyleCopyWith<$Res> {
-  _$CommissionStyleCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of CommissionStyle
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? style = null,
-    Object? material = null,
-    Object? fit = null,
-    Object? color = null,
-  }) {
-    return _then(_value.copyWith(
-      style: null == style
-          ? _value.style
-          : style // ignore: cast_nullable_to_non_nullable
-              as List<CommissionInfoStyle>,
-      material: null == material
-          ? _value.material
-          : material // ignore: cast_nullable_to_non_nullable
-              as List<CommissionInfoMaterial>,
-      fit: null == fit
-          ? _value.fit
-          : fit // ignore: cast_nullable_to_non_nullable
-              as List<CommissionInfoFit>,
-      color: null == color
-          ? _value.color
-          : color // ignore: cast_nullable_to_non_nullable
-              as List<CommissionInfoColor>,
-    ) as $Val);
-  }
-}
-
-/// @nodoc
-abstract class _$$CommissionStyleImplCopyWith<$Res>
-    implements $CommissionStyleCopyWith<$Res> {
-  factory _$$CommissionStyleImplCopyWith(_$CommissionStyleImpl value,
-          $Res Function(_$CommissionStyleImpl) then) =
-      __$$CommissionStyleImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {List<CommissionInfoStyle> style,
-      List<CommissionInfoMaterial> material,
-      List<CommissionInfoFit> fit,
-      List<CommissionInfoColor> color});
-}
-
-/// @nodoc
-class __$$CommissionStyleImplCopyWithImpl<$Res>
-    extends _$CommissionStyleCopyWithImpl<$Res, _$CommissionStyleImpl>
-    implements _$$CommissionStyleImplCopyWith<$Res> {
-  __$$CommissionStyleImplCopyWithImpl(
-      _$CommissionStyleImpl _value, $Res Function(_$CommissionStyleImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of CommissionStyle
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? style = null,
-    Object? material = null,
-    Object? fit = null,
-    Object? color = null,
-  }) {
-    return _then(_$CommissionStyleImpl(
-      style: null == style
-          ? _value._style
-          : style // ignore: cast_nullable_to_non_nullable
-              as List<CommissionInfoStyle>,
-      material: null == material
-          ? _value._material
-          : material // ignore: cast_nullable_to_non_nullable
-              as List<CommissionInfoMaterial>,
-      fit: null == fit
-          ? _value._fit
-          : fit // ignore: cast_nullable_to_non_nullable
-              as List<CommissionInfoFit>,
-      color: null == color
-          ? _value._color
-          : color // ignore: cast_nullable_to_non_nullable
-              as List<CommissionInfoColor>,
-    ));
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$CommissionStyleImpl implements _CommissionStyle {
-  _$CommissionStyleImpl(
-      {required final List<CommissionInfoStyle> style,
-      required final List<CommissionInfoMaterial> material,
-      required final List<CommissionInfoFit> fit,
-      required final List<CommissionInfoColor> color})
-      : _style = style,
-        _material = material,
-        _fit = fit,
-        _color = color;
-
-  factory _$CommissionStyleImpl.fromJson(Map<String, dynamic> json) =>
-      _$$CommissionStyleImplFromJson(json);
-
-  final List<CommissionInfoStyle> _style;
-  @override
-  List<CommissionInfoStyle> get style {
-    if (_style is EqualUnmodifiableListView) return _style;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_style);
-  }
-
-  final List<CommissionInfoMaterial> _material;
-  @override
-  List<CommissionInfoMaterial> get material {
-    if (_material is EqualUnmodifiableListView) return _material;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_material);
-  }
-
-  final List<CommissionInfoFit> _fit;
-  @override
-  List<CommissionInfoFit> get fit {
-    if (_fit is EqualUnmodifiableListView) return _fit;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_fit);
-  }
-
-  final List<CommissionInfoColor> _color;
-  @override
-  List<CommissionInfoColor> get color {
-    if (_color is EqualUnmodifiableListView) return _color;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_color);
-  }
-
-  @override
-  String toString() {
-    return 'CommissionStyle(style: $style, material: $material, fit: $fit, color: $color)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$CommissionStyleImpl &&
-            const DeepCollectionEquality().equals(other._style, _style) &&
-            const DeepCollectionEquality().equals(other._material, _material) &&
-            const DeepCollectionEquality().equals(other._fit, _fit) &&
-            const DeepCollectionEquality().equals(other._color, _color));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(_style),
-      const DeepCollectionEquality().hash(_material),
-      const DeepCollectionEquality().hash(_fit),
-      const DeepCollectionEquality().hash(_color));
-
-  /// Create a copy of CommissionStyle
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$CommissionStyleImplCopyWith<_$CommissionStyleImpl> get copyWith =>
-      __$$CommissionStyleImplCopyWithImpl<_$CommissionStyleImpl>(
-          this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$CommissionStyleImplToJson(
-      this,
-    );
-  }
-}
-
-abstract class _CommissionStyle implements CommissionStyle {
-  factory _CommissionStyle(
-      {required final List<CommissionInfoStyle> style,
-      required final List<CommissionInfoMaterial> material,
-      required final List<CommissionInfoFit> fit,
-      required final List<CommissionInfoColor> color}) = _$CommissionStyleImpl;
-
-  factory _CommissionStyle.fromJson(Map<String, dynamic> json) =
-      _$CommissionStyleImpl.fromJson;
-
-  @override
-  List<CommissionInfoStyle> get style;
-  @override
-  List<CommissionInfoMaterial> get material;
-  @override
-  List<CommissionInfoFit> get fit;
-  @override
-  List<CommissionInfoColor> get color;
-
-  /// Create a copy of CommissionStyle
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$CommissionStyleImplCopyWith<_$CommissionStyleImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-CommissionInfoColor _$CommissionInfoColorFromJson(Map<String, dynamic> json) {
-  return _CommissionInfoColor.fromJson(json);
-}
-
-/// @nodoc
-mixin _$CommissionInfoColor {
-  String get color => throw _privateConstructorUsedError;
-  bool get isPrefer => throw _privateConstructorUsedError;
-
-  /// Serializes this CommissionInfoColor to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of CommissionInfoColor
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $CommissionInfoColorCopyWith<CommissionInfoColor> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $CommissionInfoColorCopyWith<$Res> {
-  factory $CommissionInfoColorCopyWith(
-          CommissionInfoColor value, $Res Function(CommissionInfoColor) then) =
-      _$CommissionInfoColorCopyWithImpl<$Res, CommissionInfoColor>;
-  @useResult
-  $Res call({String color, bool isPrefer});
-}
-
-/// @nodoc
-class _$CommissionInfoColorCopyWithImpl<$Res, $Val extends CommissionInfoColor>
-    implements $CommissionInfoColorCopyWith<$Res> {
-  _$CommissionInfoColorCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of CommissionInfoColor
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? color = null,
-    Object? isPrefer = null,
-  }) {
-    return _then(_value.copyWith(
-      color: null == color
-          ? _value.color
-          : color // ignore: cast_nullable_to_non_nullable
-              as String,
-      isPrefer: null == isPrefer
-          ? _value.isPrefer
-          : isPrefer // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ) as $Val);
-  }
-}
-
-/// @nodoc
-abstract class _$$CommissionInfoColorImplCopyWith<$Res>
-    implements $CommissionInfoColorCopyWith<$Res> {
-  factory _$$CommissionInfoColorImplCopyWith(_$CommissionInfoColorImpl value,
-          $Res Function(_$CommissionInfoColorImpl) then) =
-      __$$CommissionInfoColorImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({String color, bool isPrefer});
-}
-
-/// @nodoc
-class __$$CommissionInfoColorImplCopyWithImpl<$Res>
-    extends _$CommissionInfoColorCopyWithImpl<$Res, _$CommissionInfoColorImpl>
-    implements _$$CommissionInfoColorImplCopyWith<$Res> {
-  __$$CommissionInfoColorImplCopyWithImpl(_$CommissionInfoColorImpl _value,
-      $Res Function(_$CommissionInfoColorImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of CommissionInfoColor
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? color = null,
-    Object? isPrefer = null,
-  }) {
-    return _then(_$CommissionInfoColorImpl(
-      color: null == color
-          ? _value.color
-          : color // ignore: cast_nullable_to_non_nullable
-              as String,
-      isPrefer: null == isPrefer
-          ? _value.isPrefer
-          : isPrefer // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ));
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$CommissionInfoColorImpl implements _CommissionInfoColor {
-  _$CommissionInfoColorImpl({required this.color, required this.isPrefer});
-
-  factory _$CommissionInfoColorImpl.fromJson(Map<String, dynamic> json) =>
-      _$$CommissionInfoColorImplFromJson(json);
-
-  @override
-  final String color;
-  @override
-  final bool isPrefer;
-
-  @override
-  String toString() {
-    return 'CommissionInfoColor(color: $color, isPrefer: $isPrefer)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$CommissionInfoColorImpl &&
-            (identical(other.color, color) || other.color == color) &&
-            (identical(other.isPrefer, isPrefer) ||
-                other.isPrefer == isPrefer));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode => Object.hash(runtimeType, color, isPrefer);
-
-  /// Create a copy of CommissionInfoColor
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$CommissionInfoColorImplCopyWith<_$CommissionInfoColorImpl> get copyWith =>
-      __$$CommissionInfoColorImplCopyWithImpl<_$CommissionInfoColorImpl>(
-          this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$CommissionInfoColorImplToJson(
-      this,
-    );
-  }
-}
-
-abstract class _CommissionInfoColor implements CommissionInfoColor {
-  factory _CommissionInfoColor(
-      {required final String color,
-      required final bool isPrefer}) = _$CommissionInfoColorImpl;
-
-  factory _CommissionInfoColor.fromJson(Map<String, dynamic> json) =
-      _$CommissionInfoColorImpl.fromJson;
-
-  @override
-  String get color;
-  @override
-  bool get isPrefer;
-
-  /// Create a copy of CommissionInfoColor
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$CommissionInfoColorImplCopyWith<_$CommissionInfoColorImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-CommissionOther _$CommissionOtherFromJson(Map<String, dynamic> json) {
-  return _CommissionOther.fromJson(json);
-}
-
-/// @nodoc
-mixin _$CommissionOther {
-  String get dateToUse => throw _privateConstructorUsedError;
-  String get desiredDate => throw _privateConstructorUsedError;
-  int get minPrice => throw _privateConstructorUsedError;
-  int get maxPrice => throw _privateConstructorUsedError;
-  String get text => throw _privateConstructorUsedError;
-
-  /// Serializes this CommissionOther to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of CommissionOther
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $CommissionOtherCopyWith<CommissionOther> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $CommissionOtherCopyWith<$Res> {
-  factory $CommissionOtherCopyWith(
-          CommissionOther value, $Res Function(CommissionOther) then) =
-      _$CommissionOtherCopyWithImpl<$Res, CommissionOther>;
-  @useResult
-  $Res call(
-      {String dateToUse,
-      String desiredDate,
-      int minPrice,
-      int maxPrice,
-      String text});
-}
-
-/// @nodoc
-class _$CommissionOtherCopyWithImpl<$Res, $Val extends CommissionOther>
-    implements $CommissionOtherCopyWith<$Res> {
-  _$CommissionOtherCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of CommissionOther
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? dateToUse = null,
-    Object? desiredDate = null,
-    Object? minPrice = null,
-    Object? maxPrice = null,
-    Object? text = null,
-  }) {
-    return _then(_value.copyWith(
-      dateToUse: null == dateToUse
-          ? _value.dateToUse
-          : dateToUse // ignore: cast_nullable_to_non_nullable
-              as String,
-      desiredDate: null == desiredDate
-          ? _value.desiredDate
-          : desiredDate // ignore: cast_nullable_to_non_nullable
-              as String,
-      minPrice: null == minPrice
-          ? _value.minPrice
-          : minPrice // ignore: cast_nullable_to_non_nullable
-              as int,
-      maxPrice: null == maxPrice
-          ? _value.maxPrice
-          : maxPrice // ignore: cast_nullable_to_non_nullable
-              as int,
-      text: null == text
-          ? _value.text
-          : text // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
-  }
-}
-
-/// @nodoc
-abstract class _$$CommissionOtherImplCopyWith<$Res>
-    implements $CommissionOtherCopyWith<$Res> {
-  factory _$$CommissionOtherImplCopyWith(_$CommissionOtherImpl value,
-          $Res Function(_$CommissionOtherImpl) then) =
-      __$$CommissionOtherImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {String dateToUse,
-      String desiredDate,
-      int minPrice,
-      int maxPrice,
-      String text});
-}
-
-/// @nodoc
-class __$$CommissionOtherImplCopyWithImpl<$Res>
-    extends _$CommissionOtherCopyWithImpl<$Res, _$CommissionOtherImpl>
-    implements _$$CommissionOtherImplCopyWith<$Res> {
-  __$$CommissionOtherImplCopyWithImpl(
-      _$CommissionOtherImpl _value, $Res Function(_$CommissionOtherImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of CommissionOther
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? dateToUse = null,
-    Object? desiredDate = null,
-    Object? minPrice = null,
-    Object? maxPrice = null,
-    Object? text = null,
-  }) {
-    return _then(_$CommissionOtherImpl(
-      dateToUse: null == dateToUse
-          ? _value.dateToUse
-          : dateToUse // ignore: cast_nullable_to_non_nullable
-              as String,
-      desiredDate: null == desiredDate
-          ? _value.desiredDate
-          : desiredDate // ignore: cast_nullable_to_non_nullable
-              as String,
-      minPrice: null == minPrice
-          ? _value.minPrice
-          : minPrice // ignore: cast_nullable_to_non_nullable
-              as int,
-      maxPrice: null == maxPrice
-          ? _value.maxPrice
-          : maxPrice // ignore: cast_nullable_to_non_nullable
-              as int,
-      text: null == text
-          ? _value.text
-          : text // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$CommissionOtherImpl implements _CommissionOther {
-  _$CommissionOtherImpl(
-      {required this.dateToUse,
-      required this.desiredDate,
-      required this.minPrice,
-      required this.maxPrice,
-      required this.text});
-
-  factory _$CommissionOtherImpl.fromJson(Map<String, dynamic> json) =>
-      _$$CommissionOtherImplFromJson(json);
-
-  @override
-  final String dateToUse;
-  @override
-  final String desiredDate;
-  @override
-  final int minPrice;
-  @override
-  final int maxPrice;
-  @override
-  final String text;
-
-  @override
-  String toString() {
-    return 'CommissionOther(dateToUse: $dateToUse, desiredDate: $desiredDate, minPrice: $minPrice, maxPrice: $maxPrice, text: $text)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$CommissionOtherImpl &&
-            (identical(other.dateToUse, dateToUse) ||
-                other.dateToUse == dateToUse) &&
-            (identical(other.desiredDate, desiredDate) ||
-                other.desiredDate == desiredDate) &&
-            (identical(other.minPrice, minPrice) ||
-                other.minPrice == minPrice) &&
-            (identical(other.maxPrice, maxPrice) ||
-                other.maxPrice == maxPrice) &&
-            (identical(other.text, text) || other.text == text));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode => Object.hash(
-      runtimeType, dateToUse, desiredDate, minPrice, maxPrice, text);
-
-  /// Create a copy of CommissionOther
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$CommissionOtherImplCopyWith<_$CommissionOtherImpl> get copyWith =>
-      __$$CommissionOtherImplCopyWithImpl<_$CommissionOtherImpl>(
-          this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$CommissionOtherImplToJson(
-      this,
-    );
-  }
-}
-
-abstract class _CommissionOther implements CommissionOther {
-  factory _CommissionOther(
-      {required final String dateToUse,
-      required final String desiredDate,
-      required final int minPrice,
-      required final int maxPrice,
-      required final String text}) = _$CommissionOtherImpl;
-
-  factory _CommissionOther.fromJson(Map<String, dynamic> json) =
-      _$CommissionOtherImpl.fromJson;
-
-  @override
-  String get dateToUse;
-  @override
-  String get desiredDate;
-  @override
-  int get minPrice;
-  @override
-  int get maxPrice;
-  @override
-  String get text;
-
-  /// Create a copy of CommissionOther
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$CommissionOtherImplCopyWith<_$CommissionOtherImpl> get copyWith =>
+  _$$DesiredStyleImplCopyWith<_$DesiredStyleImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -2739,5 +2444,270 @@ abstract class _ColorList implements ColorList {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ColorListImplCopyWith<_$ColorListImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+OtherMatters _$OtherMattersFromJson(Map<String, dynamic> json) {
+  return _OtherMatters.fromJson(json);
+}
+
+/// @nodoc
+mixin _$OtherMatters {
+  int get minPrice => throw _privateConstructorUsedError;
+  int get maxPrice => throw _privateConstructorUsedError;
+  String get dateToUse => throw _privateConstructorUsedError;
+  String get desiredDate => throw _privateConstructorUsedError;
+  String get text => throw _privateConstructorUsedError;
+  bool get isShared => throw _privateConstructorUsedError;
+
+  /// Serializes this OtherMatters to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of OtherMatters
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $OtherMattersCopyWith<OtherMatters> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $OtherMattersCopyWith<$Res> {
+  factory $OtherMattersCopyWith(
+          OtherMatters value, $Res Function(OtherMatters) then) =
+      _$OtherMattersCopyWithImpl<$Res, OtherMatters>;
+  @useResult
+  $Res call(
+      {int minPrice,
+      int maxPrice,
+      String dateToUse,
+      String desiredDate,
+      String text,
+      bool isShared});
+}
+
+/// @nodoc
+class _$OtherMattersCopyWithImpl<$Res, $Val extends OtherMatters>
+    implements $OtherMattersCopyWith<$Res> {
+  _$OtherMattersCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of OtherMatters
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? minPrice = null,
+    Object? maxPrice = null,
+    Object? dateToUse = null,
+    Object? desiredDate = null,
+    Object? text = null,
+    Object? isShared = null,
+  }) {
+    return _then(_value.copyWith(
+      minPrice: null == minPrice
+          ? _value.minPrice
+          : minPrice // ignore: cast_nullable_to_non_nullable
+              as int,
+      maxPrice: null == maxPrice
+          ? _value.maxPrice
+          : maxPrice // ignore: cast_nullable_to_non_nullable
+              as int,
+      dateToUse: null == dateToUse
+          ? _value.dateToUse
+          : dateToUse // ignore: cast_nullable_to_non_nullable
+              as String,
+      desiredDate: null == desiredDate
+          ? _value.desiredDate
+          : desiredDate // ignore: cast_nullable_to_non_nullable
+              as String,
+      text: null == text
+          ? _value.text
+          : text // ignore: cast_nullable_to_non_nullable
+              as String,
+      isShared: null == isShared
+          ? _value.isShared
+          : isShared // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$OtherMattersImplCopyWith<$Res>
+    implements $OtherMattersCopyWith<$Res> {
+  factory _$$OtherMattersImplCopyWith(
+          _$OtherMattersImpl value, $Res Function(_$OtherMattersImpl) then) =
+      __$$OtherMattersImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {int minPrice,
+      int maxPrice,
+      String dateToUse,
+      String desiredDate,
+      String text,
+      bool isShared});
+}
+
+/// @nodoc
+class __$$OtherMattersImplCopyWithImpl<$Res>
+    extends _$OtherMattersCopyWithImpl<$Res, _$OtherMattersImpl>
+    implements _$$OtherMattersImplCopyWith<$Res> {
+  __$$OtherMattersImplCopyWithImpl(
+      _$OtherMattersImpl _value, $Res Function(_$OtherMattersImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of OtherMatters
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? minPrice = null,
+    Object? maxPrice = null,
+    Object? dateToUse = null,
+    Object? desiredDate = null,
+    Object? text = null,
+    Object? isShared = null,
+  }) {
+    return _then(_$OtherMattersImpl(
+      minPrice: null == minPrice
+          ? _value.minPrice
+          : minPrice // ignore: cast_nullable_to_non_nullable
+              as int,
+      maxPrice: null == maxPrice
+          ? _value.maxPrice
+          : maxPrice // ignore: cast_nullable_to_non_nullable
+              as int,
+      dateToUse: null == dateToUse
+          ? _value.dateToUse
+          : dateToUse // ignore: cast_nullable_to_non_nullable
+              as String,
+      desiredDate: null == desiredDate
+          ? _value.desiredDate
+          : desiredDate // ignore: cast_nullable_to_non_nullable
+              as String,
+      text: null == text
+          ? _value.text
+          : text // ignore: cast_nullable_to_non_nullable
+              as String,
+      isShared: null == isShared
+          ? _value.isShared
+          : isShared // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$OtherMattersImpl implements _OtherMatters {
+  _$OtherMattersImpl(
+      {this.minPrice = 0,
+      this.maxPrice = 0,
+      this.dateToUse = '',
+      this.desiredDate = '',
+      this.text = '',
+      this.isShared = false});
+
+  factory _$OtherMattersImpl.fromJson(Map<String, dynamic> json) =>
+      _$$OtherMattersImplFromJson(json);
+
+  @override
+  @JsonKey()
+  final int minPrice;
+  @override
+  @JsonKey()
+  final int maxPrice;
+  @override
+  @JsonKey()
+  final String dateToUse;
+  @override
+  @JsonKey()
+  final String desiredDate;
+  @override
+  @JsonKey()
+  final String text;
+  @override
+  @JsonKey()
+  final bool isShared;
+
+  @override
+  String toString() {
+    return 'OtherMatters(minPrice: $minPrice, maxPrice: $maxPrice, dateToUse: $dateToUse, desiredDate: $desiredDate, text: $text, isShared: $isShared)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$OtherMattersImpl &&
+            (identical(other.minPrice, minPrice) ||
+                other.minPrice == minPrice) &&
+            (identical(other.maxPrice, maxPrice) ||
+                other.maxPrice == maxPrice) &&
+            (identical(other.dateToUse, dateToUse) ||
+                other.dateToUse == dateToUse) &&
+            (identical(other.desiredDate, desiredDate) ||
+                other.desiredDate == desiredDate) &&
+            (identical(other.text, text) || other.text == text) &&
+            (identical(other.isShared, isShared) ||
+                other.isShared == isShared));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, minPrice, maxPrice, dateToUse, desiredDate, text, isShared);
+
+  /// Create a copy of OtherMatters
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$OtherMattersImplCopyWith<_$OtherMattersImpl> get copyWith =>
+      __$$OtherMattersImplCopyWithImpl<_$OtherMattersImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$OtherMattersImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _OtherMatters implements OtherMatters {
+  factory _OtherMatters(
+      {final int minPrice,
+      final int maxPrice,
+      final String dateToUse,
+      final String desiredDate,
+      final String text,
+      final bool isShared}) = _$OtherMattersImpl;
+
+  factory _OtherMatters.fromJson(Map<String, dynamic> json) =
+      _$OtherMattersImpl.fromJson;
+
+  @override
+  int get minPrice;
+  @override
+  int get maxPrice;
+  @override
+  String get dateToUse;
+  @override
+  String get desiredDate;
+  @override
+  String get text;
+  @override
+  bool get isShared;
+
+  /// Create a copy of OtherMatters
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$OtherMattersImplCopyWith<_$OtherMattersImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

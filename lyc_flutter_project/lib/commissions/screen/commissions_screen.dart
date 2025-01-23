@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:lyc_flutter_project/commissions/provider/commissions_provider.dart';
+import 'package:lyc_flutter_project/commissions/screen/tap_view_screen.dart';
 import 'package:lyc_flutter_project/dm/provider/chat_provider.dart';
+import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 import '../../common/widget/custom_alert_dialog.dart';
 import '../../common/widget/normal_appbar.dart';
 import '../../data/app_color.dart';
 import '../../styles/app_text_style.dart';
+import '../model/commission_response_model.dart';
 import '../widget/custom_dialog.dart';
 
 class CommissionsScreen extends StatefulWidget {
@@ -42,7 +45,8 @@ class CommissionsScreenState extends State<CommissionsScreen> {
                         isDirector: isDirector,
                         commissionId: commissionId,
                         formattedTime: formattedTime,
-                        value: value),
+                        value: value,
+                        context: context),
                     const SizedBox(height: 40),
                     saveClothes(isDirector: isDirector, value: value),
                     const SizedBox(height: 40),
@@ -62,7 +66,8 @@ Widget updateCommission(
     {required bool isDirector,
     required int commissionId,
     required String formattedTime,
-    required CommissionsProvider value}) {
+    required CommissionsProvider value,
+    required BuildContext context}) {
   return Padding(
     padding: const EdgeInsets.only(bottom: 40),
     child: Container(
@@ -87,13 +92,25 @@ Widget updateCommission(
             child: TextButton(
               onPressed: isDirector
                   ? null
-                  : () {
-                      value.getCommission(commissionId);
+                  : () async {
+                      final CommissionResponseModel? model =
+                          await value.getCommission(commissionId);
+                      if (context.mounted) {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) => TapViewScreen(
+                              model: model,
+                              title: "의뢰서 수정하기",
+                              commissionId: commissionId,
+                              isDirector: isDirector, isUpdate: true,
+                            ),
+                          ),
+                        );
+                      }
                     },
               child: Text(
                 isDirector ? "의뢰서는 작성자만 수정이 가능합니다" : "의뢰서 수정하기",
-                style: AppTextStyle.title
-                    .copyWith(color: isDirector ? Colors.black : Colors.grey),
+                style: AppTextStyle.title.copyWith(color: Colors.black),
               ),
             ),
           ),
@@ -120,8 +137,7 @@ Widget saveClothes(
 }
 
 Widget terminateCommission(
-    {
-    required int chatId,
+    {required int chatId,
     required CommissionsProvider value,
     required BuildContext context}) {
   return Padding(

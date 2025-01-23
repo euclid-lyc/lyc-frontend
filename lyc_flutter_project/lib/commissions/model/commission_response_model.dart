@@ -9,115 +9,148 @@ part 'commission_response_model.g.dart';
 class CommissionResponseModel with _$CommissionResponseModel {
   factory CommissionResponseModel({
     required int commissionId,
-    required String status,
     required String createdDate,
-    required CommissionInfo commissionInfo,
-    required CommissionStyle commissionStyle,
-    required CommissionOther commissionOther,
+    required String status,
+    required BasicInfo basicInfo,
+    required DesiredStyle desiredStyle,
+    required OtherMatters otherMatters,
   }) = _CommissionResponseModel;
 
   factory CommissionResponseModel.fromJson(Map<String, dynamic> json) =>
       _$CommissionResponseModelFromJson(json);
 }
-
 @freezed
-class CommissionInfo with _$CommissionInfo {
-  factory CommissionInfo({
+class BasicInfo with _$BasicInfo {
+  factory BasicInfo({
     required int height,
     required int weight,
     required String topSize,
     required String bottomSize,
+    @Default(0) int postalCode,
+    @Default('') String address,
+    @Default('') String detailAddress,
     required String text,
-    required List<CommissionInfoStyle> commissionInfoStyleList,
-    required List<CommissionInfoBodyType> commissionInfoBodyTypeList,
-    required List<CommissionInfoFit> commissionInfoFitList,
-    required List<CommissionInfoMaterial> commissionInfoMaterialList,
-  }) = _CommissionInfo;
+    required InfoStyle infoStyle,
+    required InfoFit infoFit,
+    required InfoMaterial infoMaterial,
+    required InfoBodyType infoBodyType,
+  }) = _BasicInfo;
 
-  factory CommissionInfo.fromJson(Map<String, dynamic> json) =>
-      _$CommissionInfoFromJson(json);
+  factory BasicInfo.fromJson(Map<String, dynamic> json) =>
+      _$BasicInfoFromJson(json);
+
+  static BasicInfo defaultValue() {
+    return BasicInfo(
+      height: 0,
+      weight: 0,
+      topSize: '',
+      bottomSize: '',
+      postalCode: 0,
+      address: '',
+      detailAddress: '',
+      text: '',
+      infoStyle: InfoStyle.defaultValue(),
+      infoFit: InfoFit.defaultValue(),
+      infoMaterial: InfoMaterial.defaultValue(),
+      infoBodyType: InfoBodyType.defaultValue(),
+    );
+  }
 }
 
 @freezed
-class CommissionInfoStyle with _$CommissionInfoStyle {
-  factory CommissionInfoStyle({
+class InfoStyle with _$InfoStyle {
+  factory InfoStyle({
+    @Default([]) List<String> preferredStyleList,
+    @Default([]) List<String> nonPreferredStyleList,
+  }) = _InfoStyle;
+
+  factory InfoStyle.fromJson(Map<String, dynamic> json) =>
+      _$InfoStyleFromJson(json);
+
+  static InfoStyle defaultValue() {
+    return InfoStyle(
+      preferredStyleList: [],
+      nonPreferredStyleList: [],
+    );
+  }
+}
+
+@freezed
+class InfoFit with _$InfoFit {
+  factory InfoFit({
+    @Default([]) List<String> preferredFitList,
+    @Default([]) List<String> nonPreferredFitList,
+  }) = _InfoFit;
+
+  factory InfoFit.fromJson(Map<String, dynamic> json) =>
+      _$InfoFitFromJson(json);
+
+  static InfoFit defaultValue() {
+    return InfoFit(
+      preferredFitList: [],
+      nonPreferredFitList: [],
+    );
+  }
+}
+
+@freezed
+class InfoMaterial with _$InfoMaterial {
+  factory InfoMaterial({
+    @Default([]) List<String> preferredMaterialList,
+    @Default([]) List<String> nonPreferredMaterialList,
+  }) = _InfoMaterial;
+
+  factory InfoMaterial.fromJson(Map<String, dynamic> json) =>
+      _$InfoMaterialFromJson(json);
+
+  static InfoMaterial defaultValue() {
+    return InfoMaterial(
+      preferredMaterialList: [],
+      nonPreferredMaterialList: [],
+    );
+  }
+}
+
+@freezed
+class InfoBodyType with _$InfoBodyType {
+  factory InfoBodyType({
+    @Default([]) List<String> goodBodyTypeList,
+    @Default([]) List<String> badBodyTypeList,
+  }) = _InfoBodyType;
+
+  factory InfoBodyType.fromJson(Map<String, dynamic> json) =>
+      _$InfoBodyTypeFromJson(json);
+
+  static InfoBodyType defaultValue() {
+    return InfoBodyType(
+      goodBodyTypeList: [],
+      badBodyTypeList: [],
+    );
+  }
+}
+
+@freezed
+class DesiredStyle with _$DesiredStyle {
+  factory DesiredStyle({
     required String occasion,
     required StyleList styleList,
     required FitList fitList,
     required MaterialList materialList,
     required ColorList colorList,
-  }) = _CommissionInfoStyle;
+  }) = _DesiredStyle;
 
-  factory CommissionInfoStyle.fromJson(Map<String, dynamic> json) =>
-      _$CommissionInfoStyleFromJson(json);
-}
+  factory DesiredStyle.fromJson(Map<String, dynamic> json) =>
+      _$DesiredStyleFromJson(json);
 
-@freezed
-class CommissionInfoBodyType with _$CommissionInfoBodyType {
-  factory CommissionInfoBodyType({
-    required List<String> bodyTypes,
-  }) = _CommissionInfoBodyType;
-
-  factory CommissionInfoBodyType.fromJson(Map<String, dynamic> json) =>
-      _$CommissionInfoBodyTypeFromJson(json);
-}
-
-@freezed
-class CommissionInfoFit with _$CommissionInfoFit {
-  factory CommissionInfoFit({
-    required List<String> fits,
-  }) = _CommissionInfoFit;
-
-  factory CommissionInfoFit.fromJson(Map<String, dynamic> json) =>
-      _$CommissionInfoFitFromJson(json);
-}
-
-@freezed
-class CommissionInfoMaterial with _$CommissionInfoMaterial {
-  factory CommissionInfoMaterial({
-    required List<String> materials,
-  }) = _CommissionInfoMaterial;
-
-  factory CommissionInfoMaterial.fromJson(Map<String, dynamic> json) =>
-      _$CommissionInfoMaterialFromJson(json);
-}
-
-@freezed
-class CommissionStyle with _$CommissionStyle {
-  factory CommissionStyle({
-    required List<CommissionInfoStyle> style,
-    required List<CommissionInfoMaterial> material,
-    required List<CommissionInfoFit> fit,
-    required List<CommissionInfoColor> color,
-  }) = _CommissionStyle;
-
-  factory CommissionStyle.fromJson(Map<String, dynamic> json) =>
-      _$CommissionStyleFromJson(json);
-}
-
-@freezed
-class CommissionInfoColor with _$CommissionInfoColor {
-  factory CommissionInfoColor({
-    required String color,
-    required bool isPrefer,
-  }) = _CommissionInfoColor;
-
-  factory CommissionInfoColor.fromJson(Map<String, dynamic> json) =>
-      _$CommissionInfoColorFromJson(json);
-}
-
-@freezed
-class CommissionOther with _$CommissionOther {
-  factory CommissionOther({
-    required String dateToUse,
-    required String desiredDate,
-    required int minPrice,
-    required int maxPrice,
-    required String text,
-  }) = _CommissionOther;
-
-  factory CommissionOther.fromJson(Map<String, dynamic> json) =>
-      _$CommissionOtherFromJson(json);
+  static DesiredStyle defaultValue() {
+    return DesiredStyle(
+      occasion: '',
+      styleList: StyleList.defaultValue(),
+      fitList: FitList.defaultValue(),
+      materialList: MaterialList.defaultValue(),
+      colorList: ColorList.defaultValue(),
+    );
+  }
 }
 
 @freezed
@@ -128,6 +161,10 @@ class StyleList with _$StyleList {
 
   factory StyleList.fromJson(Map<String, dynamic> json) =>
       _$StyleListFromJson(json);
+
+  static StyleList defaultValue() {
+    return StyleList(styleList: []);
+  }
 }
 
 @freezed
@@ -138,6 +175,10 @@ class FitList with _$FitList {
 
   factory FitList.fromJson(Map<String, dynamic> json) =>
       _$FitListFromJson(json);
+
+  static FitList defaultValue() {
+    return FitList(fitList: []);
+  }
 }
 
 @freezed
@@ -148,6 +189,10 @@ class MaterialList with _$MaterialList {
 
   factory MaterialList.fromJson(Map<String, dynamic> json) =>
       _$MaterialListFromJson(json);
+
+  static MaterialList defaultValue() {
+    return MaterialList(materialList: []);
+  }
 }
 
 @freezed
@@ -158,4 +203,37 @@ class ColorList with _$ColorList {
 
   factory ColorList.fromJson(Map<String, dynamic> json) =>
       _$ColorListFromJson(json);
+
+  static ColorList defaultValue() {
+    return ColorList(colorList: []);
+  }
 }
+
+@freezed
+class OtherMatters with _$OtherMatters {
+  factory OtherMatters({
+    @Default(0) int minPrice,
+    @Default(0) int maxPrice,
+    @Default('') String dateToUse,
+    @Default('') String desiredDate,
+    @Default('') String text,
+    @Default(false) bool isShared,
+  }) = _OtherMatters;
+
+  factory OtherMatters.fromJson(Map<String, dynamic> json) =>
+      _$OtherMattersFromJson(json);
+
+  static OtherMatters defaultValue() {
+    return OtherMatters(
+      minPrice: 0,
+      maxPrice: 0,
+      dateToUse: '',
+      desiredDate: '',
+      text: '',
+      isShared: false,
+    );
+  }
+}
+
+
+

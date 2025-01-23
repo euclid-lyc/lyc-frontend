@@ -10,17 +10,22 @@ import '../model/commission_response_model.dart';
 class TapViewScreen extends StatefulWidget {
   const TapViewScreen(
       {super.key,
-      required this.directorId,
+      this.directorId,
       this.model,
-      required this.memberId,
+      // this.memberId,
       required this.title,
-      this.commissionId});
+      this.commissionId,
+      required this.isDirector,
+      required this.isUpdate});
 
-  final int directorId;
-  final int memberId;
+  final int? directorId;
+
+  // final int? memberId;
   final CommissionResponseModel? model;
   final String title;
   final int? commissionId;
+  final bool isDirector;
+  final bool isUpdate;
 
   @override
   TapViewState createState() => TapViewState();
@@ -28,10 +33,24 @@ class TapViewScreen extends StatefulWidget {
 
 class TapViewState extends State<TapViewScreen> with TickerProviderStateMixin {
   late TabController _tabController;
+  late final CommissionResponseModel? model;
+
+  late final int? directorId;
+
+  // late final int? memberId;
+  late final int? commissionId;
+
+  late final bool isDirector;
+  late final bool isUpdate;
 
   @override
   void initState() {
     // TODO: implement initState
+    model = widget.model;
+    directorId = widget.directorId;
+    commissionId = widget.commissionId;
+    isDirector = widget.isDirector;
+    // ?? (directorId == memberId);
     _tabController = TabController(length: 3, vsync: this);
     super.initState();
   }
@@ -44,10 +63,6 @@ class TapViewState extends State<TapViewScreen> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final CommissionResponseModel? model = widget.model;
-    final int directorId = widget.directorId;
-    final int? commissionId = widget.commissionId;
-    final bool isDirector = widget.directorId == widget.memberId;
     final String title = widget.title;
     return Scaffold(
         appBar: NormalAppbar(title: title),
@@ -84,9 +99,12 @@ class TapViewState extends State<TapViewScreen> with TickerProviderStateMixin {
             ),
             Expanded(
               child: TabBarView(controller: _tabController, children: [
-                BasicInfoScreen(directorId: directorId, model: model),
-                const DesiredStyleScreen(),
-                OtherMattersScreen(isDirector: isDirector,commissionId:commissionId)
+                BasicInfoScreen(model: model,isDirector: isDirector),
+                DesiredStyleScreen(isDirector: isDirector),
+                OtherMattersScreen(
+                    isDirector: isDirector,
+                    commissionId: commissionId,
+                    isUpdate: isUpdate)
               ]),
             ),
           ],

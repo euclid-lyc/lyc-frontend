@@ -5,9 +5,7 @@ import 'package:lyc_flutter_project/mypage/screen/attendance_screen.dart';
 import 'package:lyc_flutter_project/mypage/screen/review_home_screen.dart';
 import 'package:lyc_flutter_project/mypage/screen/stamp_screen.dart';
 import 'package:lyc_flutter_project/mypage/widget/custom_button_in_profile_box.dart';
-import 'package:provider/provider.dart';
 
-import '../../auth/join/Provider/login_provider.dart';
 
 class BottomButtons extends StatelessWidget {
   final int memberId;
@@ -77,10 +75,12 @@ class BottomButtons extends StatelessWidget {
                 MaterialPageRoute(
                   builder: (context) => TapViewScreen(
                       directorId: memberId,
-                      memberId:
-                          Provider.of<LoginProvider>(context, listen: false)
-                              .memberId,
-                  title: "의뢰서 작성하기",)
+                      // memberId:
+                      //     Provider.of<LoginProvider>(context, listen: false)
+                      //         .memberId
+                    isDirector: false,
+                  //여기도... true/false값을 이렇게 넣어도 되나
+                  title: "의뢰서 작성하기", isUpdate: false,)
                 ),
               );
             },

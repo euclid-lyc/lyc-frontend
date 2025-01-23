@@ -211,7 +211,8 @@ class _CommissionsRepository implements CommissionsRepository {
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{r'accessToken': 'true'};
     _headers.removeWhere((k, v) => v == null);
-    final _data = commissionModel;
+    final _data = <String, dynamic>{};
+    _data.addAll(commissionModel?.toJson() ?? <String, dynamic>{});
     final _options = _setStreamType<ApiResponse<CommissionResponse>>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
@@ -280,7 +281,8 @@ class _CommissionsRepository implements CommissionsRepository {
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{r'accessToken': 'true'};
     _headers.removeWhere((k, v) => v == null);
-    final _data = commissionModel;
+    final _data = <String, dynamic>{};
+    _data.addAll(commissionModel?.toJson() ?? <String, dynamic>{});
     final _options = _setStreamType<ApiResponse<CommissionResponse>>(
       Options(method: 'PATCH', headers: _headers, extra: _extra)
           .compose(
