@@ -113,7 +113,7 @@ class ChatProvider extends ChangeNotifier {
         pageSize: pageSize,
         cursorDateTime: cursorDateTime,
       );
-      final messages = result.result.messages.messages
+      final messages = result.result.messages
           .map(
             (e) => MessageModel(
               content: e.content,
@@ -127,7 +127,7 @@ class ChatProvider extends ChangeNotifier {
           .toList();
       _messageList = [...messages, ..._messageList];
 
-      final members = result.result.chatMembers.members
+      final members = result.result.chatMembers
           .map(
             (e) => ChatMemberModel(
                 nickname: e.nickname,

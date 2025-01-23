@@ -9,8 +9,8 @@ part 'chat_room_model.g.dart';
 @JsonSerializable()
 class ChatRoomModel {
   final int commissionId;
-  final ChatMemberListModel chatMembers;
-  final ChatMessageListModel messages;
+  final List<ChatMemberModel> chatMembers;
+  final List<ChatMessageModel> messages;
 
   ChatRoomModel({
     required this.commissionId,

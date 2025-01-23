@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
-import 'package:lyc_flutter_project/commissions/model/commission_model.dart';
+// import 'package:lyc_flutter_project/commissions/model/commission_model.dart';
 import 'package:lyc_flutter_project/commissions/model/commission_response.dart';
-import '../model/commission_response_model.dart' as commissions;
+import '../model/commission_response_model.dart';
 import '../repository/commissions_repository.dart';
 import 'package:intl/intl.dart';
 
@@ -302,13 +302,15 @@ class CommissionsProvider with ChangeNotifier {
     }
   }
 
-  Future<commissions.CommissionResponseModel?> getCommission(
+  Future<CommissionResponseModel?> getCommission(
       int commissionId) async {
     _isLoading = true;
     notifyListeners();
     try {
+
       final resp = await repositoryProvider.commissionsRepository
           .getCommission(commissionId: commissionId);
+      debugPrint(resp.message);
       if (!resp.isSuccess) {
         throw Exception(resp.message);
       } else {
@@ -323,136 +325,6 @@ class CommissionsProvider with ChangeNotifier {
     }
   }
 
-  // void updateHeight({required String selected}) {
-  //   _model= CommissionModel.copyWith(
-  //     basicInfo: BasicInfo(
-  //       height: int.parse(selected),
-  //       weight: _model.basicInfo.weight,
-  //       topSize:_model.basicInfo.topSize,
-  //       bottomSize:_model.basicInfo.bottomSize
-  //     ),
-  //   );
-  //   notifyListeners();
-  // }
-  //
-  // void updateWeight({required String selected}) {
-  //   _model= CommissionModel.copyWith(
-  //     basicInfo: BasicInfo(
-  //       height: _model.basicInfo.height,
-  //       weight: int.parse(selected),
-  //         topSize:_model.basicInfo.topSize,
-  //         bottomSize:_model.basicInfo.bottomSize
-  //     ),
-  //   );
-  //   notifyListeners();
-  // }
-  //
-  // void updateDetails({required String text}) {
-  //   _model = CommissionModel.copyWith(
-  //       basicInfo: BasicInfo
-  //         (height: _model.basicInfo.height, weight:_model.basicInfo.weight, topSize:_model.basicInfo.topSize,
-  //           bottomSize: model.basicInfo.bottomSize, text: text,
-  //           infoStyle: _model.basicInfo.infoStyle, infoFit: _model.basicInfo.infoFit,
-  //           infoMaterial: _model.basicInfo.infoMaterial, infoBodyType: _model.basicInfo.infoBodyType));
-  //   notifyListeners();
-  // }
-  //
-  // void updateTopSize({required int selected}) {
-  //   _topSize = selected;
-  //   notifyListeners();
-  // }
-  //
-  // void updateBottomSize({required int selected}) {
-  //   _bottomSize = selected;
-  //   notifyListeners();
-  // }
-  //
-  // void rollbackTopSize() {
-  //   _topSize = int.parse(_model!.spec.topSize.substring(5));
-  //   notifyListeners();
-  // }
-  //
-  // void rollbackBottomSize() {
-  //   _bottomSize = int.parse(_model!.spec.bottomSize.substring(5));
-  //   notifyListeners();
-  // }
-  //
-  // void updatePreferredStyle({required String selected}) {
-  //   List<String> list = _model!.preferredStyle.styles;
-  //   if (list.contains(selected)) {
-  //     list.remove(selected);
-  //   } else {
-  //     list.add(selected);
-  //   }
-  //   _model = _model!.copyWith(preferredStyle: StyleListModel(styles: list));
-  //   notifyListeners();
-  // }
-  //
-  // void updateNonPreferredStyle({required String selected}) {
-  //   List<String> list = _model!.nonPreferredStyle.styles;
-  //   if (list.contains(selected)) {
-  //     list.remove(selected);
-  //   } else {
-  //     list.add(selected);
-  //   }
-  //   _model = _model!.copyWith(nonPreferredStyle: StyleListModel(styles: list));
-  //   notifyListeners();
-  // }
-  //
-  // void updatePreferredMaterials({required String selected}) {
-  //   List<String> list = _model!.preferredMaterials.materials;
-  //   if (list.contains(selected)) {
-  //     list.remove(selected);
-  //   } else {
-  //     list.add(selected);
-  //   }
-  //   _model = _model!.copyWith(preferredMaterials: MaterialModel(materials: list));
-  //   notifyListeners();
-  // }
-  //
-  // void updateNonPreferredMaterials({required String selected}) {
-  //   List<String> list = _model!.nonPreferredMaterials.materials;
-  //   if (list.contains(selected)) {
-  //     list.remove(selected);
-  //   } else {
-  //     list.add(selected);
-  //   }
-  //   _model = _model!.copyWith(nonPreferredMaterials: MaterialModel(materials: list));
-  //   notifyListeners();
-  // }
-  //
-  // void updatePreferredFits({required String selected}) {
-  //   List<String> list = _model!.preferredFits.fits;
-  //   if (list.contains(selected)) {
-  //     list.remove(selected);
-  //   } else {
-  //     list.add(selected);
-  //   }
-  //   _model = _model!.copyWith(preferredFits: FitModel(fits: list));
-  //   notifyListeners();
-  // }
-  //
-  // void updateNonPreferredFits({required String selected}) {
-  //   List<String> list = _model!.nonPreferredFits.fits;
-  //   if (list.contains(selected)) {
-  //     list.remove(selected);
-  //   } else {
-  //     list.add(selected);
-  //   }
-  //   _model = _model!.copyWith(nonPreferredFits: FitModel(fits: list));
-  //   notifyListeners();
-  // }
-  //
-  // void updateBadBodyTypes({required String selected}) {
-  //   List<String> list = _model!.badBodyTypes.bodyTypes;
-  //   if (list.contains(selected)) {
-  //     list.remove(selected);
-  //   } else {
-  //     list.add(selected);
-  //   }
-  //   _model = _model!.copyWith(badBodyTypes: BodyTypeModel(bodyTypes: list));
-  //   notifyListeners();
-  // }
 
   Future<void> acceptCommission(int commissionId) async {
     _isLoading = true;

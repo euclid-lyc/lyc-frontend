@@ -46,9 +46,9 @@ class CommissionsScreenState extends State<CommissionsScreen> {
                         formattedTime: formattedTime,
                         value: value,
                         context: context),
-                    const SizedBox(height: 40),
+                    const SizedBox(height: 20),
                     saveClothes(isDirector: isDirector, value: value),
-                    const SizedBox(height: 40),
+                    const SizedBox(height: 20),
                     //todo 상태에 따라 종료요청하기/ 상대가 승낙할 때까지 기다리기 만들기
                     terminateCommission(
                         chatId: chatId, value: value, context: context),
@@ -109,7 +109,7 @@ Widget updateCommission(
                     },
               child: Text(
                 isDirector ? "의뢰서는 작성자만 수정이 가능합니다" : "의뢰서 수정하기",
-                style: AppTextStyle.title.copyWith(color: Colors.black),
+                style: AppTextStyle.littleTitle,
               ),
             ),
           ),

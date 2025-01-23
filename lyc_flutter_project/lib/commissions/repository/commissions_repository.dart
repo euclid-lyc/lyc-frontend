@@ -7,7 +7,7 @@ import 'package:lyc_flutter_project/commissions/model/commission_response.dart';
 import 'package:retrofit/retrofit.dart';
 import '../../common/model/api_response.dart';
 import '../../config/secret.dart';
-import '../model/commission_model.dart';
+
 import '../model/commission_response_model.dart';
 
 
@@ -95,16 +95,17 @@ abstract class CommissionsRepository {
   });
 
   //의뢰서 확인하기
-  @GET('/chats/commissions/{commissionsId}')
+  @GET('/chats/commissions/{commissionId}')
   @Headers({
     'accessToken': 'true',
   })
-  Future<ApiResponse<CommissionResponseModel>> getCommission({
+  Future<ApiResponse<CommissionResponseModel?>> getCommission({
     @Path() required int commissionId,
+
   });
 
   //의뢰서 수정하기
-  @PATCH('/chats/commissions/{commissionsId}')
+  @PATCH('/chats/commissions/{commissionId}')
   @Headers({
     'accessToken': 'true',
   })
@@ -114,7 +115,7 @@ abstract class CommissionsRepository {
   });
 
   //의뢰 승낙하기
-  @PATCH('/chats/commissions/{commissionsId}/accept')
+  @PATCH('/chats/commissions/{commissionId}/accept')
   @Headers({
     'accessToken': 'true',
   })
@@ -123,7 +124,7 @@ abstract class CommissionsRepository {
   });
 
   //의뢰 거절하기
-  @PATCH('/chats/commissions/{commissionsId}/decline')
+  @PATCH('/chats/commissions/{commissionId}/decline')
   @Headers({
     'accessToken': 'true',
   })

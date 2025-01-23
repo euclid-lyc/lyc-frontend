@@ -238,7 +238,7 @@ class _CommissionsRepository implements CommissionsRepository {
   }
 
   @override
-  Future<ApiResponse<CommissionResponseModel>> getCommission({
+  Future<ApiResponse<CommissionResponseModel?>> getCommission({
     required int commissionId,
   }) async {
     final _extra = <String, dynamic>{};
@@ -246,7 +246,7 @@ class _CommissionsRepository implements CommissionsRepository {
     final _headers = <String, dynamic>{r'accessToken': 'true'};
     _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<ApiResponse<CommissionResponseModel>>(
+    final _options = _setStreamType<ApiResponse<CommissionResponseModel?>>(
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -257,12 +257,15 @@ class _CommissionsRepository implements CommissionsRepository {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late ApiResponse<CommissionResponseModel> _value;
+    late ApiResponse<CommissionResponseModel?> _value;
     try {
-      _value = ApiResponse<CommissionResponseModel>.fromJson(
+      _value = ApiResponse<CommissionResponseModel?>.fromJson(
         _result.data!,
-        (json) =>
-            CommissionResponseModel.fromJson(json as Map<String, dynamic>),
+        (json) => json == null
+            ? null
+            : CommissionResponseModel.fromJson(
+                json as Map<String, dynamic>,
+              ),
       );
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);

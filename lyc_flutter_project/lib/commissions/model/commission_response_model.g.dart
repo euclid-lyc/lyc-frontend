@@ -6,12 +6,9 @@ part of 'commission_response_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$CommissionResponseModelImpl _$$CommissionResponseModelImplFromJson(
-        Map<String, dynamic> json) =>
-    _$CommissionResponseModelImpl(
-      commissionId: (json['commissionId'] as num).toInt(),
-      createdDate: json['createdDate'] as String,
-      status: json['status'] as String,
+CommissionModel _$CommissionModelFromJson(Map<String, dynamic> json) =>
+    CommissionModel(
+      directorId: (json['directorId'] as num?)?.toInt() ?? 0,
       basicInfo: BasicInfo.fromJson(json['basicInfo'] as Map<String, dynamic>),
       desiredStyle:
           DesiredStyle.fromJson(json['desiredStyle'] as Map<String, dynamic>),
@@ -19,19 +16,15 @@ _$CommissionResponseModelImpl _$$CommissionResponseModelImplFromJson(
           OtherMatters.fromJson(json['otherMatters'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$CommissionResponseModelImplToJson(
-        _$CommissionResponseModelImpl instance) =>
+Map<String, dynamic> _$CommissionModelToJson(CommissionModel instance) =>
     <String, dynamic>{
-      'commissionId': instance.commissionId,
-      'createdDate': instance.createdDate,
-      'status': instance.status,
+      'directorId': instance.directorId,
       'basicInfo': instance.basicInfo,
       'desiredStyle': instance.desiredStyle,
       'otherMatters': instance.otherMatters,
     };
 
-_$BasicInfoImpl _$$BasicInfoImplFromJson(Map<String, dynamic> json) =>
-    _$BasicInfoImpl(
+BasicInfo _$BasicInfoFromJson(Map<String, dynamic> json) => BasicInfo(
       height: (json['height'] as num).toInt(),
       weight: (json['weight'] as num).toInt(),
       topSize: json['topSize'] as String,
@@ -48,8 +41,7 @@ _$BasicInfoImpl _$$BasicInfoImplFromJson(Map<String, dynamic> json) =>
           InfoBodyType.fromJson(json['infoBodyType'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$BasicInfoImplToJson(_$BasicInfoImpl instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$BasicInfoToJson(BasicInfo instance) => <String, dynamic>{
       'height': instance.height,
       'weight': instance.weight,
       'topSize': instance.topSize,
@@ -64,8 +56,7 @@ Map<String, dynamic> _$$BasicInfoImplToJson(_$BasicInfoImpl instance) =>
       'infoBodyType': instance.infoBodyType,
     };
 
-_$InfoStyleImpl _$$InfoStyleImplFromJson(Map<String, dynamic> json) =>
-    _$InfoStyleImpl(
+InfoStyle _$InfoStyleFromJson(Map<String, dynamic> json) => InfoStyle(
       preferredStyleList: (json['preferredStyleList'] as List<dynamic>?)
               ?.map((e) => e as String)
               .toList() ??
@@ -76,14 +67,12 @@ _$InfoStyleImpl _$$InfoStyleImplFromJson(Map<String, dynamic> json) =>
           const [],
     );
 
-Map<String, dynamic> _$$InfoStyleImplToJson(_$InfoStyleImpl instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$InfoStyleToJson(InfoStyle instance) => <String, dynamic>{
       'preferredStyleList': instance.preferredStyleList,
       'nonPreferredStyleList': instance.nonPreferredStyleList,
     };
 
-_$InfoFitImpl _$$InfoFitImplFromJson(Map<String, dynamic> json) =>
-    _$InfoFitImpl(
+InfoFit _$InfoFitFromJson(Map<String, dynamic> json) => InfoFit(
       preferredFitList: (json['preferredFitList'] as List<dynamic>?)
               ?.map((e) => e as String)
               .toList() ??
@@ -94,14 +83,12 @@ _$InfoFitImpl _$$InfoFitImplFromJson(Map<String, dynamic> json) =>
           const [],
     );
 
-Map<String, dynamic> _$$InfoFitImplToJson(_$InfoFitImpl instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$InfoFitToJson(InfoFit instance) => <String, dynamic>{
       'preferredFitList': instance.preferredFitList,
       'nonPreferredFitList': instance.nonPreferredFitList,
     };
 
-_$InfoMaterialImpl _$$InfoMaterialImplFromJson(Map<String, dynamic> json) =>
-    _$InfoMaterialImpl(
+InfoMaterial _$InfoMaterialFromJson(Map<String, dynamic> json) => InfoMaterial(
       preferredMaterialList: (json['preferredMaterialList'] as List<dynamic>?)
               ?.map((e) => e as String)
               .toList() ??
@@ -113,14 +100,13 @@ _$InfoMaterialImpl _$$InfoMaterialImplFromJson(Map<String, dynamic> json) =>
               const [],
     );
 
-Map<String, dynamic> _$$InfoMaterialImplToJson(_$InfoMaterialImpl instance) =>
+Map<String, dynamic> _$InfoMaterialToJson(InfoMaterial instance) =>
     <String, dynamic>{
       'preferredMaterialList': instance.preferredMaterialList,
       'nonPreferredMaterialList': instance.nonPreferredMaterialList,
     };
 
-_$InfoBodyTypeImpl _$$InfoBodyTypeImplFromJson(Map<String, dynamic> json) =>
-    _$InfoBodyTypeImpl(
+InfoBodyType _$InfoBodyTypeFromJson(Map<String, dynamic> json) => InfoBodyType(
       goodBodyTypeList: (json['goodBodyTypeList'] as List<dynamic>?)
               ?.map((e) => e as String)
               .toList() ??
@@ -131,14 +117,13 @@ _$InfoBodyTypeImpl _$$InfoBodyTypeImplFromJson(Map<String, dynamic> json) =>
           const [],
     );
 
-Map<String, dynamic> _$$InfoBodyTypeImplToJson(_$InfoBodyTypeImpl instance) =>
+Map<String, dynamic> _$InfoBodyTypeToJson(InfoBodyType instance) =>
     <String, dynamic>{
       'goodBodyTypeList': instance.goodBodyTypeList,
       'badBodyTypeList': instance.badBodyTypeList,
     };
 
-_$DesiredStyleImpl _$$DesiredStyleImplFromJson(Map<String, dynamic> json) =>
-    _$DesiredStyleImpl(
+DesiredStyle _$DesiredStyleFromJson(Map<String, dynamic> json) => DesiredStyle(
       occasion: json['occasion'] as String,
       styleList: StyleList.fromJson(json['styleList'] as Map<String, dynamic>),
       fitList: FitList.fromJson(json['fitList'] as Map<String, dynamic>),
@@ -147,7 +132,7 @@ _$DesiredStyleImpl _$$DesiredStyleImplFromJson(Map<String, dynamic> json) =>
       colorList: ColorList.fromJson(json['colorList'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$DesiredStyleImplToJson(_$DesiredStyleImpl instance) =>
+Map<String, dynamic> _$DesiredStyleToJson(DesiredStyle instance) =>
     <String, dynamic>{
       'occasion': instance.occasion,
       'styleList': instance.styleList,
@@ -156,62 +141,54 @@ Map<String, dynamic> _$$DesiredStyleImplToJson(_$DesiredStyleImpl instance) =>
       'colorList': instance.colorList,
     };
 
-_$StyleListImpl _$$StyleListImplFromJson(Map<String, dynamic> json) =>
-    _$StyleListImpl(
+StyleList _$StyleListFromJson(Map<String, dynamic> json) => StyleList(
       styleList:
           (json['styleList'] as List<dynamic>).map((e) => e as String).toList(),
     );
 
-Map<String, dynamic> _$$StyleListImplToJson(_$StyleListImpl instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$StyleListToJson(StyleList instance) => <String, dynamic>{
       'styleList': instance.styleList,
     };
 
-_$FitListImpl _$$FitListImplFromJson(Map<String, dynamic> json) =>
-    _$FitListImpl(
+FitList _$FitListFromJson(Map<String, dynamic> json) => FitList(
       fitList:
           (json['fitList'] as List<dynamic>).map((e) => e as String).toList(),
     );
 
-Map<String, dynamic> _$$FitListImplToJson(_$FitListImpl instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$FitListToJson(FitList instance) => <String, dynamic>{
       'fitList': instance.fitList,
     };
 
-_$MaterialListImpl _$$MaterialListImplFromJson(Map<String, dynamic> json) =>
-    _$MaterialListImpl(
+MaterialList _$MaterialListFromJson(Map<String, dynamic> json) => MaterialList(
       materialList: (json['materialList'] as List<dynamic>)
           .map((e) => e as String)
           .toList(),
     );
 
-Map<String, dynamic> _$$MaterialListImplToJson(_$MaterialListImpl instance) =>
+Map<String, dynamic> _$MaterialListToJson(MaterialList instance) =>
     <String, dynamic>{
       'materialList': instance.materialList,
     };
 
-_$ColorListImpl _$$ColorListImplFromJson(Map<String, dynamic> json) =>
-    _$ColorListImpl(
+ColorList _$ColorListFromJson(Map<String, dynamic> json) => ColorList(
       colorList:
           (json['colorList'] as List<dynamic>).map((e) => e as String).toList(),
     );
 
-Map<String, dynamic> _$$ColorListImplToJson(_$ColorListImpl instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$ColorListToJson(ColorList instance) => <String, dynamic>{
       'colorList': instance.colorList,
     };
 
-_$OtherMattersImpl _$$OtherMattersImplFromJson(Map<String, dynamic> json) =>
-    _$OtherMattersImpl(
+OtherMatters _$OtherMattersFromJson(Map<String, dynamic> json) => OtherMatters(
       minPrice: (json['minPrice'] as num?)?.toInt() ?? 0,
-      maxPrice: (json['maxPrice'] as num?)?.toInt() ?? 0,
+      maxPrice: (json['maxPrice'] as num?)?.toInt() ?? 1000000,
       dateToUse: json['dateToUse'] as String? ?? '',
       desiredDate: json['desiredDate'] as String? ?? '',
       text: json['text'] as String? ?? '',
       isShared: json['isShared'] as bool? ?? false,
     );
 
-Map<String, dynamic> _$$OtherMattersImplToJson(_$OtherMattersImpl instance) =>
+Map<String, dynamic> _$OtherMattersToJson(OtherMatters instance) =>
     <String, dynamic>{
       'minPrice': instance.minPrice,
       'maxPrice': instance.maxPrice,
@@ -219,4 +196,23 @@ Map<String, dynamic> _$$OtherMattersImplToJson(_$OtherMattersImpl instance) =>
       'desiredDate': instance.desiredDate,
       'text': instance.text,
       'isShared': instance.isShared,
+    };
+
+_$CommissionResponseModelImpl _$$CommissionResponseModelImplFromJson(
+        Map<String, dynamic> json) =>
+    _$CommissionResponseModelImpl(
+      commissionId: (json['commissionId'] as num).toInt(),
+      createdDate: json['createdDate'] as String,
+      status: json['status'] as String,
+      commission:
+          CommissionModel.fromJson(json['commission'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$$CommissionResponseModelImplToJson(
+        _$CommissionResponseModelImpl instance) =>
+    <String, dynamic>{
+      'commissionId': instance.commissionId,
+      'createdDate': instance.createdDate,
+      'status': instance.status,
+      'commission': instance.commission,
     };
