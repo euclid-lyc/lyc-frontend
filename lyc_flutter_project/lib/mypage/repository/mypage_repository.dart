@@ -33,7 +33,7 @@ abstract class MypageRepository {
   @Headers({
     'accessToken': 'true',
   })
-  Future<ApiResponse<CoordieResult>> getMyCoorides({
+  Future<ApiResponse<CoordiResult>> getMyCoordies({
     @Path() required int memberId,
     @Queries() required PaginateQuery paginateQuery,
   });
@@ -42,7 +42,7 @@ abstract class MypageRepository {
   @Headers({
     "accessToken": "true",
   })
-  Future<ApiResponse<CoordieResult>> getSavedCoordies({
+  Future<ApiResponse<CoordiResult>> getSavedCoordies({
     @Path() required int memberId,
     @Queries() required PaginateQuery paginateQuery,
   });
@@ -154,7 +154,7 @@ abstract class MypageRepository {
 
   @GET("/members/{memberId}/reviews")
   @Headers({"accessToken": "true"})
-  Future<ApiResponse<CoordieResult>> getReviewList({
+  Future<ApiResponse<CoordiResult>> getReviewList({
     @Path() required int memberId,
     @Queries() required PaginateQuery paginateQuery,
   });

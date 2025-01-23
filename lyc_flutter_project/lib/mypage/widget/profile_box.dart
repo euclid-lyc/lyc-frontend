@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lyc_flutter_project/common/const/typographies.dart';
 import 'package:lyc_flutter_project/common/widget/image_networking.dart';
 import 'package:lyc_flutter_project/mypage/model/profile.dart';
 import 'package:lyc_flutter_project/mypage/screen/follow_list_screen.dart';
@@ -37,7 +38,7 @@ class ProfileBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           // 사진
           Expanded(
@@ -51,24 +52,21 @@ class ProfileBox extends StatelessWidget {
             child: SizedBox(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   // 이름
                   Text(
                     nickName,
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w800,
-                    ),
+                    style: Typos.extraBold18,
                   ),
                   // 아이디
-                  Text("@$loginId"),
-                  const Text(
-                    '\n',
-                    style: TextStyle(
-                      fontSize: 4,
+                  Text(
+                    "@$loginId",
+                    style: Typos.regular12.copyWith(
+                      color: const Color(0xff414141),
                     ),
                   ),
+                  const SizedBox(height: 4.0),
                   // 팔로워
                   GestureDetector(
                     onTap: () {
@@ -84,8 +82,8 @@ class ProfileBox extends StatelessWidget {
                     },
                     child: Text(
                       "팔로워: $follower",
-                      style: const TextStyle(
-                        color: Color(0xff414141),
+                      style: Typos.regular14.copyWith(
+                        color: const Color(0xff414141),
                       ),
                     ),
                   ),
@@ -104,8 +102,8 @@ class ProfileBox extends StatelessWidget {
                     },
                     child: Text(
                       "팔로잉: $following",
-                      style: const TextStyle(
-                        color: Color(0xff414141),
+                      style: Typos.regular14.copyWith(
+                        color: const Color(0xff414141),
                       ),
                     ),
                   ),

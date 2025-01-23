@@ -6,28 +6,24 @@ part 'result.g.dart';
 abstract class BaseResult {}
 
 @JsonSerializable()
-class CoordieResult extends BaseResult {
-  final int memberId;
+class CoordiResult extends BaseResult {
   final List<CoordiPostingPreview> imageList;
 
-  CoordieResult({
-    required this.memberId,
+  CoordiResult({
     required this.imageList,
   });
 
-  factory CoordieResult.fromJson(Map<String, dynamic> json) =>
-      _$CoordieResultFromJson(json);
+  factory CoordiResult.fromJson(Map<String, dynamic> json) =>
+      _$CoordiResultFromJson(json);
 
-  Map<String, dynamic> toJson() => _$CoordieResultToJson(this);
+  Map<String, dynamic> toJson() => _$CoordiResultToJson(this);
 }
 
 @JsonSerializable()
 class ClosetResult extends BaseResult {
-  final int memberId;
   final List<ClosetPostingPreview> clothesList;
 
   ClosetResult({
-    required this.memberId,
     required this.clothesList,
   });
 
