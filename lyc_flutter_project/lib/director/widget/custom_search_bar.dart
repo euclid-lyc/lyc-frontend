@@ -14,11 +14,11 @@ class CustomSearchBar extends StatelessWidget {
       hintStyle: WidgetStateProperty.all(
         const TextStyle(
           color: Colors.grey,
-          fontSize: 14.0,
+          fontSize: 14,
           fontWeight: FontWeight.w400,
         ),
       ),
-      elevation: WidgetStateProperty.all(3.0),
+      elevation: WidgetStateProperty.all(3),
       trailing: [
         IconButton(
           onPressed: () {

@@ -219,12 +219,12 @@ class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
     double relativeDx = localOffset.dx / size.width;
     double relativeDy = localOffset.dy / size.height;
 
-    TextEditingController linkController = TextEditingController();
+    TextEditingController _linkController = TextEditingController();
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('링크를 입력해주세요'),
-        content: TextField(controller: linkController),
+        content: TextField(controller: _linkController),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
@@ -235,7 +235,7 @@ class _AddPostingSettingScreenState extends State<AddPostingSettingScreen> {
               setState(() {
                 widget.coordiProvider.points.add({
                   "offset": Offset(relativeDx, relativeDy),
-                  "link": linkController.text
+                  "link": _linkController.text
                 });
               });
               Navigator.of(context).pop();

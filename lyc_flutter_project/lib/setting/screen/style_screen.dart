@@ -33,6 +33,7 @@ class _StyleScreenState extends State<StyleScreen> {
       body: Consumer<LoginProvider>(
         builder: (context, loginProvider, child) {
           memberId = loginProvider.memberId;
+
           return DefaultPadding(
             bottom: 20.0,
             child: Consumer<SettingProvider>(

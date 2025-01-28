@@ -30,6 +30,7 @@ class ChatScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final GlobalKey<ScaffoldState> key = GlobalKey();
+
     return ChangeNotifierProvider(
       create: (context) => ChatProvider(
         repository: context.read<ChatRepositoryProvider>().repository,
