@@ -10,6 +10,8 @@ import 'package:lyc_flutter_project/common/model/api_response.dart';
 import 'package:lyc_flutter_project/config/secret.dart';
 import 'package:lyc_flutter_project/dm/model/chat_image_model.dart';
 import 'package:lyc_flutter_project/dm/model/chat_message_model.dart';
+import 'package:lyc_flutter_project/dm/model/chat_member_model.dart';
+import 'package:lyc_flutter_project/dm/model/chat_room_model.dart';
 import 'package:lyc_flutter_project/dm/model/make_schedule_model.dart';
 import 'package:lyc_flutter_project/dm/model/message_model.dart';
 import 'package:lyc_flutter_project/dm/model/schedule_model.dart';
@@ -60,9 +62,12 @@ class ChatProvider extends ChangeNotifier {
 
   String? _accessToken;
   List<MessageModel> _messageList = [];
+  List<ChatMemberModel> _memberList = [];
+  int _commissionId = 0;
   bool hasMore = true;
   bool loadingMessages = false;
   StompClient? _client;
+  ChatMemberModel _isMine = ChatMemberModel.defaultValue();
   String initialCursor = '';
   bool loading = false;
 
@@ -73,6 +78,11 @@ class ChatProvider extends ChangeNotifier {
   bool sendImageLoading = false;
 
   List<MessageModel> get messageList => _messageList;
+
+  List<ChatMemberModel> get memberList => _memberList;
+
+  int get commissionId => _commissionId;
+  ChatMemberModel get isMine => _isMine;
 
   XFile? get imageToSend => _imageToSend;
 
@@ -158,7 +168,8 @@ class ChatProvider extends ChangeNotifier {
     }
     try {
       loadingMessages = true;
-      final ApiResponse<ChatMessageListModel> result = await repository.getChatMessages(
+      final ApiResponse<ChatRoomModel> result =
+          await repository.getChatMessages(
         chatId: chatId,
         pageSize: pageSize,
         cursorDateTime: cursorDateTime,
@@ -167,7 +178,9 @@ class ChatProvider extends ChangeNotifier {
           .map(
             (e) => MessageModel(
               content: e.content,
-              type: e.sender == nickname ? BubbleType.receiverBubble : BubbleType.sendBubble,
+              type: e.sender == nickname
+                  ? BubbleType.receiverBubble
+                  : BubbleType.sendBubble,
               image: e.profileImage,
               createdAt: e.createdAt,
               isText: e.isText,
@@ -175,6 +188,23 @@ class ChatProvider extends ChangeNotifier {
           )
           .toList();
       _messageList = [...messages, ..._messageList];
+
+      final members = result.result.chatMembers
+          .map(
+            (e) => ChatMemberModel(
+                nickname: e.nickname,
+                profileImage: e.profileImage,
+                isMine: e.isMine,
+                isDirector: e.isDirector),
+          )
+          .toList();
+      _memberList = [...members, ..._memberList];
+
+      _isMine = _memberList.firstWhere((member) => member.isMine);
+
+      final commissionId = result.result.commissionId;
+      _commissionId = commissionId;
+
     } on DioException {
       debugPrint("[에러] [메시지 목록 불러오기]");
     } finally {
@@ -348,7 +378,8 @@ class ChatProvider extends ChangeNotifier {
   Future<void> makeSchedule() async {
     late final String date;
     if (allDay) {
-      date = "${queryDateTime.year}-${queryDateTime.month.toString().padLeft(2, '0')}-${queryDateTime.day.toString().padLeft(2, '0')}";
+      date =
+          "${queryDateTime.year}-${queryDateTime.month.toString().padLeft(2, '0')}-${queryDateTime.day.toString().padLeft(2, '0')}";
     } else {
       date = queryDateTime.toIso8601String();
     }
@@ -434,7 +465,8 @@ class ChatProvider extends ChangeNotifier {
 
   bool loadingCalendar = false;
 
-  List<ScheduleModel> get schedules => scheduleList.isEmpty ? [] : scheduleList[calendarIndex];
+  List<ScheduleModel> get schedules =>
+      scheduleList.isEmpty ? [] : scheduleList[calendarIndex];
 
   void showPrevMonth() {
     calendarDate = calendarDate.copyWith(month: calendarDate.month - 1);
@@ -468,7 +500,8 @@ class ChatProvider extends ChangeNotifier {
     if (loadingCalendar) return;
 
     loadingCalendar = true;
-    final ApiResponse<ScheduleModelListResponse> result = await repository.getSchedules(
+    final ApiResponse<ScheduleModelListResponse> result =
+        await repository.getSchedules(
       chatId: chatId,
       year: date.year,
       month: date.month,

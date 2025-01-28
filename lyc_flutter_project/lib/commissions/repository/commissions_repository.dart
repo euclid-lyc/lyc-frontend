@@ -1,125 +1,165 @@
-import 'package:dio/dio.dart';
+import 'package:dio/dio.dart' hide Headers;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:lyc_flutter_project/commissions/model/basic_info.dart';
-import 'package:lyc_flutter_project/commissions/model/desired_style.dart';
-import 'package:lyc_flutter_project/commissions/model/other_matters.dart';
+import 'package:lyc_flutter_project/commissions/model/clothes_model.dart';
+import 'package:lyc_flutter_project/commissions/model/commission_terminate_result.dart';
+import 'package:lyc_flutter_project/commissions/model/commission_response.dart';
+import 'package:retrofit/retrofit.dart';
+import '../../common/model/api_response.dart';
 import '../../config/secret.dart';
 
-class CommissionsRepository {
+import '../model/commission_response_model.dart';
+
+
+part 'commissions_repository.g.dart';
+
+class CommissionsRepositoryProvider extends ChangeNotifier {
   final Dio dio;
-  final FlutterSecureStorage storage = const FlutterSecureStorage();
+  late CommissionsRepository commissionsRepository;
 
-  CommissionsRepository({required this.dio});
-
-  Future<void> submitCommission({
-    required String directerId,
-    required BasicInfo basicInfo,
-    required DesiredStyle desiredStyle,
-    required OtherMatters otherMatters,
-    required BuildContext context, // context 추가
-  }) async {
-    try {
-      const url = 'http://$ip/lyc/chats/commissions';
-      // final data = {
-      //   'directerLoginId': directerId,
-      //   'basicInfo': basicInfo,
-      //   'style': desiredStyle,
-      //   'otherMatters': otherMatters
-      // };
-      final data = {
-        'directorLoginId': directerId,
-        'basicInfo': {
-          'height': basicInfo.height,
-          'weight': basicInfo.weight,
-          'topSize': basicInfo.topSize,
-          'bottomSize': basicInfo.bottomSize,
-          'postalCode': basicInfo.postalCode,
-          'address': basicInfo.address,
-          'detailAddress': basicInfo.detailAddress,
-          'text': basicInfo.text,
-          'infoStyle': {
-            'preferredStyleList': basicInfo.infoStyle.preferredStyleList,
-            'nonPreferredStyleList': basicInfo.infoStyle.nonPreferredStyleList
-          },
-          'infoFit': {
-            'preferredFitList': basicInfo.infoFit.preferredFitList,
-            'nonPreferredFitList': basicInfo.infoFit.nonPreferredFitList
-          },
-          'infoMaterial': {
-            'preferredMaterialList':
-                basicInfo.infoMaterial.preferredMaterialList,
-            'nonPreferredMaterialList':
-                basicInfo.infoMaterial.nonPreferredMaterialList
-          },
-          'infoBodyType': {
-            'goodBodyTypeList': basicInfo.infoBodyType.goodBodyTypeList,
-            'badBodyTypeList': basicInfo.infoBodyType.badBodyTypeList
-          }
-        },
-        'style': {
-          'occasion': desiredStyle.occasion,
-          'styleList': desiredStyle.styleList.styleList, // 배열로 변경
-          'fitList': desiredStyle.fitList.fitList, // 배열로 변경
-          'materialList': desiredStyle.materialList.materialList, // 배열로 변경
-          'colorList': desiredStyle.colorList.colorList // 배열로 변경
-        },
-        'otherMatters': {
-          'minPrice': otherMatters.minPrice,
-          'maxPrice': otherMatters.maxPrice,
-          'dateToUse': otherMatters.dateToUse,
-          'desiredDate': otherMatters.desiredDate,
-          'text': otherMatters.text,
-          'isShared': otherMatters.isShared
-        }
-      };
-      final token = await storage.read(key: accessTokenKey);
-
-      final options = Options(headers: {
-        'accept': '*/*',
-        'Authorization': 'Bearer $token',
-        'Content-Type': 'application/json',
-      });
-      debugPrint ('보낸 데이터: $data');
-      debugPrint ("토큰 : $token");
-      final response = await dio.post(url, data: data, options: options);
-
-      if (response.statusCode == 200) {
-        debugPrint ("데이터 전송 성공");
-      } else {
-        debugPrint (response.statusCode as String?);
-        throw Exception('데이터 요청에 실패했습니다');
-      }
-    } catch (e) {
-      if (e is DioException && e.response != null) {
-        final responseData = e.response?.data as Map<String, dynamic>;
-        final message = responseData['message'];
-
-        if (message != null && context.mounted) {
-          _showErrorDialog(context, '데이터 요청 실패', message);
-        }
-      }
-    }
+  CommissionsRepositoryProvider({required this.dio}) {
+    commissionsRepository =
+        CommissionsRepository(dio, baseUrl: "http://$ip/lyc/");
   }
+}
 
-  void _showErrorDialog(BuildContext context, String title, String message) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text(title),
-          content: Text(message),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('확인'),
-            ),
-          ],
-        );
-      },
-    );
-  }
+@RestApi()
+abstract class CommissionsRepository {
+  factory CommissionsRepository(Dio dio, {String baseUrl}) =
+      _CommissionsRepository;
+
+  //저장한 옷 관련 api
+
+  //디렉터가 저장한 옷 목록 불러오기
+  @GET('chats/{chatId}/commissions/saved-clothes')
+  @Headers({
+    'accessToken': 'true',
+  })
+  Future<ApiResponse<List<ClothesModel>>> getClothesList({
+    @Path() required int chatId,
+  });
+
+  //옷 저장하기
+  @POST('chats/{chatId}/commissions/saved-clothes')
+  @Headers({
+    'accessToken': 'true',
+  })
+  Future<ApiResponse<ClothesModel>> saveClothes({
+    @Path() required int chatId,
+    @Body() required ClothesModel clothes,
+  });
+
+  //저장한 옷 삭제하기
+  @DELETE('chats/{chatId}/commissions/saved-clothes/{clothesId}')
+  @Headers({
+    'accessToken': 'true',
+  })
+  Future<ApiResponse<ClothesModel>> deleteClothes({
+    @Path() required int chatId,
+    @Path() required int clothesId
+  });
+
+  //디렉터가 저장한 옷 공유 해제하기
+  @PATCH('chats/{chatId}/commissions/saved-clothes/private')
+  @Headers({
+    'accessToken': 'true',
+  })
+  Future<ApiResponse<ClothesModel>> unshareClothes({
+    @Path() required int chatId,
+  });
+
+  //의뢰서 관련 api
+
+  //의뢰 목록 불러오기
+  @GET('/chats/commissions')
+  @Headers({
+    'accessToken': 'true',
+  })
+  Future<ApiResponse<List<CommissionResponse>>> getCommissionList({
+    @Query("pageSize") required int pageSize,
+    @Query("cursorDateTime") required String dateTime,
+  });
+
+
+  //의뢰서 작성하기
+  @POST('/chats/commissions')
+  @Headers({
+    'accessToken': 'true',
+  })
+  Future<ApiResponse<CommissionResponse>> createCommission({
+    @Body() CommissionModel? commissionModel,
+  });
+
+  //의뢰서 확인하기
+  @GET('/chats/commissions/{commissionId}')
+  @Headers({
+    'accessToken': 'true',
+  })
+  Future<ApiResponse<CommissionResponseModel>> getCommission({
+    @Path() required int commissionId,
+
+  });
+
+  //의뢰서 수정하기
+  @PATCH('/chats/commissions/{commissionId}')
+  @Headers({
+    'accessToken': 'true',
+  })
+  Future<ApiResponse<CommissionResponse>> updateCommission({
+    @Path() required int commissionId,
+    @Body() CommissionModel? commissionModel,
+  });
+
+  //의뢰 승낙하기
+  @PATCH('/chats/commissions/{commissionId}/accept')
+  @Headers({
+    'accessToken': 'true',
+  })
+  Future<ApiResponse<CommissionResponse>> acceptCommission({
+    @Path() required int commissionId,
+  });
+
+  //의뢰 거절하기
+  @PATCH('/chats/commissions/{commissionId}/decline')
+  @Headers({
+    'accessToken': 'true',
+  })
+  Future<ApiResponse<CommissionResponse>> declineCommission({
+    @Path() required int commissionId,
+  });
+
+
+
+  //의뢰 종료 관련 API
+
+  //의뢰 종료 승낙하기
+  @PATCH('/chats/{chatId}/commissions/termination')
+  @Headers({
+    'accessToken': 'true',
+  })
+  Future<ApiResponse<CommissionResponse>> acceptTerminate({
+    @Path() required int chatId,
+  });
+
+  //의뢰 종료 거절하기
+  @PATCH('/chats/{chatId}/commissions/termination-cancel')
+  @Headers({
+    'accessToken': 'true',
+  })
+  Future<ApiResponse<CommissionResponse>> cancelTerminate({
+    @Path() required int chatId,
+  });
+
+
+  //의뢰 종료 요청하기
+  @PATCH('/chats/{chatId}/commissions/termination-request')
+  @Headers({
+    'accessToken': 'true',
+  })
+  Future<ApiResponse<CommissionTerminateResult>> terminateCommission({
+    @Path() required int chatId,
+  });
+
+
+
 }

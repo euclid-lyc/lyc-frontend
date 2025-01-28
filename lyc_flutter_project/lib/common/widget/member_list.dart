@@ -46,7 +46,10 @@ class MemberList extends StatelessWidget {
                     : () => Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => MypageScreen(
-                              extra: {memberId: memberId == context.read<LoginProvider>().memberId},
+                              extra: {
+                                memberId: memberId ==
+                                    context.read<LoginProvider>().memberId
+                              },
                             ),
                           ),
                         ),

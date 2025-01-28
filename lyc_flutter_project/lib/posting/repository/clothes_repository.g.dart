@@ -31,35 +31,31 @@ class _ClothesRepository implements ClothesRepository {
     final _headers = <String, dynamic>{r'accessToken': 'true'};
     _headers.removeWhere((k, v) => v == null);
     final _data = FormData();
-    _data.fields.add(MapEntry(
-      'clothesByImageDTO',
-      clothesByImageDTO,
-    ));
-    _data.files.add(MapEntry(
-      'image',
-      MultipartFile.fromFileSync(
-        image.path,
-        filename: image.path.split(Platform.pathSeparator).last,
+    _data.fields.add(MapEntry('clothesByImageDTO', clothesByImageDTO));
+    _data.files.add(
+      MapEntry(
+        'image',
+        MultipartFile.fromFileSync(
+          image.path,
+          filename: image.path.split(Platform.pathSeparator).last,
+        ),
       ),
-    ));
-    final _options =
-        _setStreamType<ApiResponse<ClothesPostingImageResult>>(Options(
-      method: 'POST',
-      headers: _headers,
-      extra: _extra,
-      contentType: 'multipart/form-data',
-    )
-            .compose(
-              _dio.options,
-              '/images',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(
-                baseUrl: _combineBaseUrls(
-              _dio.options.baseUrl,
-              baseUrl,
-            )));
+    );
+    final _options = _setStreamType<ApiResponse<ClothesPostingImageResult>>(
+      Options(
+        method: 'POST',
+        headers: _headers,
+        extra: _extra,
+        contentType: 'multipart/form-data',
+      )
+          .compose(
+            _dio.options,
+            '/images',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
     late ApiResponse<ClothesPostingImageResult> _value;
     try {
@@ -76,31 +72,25 @@ class _ClothesRepository implements ClothesRepository {
   }
 
   @override
-  Future<ApiResponse<ClothesPostingTextResult>> uploadPostingText(
-      {required ClothesPostingText posting}) async {
+  Future<ApiResponse<ClothesPostingTextResult>> uploadPostingText({
+    required ClothesPostingText posting,
+  }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'accessToken': 'true'};
     _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     _data.addAll(posting.toJson());
-    final _options =
-        _setStreamType<ApiResponse<ClothesPostingTextResult>>(Options(
-      method: 'POST',
-      headers: _headers,
-      extra: _extra,
-    )
-            .compose(
-              _dio.options,
-              '/texts',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(
-                baseUrl: _combineBaseUrls(
-              _dio.options.baseUrl,
-              baseUrl,
-            )));
+    final _options = _setStreamType<ApiResponse<ClothesPostingTextResult>>(
+      Options(method: 'POST', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/texts',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
     late ApiResponse<ClothesPostingTextResult> _value;
     try {
@@ -129,10 +119,7 @@ class _ClothesRepository implements ClothesRepository {
     return requestOptions;
   }
 
-  String _combineBaseUrls(
-    String dioBaseUrl,
-    String? baseUrl,
-  ) {
+  String _combineBaseUrls(String dioBaseUrl, String? baseUrl) {
     if (baseUrl == null || baseUrl.trim().isEmpty) {
       return dioBaseUrl;
     }

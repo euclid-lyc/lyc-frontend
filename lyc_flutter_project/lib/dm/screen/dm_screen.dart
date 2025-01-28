@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:lyc_flutter_project/commissions/screen/commissions_list_screen.dart';
 import 'package:lyc_flutter_project/common/widget/custom_loading.dart';
 import 'package:lyc_flutter_project/common/widget/default_padding.dart';
 import 'package:lyc_flutter_project/common/widget/member_list.dart';
@@ -72,12 +73,20 @@ class _DmScreenState extends State<DmScreen> {
                           ),
                         ),
                         const SizedBox(width: 8),
-                        SizedBox(
-                          width: 30,
-                          height: 30,
-                          child: SvgPicture.asset(
-                            "assets/icon/commission.svg",
-                            fit: BoxFit.contain,
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => const CommissionsListScreen()),
+                            );
+                          },
+                          child: SizedBox(
+                            width: 30,
+                            height: 30,
+                            child: SvgPicture.asset(
+                              "assets/icon/commission.svg",
+                              fit: BoxFit.contain,
+                            ),
                           ),
                         ),
                       ],

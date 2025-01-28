@@ -1,463 +1,162 @@
 import 'package:flutter/material.dart';
-import 'package:lyc_flutter_project/common/widget/normal_appbar.dart';
-import 'package:lyc_flutter_project/auth/join/model/join_info.dart';
-import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:provider/provider.dart';
 import '../../../common/dio/dio.dart';
-import '../../../data/style_list.dart';
+import '../../../common/widget/normal_appbar.dart';
+import '../../../data/app_color.dart';
 import '../../../styles/app_text_style.dart';
-import '../../../widget/Controller.dart';
 import '../Provider/join_provider.dart';
+import '../model/pushset.dart';
 import 'join_screen_7.dart';
 
 class JoinScreen6 extends StatefulWidget {
   const JoinScreen6({super.key});
 
   @override
-  State<JoinScreen6> createState() {
-    return JoinScreenState6();
-  }
+  State<JoinScreen6> createState() => JoinScreenState6();
 }
 
 class JoinScreenState6 extends State<JoinScreen6> {
-  final Controller _controller1_1 = Controller();
-  final Controller _controller1_2 = Controller();
-  final Controller _controller1_3 = Controller();
-  final Controller _controller1_4 = Controller();
-  final Controller _controller2 = Controller();
-  final Controller _controller3 = Controller();
-  final Controller _controller4 = Controller();
-  final Controller _controller5 = Controller();
-  final Controller _controller6 = Controller();
-  final Controller _controller7 = Controller();
-  final Controller _controller8 = Controller();
-  final Controller _controller9 = Controller();
-  final Controller _controller10 = Controller();
+  bool dm = false;
+  bool feed = false;
+  bool schedule = false;
+  bool likeMark = false;
+  bool event = false;
+  bool ad = false;
 
   @override
   Widget build(BuildContext context) {
-    Future<void> registerMember() async {
-      final joinProvider = Provider.of<JoinProvider>(context, listen: false);
-      final verificationCode = await DioProvider().storage.read(key: 'verificationCode');
-      joinProvider.joinInfo = joinProvider.joinInfo.copyWith(
-          height: int.tryParse(_controller1_1.controller.text) ?? 0,
-          weight: int.tryParse(_controller1_2.controller.text) ?? 0,
-          topSize: _controller1_3.controller.text,
-          bottomSize: _controller1_4.controller.text,
-          infoStyle: InfoStyle(preferredStyleList: _controller2.controller.text.split(','), nonPreferredStyleList: _controller3.controller.text.split(',')),
-          infoFit: InfoFit(preferredFitList: _controller6.controller.text.split(','), nonPreferredFitList: _controller7.controller.text.split(',')),
-          infoMaterial: InfoMaterial(preferredMaterialList: _controller4.controller.text.split(','), nonPreferredMaterialList: _controller5.controller.text.split(',')),
-          infoBodyType: InfoBodyType(goodBodyTypeList: _controller8.controller.text.split(','), badBodyTypeList: _controller9.controller.text.split(',')),
-          text: _controller10.controller.text);
-      joinProvider.register(verificationCode: verificationCode);
-    }
+    final joinProvider = Provider.of<JoinProvider>(context, listen: false);
 
-    return ChangeNotifierProvider(
-      create: (_) => MembershipState(),
-      child: Scaffold(
-        backgroundColor: AppColor.lightGrey,
-        appBar: const NormalAppbar(
-          title: "회원가입",
-        ),
-        body: SingleChildScrollView(
+    return Scaffold(
+      backgroundColor: AppColor.lightGrey,
+      appBar: const NormalAppbar(
+        title: "회원가입",
+      ),
+      body: Center(
+        child: SingleChildScrollView(
           child: Container(
-            margin: const EdgeInsets.fromLTRB(30, 0, 31.1, 0),
+            padding: const EdgeInsets.fromLTRB(29, 28.5, 29, 33),
+            width: 296,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(20),
+            ),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 20),
-                  child: buildStyleInfoSection(),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 20),
-                  child: buildBodyTypeSection(),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 20),
-                  child: buildStyleSection(
-                    title: '3-2. 평소 즐겨입는 스타일은 무엇인가요?',
-                    notifier: context.read<MembershipState>()._selected2,
-                    styles: StyleList.styleOptions,
-                    text: '기타 스타일 입력',
-                    controller: _controller2,
+                Container(
+                  margin: const EdgeInsets.only(bottom: 25),
+                  child: const Text(
+                    'Step 6. 사용자 동의',
+                    style: AppTextStyle.littleTitle,
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 20),
-                  child: buildStyleSection(
-                    title: '3-3. 평소 즐겨입지 않는 스타일은 무엇인가요?',
-                    notifier: context.read<MembershipState>()._selected3,
-                    styles: StyleList.styleOptions,
-                    text: '기타 스타일 입력',
-                    controller: _controller3,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 20),
-                  child: buildStyleSection(
-                    title: '3-4. 선호하는 소재를 선택해 주세요.',
-                    notifier: context.read<MembershipState>()._selected4,
-                    styles: StyleList.materialOptions,
-                    text: '기타 소재 입력',
-                    controller: _controller4,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 20),
-                  child: buildStyleSection(
-                    title: '3-5. 선호하지 않는 소재를 선택해 주세요.',
-                    notifier: context.read<MembershipState>()._selected5,
-                    styles: StyleList.materialOptions,
-                    text: '기타 소재 입력',
-                    controller: _controller5,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 20),
-                  child: buildStyleSection(
-                    title: '3-6. 선호하는 핏을 선택해 주세요.',
-                    notifier: context.read<MembershipState>()._selected6,
-                    styles: StyleList.fitOptions,
-                    text: '기타 핏 입력',
-                    controller: _controller6,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 20),
-                  child: buildStyleSection(
-                    title: '3-7. 선호하지 않는 핏을 선택해 주세요.',
-                    notifier: context.read<MembershipState>()._selected7,
-                    styles: StyleList.fitOptions,
-                    text: '기타 핏 입력',
-                    controller: _controller7,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 20),
-                  child: buildStyleSection(
-                    title: '3-8. 강조하고 싶은 신체 부위가 있나요?',
-                    notifier: context.read<MembershipState>()._selected8,
-                    styles: StyleList.bodyParts,
-                    text: '기타 핏 입력',
-                    controller: _controller8,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 20),
-                  child: buildStyleSection(
-                    title: '3-9. 보완하고 싶은 신체 부위가 있나요?',
-                    notifier: context.read<MembershipState>()._selected9,
-                    styles: StyleList.bodyParts,
-                    text: '기타 핏 입력',
-                    controller: _controller9,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 20),
-                  child: buildAdditionalInfo('3-10.추가로 작성하고 싶은 내용이 있나요?'),
-                ),
-                Padding(
-                    padding: const EdgeInsets.only(bottom: 20),
-                    child: TextButton(
-                      onPressed: () async {
-                        try {
-                          await registerMember();
-                          if (context.mounted) {
-                            Navigator.push(
+                const SizedBox(height: 10),
+
+                // Checkbox fields
+                buildCheckField(dm, "DM 수신 동의", (value) {
+                  setState(() {
+                    dm = value ?? false;
+                  });
+                }),
+                buildCheckField(feed, "피드 알림 동의", (value) {
+                  setState(() {
+                    feed = value ?? false;
+                  });
+                }),
+                buildCheckField(schedule, "스케줄 알림 동의", (value) {
+                  setState(() {
+                    schedule = value ?? false;
+                  });
+                }),
+                buildCheckField(likeMark, "좋아요 표시 동의", (value) {
+                  setState(() {
+                    likeMark = value ?? false;
+                  });
+                }),
+                buildCheckField(event, "이벤트 알림 동의", (value) {
+                  setState(() {
+                    event = value ?? false;
+                  });
+                }),
+                buildCheckField(ad, "광고 수신 동의", (value) {
+                  setState(() {
+                    ad = value ?? false;
+                  });
+                }),
+
+                const SizedBox(height: 30.5),
+                Center(
+                  child: TextButton(
+                    onPressed: () async {
+                      joinProvider.pushSet = PushSet(
+                          dm: dm,
+                          feed: feed,
+                          schedule: schedule,
+                          likeMark: likeMark,
+                          event: event,
+                          ad: ad);
+                      try {
+                        final verificationCode = await DioProvider()
+                            .storage
+                            .read(key: 'verificationCode');
+                        joinProvider.register(
+                            verificationCode: verificationCode);
+                        if (context.mounted) {
+                          Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => const JoinScreen7()),
+                            MaterialPageRoute(
+                                builder: (context) => const JoinScreen7()),
                           );
-                          }
-                        } catch (e) {
-                          debugPrint("회원 가입에 실패했습니다: $e");
                         }
-                      },
-                      style: TextButton.styleFrom(
-                        backgroundColor: AppColor.brown, // 색상 변경
-                        minimumSize: const Size(120, 40), // 버튼 크기 설정
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
+                      } catch (e) {
+                        debugPrint("회원 가입에 실패했습니다: $e");
+                      }
+                    },
+                    style: TextButton.styleFrom(
+                      backgroundColor: AppColor.brown,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
                       ),
-                      child: const Text(
-                        '저장',
+                    ),
+                    child: const SizedBox(
+                      width: 230,
+                      child: Text(
+                        '다음',
                         style: AppTextStyle.button,
                         textAlign: TextAlign.center,
                       ),
-                    ))
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget buildAdditionalInfo(String text) {
-    return Container(
-        width: 333,
-        height: 200,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(20),
-        ),
-        padding: const EdgeInsets.fromLTRB(19, 17.5, 19, 12.5),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              text,
-              style: AppTextStyle.littleTitle,
-            ),
-            const SizedBox(height: 10),
-            Expanded(
-                child: TextField(
-              controller: _controller10.controller,
-              maxLines: null,
-              decoration: InputDecoration(
-                contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-                filled: false,
-                hintText: 'ex.종아리가 너무 두꺼운 게 고민이에요.',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
-                  borderSide: BorderSide.none,
-                ),
-              ),
-              style: AppTextStyle.hint.copyWith(color: Colors.black),
-            ))
-          ],
-        ));
-  }
-
-  Widget buildStyleInfoSection() {
-    return Container(
-      margin: const EdgeInsets.only(top: 20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            'Step 4. 사용자 스타일 정보 입력',
-            style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: 10),
-          const Text(
-            '선호하는 스타일을 선택해주세요. 이 정보는 디렉팅에 활용됩니다. 추후 “설정” > “스타일 정보 변경”에서 수정 가능합니다.',
-            style: TextStyle(fontSize: 12, color: Colors.grey),
-          ),
-          TextButton(
-            onPressed: () {},
-            child: const Text(
-              '스타일 정보 나중에 입력하기 >>',
-              style: TextStyle(fontSize: 12, color: Colors.black, decoration: TextDecoration.underline),
-            ),
-          ),
-          const Text(
-            '(스타일 정보를 입력하지 않는 경우 일부 기능이 제한될 수 있습니다)',
-            style: TextStyle(fontSize: 10, color: Colors.grey),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget buildBodyTypeSection() {
-    return Container(
-      width: 333,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-      ),
-      padding: const EdgeInsets.fromLTRB(19, 17.5, 19, 12.5),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Center(
-            child: Padding(
-              padding: EdgeInsets.only(bottom: 10.5),
-              child: Text(
-                '3-1. 본인의 체형을 알려주세요.',
-                style: AppTextStyle.littleTitle,
-              ),
-            ),
-          ),
-          Align(
-            alignment: Alignment.centerRight,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                buildInputField('키', _controller1_1),
-                buildInputField('몸무게', _controller1_2),
-                buildInputField('상의 사이즈', _controller1_3),
-                buildInputField('하의 사이즈', _controller1_4),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget buildInputField(String label, Controller controller) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 7),
-      child: Row(
-        children: [
-          Expanded(
-            flex: 1,
-            child: Align(
-              alignment: Alignment.centerRight,
-              child: Text(
-                label,
-                style: AppTextStyle.hint,
-              ),
-            ),
-          ),
-          const SizedBox(width: 10),
-          Expanded(
-            flex: 2,
-            child: SizedBox(
-              height: 20,
-              child: TextField(
-                controller: controller.controller,
-                decoration: InputDecoration(
-                  contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
-                  fillColor: AppColor.grey,
-                  filled: true,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
-                    borderSide: BorderSide.none,
+                    ),
                   ),
                 ),
-                style: AppTextStyle.hint.copyWith(color: Colors.black),
-                keyboardType: TextInputType.number,
-              ),
+              ],
             ),
           ),
-        ],
+        ),
       ),
     );
   }
 
-  Widget buildStyleSection({
-    required String title,
-    required ValueNotifier<List<String>> notifier,
-    required List<String> styles,
-    required String text,
-    required Controller controller,
-  }) {
-    notifier.addListener(() {
-      controller.controller.text = notifier.value.join(',');
-    });
+  Widget buildCheckField(
+      bool isAgreed, String text, Function(bool?) onChanged) {
     return Container(
-      width: 333,
-      height: 200,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-      ),
-      padding: const EdgeInsets.fromLTRB(15, 20, 14, 12.5),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      alignment: Alignment.topLeft,
+      margin: const EdgeInsets.only(bottom: 20),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Padding(
-              padding: const EdgeInsets.only(bottom: 13.5),
-              child: Text(
-                title,
-                style: AppTextStyle.littleTitle,
-              )),
-          Padding(padding: const EdgeInsets.only(bottom: 12), child: buildStyleOptions(styles: styles, notifier: notifier)),
-          SizedBox(
-            width: 298,
-            height: 30,
-            child: TextField(
-              controller: controller.controller,
-              decoration: InputDecoration(
-                hintText: text,
-                filled: true,
-                fillColor: AppColor.grey,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
-                  borderSide: BorderSide.none,
-                ),
-                contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              ),
-              style: AppTextStyle.hint.copyWith(color: Colors.black),
+          Checkbox(
+            value: isAgreed,
+            onChanged: onChanged,
+          ),
+          Expanded(
+            child: Text(
+              text,
+              style: AppTextStyle.labelTextStyle.copyWith(fontSize: 14),
             ),
           ),
         ],
       ),
     );
   }
-
-  Widget buildStyleOptions({
-    required List<String> styles,
-    required ValueNotifier<List<String>> notifier,
-  }) {
-    final List<String> styles1 = styles.sublist(0, 4);
-    final List<String> styles2 = styles.sublist(4);
-
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: styles1.map((style) => buildStyleButton(style, notifier)).toList(),
-        ),
-        const SizedBox(height: 6),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: styles2.map((style) => buildStyleButton(style, notifier)).toList(),
-        ),
-      ],
-    );
-  }
-
-  Widget buildStyleButton(String style, ValueNotifier<List<String>> notifier) {
-    return ValueListenableBuilder<List<String>>(
-      valueListenable: notifier,
-      builder: (context, selectedStyles, child) {
-        final isSelected = selectedStyles.contains(style);
-        return Expanded(
-          child: GestureDetector(
-            onTap: () {
-              final updatedStyles = List<String>.from(selectedStyles);
-              if (isSelected) {
-                updatedStyles.remove(style);
-              } else {
-                updatedStyles.add(style);
-              }
-              notifier.value = updatedStyles;
-            },
-            child: Container(
-              margin: const EdgeInsets.only(right: 3),
-              decoration: BoxDecoration(
-                color: isSelected ? AppColor.brown : AppColor.lightGrey,
-                borderRadius: BorderRadius.circular(20),
-              ),
-              padding: const EdgeInsets.symmetric(vertical: 7),
-              child: Center(
-                child: Text(
-                  style,
-                  style: isSelected
-                      ? const TextStyle(fontWeight: FontWeight.w500, fontSize: 14, color: AppColor.lightGrey)
-                      : const TextStyle(fontWeight: FontWeight.w500, fontSize: 14, color: Colors.black),
-                ),
-              ),
-            ),
-          ),
-        );
-      },
-    );
-  }
-}
-
-class MembershipState extends ChangeNotifier {
-  final ValueNotifier<List<String>> _selected2 = ValueNotifier<List<String>>([]);
-  final ValueNotifier<List<String>> _selected3 = ValueNotifier<List<String>>([]);
-  final ValueNotifier<List<String>> _selected4 = ValueNotifier<List<String>>([]);
-  final ValueNotifier<List<String>> _selected5 = ValueNotifier<List<String>>([]);
-  final ValueNotifier<List<String>> _selected6 = ValueNotifier<List<String>>([]);
-  final ValueNotifier<List<String>> _selected7 = ValueNotifier<List<String>>([]);
-  final ValueNotifier<List<String>> _selected8 = ValueNotifier<List<String>>([]);
-  final ValueNotifier<List<String>> _selected9 = ValueNotifier<List<String>>([]);
 }

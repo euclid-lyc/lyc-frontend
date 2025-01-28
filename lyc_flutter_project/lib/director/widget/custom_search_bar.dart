@@ -9,16 +9,16 @@ class CustomSearchBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return SearchBar(
       onChanged: onChanged,
-      backgroundColor: MaterialStateProperty.all(Colors.white),
+      backgroundColor: WidgetStateProperty.all(Colors.white),
       hintText: "검색어를 입력하세요",
-      hintStyle: MaterialStateProperty.all(
+      hintStyle: WidgetStateProperty.all(
         const TextStyle(
           color: Colors.grey,
-          fontSize: 14.0,
+          fontSize: 14,
           fontWeight: FontWeight.w400,
         ),
       ),
-      elevation: MaterialStateProperty.all(3.0),
+      elevation: WidgetStateProperty.all(3),
       trailing: [
         IconButton(
           onPressed: () {

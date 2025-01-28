@@ -3,10 +3,8 @@ import 'package:lyc_flutter_project/auth/find_id/screens/find_id_screen_1.dart';
 import 'package:lyc_flutter_project/auth/find_id/screens/find_id_screen_2.dart';
 import 'package:lyc_flutter_project/auth/find_id/screens/find_id_screen_3.dart';
 import 'package:lyc_flutter_project/auth/join/screens/login_screen.dart';
-import 'package:lyc_flutter_project/commissions/screens/desired_style_screen.dart';
-import 'package:lyc_flutter_project/commissions/screens/other_matters_screen.dart';
-import 'package:lyc_flutter_project/commissions/screens/primary_info_screen.dart';
-import 'package:lyc_flutter_project/commissions/screens/submission_success_screen.dart';
+import 'package:lyc_flutter_project/commissions/screen/desired_style_screen.dart';
+import 'package:lyc_flutter_project/commissions/screen/submission_success_screen.dart';
 import 'package:lyc_flutter_project/common/screen/splash_screen.dart';
 import 'package:lyc_flutter_project/director/screen/director_search_screen.dart';
 import 'package:lyc_flutter_project/dm/provider/chat_provider.dart';
@@ -18,6 +16,7 @@ import 'package:lyc_flutter_project/home/screen/home_screen.dart';
 import 'package:lyc_flutter_project/mypage/screen/mypage_screen.dart';
 import 'package:lyc_flutter_project/routes/routes.dart';
 import 'package:lyc_flutter_project/setting/screen/setting_screen.dart';
+import '../commissions/screen/other_matters_screen.dart';
 
 final router = GoRouter(
   initialLocation: Routes.splash.name,
@@ -100,27 +99,27 @@ final router = GoRouter(
         child: SettingScreen(),
       ),
     ),
-    GoRoute(
-      path: Routes.primaryInfo.path,
-      name: Routes.primaryInfo.name,
-      pageBuilder: (context, state) => const NoTransitionPage(
-        child: PrimaryInfoScreen(),
-      ),
-    ),
-    GoRoute(
-      path: Routes.desiredStyle.path,
-      name: Routes.desiredStyle.name,
-      pageBuilder: (context, state) => const NoTransitionPage(
-        child: DesiredStyleScreen(),
-      ),
-    ),
-    GoRoute(
-      path: Routes.otherMatters.path,
-      name: Routes.otherMatters.name,
-      pageBuilder: (context, state) => const NoTransitionPage(
-        child: OtherMattersScreen(),
-      ),
-    ),
+    // GoRoute(
+      // path: Routes.basicInfo.path,
+      // name: Routes.basicInfo.name,
+      // pageBuilder: (context, state) => const NoTransitionPage(
+      //   child: BasicInfoScreen(directorId: d,),
+      // ),
+    // ),
+    // GoRoute(
+    //   path: Routes.desiredStyle.path,
+    //   name: Routes.desiredStyle.name,
+    //   pageBuilder: (context, state) => const NoTransitionPage(
+    //     child: DesiredStyleScreen(),
+    //   ),
+    // ),
+    // GoRoute(
+    //   path: Routes.otherMatters.path,
+    //   name: Routes.otherMatters.name,
+    //   pageBuilder: (context, state) => const NoTransitionPage(
+    //     child: OtherMattersScreen(isDirector: null,),
+    //   ),
+    // ),
     GoRoute(
       path: Routes.submissionSuccess.path,
       name: Routes.submissionSuccess.name,

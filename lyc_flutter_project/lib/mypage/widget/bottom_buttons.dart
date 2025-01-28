@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:lyc_flutter_project/commissions/screen/tap_view_screen.dart';
+
 import 'package:lyc_flutter_project/mypage/screen/attendance_screen.dart';
 import 'package:lyc_flutter_project/mypage/screen/review_home_screen.dart';
 import 'package:lyc_flutter_project/mypage/screen/stamp_screen.dart';
 import 'package:lyc_flutter_project/mypage/widget/custom_button_in_profile_box.dart';
 
-import '../../routes/routes.dart';
 
 class BottomButtons extends StatelessWidget {
   final int memberId;
@@ -69,8 +69,21 @@ class BottomButtons extends StatelessWidget {
             memberId: memberId,
             text: '의뢰하기',
             onPressed: () async {
-          context.goNamed(Routes.otherMatters.name);
-        }
+              // context.goNamed(Routes.BasicInfo.name);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => TapViewScreen(
+                      directorId: memberId,
+                      // memberId:
+                      //     Provider.of<LoginProvider>(context, listen: false)
+                      //         .memberId
+                    isDirector: false,
+                  //여기도... true/false값을 이렇게 넣어도 되나
+                  title: "의뢰서 작성하기", isUpdate: false,)
+                ),
+              );
+            },
           ),
           const SizedBox(width: 15),
           CustomButtonInProfileBox(

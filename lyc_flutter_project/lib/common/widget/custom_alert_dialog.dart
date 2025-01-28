@@ -3,10 +3,11 @@ import 'package:lyc_flutter_project/data/app_color.dart';
 
 class CustomAlertDialog extends StatelessWidget {
   final String title;
-  final String leftButtonLabel;
-  final String rightButtonLabel;
-  final VoidCallback leftButtonPressed;
-  final VoidCallback rightButtonPressed;
+  final String? message;
+  final String? leftButtonLabel;
+  final String? rightButtonLabel;
+  final VoidCallback? leftButtonPressed;
+  final VoidCallback? rightButtonPressed;
   final Color backgroundColor;
   final Color titleColor;
   final Color leftBackgroundColor;
@@ -17,10 +18,11 @@ class CustomAlertDialog extends StatelessWidget {
   const CustomAlertDialog({
     super.key,
     required this.title,
-    required this.leftButtonLabel,
-    required this.rightButtonLabel,
-    required this.leftButtonPressed,
-    required this.rightButtonPressed,
+    this.message,
+    this.leftButtonLabel,
+    this.rightButtonLabel,
+    this.leftButtonPressed,
+    this.rightButtonPressed,
     this.backgroundColor = Colors.white,
     this.titleColor = Colors.black,
     this.leftBackgroundColor = AppColor.grey,
@@ -51,24 +53,37 @@ class CustomAlertDialog extends StatelessWidget {
                 fontSize: 18.0,
               ),
             ),
+            if (message != null)
+            const SizedBox(height: 10.0),
+            if (message != null)
+              Text(
+              message!,  // message 추가
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.w400,
+                fontSize: 14.0,
+              ),
+            ),
             const SizedBox(height: 30.0),
             Row(
               children: [
+                if (leftButtonLabel != null)
                 Expanded(
                   flex: 3,
                   child: _CustomTextButton(
-                    label: leftButtonLabel,
-                    onPressed: leftButtonPressed,
+                    label: leftButtonLabel!,
+                    onPressed: leftButtonPressed!,
                     backgroundColor: leftBackgroundColor,
                     foregroundColor: leftForegroundColor,
                   ),
                 ),
                 const Expanded(child: SizedBox()),
+                if (rightButtonLabel != null)
                 Expanded(
                   flex: 3,
                   child: _CustomTextButton(
-                    label: rightButtonLabel,
-                    onPressed: rightButtonPressed,
+                    label: rightButtonLabel!,
+                    onPressed: rightButtonPressed!,
                     backgroundColor: rightBackgroundColor,
                     foregroundColor: rightForegroundColor,
                   ),

@@ -30,7 +30,7 @@ class MypageScreen extends StatefulWidget {
 
 class _MypageScreenState extends State<MypageScreen> {
   late MypageProvider provider;
-  late int memberId;  
+  late int memberId;
   late bool isLoginUser;
 
   @override

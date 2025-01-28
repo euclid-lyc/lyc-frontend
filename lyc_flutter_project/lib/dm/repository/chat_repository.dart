@@ -7,6 +7,7 @@ import 'package:lyc_flutter_project/config/secret.dart';
 import 'package:lyc_flutter_project/dm/model/chat_image_model.dart';
 import 'package:lyc_flutter_project/dm/model/chat_message_model.dart';
 import 'package:lyc_flutter_project/dm/model/chat_model.dart';
+import 'package:lyc_flutter_project/dm/model/chat_room_model.dart';
 import 'package:lyc_flutter_project/dm/model/make_schedule_model.dart';
 import 'package:lyc_flutter_project/dm/model/schedule_model_response.dart';
 import 'package:retrofit/retrofit.dart';
@@ -38,7 +39,7 @@ abstract class ChatRepository {
 
   @PATCH("/{chatId}")
   @Headers({"accessToken": "true"})
-  Future<ApiResponse<ChatMessageListModel>> getChatMessages({
+  Future<ApiResponse<ChatRoomModel>> getChatMessages({
     @Path("chatId") required int chatId,
     @Query("pageSize") required int pageSize,
     @Query("cursorDateTime") required String cursorDateTime,

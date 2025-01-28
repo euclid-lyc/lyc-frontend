@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:lyc_flutter_project/commissions/screen/commissions_screen.dart';
 import 'package:lyc_flutter_project/common/const/assets.dart';
 import 'package:lyc_flutter_project/dm/provider/chat_provider.dart';
 import 'package:lyc_flutter_project/dm/widget/chat_add_schedule_bottom_sheet.dart';
@@ -70,7 +71,14 @@ class ChatBottomSheet extends StatelessWidget {
           ChatPlusButton(
             label: '의뢰',
             asset: Assets.commissionButton,
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) =>
+                    CommissionsScreen(
+                     provider: provider)),
+              );
+            },
           ),
         ],
       ),

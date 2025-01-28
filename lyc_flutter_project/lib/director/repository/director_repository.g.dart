@@ -35,22 +35,16 @@ class _DirectorRepository implements DirectorRepository {
     final _headers = <String, dynamic>{r'accessToken': 'true'};
     _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<ApiResponse<DirectorRankingList>>(Options(
-      method: 'GET',
-      headers: _headers,
-      extra: _extra,
-    )
-        .compose(
-          _dio.options,
-          '',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(
-            baseUrl: _combineBaseUrls(
-          _dio.options.baseUrl,
-          baseUrl,
-        )));
+    final _options = _setStreamType<ApiResponse<DirectorRankingList>>(
+      Options(method: 'GET', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
     late ApiResponse<DirectorRankingList> _value;
     try {
@@ -78,10 +72,7 @@ class _DirectorRepository implements DirectorRepository {
     return requestOptions;
   }
 
-  String _combineBaseUrls(
-    String dioBaseUrl,
-    String? baseUrl,
-  ) {
+  String _combineBaseUrls(String dioBaseUrl, String? baseUrl) {
     if (baseUrl == null || baseUrl.trim().isEmpty) {
       return dioBaseUrl;
     }

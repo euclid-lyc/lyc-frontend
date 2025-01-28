@@ -26,7 +26,6 @@ dependencies:
   path_provider: ^2.0.13
   json_annotation: ^4.9.0
   freezed_annotation: ^2.3.0
-
   retrofit:
   logger: any
   dio: ^5.6.0
@@ -41,17 +40,16 @@ dependencies:
 
   path: any
   http_parser: any
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
   flutter_lints: ^4.0.0
-
   build_runner: any
   json_serializable: ^6.6.0
-  retrofit_generator: ^8.2.1
+  retrofit_generator: ^9.1.7
   freezed: ^2.3.0
-
+  analyzer: ^7.1.0
 flutter:
   assets:
     - assets/

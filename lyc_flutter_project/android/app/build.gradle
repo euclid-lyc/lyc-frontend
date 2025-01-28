@@ -32,6 +32,9 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
     tasks.withType(JavaCompile) {
         options.compilerArgs << "-Xlint:deprecation"
     }
@@ -53,6 +56,19 @@ android {
             signingConfig = signingConfigs.debug
         }
     }
+    buildscript {
+        repositories {
+            google()
+            mavenCentral()
+        }
+        dependencies {
+            classpath("com.android.tools.build:gradle:8.0.2")
+
+        }
+    }
+
+
+
 }
 
 flutter {
