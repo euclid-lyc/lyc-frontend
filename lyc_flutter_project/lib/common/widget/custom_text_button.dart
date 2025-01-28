@@ -10,7 +10,6 @@ class CustomTextButton extends StatelessWidget {
   final Color backgroundColor;
   final Color overlayColor;
   final VoidCallback? onPressed;
-  final BuildContext? context;
 
   const CustomTextButton({
     super.key,
@@ -21,7 +20,7 @@ class CustomTextButton extends StatelessWidget {
     this.textColor = Colors.white,
     this.backgroundColor = AppColor.brown,
     this.overlayColor = Colors.brown,
-    this.onPressed, this.context,
+    this.onPressed
   });
 
   @override

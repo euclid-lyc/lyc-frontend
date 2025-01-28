@@ -80,7 +80,6 @@ class _CommissionsListScreenState extends State<CommissionsListScreen> {
                               label: "의뢰서 확인하기",
                               textColor: Colors.black,
                               backgroundColor: AppColor.grey,
-                              context: context,
                               onPressed: () async {
                                 final navigator = Navigator.of(context);
                                 final scaffoldMessenger =
