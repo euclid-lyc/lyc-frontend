@@ -78,6 +78,7 @@ Future<void> main() async {
         ChangeNotifierProvider(
           create: (context) => HomeProvider(
             feedRepositoryProvider: context.read<FeedRepositoryProvider>(),
+            directorRepository: context.read<DirectorRepositoryProvider>().repository,
           ),
         ),
         ChangeNotifierProxyProvider<MypageRepositoryProvider,
