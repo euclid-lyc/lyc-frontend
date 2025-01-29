@@ -43,13 +43,13 @@ class FindPasswordScreen1 extends StatelessWidget {
                       margin: const EdgeInsets.only(bottom: 25),
                       alignment: Alignment.topLeft,
                       child: const Text(
-                        'Step 1. 인증수단 선택',
+                        'Step 1. 이메일 입력',
                         style: AppTextStyle.littleTitle,
                       ),
                     ),
-                    buildInputField('이름', '이름을 입력해주세요', AppTextStyle.labelTextStyle, AppTextStyle.hint, _nameController.controller),
-                    buildInputField('아이디', '아이디를 입력해주세요', AppTextStyle.labelTextStyle, AppTextStyle.hint, _loginIdController.controller),
-                    buildInputField('가입한 이메일로 찾기', '이메일을 입력해주세요', AppTextStyle.labelTextStyle, AppTextStyle.hint, _emailController.controller),
+                    buildInputField('이름', '이름을 입력해주세요', AppTextStyle.labelTextStyle, AppTextStyle.hint, _nameController.controller,TextInputType.text),
+                    buildInputField('아이디', '아이디를 입력해주세요', AppTextStyle.labelTextStyle, AppTextStyle.hint, _loginIdController.controller,TextInputType.text),
+                    buildInputField('가입한 이메일', '이메일을 입력해주세요', AppTextStyle.labelTextStyle, AppTextStyle.hint, _emailController.controller,TextInputType.emailAddress),
                     Padding(
                       padding: const EdgeInsets.only(top: 30.5), // 위아래 여백 설정
                       child: TextButton(
@@ -157,11 +157,13 @@ class FindPasswordScreen1 extends StatelessWidget {
     );
   }
 
-  Widget buildInputField(String label, String hint, TextStyle labelTextStyle, TextStyle hintTextStyle, TextEditingController controller) {
+  Widget buildInputField(String label, String hint, TextStyle labelTextStyle,
+      TextStyle hintTextStyle, TextEditingController controller,TextInputType tetInputType) {
     return Container(
       margin: const EdgeInsets.only(bottom: 8.5),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
             margin: const EdgeInsets.only(bottom: 4.5),
@@ -172,30 +174,30 @@ class FindPasswordScreen1 extends StatelessWidget {
             ),
           ),
           Container(
-            width: double.infinity, // 너비를 입력 필드에 맞게 설정
-            height: 40, // 높이 설정
+            width: double.infinity,
+            height: 40,
             decoration: BoxDecoration(
               color: AppColor.lightGrey,
               borderRadius: BorderRadius.circular(10),
             ),
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(18, 0, 18, 15), // 좌우 및 상하 여백 설정
+              padding: const EdgeInsets.fromLTRB(18, 12, 18, 12),
               child: TextField(
-                  textAlignVertical: TextAlignVertical.center,
-                  // 텍스트 수직 정렬
-                  textAlign: TextAlign.start,
-                  // 텍스트 수평 정렬
-                  decoration: InputDecoration(
-                    hintText: hint,
-                    hintStyle: hintTextStyle,
-                    border: InputBorder.none,
-                  ),
-                  keyboardType: TextInputType.text,
-                  controller: controller),
+                controller: controller,
+                textAlignVertical: TextAlignVertical.center,
+                textAlign: TextAlign.start,
+                decoration: InputDecoration(
+                  hintText: hint,
+                  hintStyle: hintTextStyle,
+                  border: InputBorder.none,
+                ),
+                keyboardType: tetInputType,
+              ),
             ),
           ),
         ],
       ),
     );
   }
+
 }

@@ -42,7 +42,7 @@ class FindIdScreen1 extends StatelessWidget {
                       margin: const EdgeInsets.only(bottom: 25),
                       alignment: Alignment.topLeft,
                       child: const Text(
-                        'Step 1. 인증수단 선택',
+                        'Step 1. 이메일 입력',
                         style: AppTextStyle.littleTitle,
                       ),
                     ),
@@ -51,15 +51,16 @@ class FindIdScreen1 extends StatelessWidget {
                         '이름을 입력해주세요',
                         AppTextStyle.labelTextStyle,
                         AppTextStyle.hint,
-                       _nameController.controller),
+                       _nameController.controller,
+                    TextInputType.text),
                     buildInputField(
-                        '가입한 이메일로 찾기',
+                        '가입한 이메일',
                         '이메일을 입력해주세요',
                         AppTextStyle.labelTextStyle,
                         AppTextStyle.hint,
-                       _emailController.controller),
+                       _emailController.controller,TextInputType.emailAddress),
                     Padding(
-                      padding: const EdgeInsets.only(top: 30.5), // 위아래 여백 설정
+                      padding: const EdgeInsets.only(top: 32),
                       child: TextButton(
                         onPressed: ()async {
                           final info = Info(
@@ -161,7 +162,7 @@ class FindIdScreen1 extends StatelessWidget {
   }
 
   Widget buildInputField(String label, String hint, TextStyle labelTextStyle,
-      TextStyle hintTextStyle, TextEditingController controller) {
+      TextStyle hintTextStyle, TextEditingController controller,TextInputType tetInputType) {
     return Container(
       margin: const EdgeInsets.only(bottom: 8.5),
       child: Column(
@@ -177,24 +178,24 @@ class FindIdScreen1 extends StatelessWidget {
               ),
             ),
           Container(
-            width: double.infinity, // 너비를 입력 필드에 맞게 설정
-            height: 40, // 높이 설정
+            width: double.infinity,
+            height: 40,
             decoration: BoxDecoration(
               color: AppColor.lightGrey,
               borderRadius: BorderRadius.circular(10),
             ),
             child: Padding(
-               padding: const EdgeInsets.fromLTRB(18, 12, 18, 12), // 좌우 및 상하 여백 설정
+               padding: const EdgeInsets.fromLTRB(18, 12, 18, 12),
               child: TextField(
                 controller: controller,
-                textAlignVertical: TextAlignVertical.center, // 텍스트 수직 정렬
-                textAlign: TextAlign.start, // 텍스트 수평 정렬
+                textAlignVertical: TextAlignVertical.center,
+                textAlign: TextAlign.start,
                 decoration: InputDecoration(
                   hintText: hint,
                   hintStyle: hintTextStyle,
                   border: InputBorder.none,
                 ),
-                keyboardType: TextInputType.text,
+                keyboardType: tetInputType,
               ),
             ),
           ),
