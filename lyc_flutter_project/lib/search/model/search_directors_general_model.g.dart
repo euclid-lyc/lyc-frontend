@@ -27,6 +27,7 @@ SearchDirectorsGeneralModel _$SearchDirectorsGeneralModelFromJson(
       memberId: (json['memberId'] as num).toInt(),
       loginId: json['loginId'] as String,
       profileImage: json['profileImage'] as String,
+      introduction: json['introduction'] as String,
       nickname: json['nickname'] as String,
     );
 
@@ -36,5 +37,6 @@ Map<String, dynamic> _$SearchDirectorsGeneralModelToJson(
       'memberId': instance.memberId,
       'loginId': instance.loginId,
       'profileImage': instance.profileImage,
+      'introduction': instance.introduction,
       'nickname': instance.nickname,
     };

@@ -19,12 +19,14 @@ class SearchDirectorsGeneralModel {
   final int memberId;
   final String loginId;
   final String profileImage;
+  final String introduction;
   final String nickname;
 
   const SearchDirectorsGeneralModel({
     required this.memberId,
     required this.loginId,
     required this.profileImage,
+    required this.introduction,
     required this.nickname,
   });
 
