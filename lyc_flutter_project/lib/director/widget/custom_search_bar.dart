@@ -3,27 +3,31 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class CustomSearchBar extends StatelessWidget {
   final ValueChanged<String> onChanged;
-  const CustomSearchBar({super.key, required this.onChanged});
+  final VoidCallback? onPressed;
+
+  const CustomSearchBar({
+    super.key,
+    required this.onChanged,
+    this.onPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
     return SearchBar(
       onChanged: onChanged,
-      backgroundColor: MaterialStateProperty.all(Colors.white),
+      backgroundColor: WidgetStateProperty.all(Colors.white),
       hintText: "검색어를 입력하세요",
-      hintStyle: MaterialStateProperty.all(
+      hintStyle: WidgetStateProperty.all(
         const TextStyle(
           color: Colors.grey,
           fontSize: 14.0,
           fontWeight: FontWeight.w400,
         ),
       ),
-      elevation: MaterialStateProperty.all(3.0),
+      elevation: WidgetStateProperty.all(3.0),
       trailing: [
         IconButton(
-          onPressed: () {
-
-          },
+          onPressed: onPressed,
           icon: SvgPicture.asset(
             "assets/icon/search.svg",
             colorFilter: ColorFilter.mode(
