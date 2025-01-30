@@ -2,12 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:lyc_flutter_project/common/model/api_response.dart';
 import 'package:lyc_flutter_project/director/model/director_ranking.dart';
 import 'package:lyc_flutter_project/director/repository/director_repository.dart';
+import 'package:lyc_flutter_project/search/repository/search_repository.dart';
 
 class DirectorProvider extends ChangeNotifier {
-  final DirectorRepositoryProvider repositoryProvider;
+  final DirectorRepository directorRepository;
+  final SearchRepository searchRepository;
 
   DirectorProvider({
-    required this.repositoryProvider,
+    required this.directorRepository,
+    required this.searchRepository,
   }) {
     getRanking();
   }
@@ -39,7 +42,7 @@ class DirectorProvider extends ChangeNotifier {
     try {
       _loading = true;
       notifyListeners();
-      final resp = await repositoryProvider.repository.getDirectorRanking(
+      final resp = await directorRepository.getDirectorRanking(
         pageSize: pageSize,
         followerCount: followerCount,
       );
