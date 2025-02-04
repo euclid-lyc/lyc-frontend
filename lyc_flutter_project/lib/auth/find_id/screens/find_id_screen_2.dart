@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import '../../../styles/app_text_style.dart';
 import '../../../widget/Controller.dart';
 import '../Provider/find_id_provider.dart';
-import '../Provider/send_email_provider.dart';
 import 'find_id_screen_1.dart';
 import 'find_id_screen_3.dart';
 
@@ -16,7 +15,6 @@ class FindIdScreen2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final sendEmailProvider = Provider.of<SendEmailProvider>(context, listen: false);
     final findIdProvider = Provider.of<FindIdProvider>(context, listen: false);
 
     return Scaffold(
@@ -27,7 +25,7 @@ class FindIdScreen2 extends StatelessWidget {
         children: [
           Expanded(
             flex: 1,
-            child: Container(), // 빈 컨테이너로 여백 제공
+            child: Container(),
           ),
           Center(
             child: Container(
@@ -113,7 +111,6 @@ class FindIdScreen2 extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      // '이전' 버튼
                       TextButton(
                         onPressed: () {
                           Navigator.push(
@@ -138,11 +135,10 @@ class FindIdScreen2 extends StatelessWidget {
                           ),
                         ),
                       ),
-                      // '다음' 버튼
                       TextButton(
                         onPressed: () async {
                           try {
-                            await findIdProvider.sendVerification(name: sendEmailProvider.name, email: sendEmailProvider.email, verificationCode: _codeController.controller.text);
+                            await findIdProvider.checkVerificationCode(_codeController.controller.text);
                             final String loginId = await findIdProvider.storageService.read('loginId') ?? '';
                             if (context.mounted) {
                               Navigator.push(

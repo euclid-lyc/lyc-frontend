@@ -1,77 +1,98 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:lyc_flutter_project/auth/find_id/model/info.dart';
+import 'package:lyc_flutter_project/auth/find_id/repository/find_id_repository.dart';
 import '../../../common/dio/dio.dart';
 import '../../service/storage_service.dart';
 import '../model/verification_code.dart';
-import 'send_email_provider.dart';
 import 'package:lyc_flutter_project/config/secret.dart';
 
 class FindIdProvider extends ChangeNotifier {
   final DioProvider dioProvider;
-  late final Dio dio;
+  final Dio dio;
   final StorageService storageService;
-  final SendEmailProvider sendEmailProvider;
+  final FindIdRepositoryProvider findIdRepositoryProvider;
+  final storage = DioProvider().storage;
 
-  bool _isLoading = false; // 로딩 상태
+  String? _name;
+  String? _email;
+  bool _isLoading = false;
   String? _errorMessage;
 
-  FindIdProvider(this.dioProvider, this.sendEmailProvider, this.storageService) {
-    dio = dioProvider.dio;
-  }
+  FindIdProvider({
+    required this.dioProvider,
+    required this.storageService,
+    required this.dio,
+    required this.findIdRepositoryProvider,
+  });
+
 
   bool get isLoading => _isLoading;
+
   String? get errorMessage => _errorMessage;
 
-  // 인증 코드 전송
-  Future<void> sendVerification({
-    required String name,
-    required String email,
-    required String verificationCode,
-  }) async {
-    const url = 'http://$ip/lyc/auths/find-id';
+  String get name => _name ?? '';
 
-    _isLoading = true; // 로딩 시작
-    notifyListeners(); // UI 업데이트
+  String get email => _email ?? '';
+  set name(String value) => _name = value;
+  set email(String value) => _email = value;
+
+
+  Future<void> getVerificationCode() async {
+    _isLoading = true;
+    notifyListeners();
 
     try {
+      final resp = await findIdRepositoryProvider.findIdRepository
+          .getVerificationCode(info: Info(name: name,email: email));
 
+      if (resp.isSuccess) {
+        final tempToken = resp.headers?[tempTokenKey].toString() ?? '';
+        await storageService.write(tempTokenKey, tempToken);
+      } else {
+        throw Exception('Verification code request failed: ${resp.code}');
+      }
+    } on DioException catch (e) {
+      debugPrint('DioException: ${e.message}');
+      if (e.response != null) {
+        debugPrint('Response data: ${e.response?.data}');
+      }
+      throw Exception('API 요청 실패: ${e.message}');
+    } catch (e) {
+      debugPrint('Error: ${e.toString()}');
+      throw Exception('API 요청 실패: ${e.toString()}');
+    }
+  }
+
+  // 인증 코드 전송
+  Future<void> checkVerificationCode(String code) async {
+    _isLoading = true;
+    notifyListeners();
+
+    try {
       final tempToken = await storageService.read(tempTokenKey);
 
       if (tempToken == null) {
-        _errorMessage = '토큰이 없습니다.';
-        debugPrint(_errorMessage);
+        debugPrint('토큰이 존재하지 않습니다.');
         throw Exception(_errorMessage);
       }
-
-
-      final options = Options(headers: {
-        'accept': '*/*',
-        'Authorization': "Bearer $tempToken",
-        'Content-Type': 'application/json',
-      });
 
       final verificationCodeRequest = VerificationCode(
         name: name,
         email: email,
-        verificationCode: verificationCode,
+        verificationCode:code,
       );
 
-      debugPrint('Request Body: ${verificationCodeRequest.toJson()}');
-      debugPrint("요청 헤더: ${options.headers}");
-      final response = await dio.post(
-        url,
-        data: verificationCodeRequest.toJson(),
-        options: options,
-      );
+      final resp = await findIdRepositoryProvider.findIdRepository
+          .checkVerificationCode(
+              authHeader: "Bearer $tempToken",
+              verificationCode: verificationCodeRequest);
 
-      if (response.statusCode == 200) {
-
-      final responseBody = response.data;
-      String loginId = responseBody["result"]["loginId"];
-      await storageService.write('loginId', loginId);
-
+      if (resp.isSuccess) {
+        await storageService.write('loginId', resp.result.loginId);
       } else {
-        _errorMessage = 'Verification failed with status: ${response.statusCode}';
+        _errorMessage =
+            'Verification failed with status: ${resp.code}';
         throw Exception(_errorMessage);
       }
     } on DioException catch (e) {
@@ -87,7 +108,6 @@ class FindIdProvider extends ChangeNotifier {
       throw Exception('API 요청 실패: ${e.toString()}');
     } finally {
       _isLoading = false;
-      notifyListeners(); // UI 업데이트
     }
   }
 }

@@ -21,12 +21,12 @@ import 'package:lyc_flutter_project/setting/provider/setting_provider.dart';
 import 'package:lyc_flutter_project/setting/repository/setting_repository.dart';
 import 'package:provider/provider.dart';
 import 'package:lyc_flutter_project/auth/find_pw/provider/find_pw_provider.dart';
-import 'package:lyc_flutter_project/auth/find_id/Provider/send_email_provider.dart';
 import 'package:lyc_flutter_project/auth/find_id/Provider/find_id_provider.dart';
 import 'package:lyc_flutter_project/auth/join/Provider/join_provider.dart';
 import 'package:lyc_flutter_project/auth/join/screens/join_screen_5.dart';
 import 'package:lyc_flutter_project/auth/service/storage_service.dart';
 
+import 'auth/find_id/repository/find_id_repository.dart';
 import 'commissions/provider/commissions_provider.dart';
 import 'commissions/repository/commissions_repository.dart';
 
@@ -75,12 +75,7 @@ Future<void> main() async {
             feedRepositoryProvider: context.read<FeedRepositoryProvider>(),
           ),
         ),
-        ChangeNotifierProvider(
-          create: (context) => HomeProvider(
-            feedRepositoryProvider: context.read<FeedRepositoryProvider>(),
-            directorRepository: context.read<DirectorRepositoryProvider>().repository,
-          ),
-        ),
+
         ChangeNotifierProxyProvider<MypageRepositoryProvider,
             MypageProviderFactory>(
           create: (context) => MypageProviderFactory(
@@ -128,6 +123,12 @@ Future<void> main() async {
           ),
         ),
         ChangeNotifierProvider(
+          create: (context) => HomeProvider(
+            feedRepositoryProvider: context.read<FeedRepositoryProvider>(),
+            directorRepository: context.read<DirectorRepositoryProvider>().repository,
+          ),
+        ),
+        ChangeNotifierProvider(
           create: (context) => ReviewProvider(
             coordiRepositoryProvider: context.read<CoordiRepositoryProvider>(),
             loginProvider: context.read<LoginProvider>(),
@@ -138,16 +139,11 @@ Future<void> main() async {
           create: (context) => StorageService(),
         ),
         ChangeNotifierProvider(
-          create: (context) => SendEmailProvider(
-            Provider.of<DioProvider>(context, listen: false),
-            context.read<StorageService>(),
-          ),
-        ),
-        ChangeNotifierProvider(
           create: (context) => FindIdProvider(
-            context.read<DioProvider>(),
-            context.read<SendEmailProvider>(),
-            context.read<StorageService>(),
+            dioProvider: context.read<DioProvider>(),
+            dio: context.read<DioProvider>().dio,
+            storageService: context.read<StorageService>(),
+            findIdRepositoryProvider: context.read<FindIdRepositoryProvider>(),
           ),
         ),
         ChangeNotifierProvider(

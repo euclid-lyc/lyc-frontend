@@ -4,20 +4,18 @@ import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/styles/app_text_style.dart';
 import 'package:provider/provider.dart';
 import '../../../widget/Controller.dart';
-import '../Provider/send_email_provider.dart';
+import '../Provider/find_id_provider.dart';
 import 'find_id_screen_2.dart';
-import '../model/info.dart';
-
 
 class FindIdScreen1 extends StatelessWidget {
   FindIdScreen1({super.key});
+
   final Controller _nameController = Controller();
   final Controller _emailController = Controller();
 
-
   @override
   Widget build(BuildContext context) {
-    final sendEmailProvider = Provider.of<SendEmailProvider>(context);
+    final findIdProvider = Provider.of<FindIdProvider>(context);
     return Scaffold(
       backgroundColor: AppColor.lightGrey,
       appBar: const NormalAppbar(title: "아이디 찾기"),
@@ -51,34 +49,33 @@ class FindIdScreen1 extends StatelessWidget {
                         '이름을 입력해주세요',
                         AppTextStyle.labelTextStyle,
                         AppTextStyle.hint,
-                       _nameController.controller,
-                    TextInputType.text),
+                        _nameController.controller,
+                        TextInputType.text),
                     buildInputField(
                         '가입한 이메일',
                         '이메일을 입력해주세요',
                         AppTextStyle.labelTextStyle,
                         AppTextStyle.hint,
-                       _emailController.controller,TextInputType.emailAddress),
+                        _emailController.controller,
+                        TextInputType.emailAddress),
                     Padding(
                       padding: const EdgeInsets.only(top: 32),
                       child: TextButton(
-                        onPressed: ()async {
-                          final info = Info(
-                            name: _nameController.controller.text,
-                            email: _emailController.controller.text,
-                          );
+                        onPressed: () async {
+                          findIdProvider.name = _nameController.controller.text;
+                          findIdProvider.email =
+                              _emailController.controller.text;
                           try {
-                            await sendEmailProvider.getVerificationCode(info: info);
+                            await findIdProvider.getVerificationCode();
                             if (context.mounted) {
                               Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>  FindIdScreen2(),
-                              ),
-                            );
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => FindIdScreen2(),
+                                ),
+                              );
                             }
                           } catch (e) {
-                            // 에러 처리
                             debugPrint('Error: $e');
                           }
                         },
@@ -161,22 +158,27 @@ class FindIdScreen1 extends StatelessWidget {
     );
   }
 
-  Widget buildInputField(String label, String hint, TextStyle labelTextStyle,
-      TextStyle hintTextStyle, TextEditingController controller,TextInputType tetInputType) {
+  Widget buildInputField(
+      String label,
+      String hint,
+      TextStyle labelTextStyle,
+      TextStyle hintTextStyle,
+      TextEditingController controller,
+      TextInputType tetInputType) {
     return Container(
       margin: const EdgeInsets.only(bottom: 8.5),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-            Container(
-              margin: const EdgeInsets.only(bottom: 4.5),
-              alignment: Alignment.topLeft,
-              child: Text(
-                label,
-                style: labelTextStyle,
-              ),
+          Container(
+            margin: const EdgeInsets.only(bottom: 4.5),
+            alignment: Alignment.topLeft,
+            child: Text(
+              label,
+              style: labelTextStyle,
             ),
+          ),
           Container(
             width: double.infinity,
             height: 40,
@@ -185,7 +187,7 @@ class FindIdScreen1 extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
             ),
             child: Padding(
-               padding: const EdgeInsets.fromLTRB(18, 12, 18, 12),
+              padding: const EdgeInsets.fromLTRB(18, 12, 18, 12),
               child: TextField(
                 controller: controller,
                 textAlignVertical: TextAlignVertical.center,
