@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:lyc_flutter_project/auth/find_id/model/info.dart';
@@ -26,7 +28,6 @@ class FindIdProvider extends ChangeNotifier {
     required this.findIdRepositoryProvider,
   });
 
-
   bool get isLoading => _isLoading;
 
   String? get errorMessage => _errorMessage;
@@ -34,23 +35,26 @@ class FindIdProvider extends ChangeNotifier {
   String get name => _name ?? '';
 
   String get email => _email ?? '';
-  set name(String value) => _name = value;
-  set email(String value) => _email = value;
 
+  set name(String value) => _name = value;
+
+  set email(String value) => _email = value;
 
   Future<void> getVerificationCode() async {
     _isLoading = true;
     notifyListeners();
 
     try {
-      final resp = await findIdRepositoryProvider.findIdRepository
-          .getVerificationCode(info: Info(name: name,email: email));
+      final resp = await findIdRepositoryProvider.getVerificationCode(
+          info: Info(name: name, email: email));
 
-      if (resp.isSuccess) {
-        final tempToken = resp.headers?[tempTokenKey].toString() ?? '';
-        await storageService.write(tempTokenKey, tempToken);
+      if (resp.statusCode == 200) {
+        final headers = resp.headers;
+
+        await storageService.write(
+            tempTokenKey, headers.value('temp-token') ?? '');
       } else {
-        throw Exception('Verification code request failed: ${resp.code}');
+        throw Exception('Verification code request failed: ${resp.statusCode}');
       }
     } on DioException catch (e) {
       debugPrint('DioException: ${e.message}');
@@ -64,8 +68,8 @@ class FindIdProvider extends ChangeNotifier {
     }
   }
 
-  // 인증 코드 전송
-  Future<void> checkVerificationCode(String code) async {
+  // 인증 코드 확인
+  Future<String> checkVerificationCode(String code) async {
     _isLoading = true;
     notifyListeners();
 
@@ -80,7 +84,7 @@ class FindIdProvider extends ChangeNotifier {
       final verificationCodeRequest = VerificationCode(
         name: name,
         email: email,
-        verificationCode:code,
+        verificationCode: code,
       );
 
       final resp = await findIdRepositoryProvider.findIdRepository
@@ -89,10 +93,9 @@ class FindIdProvider extends ChangeNotifier {
               verificationCode: verificationCodeRequest);
 
       if (resp.isSuccess) {
-        await storageService.write('loginId', resp.result.loginId);
+        return resp.result.loginId;
       } else {
-        _errorMessage =
-            'Verification failed with status: ${resp.code}';
+        _errorMessage = 'Verification failed with status: ${resp.code}';
         throw Exception(_errorMessage);
       }
     } on DioException catch (e) {
