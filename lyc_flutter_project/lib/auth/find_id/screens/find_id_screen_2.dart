@@ -130,7 +130,6 @@ class _CustomInputField extends StatelessWidget {
   final TextInputType inputType;
 
   const _CustomInputField({
-    super.key,
     required this.label,
     required this.hint,
     required this.controller,
@@ -178,37 +177,4 @@ class _CustomInputField extends StatelessWidget {
   }
 }
 
-class _CustomButton extends StatelessWidget {
-  final VoidCallback onPressed;
-  final String text;
-  final Color backgroundColor;
 
-  const _CustomButton({
-    super.key,
-    required this.onPressed,
-    required this.text,
-    required this.backgroundColor,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 16),
-      child: TextButton(
-        onPressed: onPressed,
-        style: TextButton.styleFrom(
-          backgroundColor: backgroundColor,
-          minimumSize: const Size(120, 48),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
-        ),
-        child: Text(
-          text,
-          style: AppTextStyle.button,
-          textAlign: TextAlign.center,
-        ),
-      ),
-    );
-  }
-}

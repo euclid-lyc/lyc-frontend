@@ -110,7 +110,6 @@ class _CustomInputField extends StatelessWidget {
   final TextInputType inputType;
 
   const _CustomInputField({
-    super.key,
     required this.label,
     required this.hint,
     required this.controller,
@@ -166,7 +165,6 @@ class _CustomButton extends StatelessWidget {
   final String text;
 
   const _CustomButton({
-    super.key,
     required this.onPressed,
     required this.text,
   });
@@ -198,7 +196,6 @@ class _CustomTextButton extends StatelessWidget {
   final VoidCallback onPressed;
 
   const _CustomTextButton({
-    super.key,
     required this.text,
     required this.onPressed,
   });
