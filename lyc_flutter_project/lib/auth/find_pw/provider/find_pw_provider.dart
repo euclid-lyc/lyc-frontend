@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:lyc_flutter_project/auth/find_pw/model/verification_info.dart';
 import 'package:lyc_flutter_project/common/dio/dio.dart';
 import '../../service/storage_service.dart';
 import '../model/info.dart';

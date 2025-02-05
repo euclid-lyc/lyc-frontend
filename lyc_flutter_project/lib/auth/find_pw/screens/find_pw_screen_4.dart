@@ -3,9 +3,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:lyc_flutter_project/auth/join/screens/login_screen.dart';
 import 'package:lyc_flutter_project/common/widget/normal_appbar.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
-import '../../../common/widget/two_buttons.dart';
 import '../../../styles/app_text_style.dart';
-import '../../find_pw/screens/find_pw_screen_1.dart';
+
 
 
 class FindPwScreen4 extends StatelessWidget {

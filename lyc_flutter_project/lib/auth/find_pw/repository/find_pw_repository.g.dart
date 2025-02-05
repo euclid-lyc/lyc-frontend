@@ -17,7 +17,6 @@ class _FindPwRepository implements FindPwRepository {
 
   final ParseErrorLogger? errorLogger;
 
-  @override
   Future<ApiResponse<dynamic>> getVerificationCode({required Info info}) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};

@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:lyc_flutter_project/auth/find_pw/screens/find_password_screen_1.dart';
 import 'package:lyc_flutter_project/auth/join/screens/login_screen.dart';
 import 'package:lyc_flutter_project/common/widget/normal_appbar.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import '../../../common/widget/two_buttons.dart';
 import '../../../styles/app_text_style.dart';
-
+import '../../find_pw/screens/find_pw_screen_1.dart';
 
 class FindIdScreen3 extends StatelessWidget {
   const FindIdScreen3({super.key, required this.loginId});
@@ -69,7 +68,7 @@ class FindIdScreen3 extends StatelessWidget {
                     ),
                     Text(loginId, style: AppTextStyle.littleTitle),
                     const Padding(
-                      padding: EdgeInsets.only(top: 43),
+                      padding: EdgeInsets.only(top: 44),
                     ),
                   ],
                 ),
@@ -96,7 +95,7 @@ class FindIdScreen3 extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => FindPasswordScreen1(),
+                            builder: (context) => FindPwScreen1(),
                           ),
                         );
                       } catch (e) {

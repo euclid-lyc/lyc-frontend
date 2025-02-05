@@ -18,13 +18,13 @@ class _FindIdRepository implements FindIdRepository {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<ApiResponse<dynamic>> getVerificationCode({required Info info}) async {
+  Future<ApiResponse<String>> getVerificationCode({required Info info}) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(info.toJson());
-    final _options = _setStreamType<ApiResponse<dynamic>>(
+    final _options = _setStreamType<ApiResponse<String>>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -35,11 +35,11 @@ class _FindIdRepository implements FindIdRepository {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late ApiResponse<dynamic> _value;
+    late ApiResponse<String> _value;
     try {
-      _value = ApiResponse<dynamic>.fromJson(
+      _value = ApiResponse<String>.fromJson(
         _result.data!,
-        (json) => json as dynamic,
+        (json) => json as String,
       );
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
