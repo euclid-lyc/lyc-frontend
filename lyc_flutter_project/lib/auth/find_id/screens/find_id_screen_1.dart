@@ -26,8 +26,8 @@ class FindIdScreen1 extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                padding: const EdgeInsets.fromLTRB(29, 28.5, 29, 33),
-                width: 296,
+                padding: const EdgeInsets.fromLTRB(32, 28, 32, 28),
+                margin: const EdgeInsets.fromLTRB(32, 32, 32, 20),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(20),
@@ -37,30 +37,28 @@ class FindIdScreen1 extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Container(
-                      margin: const EdgeInsets.only(bottom: 25),
+                      margin: const EdgeInsets.only(bottom: 28),
                       alignment: Alignment.topLeft,
                       child: const Text(
                         'Step 1. 이메일 입력',
                         style: AppTextStyle.littleTitle,
                       ),
                     ),
-                    buildInputField(
-                        '이름',
-                        '이름을 입력해주세요',
-                        AppTextStyle.labelTextStyle,
-                        AppTextStyle.hint,
-                        _nameController.controller,
-                        TextInputType.text),
-                    buildInputField(
-                        '가입한 이메일',
-                        '이메일을 입력해주세요',
-                        AppTextStyle.labelTextStyle,
-                        AppTextStyle.hint,
-                        _emailController.controller,
-                        TextInputType.emailAddress),
+                    _CustomInputField(
+                      label: '이름',
+                      hint: '이름을 입력해주세요',
+                      controller: _nameController.controller,
+                      inputType: TextInputType.text,
+                    ),
+                    _CustomInputField(
+                      label: '가입한 이메일',
+                      hint: '이메일을 입력해주세요',
+                      controller: _emailController.controller,
+                      inputType: TextInputType.emailAddress,
+                    ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 32),
-                      child: TextButton(
+                      padding: const EdgeInsets.only(top: 16),
+                      child: _CustomButton(
                         onPressed: () async {
                           findIdProvider.name = _nameController.controller.text;
                           findIdProvider.email =
@@ -79,77 +77,24 @@ class FindIdScreen1 extends StatelessWidget {
                             debugPrint('Error: $e');
                           }
                         },
-                        style: TextButton.styleFrom(
-                          backgroundColor: AppColor.beige,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                        ),
-                        child: const SizedBox(
-                          width: 230,
-                          child: Text(
-                            '다음',
-                            style: AppTextStyle.button,
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
+                        text: '다음',
                       ),
                     ),
                   ],
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 20), // 위아래 여백 설정
-                child: TextButton(
+                padding: const EdgeInsets.symmetric(vertical: 20),
+                child: _CustomTextButton(
+                  text: '다른 계정으로 로그인',
                   onPressed: () {
                     // 다른 계정으로 로그인 버튼 눌렀을 때의 동작 구현
                   },
-                  child: const Text(
-                    '다른 계정으로 로그인',
-                    style: AppTextStyle.otherLoginTextStyle,
-                  ),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 0), // 위아래 여백 설정
-                child: SizedBox(
-                  width: 166,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      IconButton(
-                        icon: Image.asset(
-                          'assets/icon_naver.png',
-                          width: 35,
-                          height: 35,
-                        ),
-                        onPressed: () {
-                          // 네이버 로그인 버튼 눌렀을 때의 동작 구현
-                        },
-                      ),
-                      IconButton(
-                        icon: Image.asset(
-                          'assets/icon_kakao.png',
-                          width: 35,
-                          height: 35,
-                        ),
-                        onPressed: () {
-                          // 카카오톡 로그인 버튼 눌렀을 때의 동작 구현
-                        },
-                      ),
-                      IconButton(
-                        icon: Image.asset(
-                          'assets/icon_google.png',
-                          width: 35,
-                          height: 35,
-                        ),
-                        onPressed: () {
-                          // 구글 로그인 버튼 눌렀을 때의 동작 구현
-                        },
-                      ),
-                    ],
-                  ),
-                ),
+                padding: const EdgeInsets.symmetric(vertical: 0),
+                child: _SocialLoginButtons(),
               ),
             ],
           ),
@@ -157,49 +102,156 @@ class FindIdScreen1 extends StatelessWidget {
       ),
     );
   }
+}
+class _CustomInputField extends StatelessWidget {
+  final String label;
+  final String hint;
+  final TextEditingController controller;
+  final TextInputType inputType;
 
-  Widget buildInputField(
-      String label,
-      String hint,
-      TextStyle labelTextStyle,
-      TextStyle hintTextStyle,
-      TextEditingController controller,
-      TextInputType tetInputType) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 8.5),
+  const _CustomInputField({
+    super.key,
+    required this.label,
+    required this.hint,
+    required this.controller,
+    required this.inputType,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Container(
-            margin: const EdgeInsets.only(bottom: 4.5),
-            alignment: Alignment.topLeft,
+          Padding(
+            padding: const EdgeInsets.only(bottom: 4),
             child: Text(
               label,
-              style: labelTextStyle,
+              style: AppTextStyle.labelTextStyle.copyWith(fontSize: 14),
             ),
           ),
           Container(
             width: double.infinity,
-            height: 40,
+            height: 42,
             decoration: BoxDecoration(
               color: AppColor.lightGrey,
               borderRadius: BorderRadius.circular(10),
             ),
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(18, 12, 18, 12),
+            child: Align(
+              alignment: Alignment.centerLeft,
               child: TextField(
                 controller: controller,
-                textAlignVertical: TextAlignVertical.center,
-                textAlign: TextAlign.start,
                 decoration: InputDecoration(
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 16),
                   hintText: hint,
-                  hintStyle: hintTextStyle,
+                  hintStyle: AppTextStyle.hint.copyWith(fontSize: 14),
                   border: InputBorder.none,
                 ),
-                keyboardType: tetInputType,
+                keyboardType: inputType,
               ),
             ),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+
+
+
+class _CustomButton extends StatelessWidget {
+  final VoidCallback onPressed;
+  final String text;
+
+  const _CustomButton({
+    super.key,
+    required this.onPressed,
+    required this.text,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: onPressed,
+      style: TextButton.styleFrom(
+        backgroundColor: AppColor.beige,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+      ),
+      child: SizedBox(
+        width: 232,
+        child: Text(
+          text,
+          style: AppTextStyle.button,
+          textAlign: TextAlign.center,
+        ),
+      ),
+    );
+  }
+}
+
+class _CustomTextButton extends StatelessWidget {
+  final String text;
+  final VoidCallback onPressed;
+
+  const _CustomTextButton({
+    super.key,
+    required this.text,
+    required this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: onPressed,
+      child: Text(
+        text,
+        style: AppTextStyle.otherLoginTextStyle,
+      ),
+    );
+  }
+}
+
+class _SocialLoginButtons extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 168,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          IconButton(
+            icon: Image.asset(
+              'assets/icon_naver.png',
+              width: 36,
+              height: 36,
+            ),
+            onPressed: () {
+              // 네이버 로그인 버튼 눌렀을 때의 동작 구현
+            },
+          ),
+          IconButton(
+            icon: Image.asset(
+              'assets/icon_kakao.png',
+              width: 36,
+              height: 36,
+            ),
+            onPressed: () {
+              // 카카오톡 로그인 버튼 눌렀을 때의 동작 구현
+            },
+          ),
+          IconButton(
+            icon: Image.asset(
+              'assets/icon_google.png',
+              width: 36,
+              height: 36,
+            ),
+            onPressed: () {
+              // 구글 로그인 버튼 눌렀을 때의 동작 구현
+            },
           ),
         ],
       ),
