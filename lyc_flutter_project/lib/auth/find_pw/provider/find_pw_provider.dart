@@ -26,9 +26,11 @@ class FindPwProvider extends ChangeNotifier {
 
   String? get errorMessage => _errorMessage;
 
-  FindPwProvider({required this.dioProvider,
-    required this.dio,
-    required this.storageService,  required this.findPwRepositoryProvider});
+  FindPwProvider(
+      {required this.dioProvider,
+      required this.dio,
+      required this.storageService,
+      required this.findPwRepositoryProvider});
 
   String get name => _name ?? '';
 
@@ -36,17 +38,26 @@ class FindPwProvider extends ChangeNotifier {
 
   String get email => _email ?? '';
 
+  set name(String value) => _name = value;
+
+  set id(String value) => _id = value;
+
+  set email(String value) => _email = value;
+
   Future<void> getVerificationCode() async {
+
+    _isLoading = true;
+    notifyListeners();
+
     try {
-      final resp = await findPwRepositoryProvider.findPwRepository
-          .getVerificationCode(
+      final resp = await findPwRepositoryProvider.getVerificationCode(
           info: Info(name: name, loginId: id, email: email));
-      if (resp.isSuccess) {
-        final tempToken = resp.headers?[tempTokenKey].toString() ?? '';
-        await storageService.write(tempTokenKey, tempToken);
+      if (resp.statusCode == 200) {
+        final headers = resp.headers;
+        await storageService.write(
+            tempTokenKey, headers.value('temp-token') ?? '');
       } else {
-        throw Exception(
-            'Verification code request failed: ${resp.code}');
+        throw Exception('Verification code request failed: ${resp.statusCode}');
       }
     } on DioException catch (e) {
       debugPrint('DioException: ${e.message}');
@@ -61,7 +72,7 @@ class FindPwProvider extends ChangeNotifier {
   }
 
   // 인증 코드 전송
-  Future<void> checkVerification(String code) async {
+  Future<void> checkVerificationCode(String code) async {
     _isLoading = true; // 로딩 시작
     notifyListeners(); // UI 업데이트
 
@@ -74,14 +85,12 @@ class FindPwProvider extends ChangeNotifier {
       }
 
       final resp = await findPwRepositoryProvider.findPwRepository
-          .checkVerificationCode(
-          authHeader:  "Bearer $tempToken", code: code);
+          .checkVerificationCode(authHeader: "Bearer $tempToken", code: code);
 
       if (resp.isSuccess) {
         storage.write(key: 'verificationCode', value: code);
       } else {
-        _errorMessage =
-        'Verification failed with status: ${resp.code}';
+        _errorMessage = 'Verification failed with status: ${resp.code}';
         throw Exception(_errorMessage);
       }
     } on DioException catch (e) {
@@ -104,14 +113,13 @@ class FindPwProvider extends ChangeNotifier {
   Future<void> updatePw({
     required String pw,
     required String confirmPw,
-    required String code,
   }) async {
     _isLoading = true;
     notifyListeners();
 
     try {
       final tempToken = await storageService.read(tempTokenKey);
-
+      final code = await storage.read(key: 'verificationCode');
       if (tempToken == null) {
         _errorMessage = '토큰이 없습니다.';
         debugPrint(_errorMessage);
@@ -126,7 +134,7 @@ class FindPwProvider extends ChangeNotifier {
           "loginId": id,
           "password": pw,
           "passwordConfirmation": confirmPw,
-          "verificationCode": code,
+          "verificationCode": code!,
         },
       );
 

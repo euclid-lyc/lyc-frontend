@@ -49,7 +49,7 @@ class _FindPwRepository implements FindPwRepository {
   }
 
   @override
-  Future<ApiResponse<MemberModel>> checkVerificationCode({
+  Future<ApiResponse<dynamic>> checkVerificationCode({
     required String authHeader,
     required String code,
   }) async {
@@ -58,7 +58,7 @@ class _FindPwRepository implements FindPwRepository {
     final _headers = <String, dynamic>{r'Authorization': authHeader};
     _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<ApiResponse<MemberModel>>(
+    final _options = _setStreamType<ApiResponse<dynamic>>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -69,11 +69,11 @@ class _FindPwRepository implements FindPwRepository {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late ApiResponse<MemberModel> _value;
+    late ApiResponse<dynamic> _value;
     try {
-      _value = ApiResponse<MemberModel>.fromJson(
+      _value = ApiResponse<dynamic>.fromJson(
         _result.data!,
-        (json) => MemberModel.fromJson(json as Map<String, dynamic>),
+        (json) => json as dynamic,
       );
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
