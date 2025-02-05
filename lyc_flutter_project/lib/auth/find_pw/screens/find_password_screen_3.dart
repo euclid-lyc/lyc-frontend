@@ -100,13 +100,11 @@ class FindPasswordScreen3 extends StatelessWidget {
                       // '다음' 버튼
                       TextButton(
                         onPressed: () async {
-                          String? loginId = await DioProvider().storage.read(key: 'loginId');
                           String? verificationCode = await DioProvider().storage.read(key: 'verificationCode');
                           await findPwProvider.updatePw(
-                              loginId: loginId ?? '',
-                              password: _pwController.controller.text,
-                              passwordConfirmation: _pwCheckController.controller.text,
-                              verificationCode: verificationCode ?? '');
+                              pw: _pwController.controller.text,
+                              confirmPw: _pwCheckController.controller.text,
+                              code: verificationCode ?? '');
                           if (context.mounted) {
                             Navigator.push(
                               context,

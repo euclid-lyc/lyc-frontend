@@ -135,7 +135,7 @@ class FindPasswordScreen2 extends StatelessWidget {
                       TextButton(
                         onPressed: () async {
                           try {
-                            await findPwProvider.sendVerification(verificationCode: _vcController.controller.text);
+                            await findPwProvider.checkVerification(_vcController.controller.text);
                             if (context.mounted) {
                               Navigator.push(
                                 context,

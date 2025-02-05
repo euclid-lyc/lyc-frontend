@@ -56,7 +56,7 @@ class FindPasswordScreen1 extends StatelessWidget {
                         onPressed: () async {
                           final info = Info(name: _nameController.controller.text, loginId: _loginIdController.controller.text, email: _emailController.controller.text);
                           try {
-                            await findPwProvider.getVerificationCode(info: info);
+                            await findPwProvider.getVerificationCode();
                             if (context.mounted) {
                               Navigator.push(
                                 context,

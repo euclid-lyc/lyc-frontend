@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as context;
 import 'package:lyc_flutter_project/auth/join/Provider/login_provider.dart';
 import 'package:lyc_flutter_project/auth/join/repository/join_repository.dart';
 import 'package:lyc_flutter_project/common/dio/dio.dart';
@@ -27,6 +28,7 @@ import 'package:lyc_flutter_project/auth/join/screens/join_screen_5.dart';
 import 'package:lyc_flutter_project/auth/service/storage_service.dart';
 
 import 'auth/find_id/repository/find_id_repository.dart';
+import 'auth/find_pw/repository/find_pw_repository.dart';
 import 'commissions/provider/commissions_provider.dart';
 import 'commissions/repository/commissions_repository.dart';
 
@@ -75,7 +77,6 @@ Future<void> main() async {
             feedRepositoryProvider: context.read<FeedRepositoryProvider>(),
           ),
         ),
-
         ChangeNotifierProxyProvider<MypageRepositoryProvider,
             MypageProviderFactory>(
           create: (context) => MypageProviderFactory(
@@ -125,7 +126,8 @@ Future<void> main() async {
         ChangeNotifierProvider(
           create: (context) => HomeProvider(
             feedRepositoryProvider: context.read<FeedRepositoryProvider>(),
-            directorRepository: context.read<DirectorRepositoryProvider>().repository,
+            directorRepository:
+                context.read<DirectorRepositoryProvider>().repository,
           ),
         ),
         ChangeNotifierProvider(
@@ -139,6 +141,10 @@ Future<void> main() async {
           create: (context) => StorageService(),
         ),
         ChangeNotifierProvider(
+          create: (context) =>
+              FindIdRepositoryProvider(dio: context.read<DioProvider>().dio),
+        ),
+        ChangeNotifierProvider(
           create: (context) => FindIdProvider(
             dioProvider: context.read<DioProvider>(),
             dio: context.read<DioProvider>().dio,
@@ -147,9 +153,15 @@ Future<void> main() async {
           ),
         ),
         ChangeNotifierProvider(
+          create: (context) =>
+              FindPwRepositoryProvider(dio: context.read<DioProvider>().dio),
+        ),
+        ChangeNotifierProvider(
           create: (context) => FindPwProvider(
-            Provider.of<DioProvider>(context, listen: false),
-            context.read<StorageService>(),
+            dioProvider: context.read<DioProvider>(),
+            dio: context.read<DioProvider>().dio,
+            storageService: context.read<StorageService>(),
+            findPwRepositoryProvider: context.read<FindPwRepositoryProvider>(),
           ),
         ),
         ChangeNotifierProvider(
@@ -178,8 +190,8 @@ Future<void> main() async {
         ),
         ChangeNotifierProvider(
           create: (context) => CommissionsProvider(
-            repositoryProvider: context.read<CommissionsRepositoryProvider>()
-          ),
+              repositoryProvider:
+                  context.read<CommissionsRepositoryProvider>()),
         ),
       ],
       child: const MyApp(),
