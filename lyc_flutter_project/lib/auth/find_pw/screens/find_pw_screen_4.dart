@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:lyc_flutter_project/auth/join/screens/login_screen.dart';
 import 'package:lyc_flutter_project/common/widget/normal_appbar.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
+import '../../../common/widget/custom_next_botton.dart';
 import '../../../styles/app_text_style.dart';
 
 
@@ -73,7 +74,7 @@ class FindPwScreen4 extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 16),
-                child: _CustomButton(
+                child: CustomNextButton(
                   onPressed: () async {
                       if (context.mounted) {
                         Navigator.push(
@@ -89,36 +90,6 @@ class FindPwScreen4 extends StatelessWidget {
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-}
-class _CustomButton extends StatelessWidget {
-  final VoidCallback onPressed;
-  final String text;
-
-  const _CustomButton({
-    required this.onPressed,
-    required this.text,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: onPressed,
-      style: TextButton.styleFrom(
-        backgroundColor: AppColor.beige,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
-      ),
-      child: SizedBox(
-        width: 232,
-        child: Text(
-          text,
-          style: AppTextStyle.button,
-          textAlign: TextAlign.center,
         ),
       ),
     );
