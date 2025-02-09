@@ -5,13 +5,13 @@ import 'package:lyc_flutter_project/styles/app_text_style.dart';
 import 'package:provider/provider.dart';
 import '../../../common/widget/custom_input_field.dart';
 import '../../../common/widget/custom_loading.dart';
-
+import '../../../common/widget/custom_next_botton.dart';
+import '../../../common/widget/social_login_buttons.dart';
 import '../Provider/find_id_provider.dart';
 import 'find_id_screen_2.dart';
 
 class FindIdScreen1 extends StatelessWidget {
   const FindIdScreen1({super.key});
-
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +62,7 @@ class FindIdScreen1 extends StatelessWidget {
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 16),
-                          child: _CustomButton(
+                          child: CustomNextButton(
                             onPressed: () async {
                               try {
                                 await value.getVerificationCode();
@@ -70,7 +70,8 @@ class FindIdScreen1 extends StatelessWidget {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => const FindIdScreen2(),
+                                      builder: (context) =>
+                                          const FindIdScreen2(),
                                     ),
                                   );
                                 }
@@ -85,17 +86,17 @@ class FindIdScreen1 extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 20),
-                    child: _CustomTextButton(
-                      text: '다른 계정으로 로그인',
-                      onPressed: () {
-                        // 다른 계정으로 로그인 버튼 눌렀을 때의 동작 구현
-                      },
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 0),
-                    child: _SocialLoginButtons(),
+                      padding: const EdgeInsets.symmetric(vertical: 20),
+                      child: TextButton(
+                        onPressed: () {},
+                        child: const Text(
+                          "다른 계정으로 로그인",
+                          style: AppTextStyle.otherLoginTextStyle,
+                        ),
+                      )),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 0),
+                    child: SocialLoginButtons(),
                   ),
                 ],
               ),
@@ -108,98 +109,3 @@ class FindIdScreen1 extends StatelessWidget {
 }
 
 
-class _CustomButton extends StatelessWidget {
-  final VoidCallback onPressed;
-  final String text;
-
-  const _CustomButton({
-    required this.onPressed,
-    required this.text,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: onPressed,
-      style: TextButton.styleFrom(
-        backgroundColor: AppColor.beige,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
-      ),
-      child: SizedBox(
-        width: 232,
-        child: Text(
-          text,
-          style: AppTextStyle.button,
-          textAlign: TextAlign.center,
-        ),
-      ),
-    );
-  }
-}
-
-class _CustomTextButton extends StatelessWidget {
-  final String text;
-  final VoidCallback onPressed;
-
-  const _CustomTextButton({
-    required this.text,
-    required this.onPressed,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: onPressed,
-      child: Text(
-        text,
-        style: AppTextStyle.otherLoginTextStyle,
-      ),
-    );
-  }
-}
-
-class _SocialLoginButtons extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: 168,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          IconButton(
-            icon: Image.asset(
-              'assets/icon_naver.png',
-              width: 36,
-              height: 36,
-            ),
-            onPressed: () {
-              // 네이버 로그인 버튼 눌렀을 때의 동작 구현
-            },
-          ),
-          IconButton(
-            icon: Image.asset(
-              'assets/icon_kakao.png',
-              width: 36,
-              height: 36,
-            ),
-            onPressed: () {
-              // 카카오톡 로그인 버튼 눌렀을 때의 동작 구현
-            },
-          ),
-          IconButton(
-            icon: Image.asset(
-              'assets/icon_google.png',
-              width: 36,
-              height: 36,
-            ),
-            onPressed: () {
-              // 구글 로그인 버튼 눌렀을 때의 동작 구현
-            },
-          ),
-        ],
-      ),
-    );
-  }
-}
