@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lyc_flutter_project/common/widget/custom_next_botton.dart';
+import 'package:lyc_flutter_project/common/widget/custom_next_button.dart';
 import 'package:lyc_flutter_project/common/widget/normal_appbar.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/styles/app_text_style.dart';

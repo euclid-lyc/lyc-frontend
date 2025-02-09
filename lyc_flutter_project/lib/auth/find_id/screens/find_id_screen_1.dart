@@ -5,7 +5,7 @@ import 'package:lyc_flutter_project/styles/app_text_style.dart';
 import 'package:provider/provider.dart';
 import '../../../common/widget/custom_input_field.dart';
 import '../../../common/widget/custom_loading.dart';
-import '../../../common/widget/custom_next_botton.dart';
+import '../../../common/widget/custom_next_button.dart';
 import '../../../common/widget/social_login_buttons.dart';
 import '../Provider/find_id_provider.dart';
 import 'find_id_screen_2.dart';

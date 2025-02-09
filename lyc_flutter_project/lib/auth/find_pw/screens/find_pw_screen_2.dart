@@ -4,7 +4,7 @@ import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:provider/provider.dart';
 import '../../../common/widget/custom_input_field.dart';
 import '../../../common/widget/custom_loading.dart';
-import '../../../common/widget/custom_next_botton.dart';
+import '../../../common/widget/custom_next_button.dart';
 import '../../../styles/app_text_style.dart';
 import '../provider/find_pw_provider.dart';
 import 'find_pw_screen_3.dart';
