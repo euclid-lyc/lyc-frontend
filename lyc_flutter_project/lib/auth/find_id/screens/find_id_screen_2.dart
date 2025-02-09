@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/common/widget/normal_appbar.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:provider/provider.dart';
+import '../../../common/widget/custom_input_field.dart';
 import '../../../common/widget/custom_loading.dart';
 import '../../../common/widget/custom_next_botton.dart';
-import '../../../common/widget/two_buttons.dart';
 import '../../../styles/app_text_style.dart';
 import '../Provider/find_id_provider.dart';
-import 'find_id_screen_1.dart';
 import 'find_id_screen_3.dart';
 
 class FindIdScreen2 extends StatelessWidget {
@@ -76,7 +75,7 @@ class FindIdScreen2 extends StatelessWidget {
                             ),
                           ),
                         ),
-                        _CustomInputField(
+                        CustomInputField(
                           label: '인증번호',
                           hint: '인증번호를 입력해 주세요',
                           onChanged: (p0) => code = p0,
@@ -118,56 +117,4 @@ class FindIdScreen2 extends StatelessWidget {
   }
 }
 
-class _CustomInputField extends StatelessWidget {
-  final String label;
-  final String hint;
-  final TextInputType inputType;
-  final ValueChanged<String> onChanged;
 
-  const _CustomInputField({
-    required this.label,
-    required this.hint,
-    required this.inputType,
-    required this.onChanged,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 8),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(bottom: 4),
-            child: Text(
-              label,
-              style: AppTextStyle.labelTextStyle.copyWith(fontSize: 14),
-            ),
-          ),
-          Container(
-            width: double.infinity,
-            height: 42,
-            decoration: BoxDecoration(
-              color: AppColor.lightGrey,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: TextField(
-                onChanged: onChanged,
-                decoration: InputDecoration(
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-                  hintText: hint,
-                  hintStyle: AppTextStyle.hint.copyWith(fontSize: 14),
-                  border: InputBorder.none,
-                ),
-                keyboardType: inputType,
-              ),
-            ),
-          )
-        ],
-      ),
-    );
-  }
-}

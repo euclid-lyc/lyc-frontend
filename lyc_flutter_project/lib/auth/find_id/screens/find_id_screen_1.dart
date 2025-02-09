@@ -3,6 +3,7 @@ import 'package:lyc_flutter_project/common/widget/normal_appbar.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/styles/app_text_style.dart';
 import 'package:provider/provider.dart';
+import '../../../common/widget/custom_input_field.dart';
 import '../../../common/widget/custom_loading.dart';
 
 import '../Provider/find_id_provider.dart';
@@ -47,13 +48,13 @@ class FindIdScreen1 extends StatelessWidget {
                             style: AppTextStyle.littleTitle,
                           ),
                         ),
-                        _CustomInputField(
+                        CustomInputField(
                           label: '이름',
                           hint: '이름을 입력해주세요',
                           onChanged: (p0) => value.name = p0,
                           inputType: TextInputType.text,
                         ),
-                        _CustomInputField(
+                        CustomInputField(
                           label: '가입한 이메일',
                           hint: '이메일을 입력해주세요',
                           onChanged: (p0) => value.email = p0,
@@ -106,59 +107,6 @@ class FindIdScreen1 extends StatelessWidget {
   }
 }
 
-class _CustomInputField extends StatelessWidget {
-  final String label;
-  final String hint;
-  final TextInputType inputType;
-  final ValueChanged<String> onChanged;
-
-  const _CustomInputField({
-    required this.label,
-    required this.hint,
-    required this.inputType,
-    required this.onChanged,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 8),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(bottom: 4),
-            child: Text(
-              label,
-              style: AppTextStyle.labelTextStyle.copyWith(fontSize: 14),
-            ),
-          ),
-          Container(
-            width: double.infinity,
-            height: 42,
-            decoration: BoxDecoration(
-              color: AppColor.lightGrey,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: TextField(
-                onChanged: onChanged,
-                decoration: InputDecoration(
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-                  hintText: hint,
-                  hintStyle: AppTextStyle.hint.copyWith(fontSize: 14),
-                  border: InputBorder.none,
-                ),
-                keyboardType: inputType,
-              ),
-            ),
-          )
-        ],
-      ),
-    );
-  }
-}
 
 class _CustomButton extends StatelessWidget {
   final VoidCallback onPressed;
