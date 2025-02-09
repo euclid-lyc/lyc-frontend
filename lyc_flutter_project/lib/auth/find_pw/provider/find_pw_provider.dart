@@ -44,7 +44,6 @@ class FindPwProvider extends ChangeNotifier {
   set email(String value) => _email = value;
 
   Future<void> getVerificationCode() async {
-
     _isLoading = true;
     notifyListeners();
 
@@ -55,6 +54,7 @@ class FindPwProvider extends ChangeNotifier {
         final headers = resp.headers;
         await storageService.write(
             tempTokenKey, headers.value('temp-token') ?? '');
+        _isLoading = false;
       } else {
         throw Exception('Verification code request failed: ${resp.statusCode}');
       }
@@ -88,6 +88,7 @@ class FindPwProvider extends ChangeNotifier {
 
       if (resp.isSuccess) {
         storage.write(key: 'verificationCode', value: code);
+        _isLoading = false;
       } else {
         _errorMessage = 'Verification failed with status: ${resp.code}';
         throw Exception(_errorMessage);
@@ -138,7 +139,7 @@ class FindPwProvider extends ChangeNotifier {
       );
 
       if (resp.isSuccess) {
-        debugPrint("비밀번호 변경 성공");
+        _isLoading = false;
       } else {
         _errorMessage = resp.message;
         throw Exception(resp.message);
