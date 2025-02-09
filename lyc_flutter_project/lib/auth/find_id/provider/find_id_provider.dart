@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:lyc_flutter_project/auth/find_id/model/info.dart';
@@ -36,9 +34,15 @@ class FindIdProvider extends ChangeNotifier {
 
   String get email => _email ?? '';
 
-  set name(String value) => _name = value;
+  set name(String value) {
+    _name = value;
+    notifyListeners();
+  }
 
-  set email(String value) => _email = value;
+  set email(String value) {
+    _email = value;
+    notifyListeners();
+  }
 
   Future<void> getVerificationCode() async {
     _isLoading = true;
@@ -53,6 +57,7 @@ class FindIdProvider extends ChangeNotifier {
 
         await storageService.write(
             tempTokenKey, headers.value('temp-token') ?? '');
+        _isLoading = false;
       } else {
         throw Exception('Verification code request failed: ${resp.statusCode}');
       }
@@ -93,7 +98,9 @@ class FindIdProvider extends ChangeNotifier {
               verificationCode: verificationCodeRequest);
 
       if (resp.isSuccess) {
+        _isLoading = false;
         return resp.result.loginId;
+
       } else {
         _errorMessage = 'Verification failed with status: ${resp.code}';
         throw Exception(_errorMessage);

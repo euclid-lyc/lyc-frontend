@@ -3,117 +3,120 @@ import 'package:lyc_flutter_project/common/widget/normal_appbar.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/styles/app_text_style.dart';
 import 'package:provider/provider.dart';
-import '../../../widget/Controller.dart';
+import '../../../common/widget/custom_loading.dart';
+
 import '../Provider/find_id_provider.dart';
 import 'find_id_screen_2.dart';
 
 class FindIdScreen1 extends StatelessWidget {
-  FindIdScreen1({super.key});
+  const FindIdScreen1({super.key});
 
-  final Controller _nameController = Controller();
-  final Controller _emailController = Controller();
 
   @override
   Widget build(BuildContext context) {
-    final findIdProvider = Provider.of<FindIdProvider>(context);
     return Scaffold(
       backgroundColor: AppColor.lightGrey,
       appBar: const NormalAppbar(title: "아이디 찾기"),
-      body: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                padding: const EdgeInsets.fromLTRB(32, 28, 32, 28),
-                margin: const EdgeInsets.fromLTRB(32, 32, 32, 20),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.only(bottom: 28),
-                      alignment: Alignment.topLeft,
-                      child: const Text(
-                        'Step 1. 이메일 입력',
-                        style: AppTextStyle.littleTitle,
-                      ),
+      body: Consumer<FindIdProvider>(
+        builder: (context, value, child) {
+          if (value.isLoading) {
+            return const Center(child: CustomLoading());
+          }
+          return Center(
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.fromLTRB(32, 28, 32, 28),
+                    margin: const EdgeInsets.fromLTRB(32, 32, 32, 20),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
                     ),
-                    _CustomInputField(
-                      label: '이름',
-                      hint: '이름을 입력해주세요',
-                      controller: _nameController.controller,
-                      inputType: TextInputType.text,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.only(bottom: 28),
+                          alignment: Alignment.topLeft,
+                          child: const Text(
+                            'Step 1. 이메일 입력',
+                            style: AppTextStyle.littleTitle,
+                          ),
+                        ),
+                        _CustomInputField(
+                          label: '이름',
+                          hint: '이름을 입력해주세요',
+                          onChanged: (p0) => value.name = p0,
+                          inputType: TextInputType.text,
+                        ),
+                        _CustomInputField(
+                          label: '가입한 이메일',
+                          hint: '이메일을 입력해주세요',
+                          onChanged: (p0) => value.email = p0,
+                          inputType: TextInputType.emailAddress,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 16),
+                          child: _CustomButton(
+                            onPressed: () async {
+                              try {
+                                await value.getVerificationCode();
+                                if (context.mounted) {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const FindIdScreen2(),
+                                    ),
+                                  );
+                                }
+                              } catch (e) {
+                                debugPrint('Error: $e');
+                              }
+                            },
+                            text: '다음',
+                          ),
+                        ),
+                      ],
                     ),
-                    _CustomInputField(
-                      label: '가입한 이메일',
-                      hint: '이메일을 입력해주세요',
-                      controller: _emailController.controller,
-                      inputType: TextInputType.emailAddress,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 20),
+                    child: _CustomTextButton(
+                      text: '다른 계정으로 로그인',
+                      onPressed: () {
+                        // 다른 계정으로 로그인 버튼 눌렀을 때의 동작 구현
+                      },
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 16),
-                      child: _CustomButton(
-                        onPressed: () async {
-                          findIdProvider.name = _nameController.controller.text;
-                          findIdProvider.email =
-                              _emailController.controller.text;
-                          try {
-                            await findIdProvider.getVerificationCode();
-                            if (context.mounted) {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => FindIdScreen2(),
-                                ),
-                              );
-                            }
-                          } catch (e) {
-                            debugPrint('Error: $e');
-                          }
-                        },
-                        text: '다음',
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 0),
+                    child: _SocialLoginButtons(),
+                  ),
+                ],
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 20),
-                child: _CustomTextButton(
-                  text: '다른 계정으로 로그인',
-                  onPressed: () {
-                    // 다른 계정으로 로그인 버튼 눌렀을 때의 동작 구현
-                  },
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 0),
-                child: _SocialLoginButtons(),
-              ),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
   }
 }
+
 class _CustomInputField extends StatelessWidget {
   final String label;
   final String hint;
-  final TextEditingController controller;
   final TextInputType inputType;
+  final ValueChanged<String> onChanged;
 
   const _CustomInputField({
     required this.label,
     required this.hint,
-    required this.controller,
     required this.inputType,
+    required this.onChanged,
   });
 
   @override
@@ -140,7 +143,7 @@ class _CustomInputField extends StatelessWidget {
             child: Align(
               alignment: Alignment.centerLeft,
               child: TextField(
-                controller: controller,
+                onChanged: onChanged,
                 decoration: InputDecoration(
                   contentPadding: const EdgeInsets.symmetric(horizontal: 16),
                   hintText: hint,
@@ -156,9 +159,6 @@ class _CustomInputField extends StatelessWidget {
     );
   }
 }
-
-
-
 
 class _CustomButton extends StatelessWidget {
   final VoidCallback onPressed;

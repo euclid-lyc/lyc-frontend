@@ -17,7 +17,6 @@ class _FindIdRepository implements FindIdRepository {
 
   final ParseErrorLogger? errorLogger;
 
-  @override
   Future<ApiResponse<String>> getVerificationCode({required Info info}) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
