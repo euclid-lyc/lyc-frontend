@@ -21,7 +21,7 @@ class FindIdRepositoryProvider extends ChangeNotifier {
     final requestBody = info.toJson();
 
     final options = Options(
-      validateStatus: (status) => true,  // 모든 상태코드 허용
+      validateStatus: (status) => true,
       contentType: 'application/json',
       responseType: ResponseType.json,
     );
@@ -32,17 +32,6 @@ class FindIdRepositoryProvider extends ChangeNotifier {
         data: requestBody,
         options: options,
       );
-
-      // 성공이 아닌 모든 경우에 예외 발생
-      if (response.statusCode != 200) {
-        final errorMessage = response.data['message'] ?? '요청 처리 중 오류가 발생했습니다.';
-        throw DioException(
-          requestOptions: response.requestOptions,
-          response: response,
-          type: DioExceptionType.badResponse,
-          message: errorMessage,
-        );
-      }
 
       return response;
 

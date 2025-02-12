@@ -51,25 +51,29 @@ class FindIdProvider extends ChangeNotifier {
     try {
       final resp = await findIdRepositoryProvider.getVerificationCode(
           info: Info(name: name, email: email));
-
+      if (resp.statusCode == 200) {
         final headers = resp.headers;
         await storageService.write(
             tempTokenKey, headers.value('temp-token') ?? '');
-        _isLoading = false;
+      } else {
+        throw Exception('Verification code request failed: ${resp.statusCode}');
+      }
 
     } on DioException catch (e) {
       debugPrint('DioException: ${e.message}');
       if (e.response != null) {
         debugPrint('Response data: ${e.response?.data}');
       }
-      _isLoading = false;
       throw Exception('API 요청 실패: ${e.message}');
     } catch (e) {
       debugPrint('Error: ${e.toString()}');
-      _isLoading = false;
       throw Exception('API 요청 실패: ${e.toString()}');
+    } finally {
+      _isLoading = false;
+      notifyListeners();
     }
   }
+
 
   // 인증 코드 확인
   Future<String> checkVerificationCode(String code) async {
