@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/common/widget/normal_appbar.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:provider/provider.dart';
+import '../../../commissions/widget/custom_dialog.dart';
 import '../../../common/widget/custom_input_field.dart';
 import '../../../common/widget/custom_loading.dart';
 import '../../../common/widget/custom_next_button.dart';
@@ -94,7 +95,20 @@ class FindPwScreen2 extends StatelessWidget {
                             );
                           }
                         } catch (e) {
-                          debugPrint('Error: $e');
+                          if (context.mounted) {
+                            showDialog(
+                              context: context,
+                              builder: (context) => const CustomDialog(
+                                title: "인증번호가 일치하지 않습니다.",
+                                subtitle: "이메일 입력 화면으로 돌아갑니다.",
+                              ),
+                            ).then((_) {
+                              if (context.mounted) {
+                                Navigator.pop(context);
+                              }
+                            });
+
+                          }
                         }
                       },
                       text: '다음',

@@ -4,6 +4,7 @@ import 'package:lyc_flutter_project/common/widget/normal_appbar.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/styles/app_text_style.dart';
 import 'package:provider/provider.dart';
+import '../../../commissions/widget/custom_dialog.dart';
 import '../../../common/widget/custom_input_field.dart';
 import '../../../common/widget/custom_loading.dart';
 import '../../../common/widget/social_login_buttons.dart';
@@ -84,7 +85,14 @@ class FindPwScreen1 extends StatelessWidget {
                               );
                             }
                           } catch (e) {
-                            debugPrint('Error: $e');
+                            if (context.mounted) {
+                              showDialog(
+                                context: context,
+                                builder: (context) => const CustomDialog(
+                                  title: "일치하는 회원정보가 존재하지 않습니다.",
+                                ),
+                              );
+                            }
                           }
                         },
                         text: '다음',

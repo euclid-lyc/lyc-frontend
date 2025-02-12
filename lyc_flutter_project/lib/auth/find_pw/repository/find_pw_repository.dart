@@ -12,17 +12,42 @@ part 'find_pw_repository.g.dart';
 class FindPwRepositoryProvider extends ChangeNotifier {
   final Dio dio;
   late FindPwRepository findPwRepository;
-  Future<Response<String>> getVerificationCode({
+
+  Future<Response> getVerificationCode({
     required Info info,
   }) async {
     const url = 'http://$ip/lyc/auths/sign-in/find-pw/send-verification-code';
     final requestBody = info.toJson();
-    try {
-      return await dio.post(url, data: requestBody);
+    final options = Options(
+      validateStatus: (status) => true,
+      contentType: 'application/json',
+      responseType: ResponseType.json,
+    );
 
-    } catch (e) {
-      debugPrint('에러 발생: $e');
+    try {
+      final response = await dio.post(
+        url,
+        data: requestBody,
+        options: options,
+      );
+
+      if (response.statusCode != 200) {
+        final errorMessage = response.data['message'] ?? '요청 처리 중 오류가 발생했습니다.';
+        throw DioException(
+          requestOptions: response.requestOptions,
+          response: response,
+          type: DioExceptionType.badResponse,
+          message: errorMessage,
+        );
+      }
+
+      return response;
+    } on DioException catch (e) {
+      debugPrint('DioException 발생: ${e.type} - ${e.message}');
       rethrow;
+    } catch (e) {
+      debugPrint('기타 예외 발생: $e');
+      throw Exception('요청 처리 중 오류가 발생했습니다: $e');
     }
   }
 
@@ -35,9 +60,6 @@ class FindPwRepositoryProvider extends ChangeNotifier {
 abstract class FindPwRepository {
   factory FindPwRepository(Dio dio, {String baseUrl}) = _FindPwRepository;
 
-  // //인증번호 발급받기
-  // @POST('sign-in/find-pw/send-verification-code')
-  // Future<ApiResponse> getVerificationCode({@Body() required Info info});
   //인증 코드 검증
   @POST('find-pw')
   Future<ApiResponse> checkVerificationCode({

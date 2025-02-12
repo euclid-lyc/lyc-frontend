@@ -50,11 +50,11 @@ class FindPwProvider extends ChangeNotifier {
     try {
       final resp = await findPwRepositoryProvider.getVerificationCode(
           info: Info(name: name, loginId: id, email: email));
+
       if (resp.statusCode == 200) {
         final headers = resp.headers;
         await storageService.write(
             tempTokenKey, headers.value('temp-token') ?? '');
-        _isLoading = false;
       } else {
         throw Exception('Verification code request failed: ${resp.statusCode}');
       }
@@ -67,13 +67,17 @@ class FindPwProvider extends ChangeNotifier {
     } catch (e) {
       debugPrint('Error: ${e.toString()}');
       throw Exception('API 요청 실패: ${e.toString()}');
+    } finally {
+      _isLoading = false;
+      notifyListeners();
     }
   }
 
+
   // 인증 코드 전송
   Future<void> checkVerificationCode(String code) async {
-    _isLoading = true; // 로딩 시작
-    notifyListeners(); // UI 업데이트
+    _isLoading = true;
+    notifyListeners();
 
     try {
       final tempToken = await storageService.read(tempTokenKey);
