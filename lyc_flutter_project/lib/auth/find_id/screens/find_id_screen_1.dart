@@ -9,9 +9,16 @@ import '../../../common/widget/custom_next_button.dart';
 import '../../../common/widget/social_login_buttons.dart';
 import '../Provider/find_id_provider.dart';
 import 'find_id_screen_2.dart';
+import 'package:lyc_flutter_project/commissions/widget/custom_dialog.dart';
 
-class FindIdScreen1 extends StatelessWidget {
+class FindIdScreen1 extends StatefulWidget {
   const FindIdScreen1({super.key});
+
+  @override
+  _FindIdScreen1State createState() => _FindIdScreen1State();
+}
+
+class _FindIdScreen1State extends State<FindIdScreen1> {
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +83,15 @@ class FindIdScreen1 extends StatelessWidget {
                                   );
                                 }
                               } catch (e) {
-                                debugPrint('Error: $e');
+
+                                if (context.mounted) {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => const CustomDialog(
+                                      title: "일치하는 회원정보가 존재하지 않습니다.",
+                                    ),
+                                  );
+                                }
                               }
                             },
                             text: '다음',
@@ -107,5 +122,3 @@ class FindIdScreen1 extends StatelessWidget {
     );
   }
 }
-
-

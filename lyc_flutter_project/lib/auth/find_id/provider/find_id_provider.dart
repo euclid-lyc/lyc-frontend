@@ -52,23 +52,21 @@ class FindIdProvider extends ChangeNotifier {
       final resp = await findIdRepositoryProvider.getVerificationCode(
           info: Info(name: name, email: email));
 
-      if (resp.statusCode == 200) {
         final headers = resp.headers;
-
         await storageService.write(
             tempTokenKey, headers.value('temp-token') ?? '');
         _isLoading = false;
-      } else {
-        throw Exception('Verification code request failed: ${resp.statusCode}');
-      }
+
     } on DioException catch (e) {
       debugPrint('DioException: ${e.message}');
       if (e.response != null) {
         debugPrint('Response data: ${e.response?.data}');
       }
+      _isLoading = false;
       throw Exception('API 요청 실패: ${e.message}');
     } catch (e) {
       debugPrint('Error: ${e.toString()}');
+      _isLoading = false;
       throw Exception('API 요청 실패: ${e.toString()}');
     }
   }
@@ -94,16 +92,13 @@ class FindIdProvider extends ChangeNotifier {
 
       final resp = await findIdRepositoryProvider.findIdRepository
           .checkVerificationCode(
-              authHeader: "Bearer $tempToken",
-              verificationCode: verificationCodeRequest);
+          authHeader: "Bearer $tempToken",
+          verificationCode: verificationCodeRequest);
 
       if (resp.isSuccess) {
-        _isLoading = false;
         return resp.result.loginId;
-
       } else {
-        _errorMessage = 'Verification failed with status: ${resp.code}';
-        throw Exception(_errorMessage);
+        throw Exception('Verification failed with status: ${resp.code}');
       }
     } on DioException catch (e) {
       _errorMessage = 'DioException: ${e.message}';
@@ -118,6 +113,8 @@ class FindIdProvider extends ChangeNotifier {
       throw Exception('API 요청 실패: ${e.toString()}');
     } finally {
       _isLoading = false;
+      notifyListeners();
     }
   }
+
 }

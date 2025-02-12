@@ -14,21 +14,46 @@ class FindIdRepositoryProvider extends ChangeNotifier {
   final Dio dio;
   late FindIdRepository findIdRepository;
 
-  Future<Response<String>> getVerificationCode({
+  Future<Response> getVerificationCode({
     required Info info,
   }) async {
     const url = 'http://$ip/lyc/auths/sign-in/find-id/send-verification-code';
-
     final requestBody = info.toJson();
-    try {
-      return await dio.post(url, data: requestBody);
 
-    } catch (e) {
-      debugPrint('에러 발생: $e');
+    final options = Options(
+      validateStatus: (status) => true,  // 모든 상태코드 허용
+      contentType: 'application/json',
+      responseType: ResponseType.json,
+    );
+
+    try {
+      final response = await dio.post(
+        url,
+        data: requestBody,
+        options: options,
+      );
+
+      // 성공이 아닌 모든 경우에 예외 발생
+      if (response.statusCode != 200) {
+        final errorMessage = response.data['message'] ?? '요청 처리 중 오류가 발생했습니다.';
+        throw DioException(
+          requestOptions: response.requestOptions,
+          response: response,
+          type: DioExceptionType.badResponse,
+          message: errorMessage,
+        );
+      }
+
+      return response;
+
+    } on DioException catch (e) {
+      debugPrint('DioException 발생: ${e.type} - ${e.message}');
       rethrow;
+    } catch (e) {
+      debugPrint('기타 예외 발생: $e');
+      throw Exception('요청 처리 중 오류가 발생했습니다: $e');
     }
   }
-
   FindIdRepositoryProvider({required this.dio}) {
     findIdRepository = FindIdRepository(dio, baseUrl: "http://$ip/lyc/auths/");
   }
@@ -37,12 +62,6 @@ class FindIdRepositoryProvider extends ChangeNotifier {
 @RestApi()
 abstract class FindIdRepository {
   factory FindIdRepository(Dio dio, {String baseUrl}) = _FindIdRepository;
-
-  // //인증번호 발급받기
-  // @POST('sign-in/find-id/send-verification-code')
-  // Future<ApiResponse<String>> getVerificationCode({
-  //   @Body() required Info info
-  // });
 
   // 인증 코드 검증
   @POST('find-id')
