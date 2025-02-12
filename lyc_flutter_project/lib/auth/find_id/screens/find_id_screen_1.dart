@@ -83,7 +83,6 @@ class _FindIdScreen1State extends State<FindIdScreen1> {
                                   );
                                 }
                               } catch (e) {
-
                                 if (context.mounted) {
                                   showDialog(
                                     context: context,

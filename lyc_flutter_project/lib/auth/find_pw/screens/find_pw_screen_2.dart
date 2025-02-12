@@ -18,7 +18,7 @@ class FindPwScreen2 extends StatelessWidget {
     String code = '';
     return Scaffold(
         backgroundColor: AppColor.lightGrey,
-        appBar: const NormalAppbar(title: "비밀번호 찾기"),
+        appBar: const NormalAppbar(title: "비밀번호 찾기",backButton: false),
         body: Consumer<FindPwProvider>(builder: (context, value, child) {
           if (value.isLoading) {
             return const Center(child: CustomLoading());

@@ -15,7 +15,7 @@ class FindPwScreen4 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.lightGrey,
-      appBar: const NormalAppbar(title: "비밀번호 찾기"),
+      appBar: const NormalAppbar(title: "비밀번호 찾기",backButton: false),
       body: Center(
         child: SingleChildScrollView(
           child: Column(

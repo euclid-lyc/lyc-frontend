@@ -24,7 +24,7 @@ class _FindIdScreen2State extends State<FindIdScreen2> {
     String code='';
     return Scaffold(
       backgroundColor: AppColor.lightGrey,
-      appBar: const NormalAppbar(title: "아이디 찾기"),
+      appBar: const NormalAppbar(title: "아이디 찾기",backButton: false),
       body: Consumer<FindIdProvider>(
         builder: (context, value, child) {
           if (value.isLoading) {
