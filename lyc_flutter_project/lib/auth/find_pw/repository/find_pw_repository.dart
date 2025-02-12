@@ -31,16 +31,6 @@ class FindPwRepositoryProvider extends ChangeNotifier {
         options: options,
       );
 
-      if (response.statusCode != 200) {
-        final errorMessage = response.data['message'] ?? '요청 처리 중 오류가 발생했습니다.';
-        throw DioException(
-          requestOptions: response.requestOptions,
-          response: response,
-          type: DioExceptionType.badResponse,
-          message: errorMessage,
-        );
-      }
-
       return response;
     } on DioException catch (e) {
       debugPrint('DioException 발생: ${e.type} - ${e.message}');
@@ -49,6 +39,19 @@ class FindPwRepositoryProvider extends ChangeNotifier {
       debugPrint('기타 예외 발생: $e');
       throw Exception('요청 처리 중 오류가 발생했습니다: $e');
     }
+  }
+
+  Future<Response> updatePw({
+    required String authHeader,
+    required Map<String, String> body,
+  }) async {
+    return await dio.patch('http://$ip/lyc/auths/sign-in/find-pw/update',
+        data: body,
+        options: Options(
+          validateStatus: (status) => true,
+          contentType: 'application/json',
+          responseType: ResponseType.json,
+        ));
   }
 
   FindPwRepositoryProvider({required this.dio}) {
@@ -67,10 +70,10 @@ abstract class FindPwRepository {
     @Query('code') required String code,
   });
 
-  //비밀번호 변경
-  @PATCH('find-pw/update')
-  Future<ApiResponse> updatePw({
-    @Header('Authorization') required String authHeader,
-    @Body() required Map<String, String> body,
-  });
+//비밀번호 변경
+// @PATCH('find-pw/update')
+// Future<ApiResponse> updatePw({
+//   @Header('Authorization') required String authHeader,
+//   @Body() required Map<String, String> body,
+// });
 }

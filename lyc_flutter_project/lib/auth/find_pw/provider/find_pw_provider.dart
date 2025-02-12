@@ -132,7 +132,7 @@ class FindPwProvider extends ChangeNotifier {
         return;
       }
 
-      final resp = await findPwRepositoryProvider.findPwRepository.updatePw(
+      final resp = await findPwRepositoryProvider.updatePw(
         authHeader: "Bearer $tempToken",
         body: {
           "loginId": id,
@@ -142,11 +142,11 @@ class FindPwProvider extends ChangeNotifier {
         },
       );
 
-      if (resp.isSuccess) {
+      if (resp.statusCode == 200) {
         _isLoading = false;
       } else {
-        _errorMessage = resp.message;
-        throw Exception(resp.message);
+        throw Exception('request failed: ${resp.statusCode}');
+
       }
     } on DioException catch (e) {
       _errorMessage = 'DioException: ${e.message}';
