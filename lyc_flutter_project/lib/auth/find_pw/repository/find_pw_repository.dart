@@ -30,7 +30,6 @@ class FindPwRepositoryProvider extends ChangeNotifier {
         data: requestBody,
         options: options,
       );
-
       return response;
     } on DioException catch (e) {
       debugPrint('DioException 발생: ${e.type} - ${e.message}');
@@ -45,13 +44,23 @@ class FindPwRepositoryProvider extends ChangeNotifier {
     required String authHeader,
     required Map<String, String> body,
   }) async {
-    return await dio.patch('http://$ip/lyc/auths/sign-in/find-pw/update',
-        data: body,
-        options: Options(
-          validateStatus: (status) => true,
-          contentType: 'application/json',
-          responseType: ResponseType.json,
-        ));
+    try {
+      final response =
+          await dio.patch('http://$ip/lyc/auths/sign-in/find-pw/update',
+              data: body,
+              options: Options(
+                validateStatus: (status) => true,
+                contentType: 'application/json',
+                responseType: ResponseType.json,
+              ));
+      return response;
+    } on DioException catch (e) {
+      debugPrint('DioException 발생: ${e.type} - ${e.message}');
+      rethrow;
+    } catch (e) {
+      debugPrint('기타 예외 발생: $e');
+      throw Exception('요청 처리 중 오류가 발생했습니다: $e');
+    }
   }
 
   FindPwRepositoryProvider({required this.dio}) {
