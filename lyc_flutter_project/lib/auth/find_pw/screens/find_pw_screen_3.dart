@@ -19,7 +19,7 @@ class FindPwScreen3 extends StatelessWidget {
     String confirmPw = '';
     return Scaffold(
         backgroundColor: AppColor.lightGrey,
-        appBar: const NormalAppbar(title: "비밀번호 찾기",backButton: false),
+        appBar: const NormalAppbar(title: "비밀번호 찾기"),
         body: Consumer<FindPwProvider>(builder: (context, value, child) {
           if (value.isLoading) {
             return const Center(child: CustomLoading());

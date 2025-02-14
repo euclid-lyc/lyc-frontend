@@ -59,9 +59,9 @@ class LoginScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           buildMoveButton(context, '회원가입', const JoinScreen1()),
-                          buildMoveButton(context, '아이디찾기',  FindIdScreen1()),
+                          buildMoveButton(context, '아이디찾기',  const FindIdScreen1()),
                           buildMoveButton(
-                              context, '비밀번호찾기', FindPwScreen1()),
+                              context, '비밀번호찾기', const FindPwScreen1()),
                         ],
                       ),
                     ),
