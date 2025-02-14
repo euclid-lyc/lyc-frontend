@@ -3,202 +3,120 @@ import 'package:lyc_flutter_project/common/widget/normal_appbar.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/styles/app_text_style.dart';
 import 'package:provider/provider.dart';
-import '../../../widget/Controller.dart';
-import '../Provider/send_email_provider.dart';
+import '../../../common/widget/custom_input_field.dart';
+import '../../../common/widget/custom_loading.dart';
+import '../../../common/widget/custom_next_button.dart';
+import '../../../common/widget/social_login_buttons.dart';
+import '../Provider/find_id_provider.dart';
 import 'find_id_screen_2.dart';
-import '../model/info.dart';
+import 'package:lyc_flutter_project/commissions/widget/custom_dialog.dart';
 
+class FindIdScreen1 extends StatefulWidget {
+  const FindIdScreen1({super.key});
 
-class FindIdScreen1 extends StatelessWidget {
-  FindIdScreen1({super.key});
-  final Controller _nameController = Controller();
-  final Controller _emailController = Controller();
+  @override
+  _FindIdScreen1State createState() => _FindIdScreen1State();
+}
 
+class _FindIdScreen1State extends State<FindIdScreen1> {
 
   @override
   Widget build(BuildContext context) {
-    final sendEmailProvider = Provider.of<SendEmailProvider>(context);
     return Scaffold(
       backgroundColor: AppColor.lightGrey,
       appBar: const NormalAppbar(title: "아이디 찾기"),
-      body: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                padding: const EdgeInsets.fromLTRB(29, 28.5, 29, 33),
-                width: 296,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.only(bottom: 25),
-                      alignment: Alignment.topLeft,
-                      child: const Text(
-                        'Step 1. 인증수단 선택',
-                        style: AppTextStyle.littleTitle,
-                      ),
+      body: Consumer<FindIdProvider>(
+        builder: (context, value, child) {
+          if (value.isLoading) {
+            return const Center(child: CustomLoading());
+          }
+          return Center(
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.fromLTRB(32, 28, 32, 28),
+                    margin: const EdgeInsets.fromLTRB(32, 32, 32, 20),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
                     ),
-                    buildInputField(
-                        '이름',
-                        '이름을 입력해주세요',
-                        AppTextStyle.labelTextStyle,
-                        AppTextStyle.hint,
-                       _nameController.controller),
-                    buildInputField(
-                        '가입한 이메일로 찾기',
-                        '이메일을 입력해주세요',
-                        AppTextStyle.labelTextStyle,
-                        AppTextStyle.hint,
-                       _emailController.controller),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 30.5), // 위아래 여백 설정
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.only(bottom: 28),
+                          alignment: Alignment.topLeft,
+                          child: const Text(
+                            'Step 1. 이메일 입력',
+                            style: AppTextStyle.littleTitle,
+                          ),
+                        ),
+                        CustomInputField(
+                          label: '이름',
+                          hint: '이름을 입력해주세요',
+                          onChanged: (p0) => value.name = p0,
+                          inputType: TextInputType.text,
+                        ),
+                        CustomInputField(
+                          label: '가입한 이메일',
+                          hint: '이메일을 입력해주세요',
+                          onChanged: (p0) => value.email = p0,
+                          inputType: TextInputType.emailAddress,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 16),
+                          child: CustomNextButton(
+                            onPressed: () async {
+                              try {
+                                await value.getVerificationCode();
+                                if (context.mounted) {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const FindIdScreen2(),
+                                    ),
+                                  );
+                                }
+                              } catch (e) {
+                                if (context.mounted) {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => const CustomDialog(
+                                      title: "일치하는 회원정보가 존재하지 않습니다.",
+                                    ),
+                                  );
+                                }
+                              }
+                            },
+                            text: '다음',
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 20),
                       child: TextButton(
-                        onPressed: ()async {
-                          final info = Info(
-                            name: _nameController.controller.text,
-                            email: _emailController.controller.text,
-                          );
-                          try {
-                            await sendEmailProvider.getVerificationCode(info: info);
-                            if (context.mounted) {
-                              Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>  FindIdScreen2(),
-                              ),
-                            );
-                            }
-                          } catch (e) {
-                            // 에러 처리
-                            debugPrint('Error: $e');
-                          }
-                        },
-                        style: TextButton.styleFrom(
-                          backgroundColor: AppColor.beige,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
+                        onPressed: () {},
+                        child: const Text(
+                          "다른 계정으로 로그인",
+                          style: AppTextStyle.otherLoginTextStyle,
                         ),
-                        child: const SizedBox(
-                          width: 230,
-                          child: Text(
-                            '다음',
-                            style: AppTextStyle.button,
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 20), // 위아래 여백 설정
-                child: TextButton(
-                  onPressed: () {
-                    // 다른 계정으로 로그인 버튼 눌렀을 때의 동작 구현
-                  },
-                  child: const Text(
-                    '다른 계정으로 로그인',
-                    style: AppTextStyle.otherLoginTextStyle,
+                      )),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 0),
+                    child: SocialLoginButtons(),
                   ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 0), // 위아래 여백 설정
-                child: SizedBox(
-                  width: 166,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      IconButton(
-                        icon: Image.asset(
-                          'assets/icon_naver.png',
-                          width: 35,
-                          height: 35,
-                        ),
-                        onPressed: () {
-                          // 네이버 로그인 버튼 눌렀을 때의 동작 구현
-                        },
-                      ),
-                      IconButton(
-                        icon: Image.asset(
-                          'assets/icon_kakao.png',
-                          width: 35,
-                          height: 35,
-                        ),
-                        onPressed: () {
-                          // 카카오톡 로그인 버튼 눌렀을 때의 동작 구현
-                        },
-                      ),
-                      IconButton(
-                        icon: Image.asset(
-                          'assets/icon_google.png',
-                          width: 35,
-                          height: 35,
-                        ),
-                        onPressed: () {
-                          // 구글 로그인 버튼 눌렀을 때의 동작 구현
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget buildInputField(String label, String hint, TextStyle labelTextStyle,
-      TextStyle hintTextStyle, TextEditingController controller) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 8.5),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-            Container(
-              margin: const EdgeInsets.only(bottom: 4.5),
-              alignment: Alignment.topLeft,
-              child: Text(
-                label,
-                style: labelTextStyle,
+                ],
               ),
             ),
-          Container(
-            width: double.infinity, // 너비를 입력 필드에 맞게 설정
-            height: 40, // 높이 설정
-            decoration: BoxDecoration(
-              color: AppColor.lightGrey,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Padding(
-               padding: const EdgeInsets.fromLTRB(18, 12, 18, 12), // 좌우 및 상하 여백 설정
-              child: TextField(
-                controller: controller,
-                textAlignVertical: TextAlignVertical.center, // 텍스트 수직 정렬
-                textAlign: TextAlign.start, // 텍스트 수평 정렬
-                decoration: InputDecoration(
-                  hintText: hint,
-                  hintStyle: hintTextStyle,
-                  border: InputBorder.none,
-                ),
-                keyboardType: TextInputType.text,
-              ),
-            ),
-          ),
-        ],
+          );
+        },
       ),
     );
   }
