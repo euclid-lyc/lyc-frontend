@@ -3,13 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class CustomSearchBar extends StatelessWidget {
   final ValueChanged<String> onChanged;
-  final VoidCallback? onPressed;
-
-  const CustomSearchBar({
-    super.key,
-    required this.onChanged,
-    this.onPressed,
-  });
+  const CustomSearchBar({super.key, required this.onChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -20,14 +14,16 @@ class CustomSearchBar extends StatelessWidget {
       hintStyle: WidgetStateProperty.all(
         const TextStyle(
           color: Colors.grey,
-          fontSize: 14.0,
+          fontSize: 14,
           fontWeight: FontWeight.w400,
         ),
       ),
-      elevation: WidgetStateProperty.all(3.0),
+      elevation: WidgetStateProperty.all(3),
       trailing: [
         IconButton(
-          onPressed: onPressed,
+          onPressed: () {
+
+          },
           icon: SvgPicture.asset(
             "assets/icon/search.svg",
             colorFilter: ColorFilter.mode(
