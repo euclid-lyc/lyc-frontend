@@ -11,7 +11,6 @@ import 'package:lyc_flutter_project/director/provider/director_provider.dart';
 import 'package:lyc_flutter_project/director/widget/custom_search_bar.dart';
 import 'package:lyc_flutter_project/common/widget/default_padding.dart';
 import 'package:lyc_flutter_project/routes/routes.dart';
-import 'package:lyc_flutter_project/search/model/search_directors_general_model.dart';
 import 'package:provider/provider.dart';
 
 class DirectorSearchScreen extends StatefulWidget {
@@ -62,27 +61,39 @@ class _DirectorSearchScreenState extends State<DirectorSearchScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   CustomSearchBar(
-                    onChanged: (term) => value.onTermChanged(term: term),
-                    onPressed: () => value.searchGeneral(),
+                    onChanged: (String value) {},
                   ),
                   const SizedBox(height: 16.0),
                   renderButtons(),
-                  if (!value.showGeneralSearchResult) const SizedBox(height: 16.0),
-                  if (!value.showGeneralSearchResult)
-                    const _PaddingText(
-                      label: "디렉터 랭킹",
-                      fontWeight: FontWeight.w600,
-                      fontSize: 18.0,
-                    ),
-                  if (!value.showGeneralSearchResult)
-                    const _PaddingText(
-                      label: "사용자의 취향에 맞는 코디를 추천드려요",
-                      fontWeight: FontWeight.w400,
-                      fontSize: 12.0,
-                    ),
+                  const SizedBox(height: 16.0),
+                  const _PaddingText(
+                    label: "디렉터 랭킹",
+                    fontWeight: FontWeight.w600,
+                    fontSize: 18.0,
+                  ),
+                  const _PaddingText(
+                    label: "사용자의 취향에 맞는 코디를 추천드려요",
+                    fontWeight: FontWeight.w400,
+                    fontSize: 12.0,
+                  ),
                   const SizedBox(height: 8.0),
                   Expanded(
-                    child: renderDirectors(value),
+                    child: value.loading
+                        ? const Center(child: CustomLoading())
+                        : ListView.builder(
+                      controller: controller,
+                            itemCount: value.directors.length,
+                            itemBuilder: (context, index) {
+                              final DirectorRanking director =
+                                  value.directors[index];
+                              return MemberList(
+                                memberId: director.memberId,
+                                profile: director.profileImage,
+                                nickname: director.nickname,
+                                // button: ActiveState(),
+                              );
+                            },
+                          ),
                   ),
                 ],
               ),
@@ -91,48 +102,6 @@ class _DirectorSearchScreenState extends State<DirectorSearchScreen> {
         },
       ),
     );
-  }
-
-  Widget renderDirectors(DirectorProvider value) {
-    if (value.loading || value.loadingGeneralSearch) {
-      return const Padding(
-        padding: EdgeInsets.only(bottom: 100),
-        child: Center(child: CustomLoading()),
-      );
-    } else if (value.generalSearchMessage != null) {
-      return Center(
-        child: Padding(
-          padding: const EdgeInsets.only(bottom: 100),
-          child: Text(value.generalSearchMessage!),
-        ),
-      );
-    } else if (value.showGeneralSearchResult) {
-      return ListView.builder(
-        itemCount: value.generalSearchResult.length,
-        itemBuilder: (context, index) {
-          final SearchDirectorsGeneralModel director = value.generalSearchResult[index];
-          return MemberList(
-            memberId: director.memberId,
-            profile: director.profileImage,
-            nickname: director.nickname,
-            content: director.introduction,
-          );
-        },
-      );
-    } else {
-      return ListView.builder(
-        controller: controller,
-        itemCount: value.directors.length,
-        itemBuilder: (context, index) {
-          final DirectorRanking director = value.directors[index];
-          return MemberList(
-            memberId: director.memberId,
-            profile: director.profileImage,
-            nickname: director.nickname,
-          );
-        },
-      );
-    }
   }
 
   Container renderButtons() {
