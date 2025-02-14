@@ -46,11 +46,14 @@ class FindPwRepositoryProvider extends ChangeNotifier {
   }) async {
     try {
       final response =
-          await dio.patch('http://$ip/lyc/auths/sign-in/find-pw/update',
+          await dio.patch('http://$ip/lyc/auths/find-pw/update',
               data: body,
               options: Options(
+                headers: {
+                  'Authorization': authHeader,
+                  'Content-Type': 'application/json',
+                },
                 validateStatus: (status) => true,
-                contentType: 'application/json',
                 responseType: ResponseType.json,
               ));
       return response;

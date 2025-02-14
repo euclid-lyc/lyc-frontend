@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
+import 'package:lyc_flutter_project/home/screen/home_screen.dart';
 import 'package:lyc_flutter_project/routes/routes.dart';
 import 'package:provider/provider.dart';
 import '../../../styles/app_text_style.dart';
@@ -59,9 +60,9 @@ class LoginScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           buildMoveButton(context, '회원가입', const JoinScreen1()),
-                          buildMoveButton(context, '아이디찾기',  FindIdScreen1()),
+                          buildMoveButton(context, '아이디찾기',  const FindIdScreen1()),
                           buildMoveButton(
-                              context, '비밀번호찾기', FindPwScreen1()),
+                              context, '비밀번호찾기', const FindPwScreen1()),
                         ],
                       ),
                     ),
