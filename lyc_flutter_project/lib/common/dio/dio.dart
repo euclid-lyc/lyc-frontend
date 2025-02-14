@@ -97,7 +97,7 @@ class CustomInterceptor extends Interceptor {
         }
       }
 
-      handler.next(err);
     }
+    handler.next(err);
   }
 }

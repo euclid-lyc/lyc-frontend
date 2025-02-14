@@ -18,6 +18,7 @@ import 'package:lyc_flutter_project/posting/provider/posting_detail_provider.dar
 import 'package:lyc_flutter_project/posting/repository/clothes_repository.dart';
 import 'package:lyc_flutter_project/posting/repository/coordi_repository.dart';
 import 'package:lyc_flutter_project/routes/router.dart';
+import 'package:lyc_flutter_project/search/repository/search_repository.dart';
 import 'package:lyc_flutter_project/setting/provider/setting_provider.dart';
 import 'package:lyc_flutter_project/setting/repository/setting_repository.dart';
 import 'package:provider/provider.dart';
@@ -39,6 +40,11 @@ Future<void> main() async {
       providers: [
         ChangeNotifierProvider(
           create: (context) => DioProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => SearchRepositoryProvider(
+            dio: context.read<DioProvider>().dio,
+          ),
         ),
         ChangeNotifierProvider(
           create: (context) => MypageRepositoryProvider(
@@ -120,7 +126,8 @@ Future<void> main() async {
         ),
         ChangeNotifierProvider(
           create: (context) => DirectorProvider(
-            repositoryProvider: context.read<DirectorRepositoryProvider>(),
+            directorRepository: context.read<DirectorRepositoryProvider>().repository,
+            searchRepository: context.read<SearchRepositoryProvider>().repository,
           ),
         ),
         ChangeNotifierProvider(
