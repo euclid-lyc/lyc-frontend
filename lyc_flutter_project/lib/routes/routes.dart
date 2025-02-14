@@ -93,9 +93,9 @@ class Routes {
   );
 
   //commissions
-  static const RouteInfo primaryInfo = RouteInfo(
-    name: '/commissions/primaryInfo',
-    path: '/commissions/primaryInfo',
+  static const RouteInfo basicInfo = RouteInfo(
+    name: '/commissions/basicInfo',
+    path: '/commissions/basicInfo',
   );
   static const RouteInfo desiredStyle = RouteInfo(
     name: '/commissions/desiredStyle',

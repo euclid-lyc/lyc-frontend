@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as context;
 import 'package:lyc_flutter_project/auth/join/Provider/login_provider.dart';
 import 'package:lyc_flutter_project/auth/join/repository/join_repository.dart';
 import 'package:lyc_flutter_project/common/dio/dio.dart';
@@ -22,12 +23,13 @@ import 'package:lyc_flutter_project/setting/provider/setting_provider.dart';
 import 'package:lyc_flutter_project/setting/repository/setting_repository.dart';
 import 'package:provider/provider.dart';
 import 'package:lyc_flutter_project/auth/find_pw/provider/find_pw_provider.dart';
-import 'package:lyc_flutter_project/auth/find_id/Provider/send_email_provider.dart';
 import 'package:lyc_flutter_project/auth/find_id/Provider/find_id_provider.dart';
 import 'package:lyc_flutter_project/auth/join/Provider/join_provider.dart';
-import 'package:lyc_flutter_project/auth/join/screens/join_screen_6.dart';
+import 'package:lyc_flutter_project/auth/join/screens/join_screen_5.dart';
 import 'package:lyc_flutter_project/auth/service/storage_service.dart';
 
+import 'auth/find_id/repository/find_id_repository.dart';
+import 'auth/find_pw/repository/find_pw_repository.dart';
 import 'commissions/provider/commissions_provider.dart';
 import 'commissions/repository/commissions_repository.dart';
 
@@ -57,10 +59,12 @@ Future<void> main() async {
         ),
         ChangeNotifierProvider(create: (context) => MembershipState()),
         ChangeNotifierProvider(
-          create: (context) => ClothesRepositoryProvider(dio: context.read<DioProvider>().dio),
+          create: (context) =>
+              ClothesRepositoryProvider(dio: context.read<DioProvider>().dio),
         ),
         ChangeNotifierProvider(
-          create: (context) => CoordiRepositoryProvider(dio: context.read<DioProvider>().dio),
+          create: (context) =>
+              CoordiRepositoryProvider(dio: context.read<DioProvider>().dio),
         ),
         ChangeNotifierProvider(
           create: (context) => WeatherRepositoryProvider(
@@ -74,11 +78,13 @@ Future<void> main() async {
         ),
         ChangeNotifierProvider(
           create: (context) => FeedProvider(
-            weatherRepositoryProvider: context.read<WeatherRepositoryProvider>(),
+            weatherRepositoryProvider:
+                context.read<WeatherRepositoryProvider>(),
             feedRepositoryProvider: context.read<FeedRepositoryProvider>(),
           ),
         ),
-        ChangeNotifierProxyProvider<MypageRepositoryProvider, MypageProviderFactory>(
+        ChangeNotifierProxyProvider<MypageRepositoryProvider,
+            MypageProviderFactory>(
           create: (context) => MypageProviderFactory(
             mypageRepositoryProvider: context.read<MypageRepositoryProvider>(),
           ),
@@ -88,12 +94,16 @@ Future<void> main() async {
                 mypageRepositoryProvider: value,
               ),
         ),
-        ChangeNotifierProxyProvider2<MypageRepositoryProvider, CoordiRepositoryProvider, PostingDetailProviderFactory>(
+        ChangeNotifierProxyProvider2<MypageRepositoryProvider,
+            CoordiRepositoryProvider, PostingDetailProviderFactory>(
           create: (context) => PostingDetailProviderFactory(
-            mypageRepositoryProvider: Provider.of<MypageRepositoryProvider>(context, listen: false),
-            coordiRepositoryProvider: Provider.of<CoordiRepositoryProvider>(context, listen: false),
+            mypageRepositoryProvider:
+                Provider.of<MypageRepositoryProvider>(context, listen: false),
+            coordiRepositoryProvider:
+                Provider.of<CoordiRepositoryProvider>(context, listen: false),
           ),
-          update: (context, mypageRepositoryProvider, postingRepositoryProvider, previous) =>
+          update: (context, mypageRepositoryProvider, postingRepositoryProvider,
+                  previous) =>
               previous ??
               PostingDetailProviderFactory(
                 mypageRepositoryProvider: mypageRepositoryProvider,
@@ -101,15 +111,18 @@ Future<void> main() async {
               ),
         ),
         ChangeNotifierProvider(
-          create: (context) => SettingRepositoryProvider(dio: context.read<DioProvider>().dio),
+          create: (context) =>
+              SettingRepositoryProvider(dio: context.read<DioProvider>().dio),
         ),
         ChangeNotifierProvider(
           create: (context) => SettingProvider(
-            repositoryProvider: Provider.of<SettingRepositoryProvider>(context, listen: false),
+            repositoryProvider:
+                Provider.of<SettingRepositoryProvider>(context, listen: false),
           ),
         ),
         ChangeNotifierProvider(
-          create: (context) => DirectorRepositoryProvider(dio: context.read<DioProvider>().dio),
+          create: (context) =>
+              DirectorRepositoryProvider(dio: context.read<DioProvider>().dio),
         ),
         ChangeNotifierProvider(
           create: (context) => DirectorProvider(
@@ -120,7 +133,8 @@ Future<void> main() async {
         ChangeNotifierProvider(
           create: (context) => HomeProvider(
             feedRepositoryProvider: context.read<FeedRepositoryProvider>(),
-            directorRepository: context.read<DirectorRepositoryProvider>().repository,
+            directorRepository:
+                context.read<DirectorRepositoryProvider>().repository,
           ),
         ),
         ChangeNotifierProvider(
@@ -134,22 +148,27 @@ Future<void> main() async {
           create: (context) => StorageService(),
         ),
         ChangeNotifierProvider(
-          create: (context) => SendEmailProvider(
-            Provider.of<DioProvider>(context, listen: false),
-            context.read<StorageService>(),
-          ),
+          create: (context) =>
+              FindIdRepositoryProvider(dio: context.read<DioProvider>().dio),
         ),
         ChangeNotifierProvider(
           create: (context) => FindIdProvider(
-            context.read<DioProvider>(),
-            context.read<SendEmailProvider>(),
-            context.read<StorageService>(),
+            dioProvider: context.read<DioProvider>(),
+            dio: context.read<DioProvider>().dio,
+            storageService: context.read<StorageService>(),
+            findIdRepositoryProvider: context.read<FindIdRepositoryProvider>(),
           ),
         ),
         ChangeNotifierProvider(
+          create: (context) =>
+              FindPwRepositoryProvider(dio: context.read<DioProvider>().dio),
+        ),
+        ChangeNotifierProvider(
           create: (context) => FindPwProvider(
-            Provider.of<DioProvider>(context, listen: false),
-            context.read<StorageService>(),
+            dioProvider: context.read<DioProvider>(),
+            dio: context.read<DioProvider>().dio,
+            storageService: context.read<StorageService>(),
+            findPwRepositoryProvider: context.read<FindPwRepositoryProvider>(),
           ),
         ),
         ChangeNotifierProvider(
@@ -165,15 +184,21 @@ Future<void> main() async {
         ChangeNotifierProvider(
           create: (context) => JoinProvider(
             joinRepository: JoinRepository(
-              dio: Provider.of<DioProvider>(context, listen: false).dio,
-              storageService: Provider.of<StorageService>(context, listen: false),
+              dio: context.read<DioProvider>().dio,
+              storageService:
+                  Provider.of<StorageService>(context, listen: false),
             ),
           ),
         ),
         ChangeNotifierProvider(
-          create: (context) => CommissionsProvider(
-            repository: CommissionsRepository(dio: context.read<DioProvider>().dio,),
+          create: (context) => CommissionsRepositoryProvider(
+            dio: context.read<DioProvider>().dio,
           ),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => CommissionsProvider(
+              repositoryProvider:
+                  context.read<CommissionsRepositoryProvider>()),
         ),
       ],
       child: const MyApp(),

@@ -14,7 +14,7 @@ class LoginProvider extends ChangeNotifier {
 
   bool _isLoading = false;
   bool _isLoggedIn = false;
-  int? _memberId;
+  late int _memberId;
 
   String? _profile;
   bool _hasProfile = false;
@@ -27,7 +27,7 @@ class LoginProvider extends ChangeNotifier {
 
   bool get isLoggedIn => _isLoggedIn;
 
-  int? get memberId => _memberId;
+  int get memberId => _memberId;
 
   LoginProvider(
     this.dioProvider,
@@ -53,10 +53,10 @@ class LoginProvider extends ChangeNotifier {
   }
 
   Future<bool> getProfile() async {
-    if (_memberId == null) return false;
+    if (_memberId == -1) return false;
 
     try {
-      final resp = await mypageRepository.getProfile(memberId: _memberId!);
+      final resp = await mypageRepository.getProfile(memberId: _memberId);
 
       if (resp.isSuccess) {
         _profile = resp.result.profileImage;
@@ -156,7 +156,7 @@ class LoginProvider extends ChangeNotifier {
         await storage.delete(key: accessTokenKey);
         await storage.delete(key: memberIdKey);
         _isLoggedIn = false;
-        _memberId = null;
+        _memberId = -1;
         _profile = null;
         _hasProfile = false;
         notifyListeners();
@@ -174,7 +174,7 @@ class LoginProvider extends ChangeNotifier {
       _isLoggedIn = true;
       _memberId = int.parse(storedMemberId);
     } else {
-      _memberId = null;
+      _memberId = -1;
       _isLoggedIn = false;
     }
     notifyListeners();

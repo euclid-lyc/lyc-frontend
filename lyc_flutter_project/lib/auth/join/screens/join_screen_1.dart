@@ -263,8 +263,8 @@ class JoinScreenState1 extends State<JoinScreen1> {
                     return '아이디를 입력해 주세요.';
                   } else if (value.length < 6) {
                     return '아이디는 6글자 이상이어야 합니다.';
-                  } else if (!RegExp(r'^(?=.*[a-zA-Z])(?=.*[!@#$%^&*(),.?":{}|<>]).+$').hasMatch(value)) {
-                    return '아이디에는 영어와 특수문자가 포함되어야 합니다.';
+                  } else if (!RegExp('(?=.*[a-zA-Z])').hasMatch(value)) {
+                    return '아이디에는 특수문자가 포함되어야 합니다.';
                   }
                   return null;
                 },

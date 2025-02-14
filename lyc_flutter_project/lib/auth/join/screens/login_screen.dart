@@ -3,11 +3,10 @@ import 'package:go_router/go_router.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/routes/routes.dart';
 import 'package:provider/provider.dart';
-import '../../../commissions/screens/primary_info_screen.dart';
 import '../../../styles/app_text_style.dart';
 import '../../../widget/Controller.dart';
 import '../../find_id/Screens/find_id_screen_1.dart';
-import '../../find_pw/screens/find_password_screen_1.dart';
+import '../../find_pw/screens/find_pw_screen_1.dart';
 import '../Provider/login_provider.dart';
 import 'join_screen_1.dart';
 
@@ -60,9 +59,9 @@ class LoginScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           buildMoveButton(context, '회원가입', const JoinScreen1()),
-                          buildMoveButton(context, '아이디찾기', FindIdScreen1()),
+                          buildMoveButton(context, '아이디찾기',  FindIdScreen1()),
                           buildMoveButton(
-                              context, '비밀번호찾기', FindPasswordScreen1()),
+                              context, '비밀번호찾기', FindPwScreen1()),
                         ],
                       ),
                     ),
@@ -104,7 +103,6 @@ class LoginScreen extends StatelessWidget {
 
                         await loginProvider.login(id, pw, context); // 로그인 요청
                         if (loginProvider.isLoggedIn &&
-                            loginProvider.memberId != null &&
                             context.mounted) {
                           context.goNamed(Routes.home.name);
                         }
@@ -135,7 +133,6 @@ class LoginScreen extends StatelessWidget {
                 children: [
                   TextButton(
                     onPressed: () {
-
                     },
                     child: const Text(
                       '다른 계정으로 로그인',
@@ -164,7 +161,7 @@ class LoginScreen extends StatelessWidget {
 
   Widget buildIncome(String text, String hint, Controller controller) {
     return Container(
-      margin: const EdgeInsets.fromLTRB(0, 18.5, 0, 0),
+      margin: const EdgeInsets.fromLTRB(0, 20, 0, 0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -173,9 +170,9 @@ class LoginScreen extends StatelessWidget {
             style: AppTextStyle.labelTextStyle,
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 4.5),
+            padding: const EdgeInsets.only(top: 4),
             child: Container(
-              width: 230,
+              width: 240,
               height: 40,
               decoration: BoxDecoration(
                 color: AppColor.lightGrey,
@@ -184,7 +181,7 @@ class LoginScreen extends StatelessWidget {
               alignment: Alignment.center,
               child: Center(
                 child: Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
+                  padding: const EdgeInsets.fromLTRB(16, 10, 16, 12),
                   child: TextField(
                     controller: controller.controller,
                     decoration: InputDecoration(
@@ -192,7 +189,7 @@ class LoginScreen extends StatelessWidget {
                       hintText: hint,
                       hintStyle: AppTextStyle.hint,
                     ),
-                    obscureText: text == '비밀번호', // 비밀번호 입력 필드에서 텍스트를 숨깁니다.
+                    obscureText: text == '비밀번호', // 입력 필드에서 텍스트 숨기기
                     onChanged: (value) {},
                   ),
                 ),
@@ -223,8 +220,8 @@ class LoginScreen extends StatelessWidget {
     return IconButton(
       icon: Image.asset(
         icon,
-        width: 35,
-        height: 35,
+        width: 36,
+        height: 36,
       ),
       onPressed: () {
         // 소셜 로그인 버튼 클릭 시 동작 구현

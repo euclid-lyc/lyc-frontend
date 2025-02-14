@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 GestureDetector SelectButtonsInPosting(List<String> name, List<String> selected,
-    int index, VoidCallback _onTap, Color pointColor, Color backgroundColor) {
+    int index, VoidCallback _onTap, Color pointColor, Color backgroundColor, [bool enabled = true]) {
   final String _text = name[index];
   return GestureDetector(
-    onTap: _onTap,
+    onTap: enabled ? _onTap : null,
     child: Container(
       height: 50,
       width: 80,

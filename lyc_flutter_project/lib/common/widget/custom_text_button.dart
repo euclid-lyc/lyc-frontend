@@ -20,7 +20,7 @@ class CustomTextButton extends StatelessWidget {
     this.textColor = Colors.white,
     this.backgroundColor = AppColor.brown,
     this.overlayColor = Colors.brown,
-    this.onPressed,
+    this.onPressed
   });
 
   @override
