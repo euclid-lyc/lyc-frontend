@@ -1,8 +1,3 @@
-import 'package:bootpay/bootpay.dart';
-import 'package:bootpay/model/extra.dart';
-import 'package:bootpay/model/item.dart';
-import 'package:bootpay/model/payload.dart';
-import 'package:bootpay/model/user.dart';
 import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/mypage/widget/point_input_field.dart';
@@ -24,8 +19,6 @@ class _PointChargeScreenState extends State<PointChargeScreen> {
   final String webApplicationId = "66b0e5d186fd08d2213fbf98";
   final String iosApplicationId = "66b0e5d186fd08d2213fbf9a";
   final String androidApplicationId = "66b0e5d186fd08d2213fbf99";
-
-  Payload payload = Payload();
 
   @override
   Widget build(BuildContext context) {
@@ -61,20 +54,11 @@ class _PointChargeScreenState extends State<PointChargeScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const PointSubTitle(label: "충전 수단"),
-                    PointPay(
-                        label: "카카오페이",
-                        icon: "assets/icon_kakao.png",
-                        onTap: () {
-                          bootpayRequestDataInit('kakao');
-                          goBootpayTest(context);
-                        }),
+                    PointPay(label: "카카오페이", icon: "assets/icon_kakao.png", onTap: () {}),
                     PointPay(
                       label: "네이버페이",
                       icon: "assets/icon_naver.png",
-                      onTap: () {
-                        bootpayRequestDataInit('npay');
-                        goBootpayTest(context);
-                      },
+                      onTap: () {},
                     ),
                   ],
                 ),
@@ -85,72 +69,4 @@ class _PointChargeScreenState extends State<PointChargeScreen> {
       ),
     );
   }
-
-  void bootpayRequestDataInit(String pg) {
-    Item item = Item();
-    item.itemName = "포인트";
-    item.qty = 1;
-    item.unique = "ITEM_CODE_POINT";
-    item.price = point.toDouble();
-
-    List<Item> itemList = [item];
-
-    payload.webApplicationId = webApplicationId;
-    payload.androidApplicationId = androidApplicationId;
-    payload.iosApplicationId = iosApplicationId;
-
-    payload.pg = pg;
-    // payload.methods
-    payload.name = "포인트 충전";
-    payload.price = point.toDouble();
-    payload.orderId = DateTime.now().millisecondsSinceEpoch.toString(); // Unique order ID
-
-    payload.params = {
-      "callbackParam1": "value12",
-      "callbackParam2": "value34",
-      "callbackParam3": "value56",
-      "callbackParam4": "value78",
-    }; // Parameters for callback
-
-    payload.items = itemList; // Add item list
-
-    User user = User(); // User information
-    user.username = "카리나";
-    user.id = "1";
-
-    Extra extra = Extra(); // Payment options
-    extra.appScheme = 'bootpayFlutterExample';
-
-    payload.user = user;
-    payload.extra = extra;
-  }
-
-  void goBootpayTest(BuildContext context) {
-    Bootpay().request(
-      context: context,
-      payload: payload,
-      showCloseButton: false,
-      onCancel: (String data) {
-        debugPrint('------- onCancel: $data');
-      },
-      onError: (String data) {
-        debugPrint('------- onError: $data');
-      },
-      onClose: () {
-        debugPrint('------- onClose');
-        Bootpay().dismiss(context);
-        Navigator.pop(context);
-      },
-      onCloseHardware: () {
-        debugPrint('------- onCloseHardware');
-      },
-      onConfirm: (String data) {
-        return true;
-      },
-      onDone: (String data) {
-        debugPrint('------- onDone: $data');
-      },
-    );
-  }
 }
-
