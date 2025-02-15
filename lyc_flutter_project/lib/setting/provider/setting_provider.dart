@@ -157,13 +157,20 @@ class SettingProvider extends ChangeNotifier {
   PushAlarmModel? _pushAlarmModel;
   bool _loadingPushAlarm = false;
 
-  PushAlarmModel get alarm => _pushAlarmModel!;
+  PushAlarmModel get alarm => _pushAlarmModel ?? PushAlarmModel(
+    dm: false,
+    feed: false,
+    schedule: false,
+    likeMark: false,
+    event: false,
+    ad: false,
+  );
 
   get loadingPushAlarm => _loadingPushAlarm;
 
-  void initAlarmScreen() {
-    initDb();
-    initModel();
+  Future<void> initAlarmScreen() async {
+    await initDb();
+    await initModel();
   }
 
   Future<void> initDb() async {
