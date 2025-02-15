@@ -54,22 +54,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.2"
-  bootpay:
-    dependency: "direct main"
-    description:
-      name: bootpay
-      sha256: "76905666058b3fa150e1dcbd819c13c382d0eb1539b03caec0c29156f2177632"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.3.2"
-  bootpay_webview_flutter:
-    dependency: transitive
-    description:
-      name: bootpay_webview_flutter
-      sha256: "9e1402474870e928e785b536e53e888080f220a959c0f6a1c56b2d8b5b7cb2b6"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.3.0"
   build:
     dependency: transitive
     description:
@@ -1066,14 +1050,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.3.2"
-  uuid:
-    dependency: transitive
-    description:
-      name: uuid
-      sha256: "648e103079f7c64a36dc7d39369cabb358d377078a051d6ae2ad3aa539519313"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.7"
   vector_graphics:
     dependency: transitive
     description:

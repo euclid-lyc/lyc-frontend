@@ -1,0 +1,2 @@
+C:/git/lyc-frontend-dvlp-dy/lyc_flutter_project/android/app/.cxx/Debug/31411717/x86/CMakeFiles/edit_cache.dir
+C:/git/lyc-frontend-dvlp-dy/lyc_flutter_project/android/app/.cxx/Debug/31411717/x86/CMakeFiles/rebuild_cache.dir
