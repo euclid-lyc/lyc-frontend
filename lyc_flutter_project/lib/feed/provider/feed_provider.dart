@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
 import 'package:lyc_flutter_project/common/model/api_response.dart';
@@ -33,8 +32,8 @@ class FeedProvider extends ChangeNotifier {
 
   List<ForMemberPreview> _forMemberPreviewList = [];
 
-  double _lat = 37.30;
-  double _lon = 127.01;
+  // double _lat = 37.30;
+  // double _lon = 127.01;
 
   get loading => getLoadingStatus();
 
@@ -53,10 +52,10 @@ class FeedProvider extends ChangeNotifier {
   Future<void> initFeedScreen() async {
     try {
       await getLocation();
-      // 병렬 수행
       await Future.wait([
         getTemp(),
         getWeatherPreview(),
+        getForMemberPreview()
       ]);
     } catch (e) {
       if (e is ApiResponse) {
@@ -101,8 +100,8 @@ class FeedProvider extends ChangeNotifier {
     // 위치 정보
     locationData = await location.getLocation();
 
-    _lat = locationData.latitude ?? 37.30;
-    _lon = locationData.longitude ?? 127.01;
+    // _lat = locationData.latitude ?? 37.30;
+    // _lon = locationData.longitude ?? 127.01;
 
     _initializeLocate = true;
   }

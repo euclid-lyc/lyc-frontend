@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:lyc_flutter_project/common/style/custom_grid_delegate.dart';
 import 'package:lyc_flutter_project/common/widget/custom_loading.dart';
 import 'package:lyc_flutter_project/common/widget/home_appbar.dart';
 import 'package:lyc_flutter_project/common/widget/nav_bar.dart';
 import 'package:lyc_flutter_project/common/widget/preview_posting_card.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/director/widget/custom_search_bar.dart';
+import 'package:lyc_flutter_project/feed/model/for_member_preview.dart';
 import 'package:lyc_flutter_project/feed/model/weather_preview.dart';
 import 'package:lyc_flutter_project/feed/provider/feed_provider.dart';
 import 'package:lyc_flutter_project/feed/widget/height_box.dart';
@@ -78,8 +80,7 @@ class _FeedScreenState extends State<FeedScreen> {
                                 scrollDirection: Axis.horizontal,
                                 itemCount: value.weatherPreviewList.length,
                                 itemBuilder: (context, index) {
-                                  WeatherPreview preview =
-                                      value.weatherPreviewList[index];
+                                  WeatherPreview preview = value.weatherPreviewList[index];
                                   return PreviewPostingCard(
                                     postingId: preview.postingId,
                                     image: preview.image,
@@ -94,18 +95,17 @@ class _FeedScreenState extends State<FeedScreen> {
                   detail: "사용자 취향에 맞는 코디를 추천해드려요.",
                 ),
                 const HeightBox(),
-                // SliverGrid.builder(
-                //   gridDelegate: customGridDelegate(),
-                //   itemCount: value.forMemberPreviewList.length,
-                //   itemBuilder: (context, index) {
-                //     ForMemberPreview preview =
-                //         value.forMemberPreviewList[index];
-                //     return PreviewPostingCard(
-                //       postingId: preview.postingId,
-                //       image: preview.image,
-                //     );
-                //   },
-                // )
+                SliverGrid.builder(
+                  gridDelegate: customGridDelegate(),
+                  itemCount: value.forMemberPreviewList.length,
+                  itemBuilder: (context, index) {
+                    ForMemberPreview preview = value.forMemberPreviewList[index];
+                    return PreviewPostingCard(
+                      postingId: preview.postingId,
+                      image: preview.image,
+                    );
+                  },
+                )
               ],
             ),
           );
