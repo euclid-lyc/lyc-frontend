@@ -25,7 +25,8 @@ abstract class WeatherRepository {
 
   @GET("")
   @Headers({"accessToken": "true"})
-  Future<ApiResponse<WeatherResult>>getWeather({
-    @Queries() required WeatherQuery weatherQuery,
+  Future<ApiResponse<WeatherResult>> getWeather({
+    @Query("lat") required double lat,
+    @Query("lon") required double lon,
   });
 }

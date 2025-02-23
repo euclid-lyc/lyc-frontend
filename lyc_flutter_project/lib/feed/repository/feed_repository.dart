@@ -31,7 +31,8 @@ abstract class FeedRepository {
   @GET("/by-weather")
   @Headers({"accessToken": "true"})
   Future<ApiResponse<WeatherPreviewResult>> getWeatherPostings({
-    @Query("city") required String city,
+    @Query("lat") required double lat,
+    @Query("lon") required double lon,
   });
 
   @GET("/for-member")
