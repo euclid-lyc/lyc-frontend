@@ -1,8 +1,6 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
 import 'package:lyc_flutter_project/common/model/api_response.dart';
-import 'package:lyc_flutter_project/config/secret.dart';
 import 'package:lyc_flutter_project/feed/model/for_member_preview.dart';
 import 'package:lyc_flutter_project/feed/model/weather_model.dart';
 import 'package:lyc_flutter_project/feed/model/weather_preview.dart';
@@ -18,9 +16,7 @@ class FeedProvider extends ChangeNotifier {
     required this.feedRepositoryProvider,
   });
 
-  String? _city;
-
-  bool _initializeCity = false;
+  bool _initializeLocate = false;
 
   int? _minTemp;
   int? _maxTemp;
@@ -29,14 +25,15 @@ class FeedProvider extends ChangeNotifier {
 
   List<WeatherPreview>? _weatherPreviewList;
 
-  bool _initializeWeahterPreview = false;
+  bool _initializeWeatherPreview = false;
 
   bool _loadingForMember = false;
   bool _hasMore = true;
 
   List<ForMemberPreview> _forMemberPreviewList = [];
 
-  get initializeCity => _initializeCity;
+  // double _lat = 37.30;
+  // double _lon = 127.01;
 
   get loading => getLoadingStatus();
 
@@ -48,17 +45,17 @@ class FeedProvider extends ChangeNotifier {
 
   List<WeatherPreview> get weatherPreviewList => _weatherPreviewList ?? [];
 
-  get initializeWeatherPreview => _initializeWeahterPreview;
+  get initializeWeatherPreview => _initializeWeatherPreview;
 
   List<ForMemberPreview> get forMemberPreviewList => _forMemberPreviewList;
 
   Future<void> initFeedScreen() async {
     try {
       await getLocation();
-      // 병렬 수행
       await Future.wait([
         getTemp(),
         getWeatherPreview(),
+        getForMemberPreview()
       ]);
     } catch (e) {
       if (e is ApiResponse) {
@@ -87,8 +84,7 @@ class FeedProvider extends ChangeNotifier {
     if (!serviceEnabled) {
       serviceEnabled = await location.requestService();
       if (!serviceEnabled) {
-        _city = "seoul";
-        _initializeCity = true;
+        _initializeLocate = true;
         return;
       }
     }
@@ -97,90 +93,51 @@ class FeedProvider extends ChangeNotifier {
     if (permissionStatus == PermissionStatus.denied) {
       permissionStatus = await location.requestPermission();
       if (permissionStatus == PermissionStatus.denied) {
-        _city = "seoul";
-        _initializeCity = true;
+        _initializeLocate = true;
         return;
       }
     }
-    // 위치정보
+    // 위치 정보
     locationData = await location.getLocation();
 
-    final double? lat = locationData.latitude;
-    final double? long = locationData.longitude;
+    // _lat = locationData.latitude ?? 37.30;
+    // _lon = locationData.longitude ?? 127.01;
 
-    // 테스트 좌표
-    // const double long = 126;
-    // const double lat = 37.67;
-
-    final String x = long.toString();
-    final String y = lat.toString();
-
-    final Dio dio = Dio();
-    try {
-      final resp = await dio.get(
-        "https://dapi.kakao.com/v2/local/geo/coord2regioncode.json",
-        options: Options(
-          headers: {"Authorization": "KakaoAK $KAKAO_API_KEY"},
-        ),
-        queryParameters: {
-          "x": x,
-          "y": y,
-        },
-      );
-      _city = resp.data["documents"][0]["region_1depth_name"];
-      _initializeCity = true;
-      return;
-    } catch (e) {
-      // 좌표가 잘못된 경우 default로 서울시 반환
-      _city = "seoul";
-      _initializeCity = true;
-      return;
-    }
+    _initializeLocate = true;
   }
 
   Future<void> getTemp() async {
-    if (_city == null) {
-      try {
-        getLocation();
-      } catch (e) {
-        _city = "seoul";
-      }
+    if (!_initializeLocate) {
+      await getLocation();
     }
-    final WeatherQuery query = WeatherQuery(city: _city!);
+
     try {
-      final ApiResponse<WeatherResult> resp = await weatherRepositoryProvider.repository.getWeather(weatherQuery: query);
+      final ApiResponse<WeatherResult> resp = await weatherRepositoryProvider.repository.getWeather(
+        lat: 37.5,
+        lon: 127.0,
+      );
       _minTemp = resp.result.tempMin;
       _maxTemp = resp.result.tempMax;
       _initializeTemp = true;
       notifyListeners();
     } catch (e) {
-      if (e is ApiResponse) {
-        Exception(e.message);
-      } else {
-        Exception(e);
-      }
+      Exception(e);
+      debugPrint(e.toString());
     }
   }
 
   Future<void> getWeatherPreview() async {
-    if (_city == null) {
-      try {
-        getLocation();
-      } catch (e) {
-        _city = "seoul";
-      }
-    }
     try {
-      final resp = await feedRepositoryProvider.repository.getWeatherPostings(city: _city!);
+      final resp = await feedRepositoryProvider.repository.getWeatherPostings(
+        lat: 37.5,
+        lon: 127.0,
+      );
       _weatherPreviewList = resp.result.posting;
-      _initializeWeahterPreview = true;
+      _initializeWeatherPreview = true;
       notifyListeners();
     } catch (e) {
-      if (e is ApiResponse) {
-        Exception(e.message);
-      } else {
-        Exception(e);
-      }
+      Exception(e);
+      debugPrint(e.toString());
     }
   }
 
