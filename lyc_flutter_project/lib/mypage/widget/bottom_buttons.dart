@@ -6,7 +6,6 @@ import 'package:lyc_flutter_project/mypage/screen/review_home_screen.dart';
 import 'package:lyc_flutter_project/mypage/screen/stamp_screen.dart';
 import 'package:lyc_flutter_project/mypage/widget/custom_button_in_profile_box.dart';
 
-
 class BottomButtons extends StatelessWidget {
   final int memberId;
   final bool isLoginUser;
@@ -42,7 +41,7 @@ class BottomButtons extends StatelessWidget {
             text: '리뷰',
             onPressed: () => Navigator.push(context, MaterialPageRoute(
               builder: (context) {
-                return const ReviewHomeScreen();
+                return ReviewHomeScreen(memberId: memberId);
               },
             )),
           ),
@@ -73,15 +72,15 @@ class BottomButtons extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => TapViewScreen(
-                      directorId: memberId,
-                      // memberId:
-                      //     Provider.of<LoginProvider>(context, listen: false)
-                      //         .memberId
-                    isDirector: false,
-                  //여기도... true/false값을 이렇게 넣어도 되나
-                  title: "의뢰서 작성하기", isUpdate: false,)
-                ),
+                    builder: (context) => TapViewScreen(
+                          directorId: memberId,
+                          // memberId:
+                          //     Provider.of<LoginProvider>(context, listen: false)
+                          //         .memberId
+                          isDirector: false,
+                          //여기도... true/false값을 이렇게 넣어도 되나
+                          title: "의뢰서 작성하기", isUpdate: false,
+                        )),
               );
             },
           ),

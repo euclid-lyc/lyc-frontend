@@ -38,6 +38,10 @@ class ReviewProvider extends ChangeNotifier {
 
   get possibleReviews => _possibleReviews;
 
+  void getId({required int memberId}) {
+    _myId = memberId;
+  }
+
   Future<void> refreshReviews() async {
     await getReviews(refresh: true);
   }
@@ -48,8 +52,6 @@ class ReviewProvider extends ChangeNotifier {
     String cursorDateTime = "9999-12-31T23:59:59.0000",
   }) async {
     if (_loading || (!refresh && !_hasMore)) return;
-
-    _myId ??= loginProvider.memberId;
 
     PaginateQuery paginateQuery = PaginateQuery(
       pageSize: pageSize,

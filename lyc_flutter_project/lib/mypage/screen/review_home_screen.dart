@@ -8,20 +8,25 @@ import 'package:lyc_flutter_project/mypage/widget/my_coordi_grid_view.dart';
 import 'package:provider/provider.dart';
 
 class ReviewHomeScreen extends StatefulWidget {
-  const ReviewHomeScreen({super.key});
+  final int memberId;
+
+  const ReviewHomeScreen({
+    super.key,
+    required this.memberId,
+  });
 
   @override
   State<ReviewHomeScreen> createState() => _ReviewHomeScreenState();
 }
 
 class _ReviewHomeScreenState extends State<ReviewHomeScreen> {
-  late ReviewProvider reviewProvider;
-
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<ReviewProvider>().getReviews();
+      context.read<ReviewProvider>()
+        ..getId(memberId: widget.memberId)
+        ..getReviews();
     });
   }
 
@@ -38,7 +43,7 @@ class _ReviewHomeScreenState extends State<ReviewHomeScreen> {
                 : MyCoordiGridView(
                     postings: provider.reviews,
                     category: 3,
-                    reviewProvider: reviewProvider,
+                    reviewProvider: provider,
                   );
           },
         ),
