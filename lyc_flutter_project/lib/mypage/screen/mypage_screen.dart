@@ -63,81 +63,83 @@ class _MypageScreenState extends State<MypageScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider.value(
-      value: provider,
-      child: Consumer<MypageProvider>(
-        builder: (context, value, child) {
-          return CustomRefreshIndicator(
-            onRefresh: value.refresh,
-            child: MypageLayout(
-              top: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                color: AppColor.beige,
-                child: Column(
+    return SafeArea(
+      child: ChangeNotifierProvider.value(
+        value: provider,
+        child: Consumer<MypageProvider>(
+          builder: (context, value, child) {
+            return CustomRefreshIndicator(
+              onRefresh: value.refresh,
+              child: MypageLayout(
+                top: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                  color: AppColor.beige,
+                  child: Column(
+                    children: [
+                      // 프로필 영역
+                      Expanded(
+                        flex: 2,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Expanded(
+                              child: value.hasProfile ? ProfileBox.fromModel(profile: value.profile) : const CustomLoading(),
+                            ),
+                            IconsInProfileBox(
+                              memberId: memberId,
+                              isMypage: true,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        child: BottomButtons(
+                          memberId: memberId,
+                          isLoginUser: widget.extra.values.first,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                // 게시글 영역
+                body: Column(
                   children: [
-                    // 프로필 영역
-                    Expanded(
-                      flex: 2,
+                    Container(
+                      height: 40,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(30),
+                      ),
                       child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Expanded(
-                            child: value.hasProfile ? ProfileBox.fromModel(profile: value.profile) : const CustomLoading(),
+                          SwitchCategoryButton(
+                            text: "나의 코디",
+                            isSelected: value.category == 0,
+                            onPressed: () => value.categorySelected(0),
                           ),
-                          IconsInProfileBox(
-                            memberId: memberId,
-                            isMypage: true,
+                          SwitchCategoryButton(
+                            text: "저장한 코디",
+                            isSelected: value.category == 1,
+                            onPressed: () => value.categorySelected(1),
+                          ),
+                          SwitchCategoryButton(
+                            text: "나의 옷장",
+                            isSelected: value.category == 2,
+                            onPressed: () => value.categorySelected(2),
                           ),
                         ],
                       ),
                     ),
+                    const SizedBox(height: 20.0),
                     Expanded(
-                      child: BottomButtons(
-                        memberId: memberId,
-                        isLoginUser: widget.extra.values.first,
-                      ),
+                      child: buildPostings(value),
                     ),
                   ],
                 ),
               ),
-              // 게시글 영역
-              body: Column(
-                children: [
-                  Container(
-                    height: 40,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    child: Row(
-                      children: [
-                        SwitchCategoryButton(
-                          text: "나의 코디",
-                          isSelected: value.category == 0,
-                          onPressed: () => value.categorySelected(0),
-                        ),
-                        SwitchCategoryButton(
-                          text: "저장한 코디",
-                          isSelected: value.category == 1,
-                          onPressed: () => value.categorySelected(1),
-                        ),
-                        SwitchCategoryButton(
-                          text: "나의 옷장",
-                          isSelected: value.category == 2,
-                          onPressed: () => value.categorySelected(2),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 20.0),
-                  Expanded(
-                    child: buildPostings(value),
-                  ),
-                ],
-              ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }
