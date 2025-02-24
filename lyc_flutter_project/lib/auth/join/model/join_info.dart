@@ -1,12 +1,12 @@
 class JoinInfo {
   final int height;
   final int weight;
-  final String topSize;
+  late final String topSize;
   final String bottomSize;
+  final String text;
   final int postalCode;
   final String address;
   final String detailAddress;
-  final String text;
   final InfoStyle infoStyle;
   final InfoFit infoFit;
   final InfoMaterial infoMaterial;
@@ -17,10 +17,10 @@ class JoinInfo {
     required this.weight,
     required this.topSize,
     required this.bottomSize,
+    required this.text,
     required this.postalCode,
     required this.address,
     required this.detailAddress,
-    required this.text,
     required this.infoStyle,
     required this.infoFit,
     required this.infoMaterial,
@@ -33,10 +33,10 @@ class JoinInfo {
       'weight': weight,
       'topSize': topSize,
       'bottomSize': bottomSize,
+      'text': text,
       'postalCode': postalCode,
       'address': address,
       'detailAddress': detailAddress,
-      'text': text,
       'infoStyle': infoStyle.toJson(),
       'infoFit': infoFit.toJson(),
       'infoMaterial': infoMaterial.toJson(),
@@ -49,10 +49,10 @@ class JoinInfo {
     int? weight,
     String? topSize,
     String? bottomSize,
+    String? text,
     int? postalCode,
     String? address,
     String? detailAddress,
-    String? text,
     InfoStyle? infoStyle,
     InfoFit? infoFit,
     InfoMaterial? infoMaterial,
@@ -63,10 +63,10 @@ class JoinInfo {
       weight: weight ?? this.weight,
       topSize: topSize ?? this.topSize,
       bottomSize: bottomSize ?? this.bottomSize,
+      text: text ?? this.text,
       postalCode: postalCode ?? this.postalCode,
       address: address ?? this.address,
       detailAddress: detailAddress ?? this.detailAddress,
-      text: text ?? this.text,
       infoStyle: infoStyle ?? this.infoStyle,
       infoFit: infoFit ?? this.infoFit,
       infoMaterial: infoMaterial ?? this.infoMaterial,
@@ -80,10 +80,10 @@ class JoinInfo {
       weight: 0,
       topSize: '',
       bottomSize: '',
+      text: '',
       postalCode: 0,
       address: '',
       detailAddress: '',
-      text: '',
       infoStyle: InfoStyle.defaultValue(),
       infoFit: InfoFit.defaultValue(),
       infoMaterial: InfoMaterial.defaultValue(),

@@ -17,7 +17,7 @@ class JoinProvider extends ChangeNotifier {
   Member _member;
   String _imagePath = '';
 
-  int? _topSize = 55;
+  int? _topSize = 95;
   int? _bottomSize = 28;
 
   JoinProvider(this.storageService, this.joinRepository)
@@ -342,13 +342,9 @@ class JoinProvider extends ChangeNotifier {
     _isLoading = true;
     notifyListeners();
 
-    //이미지 업로드 안 할 경우 api를 null로 보낼 순 없어서 임의값
-    if (_imagePath == '') {
-      _imagePath = '/sdcard/0621.png';
-    }
-
     try {
       final verificationCode = await storageService.read("verificationCode");
+      _joinInfo = _joinInfo.copyWith(topSize: "SIZE_$_topSize",bottomSize: "SIZE_$_bottomSize") ;
       await joinRepository.registerMember(
         registerMember: RegisterMember(
             verificationCode: verificationCode!,

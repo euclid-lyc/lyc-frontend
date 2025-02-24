@@ -90,7 +90,7 @@ class JoinScreenState3 extends State<JoinScreen3> {
                               inputType: TextInputType.number,
                               controller: _postalCodeController,
                               onChanged: (p0) =>
-                                  value.updatePostalCode(p0 as int),
+                                  value.updatePostalCode(int.parse(p0)),
                             ),
                           ),
                           const SizedBox(width: 8),

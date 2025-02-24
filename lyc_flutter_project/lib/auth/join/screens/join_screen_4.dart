@@ -8,8 +8,6 @@ import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:provider/provider.dart';
 import '../../../common/widget/custom_loading.dart';
 import '../../../common/widget/custom_next_button.dart';
-import '../../../widget/Controller.dart';
-import 'join_screen_3.dart';
 import 'join_screen_5.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';

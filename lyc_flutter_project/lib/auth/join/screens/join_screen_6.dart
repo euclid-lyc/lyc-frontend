@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../common/dio/dio.dart';
 import '../../../common/widget/custom_loading.dart';
 import '../../../common/widget/custom_next_button.dart';
 import '../../../common/widget/normal_appbar.dart';
 import '../../../data/app_color.dart';
 import '../../../styles/app_text_style.dart';
 import '../Provider/join_provider.dart';
-import '../model/pushset.dart';
 import 'join_screen_7.dart';
 
 class JoinScreen6 extends StatefulWidget {

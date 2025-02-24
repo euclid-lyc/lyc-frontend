@@ -3,8 +3,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lyc_flutter_project/common/widget/normal_appbar.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/styles/app_text_style.dart';
-
-import '../../../common/widget/custom_loading.dart';
 import '../../../common/widget/custom_next_button.dart';
 import 'login_screen.dart';
 
