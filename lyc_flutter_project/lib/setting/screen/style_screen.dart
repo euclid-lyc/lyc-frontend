@@ -10,8 +10,7 @@ import 'package:lyc_flutter_project/common/widget/default_padding.dart';
 import 'package:lyc_flutter_project/common/widget/normal_appbar.dart';
 import 'package:provider/provider.dart';
 import '../../auth/join/Provider/login_provider.dart';
-import '../../commissions/screen/desired_style_screen.dart';
-import '../../commissions/screen/other_matters_screen.dart';
+import '../../../common/widget/content_box.dart';
 import '../../common/widget/button_list.dart';
 import '../../common/widget/spec_input_line.dart';
 

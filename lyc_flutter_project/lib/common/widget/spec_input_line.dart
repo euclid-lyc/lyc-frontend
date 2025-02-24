@@ -13,7 +13,7 @@ class SpecInputLine<T> extends StatelessWidget {
   const SpecInputLine({
     super.key,
     required this.label,
-    required this.initialValue,
+    this.initialValue,
     this.onTap,
     this.getValue,
     this.onChanged,
