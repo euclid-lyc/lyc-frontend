@@ -3,7 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import '../../../config/secret.dart';
 import '../../service/storage_service.dart';
-import '../model/register_member_dto.dart';
+import '../model/register_member.dart';
 import '../model/user_verification.dart';
 import 'package:path/path.dart' as path;
 import 'package:http_parser/http_parser.dart';
@@ -55,14 +55,14 @@ class JoinRepository {
 
   //회원 가입
   Future<void> registerMember({
-    required RegisterMemberDTO registerMemberDTO,
+    required RegisterMember registerMember,
     required String imagePath,
   }) async {
     try {
       const url = 'http://$ip/lyc/auths/sign-up';
       final tempToken = await storageService.read(tempTokenKey);
 
-      final registerMemberDTOJson = jsonEncode(registerMemberDTO.toJson());
+      final registerMemberDTOJson = jsonEncode(registerMember.toJson());
       final fileExtension = path.extension(imagePath).toLowerCase();
 
       MediaType contentType;

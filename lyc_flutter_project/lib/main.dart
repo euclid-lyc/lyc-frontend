@@ -51,7 +51,6 @@ Future<void> main() async {
             context.read<MypageRepositoryProvider>().mypageRepository,
           ),
         ),
-        ChangeNotifierProvider(create: (context) => MembershipState()),
         ChangeNotifierProvider(
           create: (context) =>
               ClothesRepositoryProvider(dio: context.read<DioProvider>().dio),
@@ -176,10 +175,10 @@ Future<void> main() async {
         ),
         ChangeNotifierProvider(
           create: (context) => JoinProvider(
-            joinRepository: JoinRepository(
+            context.read<StorageService>(),
+            JoinRepository(
               dio: context.read<DioProvider>().dio,
-              storageService:
-                  Provider.of<StorageService>(context, listen: false),
+              storageService: context.read<StorageService>(),
             ),
           ),
         ),
