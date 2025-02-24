@@ -28,6 +28,16 @@ class LoginProvider extends ChangeNotifier {
   bool get isLoggedIn => _isLoggedIn;
 
   int get memberId => _memberId;
+  String _id = '';
+  String _pw = '';
+
+  set id(String id) {
+    _id = id;
+  }
+
+  set pw(String pw) {
+    _pw = pw;
+  }
 
   LoginProvider(
     this.dioProvider,
@@ -72,10 +82,10 @@ class LoginProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> login(String id, String pw, BuildContext context) async {
+  Future<void> login(BuildContext context) async {
     _setLoading(true);
     try {
-      final requestBody = Credential(loginId: id, loginPw: pw);
+      final requestBody = Credential(loginId: _id, loginPw: _pw);
       final response = await dio.post(
         'http://$ip/lyc/auths/sign-in',
         data: requestBody,
@@ -102,9 +112,11 @@ class LoginProvider extends ChangeNotifier {
         notifyListeners();
       } else if (context.mounted) {
         _showErrorDialog(context, '로그인 실패', 'API 요청이 실패했습니다.');
+        _setLoading(false);
       }
     } catch (e) {
       debugPrint('Error: $e');
+      _setLoading(false);
       if (!context.mounted) return;
       if (e is DioException) {
         if (e.response?.statusCode == 401) {

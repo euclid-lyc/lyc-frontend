@@ -14,6 +14,7 @@ class CustomInputField extends StatefulWidget {
   final int? minLines;
   final Color? fillColor;
   final bool? filled;
+  final bool? obscure;
 
   const CustomInputField({
     super.key,
@@ -27,6 +28,7 @@ class CustomInputField extends StatefulWidget {
     this.minLines,
     this.fillColor,
     this.filled = true,
+    this.obscure = false,
   });
 
   @override
@@ -43,7 +45,6 @@ class _CustomInputFieldState extends State<CustomInputField> {
     if (widget.controller != null) {
       _controller = widget.controller;
     }
-
   }
 
   @override
@@ -72,6 +73,7 @@ class _CustomInputFieldState extends State<CustomInputField> {
           Align(
             alignment: Alignment.centerLeft,
             child: TextField(
+              obscureText: widget.obscure ?? false,
               controller: _controller,
               maxLines: widget.maxLines,
               minLines: widget.minLines,
@@ -84,7 +86,7 @@ class _CustomInputFieldState extends State<CustomInputField> {
                   borderRadius: BorderRadius.circular(10),
                   borderSide: BorderSide.none,
                 ),
-                fillColor: widget.fillColor??AppColor.lightGrey,
+                fillColor: widget.fillColor ?? AppColor.lightGrey,
                 filled: widget.filled,
               ),
               keyboardType: widget.inputType,

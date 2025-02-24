@@ -82,10 +82,4 @@ abstract class FindPwRepository {
     @Query('code') required String code,
   });
 
-//비밀번호 변경
-// @PATCH('find-pw/update')
-// Future<ApiResponse> updatePw({
-//   @Header('Authorization') required String authHeader,
-//   @Body() required Map<String, String> body,
-// });
 }

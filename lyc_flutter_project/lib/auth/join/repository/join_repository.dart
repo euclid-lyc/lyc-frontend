@@ -89,7 +89,8 @@ class JoinRepository {
           contentType: contentType,
         ),
       });
-
+      print(registerMemberDTOJson);
+      print(imagePath);
       final options = Options(
         headers: {
           'accept': '*/*',
@@ -107,12 +108,14 @@ class JoinRepository {
         options: options,
       );
 
-      if (!response.data.isSuccess) {
+      if (response.statusCode != 200) {
         throw Exception('회원 가입 실패: ${response.data["message"]}');
       }
     } catch (e) {
       debugPrint('오류 발생: $e');
-      if (e is DioException) {}
+      if (e is DioException) {
+        debugPrint('Dio 오류 발생: ${e.message}');
+      }
       rethrow;
     }
   }
