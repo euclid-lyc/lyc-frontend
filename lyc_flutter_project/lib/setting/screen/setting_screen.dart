@@ -32,124 +32,126 @@ class SettingScreen extends StatelessWidget {
       }
     }
 
-    return Scaffold(
-      floatingActionButton: NavBar(currentRouteName: Routes.setting.name),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      backgroundColor: AppColor.lightGrey,
-      appBar: const NormalAppbar(
-        backButton: false,
-        title: "설정",
-      ),
-      body: DefaultPadding(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const TitleText(
-                title: '일반',
-                content: '정보 변경 및 환경 설정',
-              ),
-              TitleButton(
-                label: "회원정보 변경",
-                onPressed: () => pushWithoutNavBar(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return InfoScreen();
-                    },
-                  ),
+    return SafeArea(
+      child: Scaffold(
+        floatingActionButton: NavBar(currentRouteName: Routes.setting.name),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        backgroundColor: AppColor.lightGrey,
+        appBar: const NormalAppbar(
+          backButton: false,
+          title: "설정",
+        ),
+        body: DefaultPadding(
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const TitleText(
+                  title: '일반',
+                  content: '정보 변경 및 환경 설정',
                 ),
-              ),
-              TitleButton(
-                label: "스타일 정보 변경",
-                onPressed: () => pushWithoutNavBar(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return const StyleScreen();
-                    },
-                  ),
-                ),
-              ),
-              TitleButton(
-                label: "푸시알림 설정",
-                onPressed: () => pushWithoutNavBar(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return const InfoModScreen();
-                    },
-                  ),
-                ),
-              ),
-              TitleButton(
-                label: "차단 계정 관리",
-                onPressed: () => pushWithoutNavBar(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return const BlockModScreen();
-                    },
-                  ),
-                ),
-              ),
-              const SizedBox(height: 30.0),
-              const TitleText(
-                title: "버전",
-                content: "유클리드 버전 정보",
-              ),
-              const TitleButton(
-                label: "버전 정보",
-                onPressed: tmp,
-                note: "v 1.1.3",
-              ),
-              const TitleButton(
-                label: "추가된 기능",
-                onPressed: tmp,
-              ),
-              const SizedBox(height: 30.0),
-              const TitleText(
-                title: "위험구역",
-                content: "로그아웃 및 회원탈퇴",
-              ),
-              TitleButton(
-                label: "로그아웃",
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) => CustomAlertDialog(
-                      title: "로그아웃하시겠습니까",
-                      leftButtonLabel: "아니오",
-                      rightButtonLabel: "네",
-                      leftButtonPressed: () => Navigator.pop(context),
-                      rightButtonPressed: () {
-                        pushReplacementWithoutNavBar(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => LoginScreen(),
-                          ),
-                        );
-                        logout();
+                TitleButton(
+                  label: "회원정보 변경",
+                  onPressed: () => pushWithoutNavBar(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return InfoScreen();
                       },
                     ),
-                  );
-                },
-              ),
-              TitleButton(
-                label: "회원 탈퇴",
-                onPressed: () => pushWithoutNavBar(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return const WithdrawalScreen();
-                    },
                   ),
                 ),
-                backgroundColor: AppColor.deepGrey,
-                foregroundColor: Colors.white,
-              ),
-              const SizedBox(height: 110.0),
-            ],
+                TitleButton(
+                  label: "스타일 정보 변경",
+                  onPressed: () => pushWithoutNavBar(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return const StyleScreen();
+                      },
+                    ),
+                  ),
+                ),
+                TitleButton(
+                  label: "푸시알림 설정",
+                  onPressed: () => pushWithoutNavBar(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return const InfoModScreen();
+                      },
+                    ),
+                  ),
+                ),
+                TitleButton(
+                  label: "차단 계정 관리",
+                  onPressed: () => pushWithoutNavBar(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return const BlockModScreen();
+                      },
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 30.0),
+                const TitleText(
+                  title: "버전",
+                  content: "유클리드 버전 정보",
+                ),
+                const TitleButton(
+                  label: "버전 정보",
+                  onPressed: tmp,
+                  note: "v 1.1.3",
+                ),
+                const TitleButton(
+                  label: "추가된 기능",
+                  onPressed: tmp,
+                ),
+                const SizedBox(height: 30.0),
+                const TitleText(
+                  title: "위험구역",
+                  content: "로그아웃 및 회원탈퇴",
+                ),
+                TitleButton(
+                  label: "로그아웃",
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) => CustomAlertDialog(
+                        title: "로그아웃하시겠습니까",
+                        leftButtonLabel: "아니오",
+                        rightButtonLabel: "네",
+                        leftButtonPressed: () => Navigator.pop(context),
+                        rightButtonPressed: () {
+                          pushReplacementWithoutNavBar(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LoginScreen(),
+                            ),
+                          );
+                          logout();
+                        },
+                      ),
+                    );
+                  },
+                ),
+                TitleButton(
+                  label: "회원 탈퇴",
+                  onPressed: () => pushWithoutNavBar(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return const WithdrawalScreen();
+                      },
+                    ),
+                  ),
+                  backgroundColor: AppColor.deepGrey,
+                  foregroundColor: Colors.white,
+                ),
+                const SizedBox(height: 110.0),
+              ],
+            ),
           ),
         ),
       ),

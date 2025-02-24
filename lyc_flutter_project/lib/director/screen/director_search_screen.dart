@@ -45,61 +45,63 @@ class _DirectorSearchScreenState extends State<DirectorSearchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButton: NavBar(currentRouteName: Routes.director.name),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      resizeToAvoidBottomInset: true,
-      backgroundColor: AppColor.lightGrey,
-      appBar: const HomeAppbar(),
-      body: Consumer<DirectorProvider>(
-        builder: (context, value, child) {
-          return CustomRefreshIndicator(
-            onRefresh: value.refreshRanking,
-            child: DefaultPadding(
-              bottom: 0,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CustomSearchBar(
-                    onChanged: (String value) {},
-                  ),
-                  const SizedBox(height: 16.0),
-                  renderButtons(),
-                  const SizedBox(height: 16.0),
-                  const _PaddingText(
-                    label: "디렉터 랭킹",
-                    fontWeight: FontWeight.w600,
-                    fontSize: 18.0,
-                  ),
-                  const _PaddingText(
-                    label: "사용자의 취향에 맞는 코디를 추천드려요",
-                    fontWeight: FontWeight.w400,
-                    fontSize: 12.0,
-                  ),
-                  const SizedBox(height: 8.0),
-                  Expanded(
-                    child: value.loading
-                        ? const Center(child: CustomLoading())
-                        : ListView.builder(
-                      controller: controller,
-                            itemCount: value.directors.length,
-                            itemBuilder: (context, index) {
-                              final DirectorRanking director =
-                                  value.directors[index];
-                              return MemberList(
-                                memberId: director.memberId,
-                                profile: director.profileImage,
-                                nickname: director.nickname,
-                                // button: ActiveState(),
-                              );
-                            },
-                          ),
-                  ),
-                ],
+    return SafeArea(
+      child: Scaffold(
+        floatingActionButton: NavBar(currentRouteName: Routes.director.name),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        resizeToAvoidBottomInset: true,
+        backgroundColor: AppColor.lightGrey,
+        appBar: const HomeAppbar(),
+        body: Consumer<DirectorProvider>(
+          builder: (context, value, child) {
+            return CustomRefreshIndicator(
+              onRefresh: value.refreshRanking,
+              child: DefaultPadding(
+                bottom: 0,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CustomSearchBar(
+                      onChanged: (String value) {},
+                    ),
+                    const SizedBox(height: 16.0),
+                    renderButtons(),
+                    const SizedBox(height: 16.0),
+                    const _PaddingText(
+                      label: "디렉터 랭킹",
+                      fontWeight: FontWeight.w600,
+                      fontSize: 18.0,
+                    ),
+                    const _PaddingText(
+                      label: "사용자의 취향에 맞는 코디를 추천드려요",
+                      fontWeight: FontWeight.w400,
+                      fontSize: 12.0,
+                    ),
+                    const SizedBox(height: 8.0),
+                    Expanded(
+                      child: value.loading
+                          ? const Center(child: CustomLoading())
+                          : ListView.builder(
+                        controller: controller,
+                              itemCount: value.directors.length,
+                              itemBuilder: (context, index) {
+                                final DirectorRanking director =
+                                    value.directors[index];
+                                return MemberList(
+                                  memberId: director.memberId,
+                                  profile: director.profileImage,
+                                  nickname: director.nickname,
+                                  // button: ActiveState(),
+                                );
+                              },
+                            ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }
