@@ -262,6 +262,11 @@ class CommissionsProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void updateOccasion(String occasion){
+    _model = _model.copyWith(otherMatters: _model.otherMatters.copyWith(occasion:occasion ));
+    notifyListeners();
+  }
+
   Future<void> createCommission() async {
     _isLoading = true;
     notifyListeners();

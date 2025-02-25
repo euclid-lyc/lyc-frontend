@@ -1,23 +1,20 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'commission_response_model.freezed.dart';
+
 part 'commission_response_model.g.dart';
-
-
 
 @freezed
 class CommissionResponseModel with _$CommissionResponseModel {
-  factory CommissionResponseModel({
-    required int commissionId,
-    required String createdDate,
-    required String status,
-    required CommissionModel commission
-  }) = _CommissionResponseModel;
+  factory CommissionResponseModel(
+      {required int commissionId,
+      required String createdDate,
+      required String status,
+      required CommissionModel commission}) = _CommissionResponseModel;
 
   factory CommissionResponseModel.fromJson(Map<String, dynamic> json) =>
       _$CommissionResponseModelFromJson(json);
 }
-
 
 @JsonSerializable()
 class CommissionModel {
@@ -35,6 +32,7 @@ class CommissionModel {
 
   factory CommissionModel.fromJson(Map<String, dynamic> json) =>
       _$CommissionModelFromJson(json);
+
   Map<String, dynamic> toJson() => _$CommissionModelToJson(this);
 
   static CommissionModel defaultValue() {
@@ -93,6 +91,7 @@ class BasicInfo {
 
   factory BasicInfo.fromJson(Map<String, dynamic> json) =>
       _$BasicInfoFromJson(json);
+
   Map<String, dynamic> toJson() => _$BasicInfoToJson(this);
 
   static BasicInfo defaultValue() {
@@ -155,6 +154,7 @@ class InfoStyle {
 
   factory InfoStyle.fromJson(Map<String, dynamic> json) =>
       _$InfoStyleFromJson(json);
+
   Map<String, dynamic> toJson() => _$InfoStyleToJson(this);
 
   static InfoStyle defaultValue() {
@@ -170,7 +170,8 @@ class InfoStyle {
   }) {
     return InfoStyle(
       preferredStyleList: preferredStyleList ?? this.preferredStyleList,
-      nonPreferredStyleList: nonPreferredStyleList ?? this.nonPreferredStyleList,
+      nonPreferredStyleList:
+          nonPreferredStyleList ?? this.nonPreferredStyleList,
     );
   }
 }
@@ -187,6 +188,7 @@ class InfoFit {
 
   factory InfoFit.fromJson(Map<String, dynamic> json) =>
       _$InfoFitFromJson(json);
+
   Map<String, dynamic> toJson() => _$InfoFitToJson(this);
 
   static InfoFit defaultValue() {
@@ -219,6 +221,7 @@ class InfoMaterial {
 
   factory InfoMaterial.fromJson(Map<String, dynamic> json) =>
       _$InfoMaterialFromJson(json);
+
   Map<String, dynamic> toJson() => _$InfoMaterialToJson(this);
 
   static InfoMaterial defaultValue() {
@@ -233,8 +236,10 @@ class InfoMaterial {
     List<String>? nonPreferredMaterialList,
   }) {
     return InfoMaterial(
-      preferredMaterialList: preferredMaterialList ?? this.preferredMaterialList,
-      nonPreferredMaterialList: nonPreferredMaterialList ?? this.nonPreferredMaterialList,
+      preferredMaterialList:
+          preferredMaterialList ?? this.preferredMaterialList,
+      nonPreferredMaterialList:
+          nonPreferredMaterialList ?? this.nonPreferredMaterialList,
     );
   }
 }
@@ -251,6 +256,7 @@ class InfoBodyType {
 
   factory InfoBodyType.fromJson(Map<String, dynamic> json) =>
       _$InfoBodyTypeFromJson(json);
+
   Map<String, dynamic> toJson() => _$InfoBodyTypeToJson(this);
 
   static InfoBodyType defaultValue() {
@@ -289,6 +295,7 @@ class DesiredStyle {
 
   factory DesiredStyle.fromJson(Map<String, dynamic> json) =>
       _$DesiredStyleFromJson(json);
+
   Map<String, dynamic> toJson() => _$DesiredStyleToJson(this);
 
   static DesiredStyle defaultValue() {
@@ -326,6 +333,7 @@ class StyleList {
 
   factory StyleList.fromJson(Map<String, dynamic> json) =>
       _$StyleListFromJson(json);
+
   Map<String, dynamic> toJson() => _$StyleListToJson(this);
 
   static StyleList defaultValue() {
@@ -345,6 +353,7 @@ class FitList {
 
   factory FitList.fromJson(Map<String, dynamic> json) =>
       _$FitListFromJson(json);
+
   Map<String, dynamic> toJson() => _$FitListToJson(this);
 
   static FitList defaultValue() {
@@ -364,6 +373,7 @@ class MaterialList {
 
   factory MaterialList.fromJson(Map<String, dynamic> json) =>
       _$MaterialListFromJson(json);
+
   Map<String, dynamic> toJson() => _$MaterialListToJson(this);
 
   static MaterialList defaultValue() {
@@ -383,6 +393,7 @@ class ColorList {
 
   factory ColorList.fromJson(Map<String, dynamic> json) =>
       _$ColorListFromJson(json);
+
   Map<String, dynamic> toJson() => _$ColorListToJson(this);
 
   static ColorList defaultValue() {
@@ -396,6 +407,7 @@ class ColorList {
 
 @JsonSerializable()
 class OtherMatters {
+  final String occasion;
   final int minPrice;
   final int maxPrice;
   final String dateToUse;
@@ -404,6 +416,7 @@ class OtherMatters {
   final bool isShared;
 
   OtherMatters({
+    this.occasion = "",
     this.minPrice = 0,
     this.maxPrice = 1000000,
     this.dateToUse = '',
@@ -414,6 +427,7 @@ class OtherMatters {
 
   factory OtherMatters.fromJson(Map<String, dynamic> json) =>
       _$OtherMattersFromJson(json);
+
   Map<String, dynamic> toJson() => _$OtherMattersToJson(this);
 
   static OtherMatters defaultValue() {
@@ -421,6 +435,7 @@ class OtherMatters {
   }
 
   OtherMatters copyWith({
+    String? occasion,
     int? minPrice,
     int? maxPrice,
     String? dateToUse,
@@ -429,6 +444,7 @@ class OtherMatters {
     bool? isShared,
   }) {
     return OtherMatters(
+      occasion: occasion ?? this.occasion,
       minPrice: minPrice ?? this.minPrice,
       maxPrice: maxPrice ?? this.maxPrice,
       dateToUse: dateToUse ?? this.dateToUse,
@@ -696,6 +712,3 @@ class OtherMatters {
 //     );
 //   }
 // }
-
-
-
