@@ -5,9 +5,11 @@ import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:lyc_flutter_project/data/style_list.dart' as styles;
 import 'package:lyc_flutter_project/setting/widget/custom_text_form_field.dart';
 import 'package:lyc_flutter_project/common/widget/default_padding.dart';
-import 'package:lyc_flutter_project/mypage/widget/select_buttons_in_posting.dart';
 import 'package:provider/provider.dart';
 import '../../auth/join/Provider/login_provider.dart';
+import '../../common/widget/button_list.dart';
+import '../../common/widget/content_box.dart';
+import '../../common/widget/spec_input_line.dart';
 import '../model/commission_response_model.dart';
 import '../provider/commissions_provider.dart';
 
@@ -50,21 +52,21 @@ class BasicInfoScreenState extends State<BasicInfoScreen> {
                         title: "1. 본인의 체형을 알려주세요.",
                         child: Column(
                           children: [
-                            SpecInputLine(
+                            SpecInputLine<CommissionsProvider>(
                                 label: "키",
                                 initialValue:
                                     value.model.basicInfo.height.toString(),
                                 onChanged: (p0) =>
                                     value.updateHeight(height: int.parse(p0)),
                                 enabled: !isDirector),
-                            SpecInputLine(
+                            SpecInputLine<CommissionsProvider>(
                                 label: "몸무게",
                                 initialValue:
                                     value.model.basicInfo.weight.toString(),
                                 onChanged: (p0) =>
                                     value.updateWeight(weight: int.parse(p0)),
                                 enabled: !isDirector),
-                            SpecInputLine(
+                            SpecInputLine<CommissionsProvider>(
                               label: "상의 사이즈",
                               initialValue: "",
                               getValue: (p0) => p0.topSize,
@@ -90,7 +92,7 @@ class BasicInfoScreenState extends State<BasicInfoScreen> {
                                 );
                               },
                             ),
-                            SpecInputLine(
+                            SpecInputLine<CommissionsProvider>(
                               label: "하의 사이즈",
                               initialValue: "",
                               getValue: (p0) => p0.bottomSize,
@@ -203,10 +205,7 @@ class BasicInfoScreenState extends State<BasicInfoScreen> {
                         child: CustomTextFormField(
                             hint: "ex. 종아리가 너무 두꺼운 게 고민이에요.",
                             maxLines: 5,
-
                             focusedBorderColor: Colors.transparent,
-
-
                             initialValue: value.model.basicInfo.text,
                             onChanged: (text) => value.updateText(text: text),
                             enabled: !isDirector),
@@ -219,212 +218,6 @@ class BasicInfoScreenState extends State<BasicInfoScreen> {
           );
         },
       ),
-    );
-  }
-}
-
-class ButtonList extends StatelessWidget {
-  final List<String> name;
-  final List<String> selected;
-  final Function(String) onSelected;
-  final bool enabled;
-
-  const ButtonList(
-      {super.key,
-      required this.name,
-      required this.selected,
-      required this.onSelected,
-      required this.enabled});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          children: [
-            for (var i = 0; i < 4; i++)
-              Expanded(
-                child: SelectButtonsInPosting(
-                  name,
-                  selected,
-                  i,
-                  () => onSelected(name[i]),
-                  AppColor.brown,
-                  AppColor.lightGrey,
-                  enabled,
-                ),
-              ),
-          ],
-        ),
-        Row(
-          children: [
-            for (var i = 4; i < 8; i++)
-              Expanded(
-                child: SelectButtonsInPosting(
-                  name,
-                  selected,
-                  i,
-                  () => onSelected(name[i]),
-                  AppColor.brown,
-                  AppColor.lightGrey,
-                   enabled,
-                ),
-              ),
-          ],
-        )
-      ],
-    );
-  }
-}
-
-class ContentBox extends StatelessWidget {
-  final String title;
-  final Widget child;
-
-  const ContentBox({
-    super.key,
-    required this.title,
-    required this.child,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(
-        bottom: 20.0,
-      ),
-      padding: const EdgeInsets.symmetric(
-        vertical: 16.0,
-        horizontal: 20.0,
-      ),
-
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(
-          20,
-        ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8),
-            child: Text(
-              title,
-              style: const TextStyle(
-                fontWeight: FontWeight.w600,
-                fontSize: 16,
-              ),
-            ),
-          ),
-          child,
-        ],
-      ),
-    );
-  }
-}
-
-class SpecInputLine extends StatelessWidget {
-  final String label;
-  final String? initialValue;
-  final VoidCallback? onTap;
-  final int Function(CommissionsProvider)? getValue;
-  final Function(String)? onChanged;
-  final bool enabled;
-
-  const SpecInputLine({
-    super.key,
-    required this.label,
-    required this.initialValue,
-    this.onTap,
-    this.getValue,
-    this.onChanged,
-    required this.enabled,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Expanded(
-            child: Text(
-              label,
-              style: const TextStyle(
-                fontWeight: FontWeight.w500,
-                fontSize: 16,
-              ),
-              textAlign: TextAlign.end,
-            ),
-          ),
-          const SizedBox(
-            width: 20,
-          ),
-          Expanded(
-            child: (label == "키" || label == "몸무게")
-                ? CustomTextFormField(
-                    fillColor: const Color(0xffE9E9E9),
-                    focusedBorderColor: Colors.black,
-                    focusedBorderWidth: 1.5,
-                    contentPaddingVertical: 4,
-                    fontSize: 16,
-                    isDense: true,
-                    initialValue: initialValue ?? '',
-                    keyboardType: TextInputType.number,
-                    onChanged: onChanged!,
-                    enabled: enabled,
-                  )
-                : SpecSizeBox(
-                    onTap: onTap!,
-              getValue: getValue!,
-                  ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class SpecSizeBox extends StatelessWidget {
-  final VoidCallback onTap;
-  final int Function(CommissionsProvider) getValue;
-
-  const SpecSizeBox({
-    super.key,
-    required this.onTap,
-    required this.getValue,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Consumer<CommissionsProvider>(
-      builder: (context, value, child) {
-        return GestureDetector(
-          onTap: onTap,
-          child: Container(
-            margin: const EdgeInsets.symmetric(vertical: 8),
-            decoration: BoxDecoration(
-              color: const Color(0xffE9E9E9),
-              borderRadius: BorderRadius.circular(20),
-            ),
-            width: double.infinity,
-            alignment: Alignment.centerLeft,
-            padding: const EdgeInsets.symmetric(
-              vertical: 4,
-              horizontal: 20,
-            ),
-            child: Text(
-              getValue(value).toString(),
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ),
-        );
-      },
     );
   }
 }

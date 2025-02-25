@@ -2,13 +2,13 @@ import '../model/member.dart';
 import '../model/pushset.dart';
 import 'join_info.dart';
 
-class RegisterMemberDTO {
+class RegisterMember {
   final String verificationCode;
   final Member member;
   final JoinInfo info;
   final PushSet pushSet;
 
-  RegisterMemberDTO({
+  RegisterMember({
     required this.verificationCode,
     required this.member,
     required this.info,

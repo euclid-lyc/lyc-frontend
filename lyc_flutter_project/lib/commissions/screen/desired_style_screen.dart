@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:lyc_flutter_project/data/app_color.dart';
 import 'package:provider/provider.dart';
 import '../../auth/join/Provider/login_provider.dart';
+import '../../common/widget/button_list.dart';
+import '../../common/widget/content_box.dart';
 import '../../common/widget/custom_loading.dart';
 import '../../common/widget/default_padding.dart';
-import '../../mypage/widget/select_buttons_in_posting.dart';
 
 import '../provider/commissions_provider.dart';
 import '../../data/style_list.dart' as styles;
@@ -153,103 +154,3 @@ class DesiredStyleScreenState extends State<DesiredStyleScreen> {
 // }
 }
 
-class ContentBox extends StatelessWidget {
-  final String title;
-  final Widget child;
-
-  const ContentBox({
-    super.key,
-    required this.title,
-    required this.child,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(
-        bottom: 20,
-      ),
-      padding: const EdgeInsets.symmetric(
-        vertical: 16,
-        horizontal: 20,
-      ),
-      //height: 200,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(
-          20,
-        ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8),
-            child: Text(
-              title,
-              style: const TextStyle(
-                fontWeight: FontWeight.w600,
-                fontSize: 16,
-              ),
-            ),
-          ),
-          child,
-        ],
-      ),
-    );
-  }
-}
-
-class ButtonList extends StatelessWidget {
-  final List<String> name;
-  final List<String> selected;
-  final Function(String) onSelected;
-  final bool enabled;
-
-  const ButtonList(
-      {super.key,
-      required this.name,
-      required this.selected,
-      required this.onSelected,
-      required this.enabled});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          children: [
-            for (var i = 0; i < 4; i++)
-              Expanded(
-                child: SelectButtonsInPosting(
-                  name,
-                  selected,
-                  i,
-                  () => onSelected(name[i]),
-                  AppColor.brown,
-                  AppColor.lightGrey,
-                  enabled,
-                ),
-              ),
-          ],
-        ),
-        Row(
-          children: [
-            for (var i = 4; i < 8; i++)
-              Expanded(
-                child: SelectButtonsInPosting(
-                  name,
-                  selected,
-                  i,
-                  () => onSelected(name[i]),
-                  AppColor.brown,
-                  AppColor.lightGrey,
-                   enabled,
-                ),
-              ),
-          ],
-        )
-      ],
-    );
-  }
-}

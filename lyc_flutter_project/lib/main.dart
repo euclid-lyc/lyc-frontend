@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as context;
 import 'package:lyc_flutter_project/auth/join/Provider/login_provider.dart';
 import 'package:lyc_flutter_project/auth/join/repository/join_repository.dart';
 import 'package:lyc_flutter_project/common/dio/dio.dart';
@@ -24,7 +23,6 @@ import 'package:provider/provider.dart';
 import 'package:lyc_flutter_project/auth/find_pw/provider/find_pw_provider.dart';
 import 'package:lyc_flutter_project/auth/find_id/Provider/find_id_provider.dart';
 import 'package:lyc_flutter_project/auth/join/Provider/join_provider.dart';
-import 'package:lyc_flutter_project/auth/join/screens/join_screen_5.dart';
 import 'package:lyc_flutter_project/auth/service/storage_service.dart';
 
 import 'auth/find_id/repository/find_id_repository.dart';
@@ -51,7 +49,6 @@ Future<void> main() async {
             context.read<MypageRepositoryProvider>().mypageRepository,
           ),
         ),
-        ChangeNotifierProvider(create: (context) => MembershipState()),
         ChangeNotifierProvider(
           create: (context) =>
               ClothesRepositoryProvider(dio: context.read<DioProvider>().dio),
@@ -176,10 +173,10 @@ Future<void> main() async {
         ),
         ChangeNotifierProvider(
           create: (context) => JoinProvider(
-            joinRepository: JoinRepository(
+            context.read<StorageService>(),
+            JoinRepository(
               dio: context.read<DioProvider>().dio,
-              storageService:
-                  Provider.of<StorageService>(context, listen: false),
+              storageService: context.read<StorageService>(),
             ),
           ),
         ),

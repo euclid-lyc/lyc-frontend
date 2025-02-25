@@ -8,10 +8,11 @@ import 'package:lyc_flutter_project/setting/provider/setting_provider.dart';
 import 'package:lyc_flutter_project/setting/widget/custom_text_form_field.dart';
 import 'package:lyc_flutter_project/common/widget/default_padding.dart';
 import 'package:lyc_flutter_project/common/widget/normal_appbar.dart';
-import 'package:lyc_flutter_project/mypage/widget/select_buttons_in_posting.dart';
 import 'package:provider/provider.dart';
-
 import '../../auth/join/Provider/login_provider.dart';
+import '../../../common/widget/content_box.dart';
+import '../../common/widget/button_list.dart';
+import '../../common/widget/spec_input_line.dart';
 
 class StyleScreen extends StatefulWidget {
   const StyleScreen({super.key});
@@ -56,17 +57,17 @@ class _StyleScreenState extends State<StyleScreen> {
                             title: "1. 본인의 체형을 알려주세요.",
                             child: Column(
                               children: [
-                                SpecInputLine(
+                                SpecInputLine<SettingProvider>(
                                   label: "키",
                                   initialValue: value.style.spec.height.toString(),
                                   onChanged: (p0) => value.updateHeight(selected: p0),
                                 ),
-                                SpecInputLine(
+                                SpecInputLine<SettingProvider>(
                                   label: "몸무게",
                                   initialValue: value.style.spec.weight.toString(),
                                   onChanged: (p0) => value.updateWeight(selected: p0),
                                 ),
-                                SpecInputLine(
+                                SpecInputLine<SettingProvider>(
                                   label: "상의 사이즈",
                                   initialValue: "",
                                   getValue: (p0) => p0.topSize,
@@ -91,7 +92,7 @@ class _StyleScreenState extends State<StyleScreen> {
                                     );
                                   },
                                 ),
-                                SpecInputLine(
+                                SpecInputLine<SettingProvider>(
                                   label: "하의 사이즈",
                                   initialValue: "",
                                   getValue: (p0) => p0.bottomSize,
@@ -221,204 +222,4 @@ class _StyleScreenState extends State<StyleScreen> {
   }
 }
 
-/////
 
-class ButtonList extends StatelessWidget {
-  final List<String> name;
-  final List<String> selected;
-  final Function(String) onSelected;
-
-  const ButtonList({
-    super.key,
-    required this.name,
-    required this.selected,
-    required this.onSelected,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          children: [
-            for (var i = 0; i < 4; i++)
-              Expanded(
-                child: SelectButtonsInPosting(
-                  name,
-                  selected,
-                  i,
-                  () => onSelected(name[i]),
-                  AppColor.brown,
-                  AppColor.lightGrey,
-                ),
-              ),
-          ],
-        ),
-        Row(
-          children: [
-            for (var i = 4; i < 8; i++)
-              Expanded(
-                child: SelectButtonsInPosting(
-                  name,
-                  selected,
-                  i,
-                  () => onSelected(name[i]),
-                  AppColor.brown,
-                  AppColor.lightGrey,
-                ),
-              ),
-          ],
-        )
-      ],
-    );
-  }
-}
-
-class ContentBox extends StatelessWidget {
-  final String title;
-  final Widget child;
-
-  const ContentBox({
-    super.key,
-    required this.title,
-    required this.child,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(
-        bottom: 20.0,
-      ),
-      padding: const EdgeInsets.symmetric(
-        vertical: 16.0,
-        horizontal: 20.0,
-      ),
-      //height: 200.0,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(
-          20.0,
-        ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              title,
-              style: const TextStyle(
-                fontWeight: FontWeight.w600,
-                fontSize: 16.0,
-              ),
-            ),
-          ),
-          child,
-        ],
-      ),
-    );
-  }
-}
-
-class SpecInputLine extends StatelessWidget {
-  final String label;
-  final String initialValue;
-  final VoidCallback? onTap;
-  final int Function(SettingProvider)? getValue;
-  final Function(String)? onChanged;
-
-  const SpecInputLine({
-    super.key,
-    required this.label,
-    required this.initialValue,
-    this.onTap,
-    this.getValue,
-    this.onChanged,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Expanded(
-            child: Text(
-              label,
-              style: const TextStyle(
-                fontWeight: FontWeight.w500,
-                fontSize: 16.0,
-              ),
-              textAlign: TextAlign.end,
-            ),
-          ),
-          const SizedBox(
-            width: 20.0,
-          ),
-          Expanded(
-            child: (label == "키" || label == "몸무게")
-                ? CustomTextFormField(
-                    fillColor: const Color(0xffE9E9E9),
-                    focusedBorderColor: Colors.black,
-                    focusedBorderWidth: 1.5,
-                    contentPaddingVertical: 4.0,
-                    fontSize: 16.0,
-                    isDense: true,
-                    initialValue: initialValue,
-                    keyboardType: TextInputType.number,
-                    onChanged: onChanged!,
-                  )
-                : SpecSizeBox(
-                    onTap: onTap!,
-                    getValue: getValue!,
-                  ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class SpecSizeBox extends StatelessWidget {
-  final VoidCallback onTap;
-  final int Function(SettingProvider) getValue;
-
-  const SpecSizeBox({
-    super.key,
-    required this.onTap,
-    required this.getValue,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Consumer<SettingProvider>(
-      builder: (context, value, child) {
-        return GestureDetector(
-          onTap: onTap,
-          child: Container(
-            margin: const EdgeInsets.symmetric(vertical: 8.0),
-            decoration: BoxDecoration(
-              color: const Color(0xffE9E9E9),
-              borderRadius: BorderRadius.circular(20.0),
-            ),
-            width: double.infinity,
-            alignment: Alignment.centerLeft,
-            padding: const EdgeInsets.symmetric(
-              vertical: 4.0,
-              horizontal: 20.0,
-            ),
-            child: Text(
-              getValue(value).toString(),
-              style: const TextStyle(
-                fontSize: 16.0,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ),
-        );
-      },
-    );
-  }
-}
