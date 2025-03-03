@@ -1,5 +1,7 @@
-# lyc-frontend
-ㅤ    
+![Slide 16_9 - 2](https://github.com/user-attachments/assets/ba4b1f4a-429e-4dd3-b00b-fdbf2b4580ca)
+
+<br>
+
 ## Commit Convention
 - `[chore]` : 동작에 영향 없는 코드 or 변경 없는 변경사항(주석 추가 등)
 - `[feat]` : 기능 구현
